@@ -1,0 +1,29 @@
+{
+  "name": "gw2api-client",
+  "version": "1.0.0",
+  "description": "A javascript wrapper around the official Guild Wars 2 API",
+  "main": "src/client.js",
+  "scripts": {
+    "test": "./node_modules/babel-cli/bin/babel-node.js ./node_modules/.bin/isparta cover --include-all-sources ./node_modules/.bin/_mocha -- tests/ --recursive"
+  },
+  "author": "queicherius@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "requester": "git+https://github.com/gw2efficiency/requester.git"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.4.5",
+    "babel-eslint": "^4.1.6",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "babel-preset-stage-3": "^6.3.13",
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.6",
+    "isparta": "^4.0.0",
+    "mocha": "^2.4.5",
+    "snazzy": "^2.0.1"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  }
+}

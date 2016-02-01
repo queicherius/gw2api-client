@@ -7,10 +7,6 @@ class AccountEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 
-  async get () {
-    return await this.request(this.url)
-  }
-
   achievements () {
     return new AchievementsEndpoint(this.client)
   }
@@ -60,10 +56,6 @@ class AchievementsEndpoint extends AbstractEndpoint {
     this.url = '/v2/account/achievements'
     this.isAuthenticated = true
   }
-
-  async get () {
-    return await this.request(this.url)
-  }
 }
 
 class BankEndpoint extends AbstractEndpoint {
@@ -71,10 +63,6 @@ class BankEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/bank'
     this.isAuthenticated = true
-  }
-
-  async get () {
-    return await this.request(this.url)
   }
 }
 
@@ -84,10 +72,6 @@ class DyesEndpoint extends AbstractEndpoint {
     this.url = '/v2/account/dyes'
     this.isAuthenticated = true
   }
-
-  async get () {
-    return await this.request(this.url)
-  }
 }
 
 class MaterialsEndpoint extends AbstractEndpoint {
@@ -95,10 +79,6 @@ class MaterialsEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/materials'
     this.isAuthenticated = true
-  }
-
-  async get () {
-    return await this.request(this.url)
   }
 }
 
@@ -108,10 +88,6 @@ class MinisEndpoint extends AbstractEndpoint {
     this.url = '/v2/account/minis'
     this.isAuthenticated = true
   }
-
-  async get () {
-    return await this.request(this.url)
-  }
 }
 
 class SkinsEndpoint extends AbstractEndpoint {
@@ -120,10 +96,6 @@ class SkinsEndpoint extends AbstractEndpoint {
     this.url = '/v2/account/skins'
     this.isAuthenticated = true
   }
-
-  async get () {
-    return await this.request(this.url)
-  }
 }
 
 class WalletEndpoint extends AbstractEndpoint {
@@ -131,10 +103,6 @@ class WalletEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/wallet'
     this.isAuthenticated = true
-  }
-
-  async get () {
-    return await this.request(this.url)
   }
 }
 

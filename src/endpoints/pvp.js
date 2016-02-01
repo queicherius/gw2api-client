@@ -25,10 +25,6 @@ class StatsEndpoint extends AbstractEndpoint {
     this.url = '/v2/pvp/stats'
     this.isAuthenticated = true
   }
-
-  async get () {
-    return await this.request(this.url)
-  }
 }
 
 module.exports = PvpEndpoint

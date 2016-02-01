@@ -51,7 +51,7 @@ describe('abstract endpoint', () => {
   })
 
   describe('get', () => {
-    it('support', async () => {
+    it('support for bulk expanding', async () => {
       let content = {id: 1, name: 'foo'}
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
@@ -62,8 +62,14 @@ describe('abstract endpoint', () => {
       expect(entry).to.deep.equal(content)
     })
 
-    it('only for bulk expanding', async () => {
-      await expectError(() => endpoint.get(1))
+    it('support for non bulk expanding', async () => {
+      let content = {id: 1, name: 'foo'}
+      endpoint.url = '/v2/test'
+      reqMock.addResponse(content)
+
+      let entry = await endpoint.get()
+      expect(reqMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test')
+      expect(entry).to.deep.equal(content)
     })
   })
 

@@ -51,10 +51,6 @@ class RanksEndpoint extends AbstractEndpoint {
     this.url = '/v2/guild/' + encodeURIComponent(id) + '/ranks'
     this.isAuthenticated = true
   }
-
-  async get () {
-    return await this.request(this.url)
-  }
 }
 
 class MembersEndpoint extends AbstractEndpoint {
@@ -62,10 +58,6 @@ class MembersEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/guild/' + encodeURIComponent(id) + '/members'
     this.isAuthenticated = true
-  }
-
-  async get () {
-    return await this.request(this.url)
   }
 }
 

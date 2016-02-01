@@ -37,7 +37,7 @@ class AbstractEndpoint {
   // Get a single entry by id
   async get (id) {
     if (!this.isBulk) {
-      throw new Error('"get" is only available for bulk expanding endpoints')
+      return await this.request(this.url)
     }
 
     return await this.request(this.url + '?id=' + id)

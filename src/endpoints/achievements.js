@@ -45,10 +45,6 @@ class DailyEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/achievements/daily'
   }
-
-  async get () {
-    return await this.request(this.url)
-  }
 }
 
 module.exports = AchievementsEndpoint

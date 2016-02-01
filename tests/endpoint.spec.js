@@ -14,13 +14,6 @@ const mockClient = {
   }
 }
 
-var endpoint
-beforeEach(() => {
-  endpoint = new (module)(mockClient)
-  reqMock.reset()
-  endpoint.requester = reqMock
-})
-
 async function expectError (callback) {
   let err
   try {
@@ -33,6 +26,13 @@ async function expectError (callback) {
 }
 
 describe('abstract endpoint', () => {
+  var endpoint
+  beforeEach(() => {
+    endpoint = new (module)(mockClient)
+    reqMock.reset()
+    endpoint.requester = reqMock
+  })
+
   describe('ids', () => {
     it('support', async () => {
       let content = [1, 2]

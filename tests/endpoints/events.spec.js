@@ -1,0 +1,49 @@
+/* eslint-env node, mocha */
+const expect = require('chai').expect
+const reqMock = require('../mocks/requester.mock.js')
+const rewire = require('rewire')
+
+const module = rewire('../../src/endpoints/events.js')
+
+describe('endpoints > events', () => {
+  let endpoint
+  beforeEach(() => {
+    endpoint = new module(false)
+    reqMock.reset()
+    endpoint.requester = reqMock
+  })
+
+  it('transforms the v1 format into v2', () => {
+    let transformer = module.__get__('transformV1Format')
+    let content = transformer({events: {
+      'uuid-one': {name: 'Defeat elite'},
+      'uuid-two': {name: 'Defeat champion'}
+    }})
+    expect(content).to.deep.equal([
+      {id: 'uuid-one', name: 'Defeat elite'},
+      {id: 'uuid-two', name: 'Defeat champion'}
+    ])
+  })
+
+  it('test /v1/event_details.json (all)', async () => {
+    expect(endpoint.url).to.equal('/v1/event_details.json')
+
+    reqMock.addResponse({events: {
+      'uuid-one': {name: 'Defeat elite'},
+      'uuid-two': {name: 'Defeat champion'}
+    }})
+    let content = await endpoint.all()
+    expect(content.length).to.equal(2)
+    expect(content[0].name).to.equal('Defeat elite')
+  })
+
+  it('test /v1/event_details.json (get)', async () => {
+    expect(endpoint.url).to.equal('/v1/event_details.json')
+
+    reqMock.addResponse({events: {
+      'uuid-one': {name: 'Defeat elite'}
+    }})
+    let content = await endpoint.get('uuid-one')
+    expect(content.name).to.equal('Defeat elite')
+  })
+})

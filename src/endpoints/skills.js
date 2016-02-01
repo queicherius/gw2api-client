@@ -1,14 +1,13 @@
 const AbstractEndpoint = require('../endpoint.js')
 
-class MapsEndpoint extends AbstractEndpoint {
+class SkillsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
-    this.url = '/v2/maps'
+    this.url = '/v2/skills'
     this.isPaginated = true
     this.isBulk = true
-    this.supportsBulkAll = false
     this.isLocalized = true
   }
 }
 
-module.exports = MapsEndpoint
+module.exports = SkillsEndpoint

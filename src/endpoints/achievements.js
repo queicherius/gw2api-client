@@ -4,6 +4,7 @@ class AchievementsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements'
+    this.isPaginated = true
     this.isBulk = true
     this.supportsBulkAll = false
     this.isLocalized = true
@@ -26,6 +27,7 @@ class CategoriesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements/categories'
+    this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
   }
@@ -35,6 +37,7 @@ class GroupsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements/groups'
+    this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
   }

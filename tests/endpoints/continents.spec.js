@@ -13,8 +13,11 @@ describe('endpoints > continents', () => {
   })
 
   it('test /v2/continents', async () => {
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/continents')
 
     reqMock.addResponse([1, 2])
@@ -26,7 +29,11 @@ describe('endpoints > continents', () => {
     endpoint = endpoint.floors(1)
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/continents/1/floors')
 
     reqMock.addResponse({texture_dims: [1, 2], clamed_view: [[1, 2]]})

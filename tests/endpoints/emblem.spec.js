@@ -16,7 +16,11 @@ describe('endpoints > emblem', () => {
     endpoint = endpoint.backgrounds()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/emblem/backgrounds')
 
     reqMock.addResponse({id: 1, layers: ['1.png', '2.png']})
@@ -28,7 +32,11 @@ describe('endpoints > emblem', () => {
     endpoint = endpoint.foregrounds()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/emblem/foregrounds')
 
     reqMock.addResponse({id: 1, layers: ['1.png', '2.png']})

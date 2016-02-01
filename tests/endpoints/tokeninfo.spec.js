@@ -13,6 +13,9 @@ describe('endpoints > tokeninfo', () => {
   })
 
   it('test /v2/tokeninfo', async () => {
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/tokeninfo')
 

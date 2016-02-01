@@ -14,6 +14,7 @@ class MatchesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/wvw/matches'
+    this.isPaginated = true
     this.isBulk = true
   }
 }
@@ -22,6 +23,7 @@ class ObjectivesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/wvw/objectives'
+    this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
   }

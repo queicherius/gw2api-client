@@ -13,7 +13,10 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters', async () => {
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/characters')
 
@@ -26,6 +29,9 @@ describe('endpoints > characters', () => {
     endpoint = endpoint.equipment('Nâme')
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/equipment')
 
@@ -38,6 +44,9 @@ describe('endpoints > characters', () => {
     endpoint = endpoint.inventory('Nâme')
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/inventory')
 
@@ -50,6 +59,9 @@ describe('endpoints > characters', () => {
     endpoint = endpoint.recipes('Nâme')
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/recipes')
 
@@ -62,6 +74,9 @@ describe('endpoints > characters', () => {
     endpoint = endpoint.specializations('Nâme')
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/specializations')
 

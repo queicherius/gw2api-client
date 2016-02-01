@@ -14,6 +14,7 @@ class GamesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/pvp/games'
+    this.isPaginated = true
     this.isBulk = true
     this.isAuthenticated = true
   }

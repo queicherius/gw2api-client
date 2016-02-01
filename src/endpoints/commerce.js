@@ -50,6 +50,7 @@ class ListingsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/commerce/listings'
+    this.isPaginated = true
     this.isBulk = true
     this.supportsBulkAll = false
   }
@@ -59,6 +60,7 @@ class PricesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/commerce/prices'
+    this.isPaginated = true
     this.isBulk = true
     this.supportsBulkAll = false
   }

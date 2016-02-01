@@ -4,6 +4,7 @@ class CharactersEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/characters'
+    this.isPaginated = true
     this.isBulk = true
     this.supportsBulkAll = false
     this.isAuthenticated = true

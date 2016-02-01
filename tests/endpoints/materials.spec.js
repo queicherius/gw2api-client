@@ -13,8 +13,11 @@ describe('endpoints > materials', () => {
   })
 
   it('test /v2/materials', async () => {
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/materials')
 
     reqMock.addResponse([1, 2, 3])

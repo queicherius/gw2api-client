@@ -16,7 +16,11 @@ describe('endpoints > wvw', () => {
     endpoint = endpoint.matches()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/wvw/matches')
 
     reqMock.addResponse({id: '2-6', scores: {red: 123, blue: 456, green: 789}})
@@ -28,8 +32,11 @@ describe('endpoints > wvw', () => {
     endpoint = endpoint.objectives()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/wvw/objectives')
 
     reqMock.addResponse([{id: '968-98', name: 'Wurm Tunnel'}])

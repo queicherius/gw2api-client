@@ -92,6 +92,10 @@ class Client {
     return new (require('./endpoints/recipes.js'))(this)
   }
 
+  skills () {
+    return new (require('./endpoints/skills.js'))(this)
+  }
+
   skins () {
     return new (require('./endpoints/skins.js'))(this)
   }

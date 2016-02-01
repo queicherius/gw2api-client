@@ -13,8 +13,11 @@ describe('endpoints > achievements', () => {
   })
 
   it('test /v2/achievements', async () => {
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(false)
     expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/achievements')
 
     reqMock.addResponse({id: 1, name: 'Centaur Slayer'})
@@ -26,8 +29,11 @@ describe('endpoints > achievements', () => {
     endpoint = endpoint.categories()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/achievements/categories')
 
     reqMock.addResponse({id: 50, name: 'Twilight Assault', order: 0, achievements: [947]})
@@ -39,8 +45,11 @@ describe('endpoints > achievements', () => {
     endpoint = endpoint.groups()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/achievements/groups')
 
     reqMock.addResponse({id: '65B4B678-607E-4D97-B458-076C3E96A810', name: 'Heart of Thorns'})
@@ -51,6 +60,11 @@ describe('endpoints > achievements', () => {
   it('test /v2/achievements/daily', async () => {
     endpoint = endpoint.daily()
     endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
 
     expect(endpoint.url).to.equal('/v2/achievements/daily')
 

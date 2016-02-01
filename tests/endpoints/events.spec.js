@@ -26,6 +26,10 @@ describe('endpoints > events', () => {
   })
 
   it('test /v1/event_details.json (all)', async () => {
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v1/event_details.json')
 
     reqMock.addResponse({events: {
@@ -38,6 +42,10 @@ describe('endpoints > events', () => {
   })
 
   it('test /v1/event_details.json (get)', async () => {
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v1/event_details.json')
 
     reqMock.addResponse({events: {

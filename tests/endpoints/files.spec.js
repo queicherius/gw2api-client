@@ -13,7 +13,11 @@ describe('endpoints > files', () => {
   })
 
   it('test /v2/files', async () => {
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/files')
 
     reqMock.addResponse(['map_complete', 'map_dungeon', 'map_heart_empty'])

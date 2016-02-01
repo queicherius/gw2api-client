@@ -13,6 +13,9 @@ describe('endpoints > account', () => {
   })
 
   it('test /v2/account', async () => {
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account')
 
@@ -25,6 +28,9 @@ describe('endpoints > account', () => {
     endpoint = endpoint.achievements()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/achievements')
 
@@ -37,6 +43,9 @@ describe('endpoints > account', () => {
     endpoint = endpoint.bank()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/bank')
 
@@ -54,6 +63,9 @@ describe('endpoints > account', () => {
     endpoint = endpoint.dyes()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/dyes')
 
@@ -66,6 +78,9 @@ describe('endpoints > account', () => {
     endpoint = endpoint.materials()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/materials')
 
@@ -78,6 +93,9 @@ describe('endpoints > account', () => {
     endpoint = endpoint.minis()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/minis')
 
@@ -95,6 +113,9 @@ describe('endpoints > account', () => {
     endpoint = endpoint.skins()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/skins')
 
@@ -112,6 +133,9 @@ describe('endpoints > account', () => {
     endpoint = endpoint.wallet()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/wallet')
 

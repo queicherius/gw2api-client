@@ -2,9 +2,9 @@
 const expect = require('chai').expect
 const reqMock = require('../mocks/requester.mock.js')
 
-const module = require('../../src/endpoints/traits.js')
+const module = require('../../src/endpoints/skills.js')
 
-describe('endpoints > traits', () => {
+describe('endpoints > skills', () => {
   let endpoint
   beforeEach(() => {
     endpoint = new module(false)
@@ -12,13 +12,13 @@ describe('endpoints > traits', () => {
     endpoint.requester = reqMock
   })
 
-  it('test /v2/traits', async () => {
+  it('test /v2/skills', async () => {
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.url).to.equal('/v2/traits')
+    expect(endpoint.url).to.equal('/v2/skills')
 
     reqMock.addResponse([1, 2, 3])
     let content = await endpoint.ids()

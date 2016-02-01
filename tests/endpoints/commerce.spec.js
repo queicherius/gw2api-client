@@ -16,6 +16,10 @@ describe('endpoints > commerce', () => {
     endpoint = endpoint.exchange()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/commerce/exchange')
 
     reqMock.addResponse({coins_per_gem: 2000, quantity: 5})
@@ -27,6 +31,10 @@ describe('endpoints > commerce', () => {
     endpoint = endpoint.exchange()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/commerce/exchange')
 
     reqMock.addResponse({coins_per_gem: 1269, quantity: 12345})
@@ -38,7 +46,11 @@ describe('endpoints > commerce', () => {
     endpoint = endpoint.listings()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/commerce/listings')
 
     reqMock.addResponse({id: 12, buys: [{listings: 1, unit_price: 123, quantity: 123}]})
@@ -50,7 +62,11 @@ describe('endpoints > commerce', () => {
     endpoint = endpoint.prices()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/commerce/prices')
 
     reqMock.addResponse({id: 12, buys: {quantity: 12345, unit_price: 123}})
@@ -63,6 +79,8 @@ describe('endpoints > commerce', () => {
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/commerce/transactions/current/buys')
 
@@ -76,6 +94,8 @@ describe('endpoints > commerce', () => {
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/commerce/transactions/current/sells')
 
@@ -89,6 +109,8 @@ describe('endpoints > commerce', () => {
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/commerce/transactions/history/buys')
 
@@ -102,6 +124,8 @@ describe('endpoints > commerce', () => {
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/commerce/transactions/history/sells')
 

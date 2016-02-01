@@ -16,7 +16,10 @@ describe('endpoints > pvp', () => {
     endpoint = endpoint.games()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/pvp/games')
 
@@ -29,6 +32,9 @@ describe('endpoints > pvp', () => {
     endpoint = endpoint.stats()
     endpoint.requester = reqMock
 
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/pvp/stats')
 

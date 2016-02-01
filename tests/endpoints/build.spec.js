@@ -15,9 +15,13 @@ describe('endpoints > build', () => {
   it('test /v2/build', async () => {
     reqMock.addResponse({'id': 1337})
 
-    let id = await endpoint.get()
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.url).to.equal('/v2/build')
 
-    expect(reqMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/build')
+    let id = await endpoint.get()
     expect(id).to.equal(1337)
   })
 })

@@ -4,6 +4,7 @@ class RecipesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/recipes'
+    this.isPaginated = true
     this.isBulk = true
     this.supportsBulkAll = false
   }

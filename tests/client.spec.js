@@ -115,6 +115,11 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/recipes')
   })
 
+  it('can get the skills endpoint', () => {
+    let endpoint = client.skills()
+    expect(endpoint.url).to.equal('/v2/skills')
+  })
+
   it('can get the skins endpoint', () => {
     let endpoint = client.skins()
     expect(endpoint.url).to.equal('/v2/skins')

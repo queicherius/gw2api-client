@@ -25,12 +25,10 @@ class AccountEndpoint extends AbstractEndpoint {
 
   materials () {
     return new MaterialsEndpoint(this.client)
-
   }
 
   minis () {
     return new MinisEndpoint(this.client)
-
   }
 
   pvp () {

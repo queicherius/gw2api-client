@@ -3,18 +3,18 @@ const expect = require('chai').expect
 const reqMock = require('../mocks/requester.mock.js')
 const rewire = require('rewire')
 
-const module = rewire('../../src/endpoints/events.js')
+const Module = rewire('../../src/endpoints/events.js')
 
 describe('endpoints > events', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new module(false)
+    endpoint = new Module(false)
     reqMock.reset()
     endpoint.requester = reqMock
   })
 
   it('transforms the v1 format into v2', () => {
-    let transformer = module.__get__('transformV1Format')
+    let transformer = Module.__get__('transformV1Format')
     let content = transformer({events: {
       'uuid-one': {name: 'Defeat elite'},
       'uuid-two': {name: 'Defeat champion'}

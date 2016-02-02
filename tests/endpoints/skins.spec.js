@@ -2,12 +2,12 @@
 const expect = require('chai').expect
 const reqMock = require('../mocks/requester.mock.js')
 
-const module = require('../../src/endpoints/skins.js')
+const Module = require('../../src/endpoints/skins.js')
 
 describe('endpoints > skins', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new module(false)
+    endpoint = new Module(false)
     reqMock.reset()
     endpoint.requester = reqMock
   })

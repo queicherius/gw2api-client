@@ -2,12 +2,12 @@
 const expect = require('chai').expect
 const reqMock = require('../mocks/requester.mock.js')
 
-const module = require('../../src/endpoints/guild.js')
+const Module = require('../../src/endpoints/guild.js')
 
 describe('endpoints > guild', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new module(false)
+    endpoint = new Module(false)
     reqMock.reset()
     endpoint.requester = reqMock
   })
@@ -60,7 +60,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild/test-uuid/stash')
 
-    reqMock.addResponse([{upgrade_id: 58, size: 50, coins: 1337, inventory: [{id: 19684, count: 29}]}]);
+    reqMock.addResponse([{upgrade_id: 58, size: 50, coins: 1337, inventory: [{id: 19684, count: 29}]}])
     let content = await endpoint.get()
     expect(content[0].coins).to.equal(1337)
   })

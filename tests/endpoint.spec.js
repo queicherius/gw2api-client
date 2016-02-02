@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
 const reqMock = require('./mocks/requester.mock.js')
-const module = require('../src/endpoint.js')
+const Module = require('../src/endpoint.js')
 
 const mockClient = {
   lang: false,
@@ -28,7 +28,7 @@ async function expectError (callback) {
 describe('abstract endpoint', () => {
   var endpoint
   beforeEach(() => {
-    endpoint = new (module)(mockClient)
+    endpoint = new Module(mockClient)
     reqMock.reset()
     endpoint.requester = reqMock
   })
@@ -220,7 +220,7 @@ describe('abstract endpoint', () => {
     it('sets the language on the client', () => {
       let x = endpoint.language('de')
       expect(mockClient.lang).to.equal('de')
-      expect(x).to.be.an.instanceof(module)
+      expect(x).to.be.an.instanceof(Module)
     })
 
     it('sets the language header for localized endpoints', () => {
@@ -239,7 +239,7 @@ describe('abstract endpoint', () => {
     it('sets the api key on the client', () => {
       let x = endpoint.authenticate('key')
       expect(mockClient.apiKey).to.equal('key')
-      expect(x).to.be.an.instanceof(module)
+      expect(x).to.be.an.instanceof(Module)
     })
 
     it('sets the authorization header for authenticated endpoints', () => {

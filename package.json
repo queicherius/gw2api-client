@@ -4,7 +4,7 @@
   "description": "A javascript wrapper around the official Guild Wars 2 API",
   "main": "src/client.js",
   "scripts": {
-    "test": "./node_modules/babel-cli/bin/babel-node.js ./node_modules/.bin/isparta cover --include-all-sources ./node_modules/.bin/_mocha -- tests/ --recursive"
+    "test": "./node_modules/babel-cli/bin/babel-node.js ./node_modules/.bin/isparta cover --include-all-sources ./node_modules/.bin/_mocha -- tests/ --recursive && node node_modules/snazzy/bin/cmd.js"
   },
   "author": "queicherius@gmail.com",
   "license": "MIT",

@@ -2,12 +2,12 @@
 const expect = require('chai').expect
 const reqMock = require('../mocks/requester.mock.js')
 
-const module = require('../../src/endpoints/tokeninfo.js')
+const Module = require('../../src/endpoints/tokeninfo.js')
 
 describe('endpoints > tokeninfo', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new module(false)
+    endpoint = new Module(false)
     reqMock.reset()
     endpoint.requester = reqMock
   })
@@ -19,7 +19,7 @@ describe('endpoints > tokeninfo', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/tokeninfo')
 
-    reqMock.addResponse({id: "uuid", name: "public key", permissions: ["account"]})
+    reqMock.addResponse({id: 'uuid', name: 'public key', permissions: ['account']})
     let content = await endpoint.get()
     expect(content.name).to.equal('public key')
   })

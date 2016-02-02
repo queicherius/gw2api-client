@@ -60,9 +60,9 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild/test-uuid/stash')
 
-    reqMock.addResponse([{todo: 'test'}])
+    reqMock.addResponse([{upgrade_id: 58, size: 50, coins: 1337, inventory: [{id: 19684, count: 29}]}]);
     let content = await endpoint.get()
-    expect(content[0].todo).to.equal('test')
+    expect(content[0].coins).to.equal(1337)
   })
 
   it('test /v2/guild/:id/treasury', async () => {
@@ -75,9 +75,9 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild/test-uuid/treasury')
 
-    reqMock.addResponse([{todo: 'test'}])
+    reqMock.addResponse([{id: 1337, count: 250}])
     let content = await endpoint.get()
-    expect(content[0].todo).to.equal('test')
+    expect(content[0].id).to.equal(1337)
   })
 
   it('test /v2/guild/:id/ranks', async () => {

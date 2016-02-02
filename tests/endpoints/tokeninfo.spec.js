@@ -19,14 +19,7 @@ describe('endpoints > tokeninfo', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/tokeninfo')
 
-    reqMock.addResponse({
-      id: "017A2B0C-A6C5-CC4D-A055-680F427CE8FD",
-      name: "public key",
-      permissions: [
-        "account",
-        "characters"
-      ]
-    })
+    reqMock.addResponse({id: "uuid", name: "public key", permissions: ["account"]})
     let content = await endpoint.get()
     expect(content.name).to.equal('public key')
   })

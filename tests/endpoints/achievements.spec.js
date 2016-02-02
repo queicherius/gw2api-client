@@ -36,9 +36,9 @@ describe('endpoints > achievements', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/achievements/categories')
 
-    reqMock.addResponse({id: 50, name: 'Twilight Assault', order: 0, achievements: [947]})
-    let content = await endpoint.get(50)
-    expect(content.name).to.equal('Twilight Assault')
+    reqMock.addResponse({id: 1, name: 'Slayer', order: 30, achievements: [1, 4, 5]})
+    let content = await endpoint.get(1)
+    expect(content.name).to.equal('Slayer')
   })
 
   it('test /v2/achievements/groups', async () => {

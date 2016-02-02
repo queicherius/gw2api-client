@@ -19,7 +19,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account')
 
-    reqMock.addResponse({id: 'guid', name: 'Account.1234', world: 1007})
+    reqMock.addResponse({id: 'unique-identifier', name: 'Account.1234', world: 1007})
     let content = await endpoint.get()
     expect(content.name).to.equal('Account.1234')
   })
@@ -34,9 +34,9 @@ describe('endpoints > account', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/achievements')
 
-    reqMock.addResponse([{id: 1, current: 1, max: 1000, done: false}])
+    reqMock.addResponse([{id: 1, current: 487, max: 1000, done: false}])
     let content = await endpoint.get()
-    expect(content[0].max).to.equal(1000)
+    expect(content[0].current).to.equal(487)
   })
 
   it('test /v2/account/bank', async () => {
@@ -49,7 +49,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/bank')
 
-    reqMock.addResponse([null, null, {id: 123, slot: 1, count: 1}])
+    reqMock.addResponse([null, null, {id: 123, count: 1}])
     let content = await endpoint.get()
     expect(content[2].id).to.equal(123)
   })
@@ -69,9 +69,9 @@ describe('endpoints > account', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/dyes')
 
-    reqMock.addResponse([1, 2, 3])
+    reqMock.addResponse([2, 3, 4])
     let content = await endpoint.get()
-    expect(content).to.deep.equal([1, 2, 3])
+    expect(content).to.deep.equal([2, 3, 4])
   })
 
   it('test /v2/account/materials', async () => {
@@ -84,9 +84,9 @@ describe('endpoints > account', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/materials')
 
-    reqMock.addResponse([{id: 123, category: 5, count: 250}])
+    reqMock.addResponse([{id: 12134, category: 5, count: 2}])
     let content = await endpoint.get()
-    expect(content[0].id).to.equal(123)
+    expect(content[0].id).to.equal(12134)
   })
 
   it('test /v2/account/minis', async () => {
@@ -99,9 +99,9 @@ describe('endpoints > account', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/minis')
 
-    reqMock.addResponse([1, 2, 3])
+    reqMock.addResponse([2, 3, 4, 5])
     let content = await endpoint.get()
-    expect(content).to.deep.equal([1, 2, 3])
+    expect(content).to.deep.equal([2, 3, 4, 5])
   })
 
   it('test /v2/account/pvp', async () => {
@@ -139,8 +139,8 @@ describe('endpoints > account', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/account/wallet')
 
-    reqMock.addResponse([{id: 1, value: 1337}, {id: 2, value: 9001}])
+    reqMock.addResponse([{id: 1, value: 48043252}, {id: 2, value: 1956351}])
     let content = await endpoint.get()
-    expect(content[0].value).to.equal(1337)
+    expect(content[0].value).to.equal(48043252)
   })
 })

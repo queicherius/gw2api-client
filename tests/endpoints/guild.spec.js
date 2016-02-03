@@ -1,6 +1,6 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('../mocks/requester.mock.js')
+const reqMock = require('requester/mock')
 
 const Module = require('../../src/endpoints/guild.js')
 

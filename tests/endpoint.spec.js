@@ -1,6 +1,6 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('./mocks/requester.mock.js')
+const reqMock = require('requester/mock')
 const Module = require('../src/endpoint.js')
 
 const mockClient = {
@@ -277,7 +277,7 @@ describe('abstract endpoint', () => {
       reqMock.addResponse({foo: 'bar'})
 
       let entry = await endpoint.request('/v2/test')
-      expect(reqMock.lastOptions().headers['Accept-Language']).to.equal('en')
+      expect(reqMock.lastOption().headers['Accept-Language']).to.equal('en')
       expect(entry).to.deep.equal({foo: 'bar'})
     })
 
@@ -301,7 +301,7 @@ describe('abstract endpoint', () => {
       reqMock.addResponse({foo: 'bar'})
 
       let entry = await endpoint.requestMany(['/v2/test'])
-      expect(reqMock.lastOptions().headers['Accept-Language']).to.equal('en')
+      expect(reqMock.lastOption().headers['Accept-Language']).to.equal('en')
       expect(entry).to.deep.equal([{foo: 'bar'}])
     })
   })

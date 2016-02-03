@@ -39,7 +39,7 @@ async function example () {
   api.authenticate('my-secret-key')
   
   // Get the ids of all items
-  let items = api.items().ids()
+  let items = await api.items().ids()
   
 }
 ```

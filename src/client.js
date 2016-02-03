@@ -1,3 +1,5 @@
+require('babel-polyfill')
+
 class Client {
   constructor () {
     this.lang = 'en'

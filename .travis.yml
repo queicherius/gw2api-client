@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - "5"
-after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+after_script: "./node_modules/.bin/codecov"
 branches:
   only:
     - master

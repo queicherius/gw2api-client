@@ -1,7 +1,7 @@
 # gw2api-client
 
-[![Travis](https://img.shields.io/travis/gw2efficiency/gw2api-client.svg?style=flat-square)](https://travis-ci.org/gw2efficiency/gw2api-client)
-[![Coveralls](https://img.shields.io/coveralls/gw2efficiency/gw2api-client/master.svg?style=flat-square)](https://coveralls.io/github/gw2efficiency/gw2api-client?branch=master)
+[![Build Status](https://img.shields.io/travis/gw2efficiency/gw2api-client.svg?style=flat-square)](https://travis-ci.org/gw2efficiency/gw2api-client)
+[![Coverage Status](https://img.shields.io/codecov/c/github/gw2efficiency/gw2api-client/master.svg?style=flat-square)](https://codecov.io/github/gw2efficiency/gw2api-client)
 
 > A javascript wrapper for the official Guild Wars 2 API.
 

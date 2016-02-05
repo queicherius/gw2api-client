@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/travis/gw2efficiency/gw2api-client.svg?style=flat-square)](https://travis-ci.org/gw2efficiency/gw2api-client)
 [![Coverage Status](https://img.shields.io/codecov/c/github/gw2efficiency/gw2api-client/master.svg?style=flat-square)](https://codecov.io/github/gw2efficiency/gw2api-client)
 
-> A javascript wrapper for the official Guild Wars 2 API.
+> Javascript wrapper for the official Guild Wars 2 API.
 
 **:bomb: NOTE: This module is still heavily in development and the API might change completely. Please don't use it yet.**
 

@@ -3,7 +3,7 @@ const {chunk, unique, flatten} = require('./helpers.js')
 class AbstractEndpoint {
   constructor (client) {
     this.client = client
-    this.requester = require('requester')
+    this.requester = client.requester
     this.baseUrl = 'https://api.guildwars2.com'
     this.isPaginated = false
     this.maxPageSize = 200

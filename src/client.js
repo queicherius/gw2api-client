@@ -1,9 +1,11 @@
 require('babel-polyfill')
+const requester = require('requester')
 
 class Client {
   constructor () {
     this.lang = 'en'
     this.apiKey = false
+    this.requester = requester
   }
 
   // Set the language for locale-aware endpoints

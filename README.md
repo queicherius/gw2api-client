@@ -71,6 +71,25 @@ it responds with a error, the following error texts can appear:
 - no such id
 - all ids provided are invalid
 
+## Mocking
+
+If you want to mock this module in your tests, you can replace the underlying 
+request library with the provided mock module, e.g. using [rewire](https://github.com/jhnns/rewire).
+
+You can find all available mock methods here: https://github.com/gw2efficiency/requester#mocking
+
+```js
+const rewire = require('rewire')
+const requesterMock = require('requester/mock')
+const file = rewire('../some/file/using/gw2api/client.js')
+
+// Get the variable "api" (which is the initialized api client)
+// and replace the requester method with the requesterMock
+file.__get__('api').requester = requesterMock
+
+// Use the requester mock methods as described in the link above
+```
+
 ## Tests
 
 ```

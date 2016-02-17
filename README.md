@@ -28,9 +28,11 @@ don't be shocked at the dependency tree. :wink:)
 ```js
 async function example () {
 
-  // Get a new client object
-  const Client = require('gw2api-client')
-  const api = new Client()
+  // Get the constructor of a client
+  const client = require('gw2api-client')
+  
+  // Actually generate a API client
+  let api = client()
   
   // Optional: Set the language of the client
   api.language('en')
@@ -40,6 +42,14 @@ async function example () {
   
   // Get the ids of all items
   let items = await api.items().ids()
+  
+  // Note: If you want to request e.g. multiple items with different languages
+  // or API keys in *parallel*, you have to use *different* client instances
+  // for that, since language and key are connected to the client instance
+  async.parallel([
+    () => client().language('en').items().all(),
+    () => client().language('de').items().all()
+  ])
   
 }
 ```

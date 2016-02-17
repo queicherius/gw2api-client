@@ -1,4 +1,3 @@
-require('babel-polyfill')
 const requester = require('requester')
 
 class Client {

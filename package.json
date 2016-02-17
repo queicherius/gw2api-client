@@ -2,7 +2,7 @@
   "name": "gw2api-client",
   "version": "1.0.0",
   "description": "A javascript wrapper around the official Guild Wars 2 API",
-  "main": "./build/client.js",
+  "main": "./build/index.js",
   "scripts": {
     "postinstall": "./node_modules/.bin/babel src/ -d build/",
     "test": "./node_modules/babel-cli/bin/babel-node.js ./node_modules/.bin/isparta cover --include-all-sources ./node_modules/.bin/_mocha -- tests/ --recursive && node node_modules/snazzy/bin/cmd.js"

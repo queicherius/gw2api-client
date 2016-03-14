@@ -55,7 +55,7 @@ You can wrap every call in a `try...catch` statement, catching all possible erro
 
 ```js
 try {
-  let bank = api.account().bank()
+  let bank = await api.account().bank()
 } catch (err) {
   console.log('Something went wrong. :(', err)
   // err.response is the last response object (e.g. err.response.status)

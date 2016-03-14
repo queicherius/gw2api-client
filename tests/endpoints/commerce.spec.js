@@ -1,6 +1,6 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('requester/mock')
+const reqMock = require('gw2e-requester/mock')
 
 const Module = require('../../src/endpoints/commerce.js')
 

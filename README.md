@@ -5,19 +5,14 @@
 
 > Javascript wrapper for the official Guild Wars 2 API.
 
-**:bomb: NOTE: This module is still heavily in development and the API might change completely. Please don't use it yet.**
-
 ## Install
 
 ```
-npm install https://github.com/gw2efficiency/gw2api-client
+npm install gw2e-gw2api-client
 ```
 
-This module can be used for Node.js as well as browsers using [Browserify](https://github.com/substack/browserify-handbook#how-node_modules-works).
-
-(Note: Babel gets pulled in as a dependency, because the module is written in ES7 and 
-gets compiled into ES5 during the installation. The Babel code is **not** included in the module, 
-don't be shocked at the dependency tree. :wink:)
+This module can be used for Node.js as well as browsers using [Browserify](https://github.com/substack/browserify-handbook#how-node_modules-works). 
+Requires the [babel-polyfill](https://babeljs.io/docs/usage/polyfill/) to work.
 
 ## Usage
 
@@ -29,7 +24,7 @@ don't be shocked at the dependency tree. :wink:)
 async function example () {
 
   // Get the constructor of a client
-  const client = require('gw2api-client')
+  const client = require('gw2e-gw2api-client')
   
   // Actually generate a API client
   let api = client()
@@ -90,7 +85,7 @@ You can find all available mock methods here: https://github.com/gw2efficiency/r
 
 ```js
 const rewire = require('rewire')
-const requesterMock = require('requester/mock')
+const requesterMock = require('gw2e-requester/mock')
 const file = rewire('../some/file/using/gw2api/client.js')
 
 // Get the variable "api" (which is the initialized api client)

@@ -1,4 +1,4 @@
-const requester = require('requester')
+const requester = require('gw2e-requester')
 
 class Client {
   constructor () {

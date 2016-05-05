@@ -5,6 +5,8 @@
 
 > Javascript wrapper for the official Guild Wars 2 API.
 
+*This is part of [gw2efficiency](https://gw2efficiency.com). Please report all issues in [the central repository](https://github.com/gw2efficiency/issues/issues).*
+
 ## Install
 
 ```

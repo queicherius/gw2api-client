@@ -1,3 +1,4 @@
+const parseUrl = require('url-parse')
 const {chunk, unique, flatten} = require('./helpers.js')
 
 class AbstractEndpoint {
@@ -111,28 +112,40 @@ class AbstractEndpoint {
 
   // Executes a single request
   async request (url, type = 'json') {
-    return await this.requester.single(this.baseUrl + url, {headers: this.buildHeaders(), type})
+    return await this.requester.single(this.buildUrl(url), {type})
   }
 
   // Executes multiple requests in parallel
   async requestMany (urls, type = 'json') {
-    urls = urls.map(url => this.baseUrl + url)
-    return await this.requester.many(urls, {headers: this.buildHeaders(), type})
+    urls = urls.map(url => this.buildUrl(url))
+    return await this.requester.many(urls, {type})
   }
 
   // Builds the headers for localization and authentication
-  buildHeaders () {
-    let headers = {}
+  buildUrl (url) {
+    // Add the base url
+    url = this.baseUrl + url
+
+    // Parse a possibly existing query
+    let parsedUrl = parseUrl(url, true)
+    let query = parsedUrl.query
 
     if (this.isAuthenticated) {
-      headers['Authorization'] = 'Bearer ' + this.client.apiKey
+      query['access_token'] = this.client.apiKey
     }
 
     if (this.isLocalized) {
-      headers['Accept-Language'] = this.client.lang
+      query['lang'] = this.client.lang
     }
 
-    return headers
+    // Build the new url
+    parsedUrl.set('query', query)
+    let string = parsedUrl.toString()
+
+    // Clean up the mess by the query parser, and unencode ','
+    string = string.replace(/%2C/g, ',')
+
+    return string
   }
 }
 

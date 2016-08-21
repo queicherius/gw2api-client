@@ -12,27 +12,17 @@ describe('endpoints > guild', () => {
     endpoint.requester = reqMock
   })
 
-  it('test /v1/guild_details.json', async () => {
-    expect(endpoint.url).to.equal('/v1/guild_details.json')
+  it('test /v2/guild', async () => {
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.isOptionallyAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/guild')
 
-    reqMock.addResponse({guild_id: 'guid', guild_name: 'Baws Like'})
+    reqMock.addResponse({id: 'guid', name: 'Baws Like', tag: 'BAWS'})
     let content = await endpoint.get()
-    expect(content.guild_name).to.equal('Baws Like')
-  })
-
-  it('test /v2/guild/upgrades', async () => {
-    endpoint = endpoint.upgrades()
-    endpoint.requester = reqMock
-
-    expect(endpoint.isPaginated).to.equal(true)
-    expect(endpoint.isBulk).to.equal(true)
-    expect(endpoint.isLocalized).to.equal(true)
-    expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.url).to.equal('/v2/guild/upgrades')
-
-    reqMock.addResponse([1, 2, 3])
-    let content = await endpoint.ids()
-    expect(content).to.deep.equal([1, 2, 3])
+    expect(content.name).to.equal('Baws Like')
   })
 
   it('test /v2/guild/permissions', async () => {
@@ -50,34 +40,64 @@ describe('endpoints > guild', () => {
     expect(content).to.deep.equal(['ClaimableEditOptions', 'EditBGM'])
   })
 
-  it('test /v2/guild/:id/stash', async () => {
-    endpoint = endpoint.stash('test-uuid')
+  it('test /v2/guild/search', async () => {
+    endpoint = endpoint.search('Baws Like')
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
-    expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/guild/test-uuid/stash')
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.url).to.equal('/v2/guild/search?name=Baws%20Like')
 
-    reqMock.addResponse([{upgrade_id: 58, size: 50, coins: 1337, inventory: [{id: 19684, count: 29}]}])
+    reqMock.addResponse(['F8CDF1E0-2D64-4D71-81E2-049B0796B7AE'])
     let content = await endpoint.get()
-    expect(content[0].coins).to.equal(1337)
+    expect(content).to.equal('F8CDF1E0-2D64-4D71-81E2-049B0796B7AE')
   })
 
-  it('test /v2/guild/:id/treasury', async () => {
-    endpoint = endpoint.treasury('test-uuid')
+  it('test /v2/guild/upgrades', async () => {
+    endpoint = endpoint.upgrades()
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.url).to.equal('/v2/guild/upgrades')
+
+    reqMock.addResponse([1, 2, 3])
+    let content = await endpoint.ids()
+    expect(content).to.deep.equal([1, 2, 3])
+  })
+
+  it('test /v2/guild/:id/log', async () => {
+    endpoint = endpoint.log('test-uuid')
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/guild/test-uuid/treasury')
+    expect(endpoint.url).to.equal('/v2/guild/test-uuid/log')
 
-    reqMock.addResponse([{id: 1337, count: 250}])
+    reqMock.addResponse([{id: 123, user: 'Account.1234', type: 'upgrade'}])
     let content = await endpoint.get()
-    expect(content[0].id).to.equal(1337)
+    expect(content[0].user).to.equal('Account.1234')
+  })
+
+  it('test /v2/guild/:id/members', async () => {
+    endpoint = endpoint.members('test-uuid')
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/guild/test-uuid/members')
+
+    reqMock.addResponse([{name: 'Account.1234', rank: 'Leader'}])
+    let content = await endpoint.get()
+    expect(content[0].name).to.equal('Account.1234')
   })
 
   it('test /v2/guild/:id/ranks', async () => {
@@ -95,18 +115,63 @@ describe('endpoints > guild', () => {
     expect(content[0].id).to.equal('Officer')
   })
 
-  it('test /v2/guild/:id/members', async () => {
-    endpoint = endpoint.members('test-uuid')
+  it('test /v2/guild/:id/stash', async () => {
+    endpoint = endpoint.stash('test-uuid')
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/guild/test-uuid/members')
+    expect(endpoint.url).to.equal('/v2/guild/test-uuid/stash')
 
-    reqMock.addResponse([{name: 'Account.1234', rank: 'Leader'}])
+    reqMock.addResponse([{upgrade_id: 58, size: 50, coins: 1337, inventory: [{id: 19684, count: 29}]}])
     let content = await endpoint.get()
-    expect(content[0].name).to.equal('Account.1234')
+    expect(content[0].coins).to.equal(1337)
+  })
+
+  it('test /v2/guild/:id/teams', async () => {
+    endpoint = endpoint.teams('test-uuid')
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/guild/test-uuid/teams')
+
+    reqMock.addResponse([{id: 1, name: 'Gimme That Guild Hall Pls'}])
+    let content = await endpoint.get()
+    expect(content[0].name).to.equal('Gimme That Guild Hall Pls')
+  })
+
+  it('test /v2/guild/:id/treasury', async () => {
+    endpoint = endpoint.treasury('test-uuid')
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/guild/test-uuid/treasury')
+
+    reqMock.addResponse([{id: 1337, count: 250}])
+    let content = await endpoint.get()
+    expect(content[0].id).to.equal(1337)
+  })
+
+  it('test /v2/guild/:id/upgrades', async () => {
+    endpoint = endpoint.upgrades('test-uuid')
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/guild/test-uuid/upgrades')
+
+    reqMock.addResponse([1, 2, 3])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([1, 2, 3])
   })
 })

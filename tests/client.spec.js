@@ -30,6 +30,11 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/achievements')
   })
 
+  it('can get the backstory endpoint', () => {
+    let endpoint = client.backstory()
+    expect(endpoint.answers).to.exist
+  })
+
   it('can get the build endpoint', () => {
     let endpoint = client.build()
     expect(endpoint.url).to.equal('/v2/build')
@@ -75,9 +80,14 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/files')
   })
 
+  it('can get the finishers endpoint', () => {
+    let endpoint = client.finishers()
+    expect(endpoint.url).to.equal('/v2/finishers')
+  })
+
   it('can get the guild endpoint', () => {
     let endpoint = client.guild()
-    expect(endpoint.url).to.equal('/v1/guild_details.json')
+    expect(endpoint.url).to.equal('/v2/guild')
   })
 
   it('can get the items endpoint', () => {
@@ -85,9 +95,24 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/items')
   })
 
+  it('can get the itemstats endpoint', () => {
+    let endpoint = client.itemstats()
+    expect(endpoint.url).to.equal('/v2/itemstats')
+  })
+
+  it('can get the legends endpoint', () => {
+    let endpoint = client.legends()
+    expect(endpoint.url).to.equal('/v2/legends')
+  })
+
   it('can get the maps endpoint', () => {
     let endpoint = client.maps()
     expect(endpoint.url).to.equal('/v2/maps')
+  })
+
+  it('can get the masteries endpoint', () => {
+    let endpoint = client.masteries()
+    expect(endpoint.url).to.equal('/v2/masteries')
   })
 
   it('can get the materials endpoint', () => {
@@ -98,6 +123,16 @@ describe('client', () => {
   it('can get the minis endpoint', () => {
     let endpoint = client.minis()
     expect(endpoint.url).to.equal('/v2/minis')
+  })
+
+  it('can get the pets endpoint', () => {
+    let endpoint = client.pets()
+    expect(endpoint.url).to.equal('/v2/pets')
+  })
+
+  it('can get the professions endpoint', () => {
+    let endpoint = client.professions()
+    expect(endpoint.url).to.equal('/v2/professions')
   })
 
   it('can get the pvp endpoint', () => {
@@ -128,6 +163,16 @@ describe('client', () => {
   it('can get the specializations endpoint', () => {
     let endpoint = client.specializations()
     expect(endpoint.url).to.equal('/v2/specializations')
+  })
+
+  it('can get the stories endpoint', () => {
+    let endpoint = client.stories()
+    expect(endpoint.url).to.equal('/v2/stories')
+  })
+
+  it('can get the titles endpoint', () => {
+    let endpoint = client.titles()
+    expect(endpoint.url).to.equal('/v2/titles')
   })
 
   it('can get the tokeninfo endpoint', () => {

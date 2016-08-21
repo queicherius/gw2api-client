@@ -25,6 +25,51 @@ describe('endpoints > characters', () => {
     expect(content).to.deep.equal(['Character Name'])
   })
 
+  it('test /v2/characters/:id/backstory', async () => {
+    endpoint = endpoint.backstory('Nâme')
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/backstory')
+
+    reqMock.addResponse({backstory: [1, 2, 3]})
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([1, 2, 3])
+  })
+
+  it('test /v2/characters/:id/core', async () => {
+    endpoint = endpoint.core('Nâme')
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/core')
+
+    reqMock.addResponse({name: 'Nâme', race: 'Asura'})
+    let content = await endpoint.get()
+    expect(content).to.deep.equal({name: 'Nâme', race: 'Asura'})
+  })
+
+  it('test /v2/characters/:id/crafting', async () => {
+    endpoint = endpoint.crafting('Nâme')
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/crafting')
+
+    reqMock.addResponse({crafting: [{discipline: 'Artificer', rating: 50}]})
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([{discipline: 'Artificer', rating: 50}])
+  })
+
   it('test /v2/characters/:id/equipment', async () => {
     endpoint = endpoint.equipment('Nâme')
     endpoint.requester = reqMock
@@ -38,6 +83,21 @@ describe('endpoints > characters', () => {
     reqMock.addResponse({equipment: [{id: 123, slot: 'Coat'}]})
     let content = await endpoint.get()
     expect(content[0].id).to.equal(123)
+  })
+
+  it('test /v2/characters/:id/heropoints', async () => {
+    endpoint = endpoint.heropoints('Nâme')
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/heropoints')
+
+    reqMock.addResponse(['0-0', '0-2'])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal(['0-0', '0-2'])
   })
 
   it('test /v2/characters/:id/inventory', async () => {
@@ -83,5 +143,20 @@ describe('endpoints > characters', () => {
     reqMock.addResponse({specializations: {pve: [{id: 41, traits: [1, 2, 3]}]}})
     let content = await endpoint.get()
     expect(content.pve[0].id).to.equal(41)
+  })
+
+  it('test /v2/characters/:id/training', async () => {
+    endpoint = endpoint.training('Nâme')
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/training')
+
+    reqMock.addResponse({training: [{id: 60, spent: 20, done: true}]})
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([{id: 60, spent: 20, done: true}])
   })
 })

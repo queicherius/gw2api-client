@@ -74,6 +74,57 @@ describe('endpoints > account', () => {
     expect(content).to.deep.equal([2, 3, 4])
   })
 
+  it('test /v2/account/finishers', async () => {
+    endpoint = endpoint.finishers()
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/account/finishers')
+
+    reqMock.addResponse([2, 3, 4])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([2, 3, 4])
+  })
+
+  it('test /v2/account/inventory', async () => {
+    endpoint = endpoint.inventory()
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/account/inventory')
+
+    reqMock.addResponse([
+      {id: 49308, count: 1, binding: 'Account'},
+      {id: 48931, count: 1, binding: 'Account'}
+    ])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([
+      {id: 49308, count: 1, binding: 'Account'},
+      {id: 48931, count: 1, binding: 'Account'}
+    ])
+  })
+
+  it('test /v2/account/masteries', async () => {
+    endpoint = endpoint.masteries()
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/account/masteries')
+
+    reqMock.addResponse([{id: 1, level: 4}, {id: 2, level: 5}])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([{id: 1, level: 4}, {id: 2, level: 5}])
+  })
+
   it('test /v2/account/materials', async () => {
     endpoint = endpoint.materials()
     endpoint.requester = reqMock
@@ -104,9 +155,39 @@ describe('endpoints > account', () => {
     expect(content).to.deep.equal([2, 3, 4, 5])
   })
 
+  it('test /v2/account/outfits', async () => {
+    endpoint = endpoint.outfits()
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/account/outfits')
+
+    reqMock.addResponse([2, 3, 4, 5])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([2, 3, 4, 5])
+  })
+
   it('test /v2/account/pvp', async () => {
     endpoint = endpoint.pvp()
     expect(endpoint.games).to.exist
+  })
+
+  it('test /v2/account/recipes', async () => {
+    endpoint = endpoint.recipes()
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/account/recipes')
+
+    reqMock.addResponse([2, 3, 4, 5])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([2, 3, 4, 5])
   })
 
   it('test /v2/account/skins', async () => {
@@ -122,6 +203,21 @@ describe('endpoints > account', () => {
     reqMock.addResponse([1, 2, 3])
     let content = await endpoint.get()
     expect(content).to.deep.equal([1, 2, 3])
+  })
+
+  it('test /v2/account/titles', async () => {
+    endpoint = endpoint.titles()
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.url).to.equal('/v2/account/titles')
+
+    reqMock.addResponse([2, 3, 4, 5])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([2, 3, 4, 5])
   })
 
   it('test /v2/account/transactions', async () => {

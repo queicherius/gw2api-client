@@ -27,6 +27,10 @@ class Client {
     return new (require('./endpoints/achievements.js'))(this)
   }
 
+  backstory () {
+    return new (require('./endpoints/backstory.js'))(this)
+  }
+
   build () {
     return new (require('./endpoints/build.js'))(this)
   }
@@ -63,6 +67,10 @@ class Client {
     return new (require('./endpoints/files.js'))(this)
   }
 
+  finishers () {
+    return new (require('./endpoints/finishers.js'))(this)
+  }
+
   guild () {
     return new (require('./endpoints/guild.js'))(this)
   }
@@ -71,8 +79,20 @@ class Client {
     return new (require('./endpoints/items.js'))(this)
   }
 
+  itemstats () {
+    return new (require('./endpoints/itemstats.js'))(this)
+  }
+
+  legends () {
+    return new (require('./endpoints/legends.js'))(this)
+  }
+
   maps () {
     return new (require('./endpoints/maps.js'))(this)
+  }
+
+  masteries () {
+    return new (require('./endpoints/masteries.js'))(this)
   }
 
   materials () {
@@ -81,6 +101,14 @@ class Client {
 
   minis () {
     return new (require('./endpoints/minis.js'))(this)
+  }
+
+  pets () {
+    return new (require('./endpoints/pets.js'))(this)
+  }
+
+  professions () {
+    return new (require('./endpoints/professions.js'))(this)
   }
 
   pvp () {
@@ -105,6 +133,14 @@ class Client {
 
   specializations () {
     return new (require('./endpoints/specializations.js'))(this)
+  }
+
+  stories () {
+    return new (require('./endpoints/stories.js'))(this)
+  }
+
+  titles () {
+    return new (require('./endpoints/titles.js'))(this)
   }
 
   tokeninfo () {

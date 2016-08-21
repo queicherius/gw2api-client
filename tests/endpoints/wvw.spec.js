@@ -12,6 +12,22 @@ describe('endpoints > wvw', () => {
     endpoint.requester = reqMock
   })
 
+  it('test /v2/wvw/abilities', async () => {
+    endpoint = endpoint.abilities()
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.url).to.equal('/v2/wvw/abilities')
+
+    reqMock.addResponse({id: 1, name: 'Guard Killer'})
+    let content = await endpoint.get(1)
+    expect(content.name).to.equal('Guard Killer')
+  })
+
   it('test /v2/wvw/matches', async () => {
     endpoint = endpoint.matches()
     endpoint.requester = reqMock

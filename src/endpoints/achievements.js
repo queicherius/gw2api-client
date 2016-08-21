@@ -21,6 +21,10 @@ class AchievementsEndpoint extends AbstractEndpoint {
   daily () {
     return new DailyEndpoint(this.client)
   }
+
+  dailyTomorrow () {
+    return new DailyTomorrowEndpoint(this.client)
+  }
 }
 
 class CategoriesEndpoint extends AbstractEndpoint {
@@ -47,6 +51,13 @@ class DailyEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements/daily'
+  }
+}
+
+class DailyTomorrowEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/achievements/daily/tomorrow'
   }
 }
 

@@ -72,4 +72,20 @@ describe('endpoints > achievements', () => {
     let content = await endpoint.get()
     expect(content.pve[0].id).to.equal(1984)
   })
+
+  it('test /v2/achievements/daily/tomorrow', async () => {
+    endpoint = endpoint.dailyTomorrow()
+    endpoint.requester = reqMock
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
+
+    expect(endpoint.url).to.equal('/v2/achievements/daily/tomorrow')
+
+    reqMock.addResponse({pve: [{id: 1984, level: {min: 1, max: 80}}]})
+    let content = await endpoint.get()
+    expect(content.pve[0].id).to.equal(1984)
+  })
 })

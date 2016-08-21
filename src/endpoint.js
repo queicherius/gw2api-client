@@ -12,6 +12,7 @@ class AbstractEndpoint {
     this.supportsBulkAll = true
     this.isLocalized = false
     this.isAuthenticated = false
+    this.isOptionallyAuthenticated = false
   }
 
   // Set the language for locale-aware endpoints
@@ -130,7 +131,12 @@ class AbstractEndpoint {
     let parsedUrl = parseUrl(url, true)
     let query = parsedUrl.query
 
-    if (this.isAuthenticated) {
+    // Only set the API key for authenticated endpoints, when it is
+    // required or set on the client
+    const usesApiKey = this.isAuthenticated &&
+      (!this.isOptionallyAuthenticated || this.client.apiKey !== undefined)
+
+    if (usesApiKey) {
       query['access_token'] = this.client.apiKey
     }
 

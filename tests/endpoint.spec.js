@@ -255,6 +255,22 @@ describe('abstract endpoint', () => {
       expect(url).to.equal('https://api.guildwars2.com/test')
     })
 
+    it('sets the authorization header for optional authenticated endpoints', () => {
+      endpoint.isAuthenticated = true
+      endpoint.isOptionallyAuthenticated = true
+      endpoint.authenticate('key')
+      let url = endpoint.buildUrl('/test')
+      expect(url).to.equal('https://api.guildwars2.com/test?access_token=key')
+    })
+
+    it('doesn\'t set the authorization header for optional authenticated endpoints if the key is not set', () => {
+      endpoint.isAuthenticated = true
+      endpoint.isOptionallyAuthenticated = true
+      endpoint.authenticate()
+      let url = endpoint.buildUrl('/test')
+      expect(url).to.equal('https://api.guildwars2.com/test')
+    })
+
     it('handles an already existing query', () => {
       endpoint.isAuthenticated = true
       endpoint.authenticate('key')

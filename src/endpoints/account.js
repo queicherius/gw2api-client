@@ -23,6 +23,18 @@ class AccountEndpoint extends AbstractEndpoint {
     return new DyesEndpoint(this.client)
   }
 
+  finishers () {
+    return new FinishersEndpoint(this.client)
+  }
+
+  inventory () {
+    return new InventoryEndpoint(this.client)
+  }
+
+  masteries () {
+    return new MasteriesEndpoint(this.client)
+  }
+
   materials () {
     return new MaterialsEndpoint(this.client)
   }
@@ -31,12 +43,24 @@ class AccountEndpoint extends AbstractEndpoint {
     return new MinisEndpoint(this.client)
   }
 
+  outfits () {
+    return new OutfitsEndpoint(this.client)
+  }
+
   pvp () {
     return new (require('./pvp.js'))(this.client)
   }
 
+  recipes () {
+    return new RecipesEndpoint(this.client)
+  }
+
   skins () {
     return new SkinsEndpoint(this.client)
+  }
+
+  titles () {
+    return new TitlesEndpoint(this.client)
   }
 
   transactions () {
@@ -72,6 +96,30 @@ class DyesEndpoint extends AbstractEndpoint {
   }
 }
 
+class FinishersEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/finishers'
+    this.isAuthenticated = true
+  }
+}
+
+class InventoryEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/inventory'
+    this.isAuthenticated = true
+  }
+}
+
+class MasteriesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/masteries'
+    this.isAuthenticated = true
+  }
+}
+
 class MaterialsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
@@ -88,10 +136,34 @@ class MinisEndpoint extends AbstractEndpoint {
   }
 }
 
+class OutfitsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/outfits'
+    this.isAuthenticated = true
+  }
+}
+
+class RecipesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/recipes'
+    this.isAuthenticated = true
+  }
+}
+
 class SkinsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/skins'
+    this.isAuthenticated = true
+  }
+}
+
+class TitlesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/titles'
     this.isAuthenticated = true
   }
 }

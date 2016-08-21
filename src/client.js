@@ -35,8 +35,8 @@ class Client {
     return new (require('./endpoints/build.js'))(this)
   }
 
-  characters () {
-    return new (require('./endpoints/characters.js'))(this)
+  characters (name) {
+    return new (require('./endpoints/characters.js'))(this, name)
   }
 
   colors () {
@@ -71,8 +71,8 @@ class Client {
     return new (require('./endpoints/finishers.js'))(this)
   }
 
-  guild () {
-    return new (require('./endpoints/guild.js'))(this)
+  guild (id) {
+    return new (require('./endpoints/guild.js'))(this, id)
   }
 
   items () {

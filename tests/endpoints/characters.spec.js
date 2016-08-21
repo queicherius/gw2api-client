@@ -26,7 +26,7 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/backstory', async () => {
-    endpoint = endpoint.backstory('Nâme')
+    endpoint = (new Module(false, 'Nâme')).backstory()
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
@@ -41,7 +41,7 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/core', async () => {
-    endpoint = endpoint.core('Nâme')
+    endpoint = (new Module(false, 'Nâme')).core()
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
@@ -56,7 +56,7 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/crafting', async () => {
-    endpoint = endpoint.crafting('Nâme')
+    endpoint = (new Module(false, 'Nâme')).crafting()
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
@@ -71,7 +71,7 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/equipment', async () => {
-    endpoint = endpoint.equipment('Nâme')
+    endpoint = (new Module(false, 'Nâme')).equipment()
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
@@ -86,7 +86,7 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/heropoints', async () => {
-    endpoint = endpoint.heropoints('Nâme')
+    endpoint = (new Module(false, 'Nâme')).heropoints()
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
@@ -101,7 +101,7 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/inventory', async () => {
-    endpoint = endpoint.inventory('Nâme')
+    endpoint = (new Module(false, 'Nâme')).inventory()
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
@@ -116,7 +116,7 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/recipes', async () => {
-    endpoint = endpoint.recipes('Nâme')
+    endpoint = (new Module(false, 'Nâme')).recipes()
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
@@ -131,7 +131,7 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/specializations', async () => {
-    endpoint = endpoint.specializations('Nâme')
+    endpoint = (new Module(false, 'Nâme')).specializations()
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
@@ -146,7 +146,7 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/training', async () => {
-    endpoint = endpoint.training('Nâme')
+    endpoint = (new Module(false, 'Nâme')).training()
     endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)

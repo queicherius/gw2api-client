@@ -45,6 +45,12 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/characters')
   })
 
+  it('can get the characters endpoint with a name', () => {
+    let endpoint = client.characters('Derp')
+    expect(endpoint.url).to.equal('/v2/characters')
+    expect(endpoint.name).to.equal('Derp')
+  })
+
   it('can get the colors endpoint', () => {
     let endpoint = client.colors()
     expect(endpoint.url).to.equal('/v2/colors')
@@ -88,6 +94,12 @@ describe('client', () => {
   it('can get the guild endpoint', () => {
     let endpoint = client.guild()
     expect(endpoint.url).to.equal('/v2/guild')
+  })
+
+  it('can get the guild endpoint with an id', () => {
+    let endpoint = client.guild('UUID')
+    expect(endpoint.url).to.equal('/v2/guild')
+    expect(endpoint.id).to.equal('UUID')
   })
 
   it('can get the items endpoint', () => {

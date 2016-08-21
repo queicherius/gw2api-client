@@ -1,8 +1,9 @@
 const AbstractEndpoint = require('../endpoint.js')
 
 class CharactersEndpoint extends AbstractEndpoint {
-  constructor (client) {
+  constructor (client, name) {
     super(client)
+    this.name = name
     this.url = '/v2/characters'
     this.isPaginated = true
     this.isBulk = true
@@ -10,40 +11,40 @@ class CharactersEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 
-  backstory (character) {
-    return new BackstoryEndpoint(this.client, character)
+  backstory () {
+    return new BackstoryEndpoint(this.client, this.name)
   }
 
-  core (character) {
-    return new CoreEndpoint(this.client, character)
+  core () {
+    return new CoreEndpoint(this.client, this.name)
   }
 
-  crafting (character) {
-    return new CraftingEndpoint(this.client, character)
+  crafting () {
+    return new CraftingEndpoint(this.client, this.name)
   }
 
-  equipment (character) {
-    return new EquipmentEndpoint(this.client, character)
+  equipment () {
+    return new EquipmentEndpoint(this.client, this.name)
   }
 
-  heropoints (character) {
-    return new HeropointsEndpoint(this.client, character)
+  heropoints () {
+    return new HeropointsEndpoint(this.client, this.name)
   }
 
-  inventory (character) {
-    return new InventoryEndpoint(this.client, character)
+  inventory () {
+    return new InventoryEndpoint(this.client, this.name)
   }
 
-  recipes (character) {
-    return new RecipesEndpoint(this.client, character)
+  recipes () {
+    return new RecipesEndpoint(this.client, this.name)
   }
 
-  specializations (character) {
-    return new SpecializationsEndpoint(this.client, character)
+  specializations () {
+    return new SpecializationsEndpoint(this.client, this.name)
   }
 
-  training (character) {
-    return new TrainingEndpoint(this.client, character)
+  training () {
+    return new TrainingEndpoint(this.client, this.name)
   }
 }
 

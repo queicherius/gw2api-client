@@ -1,8 +1,9 @@
 const AbstractEndpoint = require('../endpoint.js')
 
 class GuildEndpoint extends AbstractEndpoint {
-  constructor (client) {
+  constructor (client, id) {
     super(client)
+    this.id = id
     this.url = '/v2/guild'
     this.isAuthenticated = true
     this.isOptionallyAuthenticated = true
@@ -16,36 +17,36 @@ class GuildEndpoint extends AbstractEndpoint {
     return new SearchEndpoint(this.client, name)
   }
 
-  upgrades (id) {
-    if (id === undefined) {
+  upgrades () {
+    if (this.id === undefined) {
       return new AllUpgradesEndpoint(this.client)
     }
 
-    return new UpgradesEndpoint(this.client, id)
+    return new UpgradesEndpoint(this.client, this.id)
   }
 
-  log (id) {
-    return new LogEndpoint(this.client, id)
+  log () {
+    return new LogEndpoint(this.client, this.id)
   }
 
-  members (id) {
-    return new MembersEndpoint(this.client, id)
+  members () {
+    return new MembersEndpoint(this.client, this.id)
   }
 
-  ranks (id) {
-    return new RanksEndpoint(this.client, id)
+  ranks () {
+    return new RanksEndpoint(this.client, this.id)
   }
 
-  stash (id) {
-    return new StashEndpoint(this.client, id)
+  stash () {
+    return new StashEndpoint(this.client, this.id)
   }
 
-  teams (id) {
-    return new TeamsEndpoint(this.client, id)
+  teams () {
+    return new TeamsEndpoint(this.client, this.id)
   }
 
-  treasury (id) {
-    return new TreasuryEndpoint(this.client, id)
+  treasury () {
+    return new TreasuryEndpoint(this.client, this.id)
   }
 }
 

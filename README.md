@@ -98,95 +98,347 @@ file.__get__('api').requester = requesterMock
 
 ## Endpoint Overview
 
- API Endpoint                 | Method call                           | Flags
- ---|------|---
- /v2/account | `client.account()` | 🔒
-/v2/account/achievements | `client.account().achievements()` | 🔒
-/v2/account/bank | `client.account().bank()` | 🔒
-/v2/account/dyes | `client.account().dyes()` | 🔒
-/v2/account/finishers | `client.account().finishers()` | 🔒
-/v2/account/inventory | `client.account().inventory()` | 🔒
-/v2/account/masteries | `client.account().masteries()` | 🔒
-/v2/account/materials | `client.account().materials()` | 🔒
-/v2/account/minis | `client.account().minis()` | 🔒
-/v2/account/outfits | `client.account().outfits()` | 🔒
-/v2/account/recipes | `client.account().recipes()` | 🔒
-/v2/account/skins | `client.account().skins()` | 🔒
-/v2/account/titles | `client.account().titles()` | 🔒
-/v2/account/wallet | `client.account().wallet()` | 🔒
-/v2/achievements | `client.achievements()` | 📦📄🌏
-/v2/achievements/categories | `client.achievements().categories()` | 📦📄🌏
-/v2/achievements/daily | `client.achievements().daily()` |
-/v2/achievements/daily/tomorrow | `client.achievements().dailyTomorrow()` |
-/v2/achievements/groups | `client.achievements().groups()` | 📦📄🌏
-/v2/backstory/answers | `client.backstory().answers()` | 📦📄🌏
-/v2/backstory/questions | `client.backstory().questions()` | 📦📄🌏
-/v2/build | `client.build()` |
-/v2/characters | `client.characters()` | 🔒📦📄
-/v2/characters/CHARACTER_NAME/backstory | `client.characters('CHARACTER_NAME').backstory()` | 🔒
-/v2/characters/CHARACTER_NAME/core | `client.characters('CHARACTER_NAME').core()` | 🔒
-/v2/characters/CHARACTER_NAME/crafting | `client.characters('CHARACTER_NAME').crafting()` | 🔒
-/v2/characters/CHARACTER_NAME/equipment | `client.characters('CHARACTER_NAME').equipment()` | 🔒
-/v2/characters/CHARACTER_NAME/heropoints | `client.characters('CHARACTER_NAME').heropoints()` | 🔒
-/v2/characters/CHARACTER_NAME/inventory | `client.characters('CHARACTER_NAME').inventory()` | 🔒
-/v2/characters/CHARACTER_NAME/recipes | `client.characters('CHARACTER_NAME').recipes()` | 🔒
-/v2/characters/CHARACTER_NAME/specializations | `client.characters('CHARACTER_NAME').specializations()` | 🔒
-/v2/characters/CHARACTER_NAME/training | `client.characters('CHARACTER_NAME').training()` | 🔒
-/v2/colors | `client.colors()` | 📦📄🌏
-/v2/commerce/exchange | `client.commerce().exchange()` |
-/v2/commerce/listings | `client.commerce().listings()` | 📦📄
-/v2/commerce/prices | `client.commerce().prices()` | 📦📄
-/v2/commerce/prices/transactions/current/buys | `client.commerce().transactions().current().buys()` | 🔒📄
-/v2/commerce/prices/transactions/current/sells | `client.commerce().transactions().current().sells()` | 🔒📄
-/v2/commerce/prices/transactions/history/buys | `client.commerce().transactions().history().buys()` | 🔒📄
-/v2/commerce/prices/transactions/history/sells | `client.commerce().transactions().history().sells()` | 🔒📄
-/v2/continents | `client.continents()` | 📦📄🌏
-/v2/currencies | `client.currencies()` | 📦📄🌏
-/v2/emblem/foreground | `client.emblem().foreground()` | 📦📄
-/v2/emblem/background | `client.emblem().background()` | 📦📄
-/v2/files | `client.files()` | 📦📄
-/v2/finishers | `client.finishers()` | 📦📄🌏
-/v2/guild | `client.guild()` | 🔒
-/v2/guild/permissions | `client.guild().permissions()` | 📦📄🌏
-/v2/guild/search?name=GUILD_NAME | `client.guild().search('GUILD_NAME')` |
-/v2/guild/upgrades | `client.guild().upgrades()` | 📦📄🌏
-/v2/guild/GUILD_ID/log | `client.guild('GUILD_ID').log()` | 🔒
-/v2/guild/GUILD_ID/members | `client.guild('GUILD_ID').members()` | 🔒
-/v2/guild/GUILD_ID/ranks | `client.guild('GUILD_ID').ranks()` | 🔒
-/v2/guild/GUILD_ID/stash | `client.guild('GUILD_ID').stash()` | 🔒
-/v2/guild/GUILD_ID/teams | `client.guild('GUILD_ID').teams()` | 🔒
-/v2/guild/GUILD_ID/treasury | `client.guild('GUILD_ID').treasury()` | 🔒
-/v2/guild/GUILD_ID/upgrades | `client.guild('GUILD_ID').upgrades()` | 🔒
-/v2/items | `client.items()` | 📦📄🌏
-/v2/itemstats | `client.itemstats()` | 📦📄🌏
-/v2/legends | `client.legends()` | 📦📄
-/v2/maps | `client.maps()` | 📦📄🌏
-/v2/masteries | `client.masteries()` | 📦📄🌏
-/v2/materials | `client.materials()` | 📦📄🌏
-/v2/minis | `client.minis()` | 📦📄🌏
-/v2/pets | `client.pets()` | 📦📄🌏
-/v2/professions | `client.professions()` | 📦📄🌏
-/v2/pvp/amulets | `client.pvp().amulets()` | 📦📄🌏
-/v2/pvp/games | `client.pvp().games()` | 🔒📦📄
-/v2/pvp/seasons | `client.pvp().seasons()` | 📦📄🌏
-/v2/pvp/standings | `client.pvp().standings()` | 🔒
-/v2/pvp/stats | `client.pvp().stats()` | 🔒
-/v2/quaggans | `client.quaggans()` | 📦📄
-/v2/recipes | `client.recipes()` | 📦📄
-/v2/recipes/search | `client.recipes().search().input('ITEM_ID')` |
-/v2/recipes/search | `client.recipes().search().output('ITEM_ID')` |
-/v2/skills | `client.skills()` | 📦📄🌏
-/v2/skins | `client.skins()` | 📦📄🌏
-/v2/specializations | `client.specializations()` | 📦📄🌏
-/v2/stories | `client.stories()` | 📦📄🌏
-/v2/stories/seasons | `client.stories().seasons()` | 📦📄🌏
-/v2/titles | `client.titles()` | 📦📄🌏
-/v2/tokeninfo | `client.tokeninfo()` | 🔒
-/v2/traits | `client.traits()` | 📦📄🌏
-/v2/worlds | `client.worlds()` | 📦📄🌏
-/v2/wvw/abilities | `client.wvw().abilities()` | 📦📄🌏
-/v2/wvw/matches | `client.wvw().matches()` | 📦📄
-/v2/wvw/objectives | `client.wvw().objectives()` | 📦📄🌏
+```js
+// Url: /v2/account
+// Flags: 🔒
+client.account()
+
+// Url: /v2/account/achievements
+// Flags: 🔒
+client.account().achievements()
+
+// Url: /v2/account/bank
+// Flags: 🔒
+client.account().bank()
+
+// Url: /v2/account/dyes
+// Flags: 🔒
+client.account().dyes()
+
+// Url: /v2/account/finishers
+// Flags: 🔒
+client.account().finishers()
+
+// Url: /v2/account/inventory
+// Flags: 🔒
+client.account().inventory()
+
+// Url: /v2/account/masteries
+// Flags: 🔒
+client.account().masteries()
+
+// Url: /v2/account/materials
+// Flags: 🔒
+client.account().materials()
+
+// Url: /v2/account/minis
+// Flags: 🔒
+client.account().minis()
+
+// Url: /v2/account/outfits
+// Flags: 🔒
+client.account().outfits()
+
+// Url: /v2/account/recipes
+// Flags: 🔒
+client.account().recipes()
+
+// Url: /v2/account/skins
+// Flags: 🔒
+client.account().skins()
+
+// Url: /v2/account/titles
+// Flags: 🔒
+client.account().titles()
+
+// Url: /v2/account/wallet
+// Flags: 🔒
+client.account().wallet()
+
+// Url: /v2/achievements
+// Flags: 📦📄🌏
+client.achievements()
+
+// Url: /v2/achievements/categories
+// Flags: 📦📄🌏
+client.achievements().categories()
+
+// Url: /v2/achievements/daily
+client.achievements().daily()
+
+// Url: /v2/achievements/dailyTomorrow
+client.achievements().dailyTomorrow()
+
+// Url: /v2/achievements/groups
+// Flags: 📦📄🌏
+client.achievements().groups()
+
+// Url: /v2/backstory/answers
+// Flags: 📦📄🌏
+client.backstory().answers()
+
+// Url: /v2/backstory/questions
+// Flags: 📦📄🌏
+client.backstory().questions()
+
+// Url: /v2/build
+client.build()
+
+// Url: /v2/characters
+// Flags: 🔒📦📄
+client.characters()
+
+// Url: /v2/characters/CHARACTER_NAME/backstory
+// Flags: 🔒
+client.characters('CHARACTER_NAME').backstory()
+
+// Url: /v2/characters/CHARACTER_NAME/core
+// Flags: 🔒
+client.characters('CHARACTER_NAME').core()
+
+// Url: /v2/characters/CHARACTER_NAME/crafting
+// Flags: 🔒
+client.characters('CHARACTER_NAME').crafting()
+
+// Url: /v2/characters/CHARACTER_NAME/equipment
+// Flags: 🔒
+client.characters('CHARACTER_NAME').equipment()
+
+// Url: /v2/characters/CHARACTER_NAME/heropoints
+// Flags: 🔒
+client.characters('CHARACTER_NAME').heropoints()
+
+// Url: /v2/characters/CHARACTER_NAME/inventory
+// Flags: 🔒
+client.characters('CHARACTER_NAME').inventory()
+
+// Url: /v2/characters/CHARACTER_NAME/recipes
+// Flags: 🔒
+client.characters('CHARACTER_NAME').recipes()
+
+// Url: /v2/characters/CHARACTER_NAME/specializations
+// Flags: 🔒
+client.characters('CHARACTER_NAME').specializations()
+
+// Url: /v2/characters/CHARACTER_NAME/training
+// Flags: 🔒
+client.characters('CHARACTER_NAME').training()
+
+// Url: /v2/colors
+// Flags: 📦📄🌏
+client.colors()
+
+// Url: /v2/commerce/exchange
+client.commerce().exchange().gems('AMOUNT')
+client.commerce().exchange().gold('AMOUNT')
+
+// Url: /v2/commerce/listings
+// Flags: 📦📄
+client.commerce().listings()
+
+// Url: /v2/commerce/prices
+// Flags: 📦📄
+client.commerce().prices()
+
+// Url: /v2/commerce/prices/transactions/current/buys
+// Flags: 🔒📄
+client.commerce().transactions().current().buys()
+
+// Url: /v2/commerce/prices/transactions/current/sells
+// Flags: 🔒📄
+client.commerce().transactions().current().sells()
+
+// Url: /v2/commerce/prices/transactions/history/buys
+// Flags: 🔒📄
+client.commerce().transactions().history().buys()
+
+// Url: /v2/commerce/prices/transactions/history/sells
+// Flags: 🔒📄
+client.commerce().transactions().history().sells()
+
+// Url: /v2/continents
+// Flags: 📦📄🌏
+client.continents()
+
+// Url: /v2/currencies
+// Flags: 📦📄🌏
+client.currencies()
+
+// Url: /v2/emblem/foreground
+// Flags: 📦📄
+client.emblem().foreground()
+
+// Url: /v2/emblem/background
+// Flags: 📦📄
+client.emblem().background()
+
+// Url: /v2/files
+// Flags: 📦📄
+client.files()
+
+// Url: /v2/finishers
+// Flags: 📦📄🌏
+client.finishers()
+
+// Url: /v2/guild
+// Flags: 🔒
+client.guild()
+
+// Url: /v2/guild/permissions
+// Flags: 📦📄🌏
+client.guild().permissions()
+
+// Url: /v2/guild/search?name=GUILD_NAME
+client.guild().search('GUILD_NAME')
+
+// Url: /v2/guild/upgrades
+// Flags: 📦📄🌏
+client.guild().upgrades()
+
+// Url: /v2/guild/GUILD_ID/log
+// Flags: 🔒
+client.guild('GUILD_ID').log()
+
+// Url: /v2/guild/GUILD_ID/members
+// Flags: 🔒
+client.guild('GUILD_ID').members()
+
+// Url: /v2/guild/GUILD_ID/ranks
+// Flags: 🔒
+client.guild('GUILD_ID').ranks()
+
+// Url: /v2/guild/GUILD_ID/stash
+// Flags: 🔒
+client.guild('GUILD_ID').stash()
+
+// Url: /v2/guild/GUILD_ID/teams
+// Flags: 🔒
+client.guild('GUILD_ID').teams()
+
+// Url: /v2/guild/GUILD_ID/treasury
+// Flags: 🔒
+client.guild('GUILD_ID').treasury()
+
+// Url: /v2/guild/GUILD_ID/upgrades
+// Flags: 🔒
+client.guild('GUILD_ID').upgrades()
+
+// Url: /v2/items
+// Flags: 📦📄🌏
+client.items()
+
+// Url: /v2/itemstats
+// Flags: 📦📄🌏
+client.itemstats()
+
+// Url: /v2/legends
+// Flags: 📦📄
+client.legends()
+
+// Url: /v2/maps
+// Flags: 📦📄🌏
+client.maps()
+
+// Url: /v2/masteries
+// Flags: 📦📄🌏
+client.masteries()
+
+// Url: /v2/materials
+// Flags: 📦📄🌏
+client.materials()
+
+// Url: /v2/minis
+// Flags: 📦📄🌏
+client.minis()
+
+// Url: /v2/pets
+// Flags: 📦📄🌏
+client.pets()
+
+// Url: /v2/professions
+// Flags: 📦📄🌏
+client.professions()
+
+// Url: /v2/pvp/amulets
+// Flags: 📦📄🌏
+client.pvp().amulets()
+
+// Url: /v2/pvp/games
+// Flags: 🔒📦📄
+client.pvp().games()
+
+// Url: /v2/pvp/seasons
+// Flags: 📦📄🌏
+client.pvp().seasons()
+
+// Url: /v2/pvp/standings
+// Flags: 🔒
+client.pvp().standings()
+
+// Url: /v2/pvp/stats
+// Flags: 🔒
+client.pvp().stats()
+
+// Url: /v2/quaggans
+// Flags: 📦📄
+client.quaggans()
+
+// Url: /v2/recipes
+// Flags: 📦📄
+client.recipes()
+
+// Url: /v2/recipes/search
+client.recipes().search().input('ITEM_ID')
+client.recipes().search().output('ITEM_ID')
+
+// Url: /v2/skills
+// Flags: 📦📄🌏
+client.skills()
+
+// Url: /v2/skins
+// Flags: 📦📄🌏
+client.skins()
+
+// Url: /v2/specializations
+// Flags: 📦📄🌏
+client.specializations()
+
+// Url: /v2/stories
+// Flags: 📦📄🌏
+client.stories()
+
+// Url: /v2/stories/seasons
+// Flags: 📦📄🌏
+client.stories().seasons()
+
+// Url: /v2/titles
+// Flags: 📦📄🌏
+client.titles()
+
+// Url: /v2/tokeninfo
+// Flags: 🔒
+client.tokeninfo()
+
+// Url: /v2/traits
+// Flags: 📦📄🌏
+client.traits()
+
+// Url: /v2/worlds
+// Flags: 📦📄🌏
+client.worlds()
+
+// Url: /v2/wvw/abilities
+// Flags: 📦📄🌏
+client.wvw().abilities()
+
+// Url: /v2/wvw/matches
+// Flags: 📦📄
+client.wvw().matches()
+
+// Url: /v2/wvw/objectives
+// Flags: 📦📄🌏
+client.wvw().objectives()
+```
 
 ### Flags
 

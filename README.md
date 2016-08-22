@@ -77,7 +77,43 @@ it responds with a error, the following error texts can appear:
 - no such id
 - all ids provided are invalid
 
-## Mocking
+### Extending
+
+You can extend or overwrite the API client with your own endpoints if you wish so. The only thing that is required, is an extension of `AbstractEndpoint` to provide all the logic for pagination, bulk, localization etc.
+
+If you need more specific ways to handle data then the previously defined ones, take a look at how the existing endpoints handle these cases (e.g. in `/src/endpoints/recipes.js`)
+
+```js
+import api from 'gw2-gw2api-client'
+import AbstractEndpoint from 'gw2-gw2api-client/build/endpoint'
+
+// Create the client
+const client = api()
+
+// Define our custom "items" endpoint
+class ItemsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.baseUrl = 'https://gw2-api.com'
+    this.url = '/items'
+    this.isPaginated = false
+    this.isBulk = true
+    this.supportsBulkAll = false
+    this.isLocalized = true
+  }
+}
+
+// Attach it to the client, either as a new endpoint
+// or overwriting an already existing one
+client.items = () => new ItemsEndpoint(client)
+
+// Use the new, overwritten endpoint
+client.items().many([123, 456])
+  .then(items => console.log('Got the items', items))
+  .catch(err => console.error('Things went south', err))
+```
+
+### Mocking
 
 If you want to mock this module in your tests, you can replace the underlying 
 request library with the provided mock module, e.g. using [rewire](https://github.com/jhnns/rewire).

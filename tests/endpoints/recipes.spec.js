@@ -1,15 +1,13 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('gw2e-requester/mock')
-
+const {mockClient, reqMock} = require('../mocks/client.mock.js')
 const Module = require('../../src/endpoints/recipes.js')
 
 describe('endpoints > recipes', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new Module(false)
+    endpoint = new Module(mockClient)
     reqMock.reset()
-    endpoint.requester = reqMock
   })
 
   it('test /v2/recipes', async () => {
@@ -27,7 +25,6 @@ describe('endpoints > recipes', () => {
 
   it('test /v2/recipes/search (input)', async () => {
     endpoint = endpoint.search()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -42,7 +39,6 @@ describe('endpoints > recipes', () => {
 
   it('test /v2/recipes/search (output)', async () => {
     endpoint = endpoint.search()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)

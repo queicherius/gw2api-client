@@ -1,15 +1,13 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('gw2e-requester/mock')
-
+const {mockClient, reqMock} = require('../mocks/client.mock.js')
 const Module = require('../../src/endpoints/achievements.js')
 
 describe('endpoints > achievements', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new Module(false)
+    endpoint = new Module(mockClient)
     reqMock.reset()
-    endpoint.requester = reqMock
   })
 
   it('test /v2/achievements', async () => {
@@ -27,7 +25,6 @@ describe('endpoints > achievements', () => {
 
   it('test /v2/achievements/categories', async () => {
     endpoint = endpoint.categories()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
@@ -43,7 +40,6 @@ describe('endpoints > achievements', () => {
 
   it('test /v2/achievements/groups', async () => {
     endpoint = endpoint.groups()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
@@ -59,7 +55,6 @@ describe('endpoints > achievements', () => {
 
   it('test /v2/achievements/daily', async () => {
     endpoint = endpoint.daily()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -75,7 +70,6 @@ describe('endpoints > achievements', () => {
 
   it('test /v2/achievements/daily/tomorrow', async () => {
     endpoint = endpoint.dailyTomorrow()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)

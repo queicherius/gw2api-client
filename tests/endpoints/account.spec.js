@@ -1,15 +1,13 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('gw2e-requester/mock')
-
+const {mockClient, reqMock} = require('../mocks/client.mock.js')
 const Module = require('../../src/endpoints/account.js')
 
 describe('endpoints > account', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new Module(false)
+    endpoint = new Module(mockClient)
     reqMock.reset()
-    endpoint.requester = reqMock
   })
 
   it('test /v2/account', async () => {
@@ -26,7 +24,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/achievements', async () => {
     endpoint = endpoint.achievements()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -41,7 +38,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/bank', async () => {
     endpoint = endpoint.bank()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -61,7 +57,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/dyes', async () => {
     endpoint = endpoint.dyes()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -76,7 +71,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/finishers', async () => {
     endpoint = endpoint.finishers()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -91,7 +85,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/inventory', async () => {
     endpoint = endpoint.inventory()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -112,7 +105,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/masteries', async () => {
     endpoint = endpoint.masteries()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -127,7 +119,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/materials', async () => {
     endpoint = endpoint.materials()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -142,7 +133,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/minis', async () => {
     endpoint = endpoint.minis()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -157,7 +147,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/outfits', async () => {
     endpoint = endpoint.outfits()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -177,7 +166,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/recipes', async () => {
     endpoint = endpoint.recipes()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -192,7 +180,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/skins', async () => {
     endpoint = endpoint.skins()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -207,7 +194,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/titles', async () => {
     endpoint = endpoint.titles()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -227,7 +213,6 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/wallet', async () => {
     endpoint = endpoint.wallet()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)

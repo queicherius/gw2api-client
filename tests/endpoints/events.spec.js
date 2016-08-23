@@ -1,16 +1,14 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('gw2e-requester/mock')
 const rewire = require('rewire')
-
+const {mockClient, reqMock} = require('../mocks/client.mock.js')
 const Module = rewire('../../src/endpoints/events.js')
 
 describe('endpoints > events', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new Module(false)
+    endpoint = new Module(mockClient)
     reqMock.reset()
-    endpoint.requester = reqMock
   })
 
   it('transforms the v1 format into v2', () => {

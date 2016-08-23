@@ -1,20 +1,17 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('gw2e-requester/mock')
-
+const {mockClient, reqMock} = require('../mocks/client.mock.js')
 const Module = require('../../src/endpoints/backstory.js')
 
 describe('endpoints > backstory', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new Module(false)
+    endpoint = new Module(mockClient)
     reqMock.reset()
-    endpoint.requester = reqMock
   })
 
   it('test /v2/backstory/answers', async () => {
     endpoint = endpoint.answers()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
@@ -30,7 +27,6 @@ describe('endpoints > backstory', () => {
 
   it('test /v2/backstory/questions', async () => {
     endpoint = endpoint.questions()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)

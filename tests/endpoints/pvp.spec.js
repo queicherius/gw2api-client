@@ -1,20 +1,17 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('gw2e-requester/mock')
-
+const {mockClient, reqMock} = require('../mocks/client.mock.js')
 const Module = require('../../src/endpoints/pvp.js')
 
 describe('endpoints > pvp', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new Module(false)
+    endpoint = new Module(mockClient)
     reqMock.reset()
-    endpoint.requester = reqMock
   })
 
   it('test /v2/pvp/amulets', async () => {
     endpoint = endpoint.amulets()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
@@ -30,7 +27,6 @@ describe('endpoints > pvp', () => {
 
   it('test /v2/pvp/games', async () => {
     endpoint = endpoint.games()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
@@ -46,7 +42,6 @@ describe('endpoints > pvp', () => {
 
   it('test /v2/pvp/seasons', async () => {
     endpoint = endpoint.seasons()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
@@ -62,7 +57,6 @@ describe('endpoints > pvp', () => {
 
   it('test /v2/pvp/standings', async () => {
     endpoint = endpoint.standings()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -77,7 +71,6 @@ describe('endpoints > pvp', () => {
 
   it('test /v2/pvp/stats', async () => {
     endpoint = endpoint.stats()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)

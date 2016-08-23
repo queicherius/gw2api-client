@@ -1,15 +1,13 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('gw2e-requester/mock')
-
+const {mockClient, reqMock} = require('../mocks/client.mock.js')
 const Module = require('../../src/endpoints/guild.js')
 
 describe('endpoints > guild', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new Module(false)
+    endpoint = new Module(mockClient)
     reqMock.reset()
-    endpoint.requester = reqMock
   })
 
   it('test /v2/guild', async () => {
@@ -27,7 +25,6 @@ describe('endpoints > guild', () => {
 
   it('test /v2/guild/permissions', async () => {
     endpoint = endpoint.permissions()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
@@ -42,7 +39,6 @@ describe('endpoints > guild', () => {
 
   it('test /v2/guild/search', async () => {
     endpoint = endpoint.search('Baws Like')
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -57,7 +53,6 @@ describe('endpoints > guild', () => {
 
   it('test /v2/guild/upgrades', async () => {
     endpoint = endpoint.upgrades()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
@@ -71,8 +66,7 @@ describe('endpoints > guild', () => {
   })
 
   it('test /v2/guild/:id/log', async () => {
-    endpoint = (new Module(false, 'S0ME-UU1D')).log()
-    endpoint.requester = reqMock
+    endpoint = (new Module(mockClient, 'S0ME-UU1D')).log()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -86,8 +80,7 @@ describe('endpoints > guild', () => {
   })
 
   it('test /v2/guild/:id/members', async () => {
-    endpoint = (new Module(false, 'S0ME-UU1D')).members()
-    endpoint.requester = reqMock
+    endpoint = (new Module(mockClient, 'S0ME-UU1D')).members()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -101,8 +94,7 @@ describe('endpoints > guild', () => {
   })
 
   it('test /v2/guild/:id/ranks', async () => {
-    endpoint = (new Module(false, 'S0ME-UU1D')).ranks()
-    endpoint.requester = reqMock
+    endpoint = (new Module(mockClient, 'S0ME-UU1D')).ranks()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -116,8 +108,7 @@ describe('endpoints > guild', () => {
   })
 
   it('test /v2/guild/:id/stash', async () => {
-    endpoint = (new Module(false, 'S0ME-UU1D')).stash()
-    endpoint.requester = reqMock
+    endpoint = (new Module(mockClient, 'S0ME-UU1D')).stash()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -131,8 +122,7 @@ describe('endpoints > guild', () => {
   })
 
   it('test /v2/guild/:id/teams', async () => {
-    endpoint = (new Module(false, 'S0ME-UU1D')).teams()
-    endpoint.requester = reqMock
+    endpoint = (new Module(mockClient, 'S0ME-UU1D')).teams()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -146,8 +136,7 @@ describe('endpoints > guild', () => {
   })
 
   it('test /v2/guild/:id/treasury', async () => {
-    endpoint = (new Module(false, 'S0ME-UU1D')).treasury()
-    endpoint.requester = reqMock
+    endpoint = (new Module(mockClient, 'S0ME-UU1D')).treasury()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -161,8 +150,7 @@ describe('endpoints > guild', () => {
   })
 
   it('test /v2/guild/:id/upgrades', async () => {
-    endpoint = (new Module(false, 'S0ME-UU1D')).upgrades()
-    endpoint.requester = reqMock
+    endpoint = (new Module(mockClient, 'S0ME-UU1D')).upgrades()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)

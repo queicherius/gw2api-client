@@ -1,20 +1,17 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const reqMock = require('gw2e-requester/mock')
-
+const {mockClient, reqMock} = require('../mocks/client.mock.js')
 const Module = require('../../src/endpoints/commerce.js')
 
 describe('endpoints > commerce', () => {
   let endpoint
   beforeEach(() => {
-    endpoint = new Module(false)
+    endpoint = new Module(mockClient)
     reqMock.reset()
-    endpoint.requester = reqMock
   })
 
   it('test /v2/commerce/exchange (coins)', async () => {
     endpoint = endpoint.exchange()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -29,7 +26,6 @@ describe('endpoints > commerce', () => {
 
   it('test /v2/commerce/exchange (gems)', async () => {
     endpoint = endpoint.exchange()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
@@ -44,7 +40,6 @@ describe('endpoints > commerce', () => {
 
   it('test /v2/commerce/listings', async () => {
     endpoint = endpoint.listings()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
@@ -60,7 +55,6 @@ describe('endpoints > commerce', () => {
 
   it('test /v2/commerce/prices', async () => {
     endpoint = endpoint.prices()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
@@ -76,7 +70,6 @@ describe('endpoints > commerce', () => {
 
   it('test /v2/commerce/transactions/current/buys', async () => {
     endpoint = endpoint.transactions().current().buys()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(false)
@@ -91,7 +84,6 @@ describe('endpoints > commerce', () => {
 
   it('test /v2/commerce/transactions/current/sells', async () => {
     endpoint = endpoint.transactions().current().sells()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(false)
@@ -106,7 +98,6 @@ describe('endpoints > commerce', () => {
 
   it('test /v2/commerce/transactions/history/buys', async () => {
     endpoint = endpoint.transactions().history().buys()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(false)
@@ -121,7 +112,6 @@ describe('endpoints > commerce', () => {
 
   it('test /v2/commerce/transactions/history/sells', async () => {
     endpoint = endpoint.transactions().history().sells()
-    endpoint.requester = reqMock
 
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(false)

@@ -94,9 +94,9 @@ class AbstractEndpoint {
       return this.request(this.url + '?ids=all')
     }
 
-    let first_page = await this.request(this.url + '?page=0&page_size=' + this.maxPageSize, 'response')
-    let result = await first_page.json()
-    let total = first_page.headers.get('X-Result-Total')
+    let firstPage = await this.request(this.url + '?page=0&page_size=' + this.maxPageSize, 'response')
+    let result = await firstPage.json()
+    let total = firstPage.headers.get('X-Result-Total')
 
     if (total <= this.maxPageSize) {
       return result

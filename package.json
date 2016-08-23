@@ -5,8 +5,8 @@
   "main": "./build/index.js",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "./node_modules/.bin/babel src/ -d build/",
-    "test": "./node_modules/babel-cli/bin/babel-node.js ./node_modules/.bin/isparta cover --include-all-sources ./node_modules/.bin/_mocha -- tests/ --recursive && node node_modules/snazzy/bin/cmd.js"
+    "build": "babel src/ -d build/",
+    "test": "NODE_ENV=test nyc --reporter=lcov --reporter=text-summary --report-dir=coverage/ mocha --compilers js:babel-core/register --require babel-polyfill tests/* && snazzy"
   },
   "author": "queicherius@gmail.com",
   "license": "MIT",
@@ -14,22 +14,29 @@
     "type": "git",
     "url": "https://github.com/gw2efficiency/gw2api-client"
   },
+  "nyc": {
+    "include": ["src/"],
+    "sourceMap": false,
+    "instrument": false
+  },
   "dependencies": {
     "gw2e-requester": "^1.0.0",
     "url-parse": "^1.1.3"
   },
   "devDependencies": {
-    "babel-eslint": "^4.1.6",
+    "babel-cli": "^6.4.5",
+    "babel-eslint": "^6.1.2",
+    "babel-plugin-istanbul": "^2.0.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "babel-preset-stage-3": "^6.3.13",
     "chai": "^3.5.0",
     "codecov": "^1.0.1",
     "isparta": "^4.0.0",
-    "mocha": "^2.4.5",
+    "mocha": "^3.0.2",
+    "nyc": "^8.1.0",
     "rewire": "^2.5.1",
-    "snazzy": "^2.0.1",
-    "babel-cli": "^6.4.5",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-stage-0": "^6.3.13",
-    "babel-preset-stage-3": "^6.3.13"
+    "snazzy": "^4.0.1"
   },
   "standard": {
     "parser": "babel-eslint"

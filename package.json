@@ -1,6 +1,6 @@
 {
   "name": "gw2e-gw2api-client",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A javascript wrapper around the official Guild Wars 2 API",
   "main": "./build/index.js",
   "scripts": {
@@ -15,7 +15,9 @@
     "url": "https://github.com/gw2efficiency/gw2api-client"
   },
   "nyc": {
-    "include": ["src/"],
+    "include": [
+      "src/"
+    ],
     "sourceMap": false,
     "instrument": false
   },

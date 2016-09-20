@@ -137,6 +137,11 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/minis')
   })
 
+  it('can get the outfits endpoint', () => {
+    let endpoint = client.outfits()
+    expect(endpoint.url).to.equal('/v2/outfits')
+  })
+
   it('can get the pets endpoint', () => {
     let endpoint = client.pets()
     expect(endpoint.url).to.equal('/v2/pets')

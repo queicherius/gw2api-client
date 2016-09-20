@@ -103,6 +103,10 @@ class Client {
     return new (require('./endpoints/minis.js'))(this)
   }
 
+  outfits () {
+    return new (require('./endpoints/outfits.js'))(this)
+  }
+
   pets () {
     return new (require('./endpoints/pets.js'))(this)
   }

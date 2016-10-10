@@ -1,8 +1,11 @@
 {
-  "presets": ["es2015", "stage-0", "stage-3"],
+  "presets": ["latest", "stage-0"],
   "env": {
     "test": {
-      "plugins": [ "istanbul" ]
+      "plugins": [
+        ["istanbul", {"include": ["src/**"]}],
+        "rewire"
+      ]
     }
   }
 }

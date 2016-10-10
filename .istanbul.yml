@@ -1,3 +1,0 @@
-instrumentation:
-  root: src/
-  excludes: ['./node_modules/.bin/*']

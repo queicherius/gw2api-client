@@ -4,7 +4,7 @@ const {chunk, unique, flatten} = require('./helpers.js')
 class AbstractEndpoint {
   constructor (client) {
     this.client = client
-    this.requester = client.requester
+    this.fetch = client.fetch
     this.baseUrl = 'https://api.guildwars2.com'
     this.isPaginated = false
     this.maxPageSize = 200
@@ -113,13 +113,13 @@ class AbstractEndpoint {
 
   // Executes a single request
   async request (url, type = 'json') {
-    return await this.requester.single(this.buildUrl(url), {type})
+    return await this.fetch.single(this.buildUrl(url), {type})
   }
 
   // Executes multiple requests in parallel
   async requestMany (urls, type = 'json') {
     urls = urls.map(url => this.buildUrl(url))
-    return await this.requester.many(urls, {type})
+    return await this.fetch.many(urls, {type})
   }
 
   // Builds the headers for localization and authentication

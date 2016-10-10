@@ -9,8 +9,8 @@
 
 ## Install
 
-```
-npm install gw2e-gw2api-client
+```bash
+npm install gw2api-client
 ```
 
 This module can be used for Node.js as well as browsers using [Browserify](https://github.com/substack/browserify-handbook#how-node_modules-works). 
@@ -22,12 +22,11 @@ This module can be used for Node.js as well as browsers using [Browserify](https
 ### Basic usage
 
 ```js
-async function example () {
+import client from 'gw2api-client'
+import flow from 'promise-control-flow'
 
-  // Get the constructor of a client
-  const client = require('gw2e-gw2api-client')
-  
-  // Actually generate a API client
+async function example () {
+  // Get an instance of an API client
   let api = client()
   
   // Optional: Set the language of the client
@@ -42,26 +41,25 @@ async function example () {
   // Note: If you want to request e.g. multiple items with different languages
   // or API keys in *parallel*, you have to use *different* client instances
   // for that, since language and key are connected to the client instance
-  async.parallel([
+  flow.parallel([
     () => client().language('en').items().all(),
     () => client().language('de').items().all()
   ])
-  
 }
 ```
 
 ### Error handling
 
-You can wrap every call in a `try...catch` statement, catching all possible errors.
+You can wrap every call in a `try...catch` statement (or using Promise `catch`), catching all possible errors.
 
 ```js
 try {
   let bank = await api.account().bank()
 } catch (err) {
-  console.log('Something went wrong. :(', err)
   // err.response is the last response object (e.g. err.response.status)
   // err.content is the parsed body of the response, if available
   // err.content.text MAY be set to the error text thrown of the API, if available
+  console.log('Something went wrong', err)
 }
 ```
 
@@ -84,11 +82,11 @@ You can extend or overwrite the API client with your own endpoints if you wish s
 If you need more specific ways to handle data then the previously defined ones, take a look at how the existing endpoints handle these cases (e.g. in `/src/endpoints/recipes.js`)
 
 ```js
-import api from 'gw2-gw2api-client'
-import AbstractEndpoint from 'gw2-gw2api-client/build/endpoint'
+import client from 'gw2api-client'
+import AbstractEndpoint from 'gw2api-client/build/endpoint'
 
-// Create the client
-const client = api()
+// Get an instance of an API client
+const api = client()
 
 // Define our custom "items" endpoint
 class ItemsEndpoint extends AbstractEndpoint {
@@ -105,10 +103,10 @@ class ItemsEndpoint extends AbstractEndpoint {
 
 // Attach it to the client, either as a new endpoint
 // or overwriting an already existing one
-client.items = () => new ItemsEndpoint(client)
+api.items = () => new ItemsEndpoint(client)
 
 // Use the new, overwritten endpoint
-client.items().many([123, 456])
+api.items().many([123, 456])
   .then(items => console.log('Got the items', items))
   .catch(err => console.error('Things went south', err))
 ```
@@ -116,20 +114,20 @@ client.items().many([123, 456])
 ### Mocking
 
 If you want to mock this module in your tests, you can replace the underlying 
-request library with the provided mock module, e.g. using [rewire](https://github.com/jhnns/rewire).
+request library with the provided mock module, e.g. using [rewire](https://github.com/speedskater/babel-plugin-rewire).
 
-You can find all available mock methods here: https://github.com/gw2efficiency/requester#mocking
+You can find all available mock methods here: https://github.com/queicherius/lets-fetch#mocking
 
 ```js
 const rewire = require('rewire')
-const requesterMock = require('gw2e-requester/mock')
+const fetchMock = require('lets-fetch/mock')
 const file = rewire('../some/file/using/gw2api/client.js')
 
 // Get the variable "api" (which is the initialized api client)
-// and replace the requester method with the requesterMock
-file.__get__('api').requester = requesterMock
+// and replace the fetch method with the fetchMock
+file.__get__('api').fetch = fetchMock
 
-// Use the requester mock methods as described in the link above
+// Use the fetch mock methods as described in the link above
 ```
 
 ## Endpoint Overview

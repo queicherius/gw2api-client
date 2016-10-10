@@ -1,9 +1,9 @@
-const reqMock = require('gw2e-requester/mock')
+const reqMock = require('lets-fetch/mock')
 
 const mockClient = {
   lang: false,
   apiKey: false,
-  requester: reqMock,
+  fetch: reqMock,
   language: function (lang) {
     this.lang = lang
   },

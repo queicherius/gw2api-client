@@ -1,8 +1,7 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect
-const rewire = require('rewire')
 const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = rewire('../../src/endpoints/events.js')
+const Module = require('../../src/endpoints/events.js')
 
 describe('endpoints > events', () => {
   let endpoint

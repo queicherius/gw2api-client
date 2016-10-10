@@ -1,10 +1,10 @@
-const requester = require('gw2e-requester')
+const fetch = require('lets-fetch')
 
 class Client {
   constructor () {
     this.lang = 'en'
     this.apiKey = false
-    this.requester = requester
+    this.fetch = fetch
   }
 
   // Set the language for locale-aware endpoints

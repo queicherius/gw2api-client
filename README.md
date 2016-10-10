@@ -21,55 +21,53 @@ This module can be used for Node.js as well as browsers using [Browserify](https
 import client from 'gw2api-client'
 import flow from 'promise-control-flow'
 
-async function example () {
-  // Get an instance of an API client
-  let api = client()
-  
-  // Optional: Set the language of the client
-  api.language('en')
-  
-  // Optional: Authenticate the client using an API key
-  api.authenticate('my-secret-key')
-  
-  // Get the ids of all items
-  let items = await api.items().ids()
-  
-  // Note: If you want to request e.g. multiple items with different languages
-  // or API keys in *parallel*, you have to use *different* client instances
-  // for that, since language and key are connected to the client instance
-  flow.parallel([
-    () => client().language('en').items().all(),
-    () => client().language('de').items().all()
-  ])
-}
+// Get an instance of an API client
+let api = client()
+
+// Optional: Set the language of the client
+api.language('en')
+
+// Optional: Authenticate the client using an API key
+api.authenticate('my-secret-key')
+
+// Get the ids of all items
+api.items().ids()
+  .then(items => console.log(items))
+
+// Note: If you want to request e.g. multiple items with different languages
+// or API keys in *parallel*, you have to use *different* client instances
+// for that, since language and key are connected to the client instance
+flow.parallel([
+  () => client().language('en').items().all(),
+  () => client().language('de').items().all()
+])
 ```
 
 ### Error handling
 
-You can wrap every call in a `try...catch` statement (or using Promise `catch`), catching all possible errors.
+You can use the Promise `catch` to handle all possible errors.
 
 ```js
-try {
-  let bank = await api.account().bank()
-} catch (err) {
-  // err.response is the last response object (e.g. err.response.status)
-  // err.content is the parsed body of the response, if available
-  // err.content.text MAY be set to the error text thrown of the API, if available
-  console.log('Something went wrong', err)
-}
+api.account().bank()
+  .catch(err => {
+    // err.response is the last response object (e.g. err.response.status)
+    // err.content is the parsed body of the response, if available
+    // err.content.text is the error text thrown of the API, if available
+    console.error('Something went wrong', err)
+  })
 ```
 
-The API can throw server errors (status > `500`) that don't have a `text` property set, but if
-it responds with a error, the following error texts can appear:
+The API can throw server errors (status >= `500`) that don't have a `text` property set.
+However, most of the time it responds with one of the following errors:
 
-- endpoint requires authentication
-- invalid key
-- requires scope xyz
-- membership required
-- access restricted to guild leaders
-- page out of range
-- no such id
-- all ids provided are invalid
+- `endpoint requires authentication`
+- `invalid key`
+- `requires scope <xyz>`
+- `membership required`
+- `access restricted to guild leaders`
+- `page out of range`
+- `no such id`
+- `all ids provided are invalid`
 
 ### Extending
 
@@ -88,7 +86,7 @@ const api = client()
 class ItemsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
-    this.baseUrl = 'https://gw2-api.com'
+    this.baseUrl = 'https://api.my-domain.com'
     this.url = '/items'
     this.isPaginated = false
     this.isBulk = true
@@ -104,7 +102,7 @@ api.items = () => new ItemsEndpoint(client)
 // Use the new, overwritten endpoint
 api.items().many([123, 456])
   .then(items => console.log('Got the items', items))
-  .catch(err => console.error('Things went south', err))
+  .catch(err => console.error('Things went badly', err))
 ```
 
 ### Mocking
@@ -116,7 +114,7 @@ You can find all available mock methods here: https://github.com/queicherius/let
 
 ```js
 import fetchMock from 'lets-fetch/mock'
-import file from '../some/file/using/gw2api/client.js'
+import file from './some/file/using/gw2api/client.js'
 
 // Get the variable "api" (which is the initialized api client)
 // and replace the fetch method with the fetchMock

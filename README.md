@@ -1,11 +1,9 @@
 # gw2api-client
 
-[![Build Status](https://img.shields.io/travis/gw2efficiency/gw2api-client.svg?style=flat-square)](https://travis-ci.org/gw2efficiency/gw2api-client)
-[![Coverage Status](https://img.shields.io/codecov/c/github/gw2efficiency/gw2api-client/master.svg?style=flat-square)](https://codecov.io/github/gw2efficiency/gw2api-client)
+[![Build Status](https://img.shields.io/travis/queicherius/gw2api-client.svg?style=flat-square)](https://travis-ci.org/queicherius/gw2api-client)
+[![Coverage Status](https://img.shields.io/codecov/c/github/queicherius/gw2api-client/master.svg?style=flat-square)](https://codecov.io/github/queicherius/gw2api-client)
 
 > Javascript wrapper for the official Guild Wars 2 API.
-
-*This is part of [gw2efficiency](https://gw2efficiency.com). Please report all issues in [the central repository](https://github.com/gw2efficiency/issues/issues).*
 
 ## Install
 

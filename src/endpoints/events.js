@@ -6,12 +6,14 @@ export default class EventsEndpoint extends AbstractEndpoint {
     this.url = '/v1/event_details.json'
   }
 
-  async all () {
-    return transformV1Format(await this.request(this.url))
+  all () {
+    return this.request(this.url)
+      .then(transformV1Format)
   }
 
-  async get (id) {
-    return transformV1Format(await this.request(`${this.url}?event_id=${id}`))[0]
+  get (id) {
+    return this.request(`${this.url}?event_id=${id}`)
+      .then(json => transformV1Format(json)[0])
   }
 }
 

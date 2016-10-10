@@ -6,7 +6,7 @@ export default class BuildEndpoint extends AbstractEndpoint {
     this.url = '/v2/build'
   }
 
-  async get () {
-    return (await this.request(this.url)).id
+  get () {
+    return this.request(this.url).then(result => result.id)
   }
 }

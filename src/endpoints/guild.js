@@ -66,8 +66,8 @@ class SearchEndpoint extends AbstractEndpoint {
     this.url = `/v2/guild/search?name=${encodeURIComponent(name)}`
   }
 
-  async get () {
-    return (await this.request(this.url))[0]
+  get () {
+    return this.request(this.url).then(result => result[0])
   }
 }
 

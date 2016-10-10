@@ -55,8 +55,8 @@ class BackstoryEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 
-  async get () {
-    return (await this.request(this.url)).backstory
+  get () {
+    return this.request(this.url).then(result => result.backstory)
   }
 }
 
@@ -75,8 +75,8 @@ class CraftingEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 
-  async get () {
-    return (await this.request(this.url)).crafting
+  get () {
+    return this.request(this.url).then(result => result.crafting)
   }
 }
 
@@ -87,8 +87,8 @@ class EquipmentEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 
-  async get () {
-    return (await this.request(this.url)).equipment
+  get () {
+    return this.request(this.url).then(result => result.equipment)
   }
 }
 
@@ -107,8 +107,8 @@ class InventoryEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 
-  async get () {
-    return (await this.request(this.url)).bags
+  get () {
+    return this.request(this.url).then(result => result.bags)
   }
 }
 
@@ -119,8 +119,8 @@ class RecipesEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 
-  async get () {
-    return (await this.request(this.url)).recipes
+  get () {
+    return this.request(this.url).then(result => result.recipes)
   }
 }
 
@@ -131,8 +131,8 @@ class SpecializationsEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 
-  async get () {
-    return (await this.request(this.url)).specializations
+  get () {
+    return this.request(this.url).then(result => result.specializations)
   }
 }
 
@@ -143,7 +143,7 @@ class TrainingEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 
-  async get () {
-    return (await this.request(this.url)).training
+  get () {
+    return this.request(this.url).then(result => result.training)
   }
 }

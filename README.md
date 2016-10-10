@@ -13,8 +13,6 @@ npm install gw2api-client
 
 This module can be used for Node.js as well as browsers using [Browserify](https://github.com/substack/browserify-handbook#how-node_modules-works). 
 
-**Requires the [babel-polyfill](https://babeljs.io/docs/usage/polyfill/) to work.**
-
 ## Usage
 
 ### Basic usage

@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class RecipesEndpoint extends AbstractEndpoint {
+export default class RecipesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/recipes'
@@ -21,12 +21,10 @@ class SearchEndpoint extends AbstractEndpoint {
   }
 
   input (id) {
-    return this.request(this.url + '?input=' + id)
+    return this.request(`${this.url}?input=${id}`)
   }
 
   output (id) {
-    return this.request(this.url + '?output=' + id)
+    return this.request(`${this.url}?output=${id}`)
   }
 }
-
-module.exports = RecipesEndpoint

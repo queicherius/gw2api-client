@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class CommerceEndpoint extends AbstractEndpoint {
+export default class CommerceEndpoint extends AbstractEndpoint {
   // Current gem/coin exchange rates
   exchange () {
     return new ExchangeEndpoint(this.client)
@@ -38,11 +38,11 @@ class ExchangeEndpoint extends AbstractEndpoint {
   }
 
   gems (quantity) {
-    return this.request(this.url + '/gems?quantity=' + quantity)
+    return this.request(`${this.url}/gems?quantity=${quantity}`)
   }
 
   coins (quantity) {
-    return this.request(this.url + '/coins?quantity=' + quantity)
+    return this.request(`${this.url}/coins?quantity=${quantity}`)
   }
 }
 
@@ -69,10 +69,8 @@ class PricesEndpoint extends AbstractEndpoint {
 class TransactionsEndpoint extends AbstractEndpoint {
   constructor (client, type, list) {
     super(client)
-    this.url = '/v2/commerce/transactions/' + type + '/' + list
+    this.url = `/v2/commerce/transactions/${type}/${list}`
     this.isPaginated = true
     this.isAuthenticated = true
   }
 }
-
-module.exports = CommerceEndpoint

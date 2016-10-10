@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class SkinsEndpoint extends AbstractEndpoint {
+export default class SkinsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/skins'
@@ -10,5 +10,3 @@ class SkinsEndpoint extends AbstractEndpoint {
     this.isLocalized = true
   }
 }
-
-module.exports = SkinsEndpoint

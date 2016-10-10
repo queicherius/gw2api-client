@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = require('../../src/endpoints/emblem.js')
+import {expect} from 'chai'
+import {mockClient, fetchMock} from '../mocks/client.mock'
+import Module from '../../src/endpoints/emblem'
 
 describe('endpoints > emblem', () => {
   let endpoint
   beforeEach(() => {
     endpoint = new Module(mockClient)
-    reqMock.reset()
+    fetchMock.reset()
   })
 
   it('test /v2/emblem/backgrounds', async () => {
@@ -20,7 +20,7 @@ describe('endpoints > emblem', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/emblem/backgrounds')
 
-    reqMock.addResponse({id: 1, layers: ['1.png', '2.png']})
+    fetchMock.addResponse({id: 1, layers: ['1.png', '2.png']})
     let content = await endpoint.get(1)
     expect(content.id).to.equal(1)
   })
@@ -35,7 +35,7 @@ describe('endpoints > emblem', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/emblem/foregrounds')
 
-    reqMock.addResponse({id: 1, layers: ['1.png', '2.png']})
+    fetchMock.addResponse({id: 1, layers: ['1.png', '2.png']})
     let content = await endpoint.get(1)
     expect(content.id).to.equal(1)
   })

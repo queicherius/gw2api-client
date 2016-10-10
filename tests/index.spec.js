@@ -1,10 +1,11 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const index = require('../src/index.js')
+import {expect} from 'chai'
+import index from '../src/index'
+import Client from '../src/client'
 
 describe('index', () => {
   it('exports a function that returns a new client object', () => {
     expect(index).to.be.a.function
-    expect(index()).to.be.an.instanceOf(require('../src/client.js'))
+    expect(index()).to.be.an.instanceOf(Client)
   })
 })

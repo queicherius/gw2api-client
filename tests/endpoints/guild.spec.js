@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = require('../../src/endpoints/guild.js')
+import {expect} from 'chai'
+import {mockClient, fetchMock} from '../mocks/client.mock'
+import Module from '../../src/endpoints/guild'
 
 describe('endpoints > guild', () => {
   let endpoint
   beforeEach(() => {
     endpoint = new Module(mockClient)
-    reqMock.reset()
+    fetchMock.reset()
   })
 
   it('test /v2/guild', async () => {
@@ -18,7 +18,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isOptionallyAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild')
 
-    reqMock.addResponse({id: 'guid', name: 'Baws Like', tag: 'BAWS'})
+    fetchMock.addResponse({id: 'guid', name: 'Baws Like', tag: 'BAWS'})
     let content = await endpoint.get()
     expect(content.name).to.equal('Baws Like')
   })
@@ -32,7 +32,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/guild/permissions')
 
-    reqMock.addResponse(['ClaimableEditOptions', 'EditBGM'])
+    fetchMock.addResponse(['ClaimableEditOptions', 'EditBGM'])
     let content = await endpoint.ids()
     expect(content).to.deep.equal(['ClaimableEditOptions', 'EditBGM'])
   })
@@ -46,7 +46,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/guild/search?name=Baws%20Like')
 
-    reqMock.addResponse(['F8CDF1E0-2D64-4D71-81E2-049B0796B7AE'])
+    fetchMock.addResponse(['F8CDF1E0-2D64-4D71-81E2-049B0796B7AE'])
     let content = await endpoint.get()
     expect(content).to.equal('F8CDF1E0-2D64-4D71-81E2-049B0796B7AE')
   })
@@ -60,7 +60,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/guild/upgrades')
 
-    reqMock.addResponse([1, 2, 3])
+    fetchMock.addResponse([1, 2, 3])
     let content = await endpoint.ids()
     expect(content).to.deep.equal([1, 2, 3])
   })
@@ -74,7 +74,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild/S0ME-UU1D/log')
 
-    reqMock.addResponse([{id: 123, user: 'Account.1234', type: 'upgrade'}])
+    fetchMock.addResponse([{id: 123, user: 'Account.1234', type: 'upgrade'}])
     let content = await endpoint.get()
     expect(content[0].user).to.equal('Account.1234')
   })
@@ -88,7 +88,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild/S0ME-UU1D/members')
 
-    reqMock.addResponse([{name: 'Account.1234', rank: 'Leader'}])
+    fetchMock.addResponse([{name: 'Account.1234', rank: 'Leader'}])
     let content = await endpoint.get()
     expect(content[0].name).to.equal('Account.1234')
   })
@@ -102,7 +102,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild/S0ME-UU1D/ranks')
 
-    reqMock.addResponse([{id: 'Officer', order: 2, permissions: ['Admin']}])
+    fetchMock.addResponse([{id: 'Officer', order: 2, permissions: ['Admin']}])
     let content = await endpoint.get()
     expect(content[0].id).to.equal('Officer')
   })
@@ -116,7 +116,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild/S0ME-UU1D/stash')
 
-    reqMock.addResponse([{upgrade_id: 58, size: 50, coins: 1337, inventory: [{id: 19684, count: 29}]}])
+    fetchMock.addResponse([{upgrade_id: 58, size: 50, coins: 1337, inventory: [{id: 19684, count: 29}]}])
     let content = await endpoint.get()
     expect(content[0].coins).to.equal(1337)
   })
@@ -130,7 +130,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild/S0ME-UU1D/teams')
 
-    reqMock.addResponse([{id: 1, name: 'Gimme That Guild Hall Pls'}])
+    fetchMock.addResponse([{id: 1, name: 'Gimme That Guild Hall Pls'}])
     let content = await endpoint.get()
     expect(content[0].name).to.equal('Gimme That Guild Hall Pls')
   })
@@ -144,7 +144,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild/S0ME-UU1D/treasury')
 
-    reqMock.addResponse([{id: 1337, count: 250}])
+    fetchMock.addResponse([{id: 1337, count: 250}])
     let content = await endpoint.get()
     expect(content[0].id).to.equal(1337)
   })
@@ -158,7 +158,7 @@ describe('endpoints > guild', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/guild/S0ME-UU1D/upgrades')
 
-    reqMock.addResponse([1, 2, 3])
+    fetchMock.addResponse([1, 2, 3])
     let content = await endpoint.get()
     expect(content).to.deep.equal([1, 2, 3])
   })

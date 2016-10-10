@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class SkillsEndpoint extends AbstractEndpoint {
+export default class SkillsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/skills'
@@ -9,5 +9,3 @@ class SkillsEndpoint extends AbstractEndpoint {
     this.isLocalized = true
   }
 }
-
-module.exports = SkillsEndpoint

@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class BackstoryEndpoint extends AbstractEndpoint {
+export default class BackstoryEndpoint extends AbstractEndpoint {
   answers () {
     return new AnswersEndpoint(this.client)
   }
@@ -31,5 +31,3 @@ class QuestionsEndpoint extends AbstractEndpoint {
     this.isLocalized = true
   }
 }
-
-module.exports = BackstoryEndpoint

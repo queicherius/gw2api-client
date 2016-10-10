@@ -1,6 +1,42 @@
-const fetch = require('lets-fetch')
+import fetch from 'lets-fetch'
+import AccountEndpoint from './endpoints/account'
+import AchievementsEndpoint from './endpoints/achievements'
+import BackstoryEndpoint from './endpoints/backstory'
+import BuildEndpoint from './endpoints/build'
+import CharactersEndpoint from './endpoints/characters'
+import ColorsEndpoint from './endpoints/colors'
+import CommerceEndpoint from './endpoints/commerce'
+import ContinentsEndpoint from './endpoints/continents'
+import CurrenciesEndpoint from './endpoints/currencies'
+import EmblemEndpoint from './endpoints/emblem'
+import EventsEndpoint from './endpoints/events'
+import FilesEndpoint from './endpoints/files'
+import FinishersEndpoint from './endpoints/finishers'
+import GuildEndpoint from './endpoints/guild'
+import ItemsEndpoint from './endpoints/items'
+import ItemstatsEndpoint from './endpoints/itemstats'
+import LegendsEndpoint from './endpoints/legends'
+import MapsEndpoint from './endpoints/maps'
+import MasteriesEndpoint from './endpoints/masteries'
+import MaterialsEndpoint from './endpoints/materials'
+import MinisEndpoint from './endpoints/minis'
+import OutfitsEndpoint from './endpoints/outfits'
+import PetsEndpoint from './endpoints/pets'
+import ProfessionsEndpoint from './endpoints/professions'
+import PvpEndpoint from './endpoints/pvp'
+import QuaggansEndpoint from './endpoints/quaggans'
+import RecipesEndpoint from './endpoints/recipes'
+import SkillsEndpoint from './endpoints/skills'
+import SkinsEndpoint from './endpoints/skins'
+import SpecializationsEndpoint from './endpoints/specializations'
+import StoriesEndpoint from './endpoints/stories'
+import TitlesEndpoint from './endpoints/titles'
+import TokeninfoEndpoint from './endpoints/tokeninfo'
+import TraitsEndpoint from './endpoints/traits'
+import WorldsEndpoint from './endpoints/worlds'
+import WvwEndpoint from './endpoints/wvw'
 
-class Client {
+export default class Client {
   constructor () {
     this.lang = 'en'
     this.apiKey = false
@@ -20,148 +56,147 @@ class Client {
   }
 
   account () {
-    return new (require('./endpoints/account.js'))(this)
+    return new AccountEndpoint(this)
   }
 
+  // All the different API endpoints
   achievements () {
-    return new (require('./endpoints/achievements.js'))(this)
+    return new AchievementsEndpoint(this)
   }
 
   backstory () {
-    return new (require('./endpoints/backstory.js'))(this)
+    return new BackstoryEndpoint(this)
   }
 
   build () {
-    return new (require('./endpoints/build.js'))(this)
+    return new BuildEndpoint(this)
   }
 
   characters (name) {
-    return new (require('./endpoints/characters.js'))(this, name)
+    return new CharactersEndpoint(this, name)
   }
 
   colors () {
-    return new (require('./endpoints/colors.js'))(this)
+    return new ColorsEndpoint(this)
   }
 
   commerce () {
-    return new (require('./endpoints/commerce.js'))(this)
+    return new CommerceEndpoint(this)
   }
 
   continents () {
-    return new (require('./endpoints/continents.js'))(this)
+    return new ContinentsEndpoint(this)
   }
 
   currencies () {
-    return new (require('./endpoints/currencies.js'))(this)
+    return new CurrenciesEndpoint(this)
   }
 
   emblem () {
-    return new (require('./endpoints/emblem.js'))(this)
+    return new EmblemEndpoint(this)
   }
 
   events () {
-    return new (require('./endpoints/events.js'))(this)
+    return new EventsEndpoint(this)
   }
 
   files () {
-    return new (require('./endpoints/files.js'))(this)
+    return new FilesEndpoint(this)
   }
 
   finishers () {
-    return new (require('./endpoints/finishers.js'))(this)
+    return new FinishersEndpoint(this)
   }
 
   guild (id) {
-    return new (require('./endpoints/guild.js'))(this, id)
+    return new GuildEndpoint(this, id)
   }
 
   items () {
-    return new (require('./endpoints/items.js'))(this)
+    return new ItemsEndpoint(this)
   }
 
   itemstats () {
-    return new (require('./endpoints/itemstats.js'))(this)
+    return new ItemstatsEndpoint(this)
   }
 
   legends () {
-    return new (require('./endpoints/legends.js'))(this)
+    return new LegendsEndpoint(this)
   }
 
   maps () {
-    return new (require('./endpoints/maps.js'))(this)
+    return new MapsEndpoint(this)
   }
 
   masteries () {
-    return new (require('./endpoints/masteries.js'))(this)
+    return new MasteriesEndpoint(this)
   }
 
   materials () {
-    return new (require('./endpoints/materials.js'))(this)
+    return new MaterialsEndpoint(this)
   }
 
   minis () {
-    return new (require('./endpoints/minis.js'))(this)
+    return new MinisEndpoint(this)
   }
 
   outfits () {
-    return new (require('./endpoints/outfits.js'))(this)
+    return new OutfitsEndpoint(this)
   }
 
   pets () {
-    return new (require('./endpoints/pets.js'))(this)
+    return new PetsEndpoint(this)
   }
 
   professions () {
-    return new (require('./endpoints/professions.js'))(this)
+    return new ProfessionsEndpoint(this)
   }
 
   pvp () {
-    return new (require('./endpoints/pvp.js'))(this)
+    return new PvpEndpoint(this)
   }
 
   quaggans () {
-    return new (require('./endpoints/quaggans.js'))(this)
+    return new QuaggansEndpoint(this)
   }
 
   recipes () {
-    return new (require('./endpoints/recipes.js'))(this)
+    return new RecipesEndpoint(this)
   }
 
   skills () {
-    return new (require('./endpoints/skills.js'))(this)
+    return new SkillsEndpoint(this)
   }
 
   skins () {
-    return new (require('./endpoints/skins.js'))(this)
+    return new SkinsEndpoint(this)
   }
 
   specializations () {
-    return new (require('./endpoints/specializations.js'))(this)
+    return new SpecializationsEndpoint(this)
   }
 
   stories () {
-    return new (require('./endpoints/stories.js'))(this)
+    return new StoriesEndpoint(this)
   }
 
   titles () {
-    return new (require('./endpoints/titles.js'))(this)
+    return new TitlesEndpoint(this)
   }
 
   tokeninfo () {
-    return new (require('./endpoints/tokeninfo.js'))(this)
+    return new TokeninfoEndpoint(this)
   }
 
   traits () {
-    return new (require('./endpoints/traits.js'))(this)
+    return new TraitsEndpoint(this)
   }
 
   worlds () {
-    return new (require('./endpoints/worlds.js'))(this)
+    return new WorldsEndpoint(this)
   }
 
   wvw () {
-    return new (require('./endpoints/wvw.js'))(this)
+    return new WvwEndpoint(this)
   }
 }
-
-module.exports = Client

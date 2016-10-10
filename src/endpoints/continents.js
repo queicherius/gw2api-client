@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class ContinentsEndpoint extends AbstractEndpoint {
+export default class ContinentsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/continents'
@@ -17,10 +17,8 @@ class ContinentsEndpoint extends AbstractEndpoint {
 class FloorsEndpoint extends AbstractEndpoint {
   constructor (client, continentId) {
     super(client)
-    this.url = '/v2/continents/' + continentId + '/floors'
+    this.url = `/v2/continents/${continentId}/floors`
     this.isPaginated = true
     this.isBulk = true
   }
 }
-
-module.exports = ContinentsEndpoint

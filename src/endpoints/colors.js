@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class ColorsEndpoint extends AbstractEndpoint {
+export default class ColorsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/colors'
@@ -9,5 +9,3 @@ class ColorsEndpoint extends AbstractEndpoint {
     this.isLocalized = true
   }
 }
-
-module.exports = ColorsEndpoint

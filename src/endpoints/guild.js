@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class GuildEndpoint extends AbstractEndpoint {
+export default class GuildEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
     this.id = id
@@ -63,7 +63,7 @@ class PermissionsEndpoint extends AbstractEndpoint {
 class SearchEndpoint extends AbstractEndpoint {
   constructor (client, name) {
     super(client)
-    this.url = '/v2/guild/search?name=' + encodeURIComponent(name)
+    this.url = `/v2/guild/search?name=${encodeURIComponent(name)}`
   }
 
   async get () {
@@ -84,7 +84,7 @@ class AllUpgradesEndpoint extends AbstractEndpoint {
 class LogEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
-    this.url = '/v2/guild/' + encodeURIComponent(id) + '/log'
+    this.url = `/v2/guild/${encodeURIComponent(id)}/log`
     this.isAuthenticated = true
   }
 }
@@ -92,7 +92,7 @@ class LogEndpoint extends AbstractEndpoint {
 class MembersEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
-    this.url = '/v2/guild/' + encodeURIComponent(id) + '/members'
+    this.url = `/v2/guild/${encodeURIComponent(id)}/members`
     this.isAuthenticated = true
   }
 }
@@ -100,7 +100,7 @@ class MembersEndpoint extends AbstractEndpoint {
 class RanksEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
-    this.url = '/v2/guild/' + encodeURIComponent(id) + '/ranks'
+    this.url = `/v2/guild/${encodeURIComponent(id)}/ranks`
     this.isAuthenticated = true
   }
 }
@@ -108,7 +108,7 @@ class RanksEndpoint extends AbstractEndpoint {
 class StashEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
-    this.url = '/v2/guild/' + encodeURIComponent(id) + '/stash'
+    this.url = `/v2/guild/${encodeURIComponent(id)}/stash`
     this.isAuthenticated = true
   }
 }
@@ -116,7 +116,7 @@ class StashEndpoint extends AbstractEndpoint {
 class TeamsEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
-    this.url = '/v2/guild/' + encodeURIComponent(id) + '/teams'
+    this.url = `/v2/guild/${encodeURIComponent(id)}/teams`
     this.isAuthenticated = true
   }
 }
@@ -124,7 +124,7 @@ class TeamsEndpoint extends AbstractEndpoint {
 class TreasuryEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
-    this.url = '/v2/guild/' + encodeURIComponent(id) + '/treasury'
+    this.url = `/v2/guild/${encodeURIComponent(id)}/treasury`
     this.isAuthenticated = true
   }
 }
@@ -132,9 +132,7 @@ class TreasuryEndpoint extends AbstractEndpoint {
 class UpgradesEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
-    this.url = '/v2/guild/' + encodeURIComponent(id) + '/upgrades'
+    this.url = `/v2/guild/${encodeURIComponent(id)}/upgrades`
     this.isAuthenticated = true
   }
 }
-
-module.exports = GuildEndpoint

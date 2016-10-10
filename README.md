@@ -117,9 +117,8 @@ request library with the provided mock module, e.g. using [rewire](https://githu
 You can find all available mock methods here: https://github.com/queicherius/lets-fetch#mocking
 
 ```js
-const rewire = require('rewire')
-const fetchMock = require('lets-fetch/mock')
-const file = rewire('../some/file/using/gw2api/client.js')
+import fetchMock from 'lets-fetch/mock'
+import file from '../some/file/using/gw2api/client.js'
 
 // Get the variable "api" (which is the initialized api client)
 // and replace the fetch method with the fetchMock

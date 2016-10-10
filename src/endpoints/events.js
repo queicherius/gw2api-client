@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class EventsEndpoint extends AbstractEndpoint {
+export default class EventsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v1/event_details.json'
@@ -11,7 +11,7 @@ class EventsEndpoint extends AbstractEndpoint {
   }
 
   async get (id) {
-    return transformV1Format(await this.request(this.url + '?event_id=' + id))[0]
+    return transformV1Format(await this.request(`${this.url}?event_id=${id}`))[0]
   }
 }
 
@@ -28,5 +28,3 @@ function transformV1Format (json) {
 
   return transformed
 }
-
-module.exports = EventsEndpoint

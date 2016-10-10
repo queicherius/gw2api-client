@@ -1,7 +1,7 @@
-const parseUrl = require('url-parse')
-const {chunk, unique, flatten} = require('./helpers.js')
+import parseUrl from 'url-parse'
+import {chunk, unique, flatten} from './helpers'
 
-class AbstractEndpoint {
+export default class AbstractEndpoint {
   constructor (client) {
     this.client = client
     this.fetch = client.fetch
@@ -42,7 +42,7 @@ class AbstractEndpoint {
       return await this.request(this.url)
     }
 
-    return await this.request(this.url + '?id=' + id)
+    return await this.request(`${this.url}?id=${id}`)
   }
 
   // Get multiple entries by ids
@@ -59,7 +59,7 @@ class AbstractEndpoint {
 
     let requests = []
     pages.map(page => {
-      requests.push(this.url + '?ids=' + page.join(','))
+      requests.push(`${this.url}?ids=${page.join(',')}`)
     })
 
     let responses = await this.requestMany(requests)
@@ -73,14 +73,14 @@ class AbstractEndpoint {
     }
 
     if (size > this.maxPageSize || size <= 0) {
-      throw new Error('"size" has to be between 0 and ' + this.maxPageSize + ', was ' + size)
+      throw new Error(`"size" has to be between 0 and ${this.maxPageSize}, was ${size}`)
     }
 
     if (page < 0) {
       throw new Error('page has to be 0 or greater')
     }
 
-    return await this.request(this.url + '?page=' + page + '&page_size=' + size)
+    return await this.request(`${this.url}?page=${page}&page_size=${size}`)
   }
 
   // Get all entries: If the endpoint supports the "all" keyword for bulk
@@ -91,10 +91,10 @@ class AbstractEndpoint {
     }
 
     if (this.isBulk && this.supportsBulkAll) {
-      return this.request(this.url + '?ids=all')
+      return this.request(`${this.url}?ids=all`)
     }
 
-    let firstPage = await this.request(this.url + '?page=0&page_size=' + this.maxPageSize, 'response')
+    let firstPage = await this.request(`${this.url}?page=0&page_size=${this.maxPageSize}`, 'response')
     let result = await firstPage.json()
     let total = firstPage.headers.get('X-Result-Total')
 
@@ -104,7 +104,7 @@ class AbstractEndpoint {
 
     let requests = []
     for (let page = 1; page < Math.ceil(total / this.maxPageSize); page++) {
-      requests.push(this.url + '?page=' + page + '&page_size=' + this.maxPageSize)
+      requests.push(`${this.url}?page=${page}&page_size=${this.maxPageSize}`)
     }
 
     let responses = await this.requestMany(requests)
@@ -131,8 +131,7 @@ class AbstractEndpoint {
     let parsedUrl = parseUrl(url, true)
     let query = parsedUrl.query
 
-    // Only set the API key for authenticated endpoints, when it is
-    // required or set on the client
+    // Only set the API key for authenticated endpoints, when it is required or set on the client
     const usesApiKey = this.isAuthenticated &&
       (!this.isOptionallyAuthenticated || this.client.apiKey !== undefined)
 
@@ -154,5 +153,3 @@ class AbstractEndpoint {
     return string
   }
 }
-
-module.exports = AbstractEndpoint

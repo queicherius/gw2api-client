@@ -1,17 +1,17 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = require('../../src/endpoints/build.js')
+import {expect} from 'chai'
+import {mockClient, fetchMock} from '../mocks/client.mock'
+import Module from '../../src/endpoints/build'
 
 describe('endpoints > build', () => {
-  var endpoint
+  let endpoint
   beforeEach(() => {
     endpoint = new Module(mockClient)
-    reqMock.reset()
+    fetchMock.reset()
   })
 
   it('test /v2/build', async () => {
-    reqMock.addResponse({'id': 1337})
+    fetchMock.addResponse({id: 1337})
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)

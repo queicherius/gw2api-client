@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = require('../../src/endpoints/pvp.js')
+import {expect} from 'chai'
+import {mockClient, fetchMock} from '../mocks/client.mock'
+import Module from '../../src/endpoints/pvp'
 
 describe('endpoints > pvp', () => {
   let endpoint
   beforeEach(() => {
     endpoint = new Module(mockClient)
-    reqMock.reset()
+    fetchMock.reset()
   })
 
   it('test /v2/pvp/amulets', async () => {
@@ -20,7 +20,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/pvp/amulets')
 
-    reqMock.addResponse({id: 4, name: 'Assassin Amulet'})
+    fetchMock.addResponse({id: 4, name: 'Assassin Amulet'})
     let content = await endpoint.get(4)
     expect(content.name).to.equal('Assassin Amulet')
   })
@@ -35,7 +35,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/pvp/games')
 
-    reqMock.addResponse(['uuid1', 'uuid2'])
+    fetchMock.addResponse(['uuid1', 'uuid2'])
     let content = await endpoint.ids()
     expect(content).to.deep.equal(['uuid1', 'uuid2'])
   })
@@ -50,7 +50,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/pvp/seasons')
 
-    reqMock.addResponse({id: 'S0ME-UU1D', name: 'PvP League Season Four'})
+    fetchMock.addResponse({id: 'S0ME-UU1D', name: 'PvP League Season Four'})
     let content = await endpoint.get('S0ME-UU1D')
     expect(content.name).to.equal('PvP League Season Four')
   })
@@ -64,7 +64,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/pvp/standings')
 
-    reqMock.addResponse([{season_id: 'UUID', current: {tier: 1}}])
+    fetchMock.addResponse([{season_id: 'UUID', current: {tier: 1}}])
     let content = await endpoint.get()
     expect(content[0].season_id).to.equal('UUID')
   })
@@ -78,7 +78,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.url).to.equal('/v2/pvp/stats')
 
-    reqMock.addResponse({pvp_rank: 80})
+    fetchMock.addResponse({pvp_rank: 80})
     let content = await endpoint.get()
     expect(content.pvp_rank).to.equal(80)
   })

@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class CharactersEndpoint extends AbstractEndpoint {
+export default class CharactersEndpoint extends AbstractEndpoint {
   constructor (client, name) {
     super(client)
     this.name = name
@@ -51,7 +51,7 @@ class CharactersEndpoint extends AbstractEndpoint {
 class BackstoryEndpoint extends AbstractEndpoint {
   constructor (client, character) {
     super(client)
-    this.url = '/v2/characters/' + encodeURIComponent(character) + '/backstory'
+    this.url = `/v2/characters/${encodeURIComponent(character)}/backstory`
     this.isAuthenticated = true
   }
 
@@ -63,7 +63,7 @@ class BackstoryEndpoint extends AbstractEndpoint {
 class CoreEndpoint extends AbstractEndpoint {
   constructor (client, character) {
     super(client)
-    this.url = '/v2/characters/' + encodeURIComponent(character) + '/core'
+    this.url = `/v2/characters/${encodeURIComponent(character)}/core`
     this.isAuthenticated = true
   }
 }
@@ -71,7 +71,7 @@ class CoreEndpoint extends AbstractEndpoint {
 class CraftingEndpoint extends AbstractEndpoint {
   constructor (client, character) {
     super(client)
-    this.url = '/v2/characters/' + encodeURIComponent(character) + '/crafting'
+    this.url = `/v2/characters/${encodeURIComponent(character)}/crafting`
     this.isAuthenticated = true
   }
 
@@ -83,7 +83,7 @@ class CraftingEndpoint extends AbstractEndpoint {
 class EquipmentEndpoint extends AbstractEndpoint {
   constructor (client, character) {
     super(client)
-    this.url = '/v2/characters/' + encodeURIComponent(character) + '/equipment'
+    this.url = `/v2/characters/${encodeURIComponent(character)}/equipment`
     this.isAuthenticated = true
   }
 
@@ -95,7 +95,7 @@ class EquipmentEndpoint extends AbstractEndpoint {
 class HeropointsEndpoint extends AbstractEndpoint {
   constructor (client, character) {
     super(client)
-    this.url = '/v2/characters/' + encodeURIComponent(character) + '/heropoints'
+    this.url = `/v2/characters/${encodeURIComponent(character)}/heropoints`
     this.isAuthenticated = true
   }
 }
@@ -103,7 +103,7 @@ class HeropointsEndpoint extends AbstractEndpoint {
 class InventoryEndpoint extends AbstractEndpoint {
   constructor (client, character) {
     super(client)
-    this.url = '/v2/characters/' + encodeURIComponent(character) + '/inventory'
+    this.url = `/v2/characters/${encodeURIComponent(character)}/inventory`
     this.isAuthenticated = true
   }
 
@@ -115,7 +115,7 @@ class InventoryEndpoint extends AbstractEndpoint {
 class RecipesEndpoint extends AbstractEndpoint {
   constructor (client, character) {
     super(client)
-    this.url = '/v2/characters/' + encodeURIComponent(character) + '/recipes'
+    this.url = `/v2/characters/${encodeURIComponent(character)}/recipes`
     this.isAuthenticated = true
   }
 
@@ -127,7 +127,7 @@ class RecipesEndpoint extends AbstractEndpoint {
 class SpecializationsEndpoint extends AbstractEndpoint {
   constructor (client, character) {
     super(client)
-    this.url = '/v2/characters/' + encodeURIComponent(character) + '/specializations'
+    this.url = `/v2/characters/${encodeURIComponent(character)}/specializations`
     this.isAuthenticated = true
   }
 
@@ -139,7 +139,7 @@ class SpecializationsEndpoint extends AbstractEndpoint {
 class TrainingEndpoint extends AbstractEndpoint {
   constructor (client, character) {
     super(client)
-    this.url = '/v2/characters/' + encodeURIComponent(character) + '/training'
+    this.url = `/v2/characters/${encodeURIComponent(character)}/training`
     this.isAuthenticated = true
   }
 
@@ -147,5 +147,3 @@ class TrainingEndpoint extends AbstractEndpoint {
     return (await this.request(this.url)).training
   }
 }
-
-module.exports = CharactersEndpoint

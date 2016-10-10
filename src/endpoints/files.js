@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class FilesEndpoint extends AbstractEndpoint {
+export default class FilesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/files'
@@ -8,5 +8,3 @@ class FilesEndpoint extends AbstractEndpoint {
     this.isBulk = true
   }
 }
-
-module.exports = FilesEndpoint

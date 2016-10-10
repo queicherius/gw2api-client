@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = require('../../src/endpoints/stories.js')
+import {expect} from 'chai'
+import {mockClient, fetchMock} from '../mocks/client.mock'
+import Module from '../../src/endpoints/stories'
 
 describe('endpoints > stories', () => {
   let endpoint
   beforeEach(() => {
     endpoint = new Module(mockClient)
-    reqMock.reset()
+    fetchMock.reset()
   })
 
   it('test /v2/stories', async () => {
@@ -18,7 +18,7 @@ describe('endpoints > stories', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/stories')
 
-    reqMock.addResponse({id: 1, name: 'My Story'})
+    fetchMock.addResponse({id: 1, name: 'My Story'})
     let content = await endpoint.get(1)
     expect(content.name).to.equal('My Story')
   })
@@ -33,7 +33,7 @@ describe('endpoints > stories', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/stories/seasons')
 
-    reqMock.addResponse({id: 'S0ME-UU1D', name: 'Scarlet\'s War'})
+    fetchMock.addResponse({id: 'S0ME-UU1D', name: 'Scarlet\'s War'})
     let content = await endpoint.get('S0ME-UU1D')
     expect(content.name).to.equal('Scarlet\'s War')
   })

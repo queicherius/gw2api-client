@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class LegendsEndpoint extends AbstractEndpoint {
+export default class LegendsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/legends'
@@ -8,5 +8,3 @@ class LegendsEndpoint extends AbstractEndpoint {
     this.isBulk = true
   }
 }
-
-module.exports = LegendsEndpoint

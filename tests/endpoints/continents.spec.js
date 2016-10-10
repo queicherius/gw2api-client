@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = require('../../src/endpoints/continents.js')
+import {expect} from 'chai'
+import {mockClient, fetchMock} from '../mocks/client.mock'
+import Module from '../../src/endpoints/continents'
 
 describe('endpoints > continents', () => {
   let endpoint
   beforeEach(() => {
     endpoint = new Module(mockClient)
-    reqMock.reset()
+    fetchMock.reset()
   })
 
   it('test /v2/continents', async () => {
@@ -18,7 +18,7 @@ describe('endpoints > continents', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/continents')
 
-    reqMock.addResponse([1, 2])
+    fetchMock.addResponse([1, 2])
     let content = await endpoint.ids()
     expect(content).to.deep.equal([1, 2])
   })
@@ -33,7 +33,7 @@ describe('endpoints > continents', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/continents/1/floors')
 
-    reqMock.addResponse({texture_dims: [1, 2], clamed_view: [[1, 2]]})
+    fetchMock.addResponse({texture_dims: [1, 2], clamed_view: [[1, 2]]})
     let content = await endpoint.get(42)
     expect(content.texture_dims).to.deep.equal([1, 2])
   })

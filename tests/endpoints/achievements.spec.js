@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = require('../../src/endpoints/achievements.js')
+import {expect} from 'chai'
+import {mockClient, fetchMock} from '../mocks/client.mock'
+import Module from '../../src/endpoints/achievements'
 
 describe('endpoints > achievements', () => {
   let endpoint
   beforeEach(() => {
     endpoint = new Module(mockClient)
-    reqMock.reset()
+    fetchMock.reset()
   })
 
   it('test /v2/achievements', async () => {
@@ -18,7 +18,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/achievements')
 
-    reqMock.addResponse({id: 1, name: 'Centaur Slayer'})
+    fetchMock.addResponse({id: 1, name: 'Centaur Slayer'})
     let content = await endpoint.get(1)
     expect(content.name).to.equal('Centaur Slayer')
   })
@@ -33,7 +33,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/achievements/categories')
 
-    reqMock.addResponse({id: 1, name: 'Slayer', order: 30, achievements: [1, 4, 5]})
+    fetchMock.addResponse({id: 1, name: 'Slayer', order: 30, achievements: [1, 4, 5]})
     let content = await endpoint.get(1)
     expect(content.name).to.equal('Slayer')
   })
@@ -48,7 +48,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/achievements/groups')
 
-    reqMock.addResponse({id: '65B4B678-607E-4D97-B458-076C3E96A810', name: 'Heart of Thorns'})
+    fetchMock.addResponse({id: '65B4B678-607E-4D97-B458-076C3E96A810', name: 'Heart of Thorns'})
     let content = await endpoint.get('65B4B678-607E-4D97-B458-076C3E96A810')
     expect(content.name).to.equal('Heart of Thorns')
   })
@@ -63,7 +63,7 @@ describe('endpoints > achievements', () => {
 
     expect(endpoint.url).to.equal('/v2/achievements/daily')
 
-    reqMock.addResponse({pve: [{id: 1984, level: {min: 1, max: 80}}]})
+    fetchMock.addResponse({pve: [{id: 1984, level: {min: 1, max: 80}}]})
     let content = await endpoint.get()
     expect(content.pve[0].id).to.equal(1984)
   })
@@ -78,7 +78,7 @@ describe('endpoints > achievements', () => {
 
     expect(endpoint.url).to.equal('/v2/achievements/daily/tomorrow')
 
-    reqMock.addResponse({pve: [{id: 1984, level: {min: 1, max: 80}}]})
+    fetchMock.addResponse({pve: [{id: 1984, level: {min: 1, max: 80}}]})
     let content = await endpoint.get()
     expect(content.pve[0].id).to.equal(1984)
   })

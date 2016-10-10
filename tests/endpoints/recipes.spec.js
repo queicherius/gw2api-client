@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = require('../../src/endpoints/recipes.js')
+import {expect} from 'chai'
+import {mockClient, fetchMock} from '../mocks/client.mock'
+import Module from '../../src/endpoints/recipes'
 
 describe('endpoints > recipes', () => {
   let endpoint
   beforeEach(() => {
     endpoint = new Module(mockClient)
-    reqMock.reset()
+    fetchMock.reset()
   })
 
   it('test /v2/recipes', async () => {
@@ -18,7 +18,7 @@ describe('endpoints > recipes', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/recipes')
 
-    reqMock.addResponse([1, 2, 3])
+    fetchMock.addResponse([1, 2, 3])
     let content = await endpoint.ids()
     expect(content).to.deep.equal([1, 2, 3])
   })
@@ -32,7 +32,7 @@ describe('endpoints > recipes', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/recipes/search')
 
-    reqMock.addResponse([1, 2, 3])
+    fetchMock.addResponse([1, 2, 3])
     let content = await endpoint.input(123)
     expect(content).to.deep.equal([1, 2, 3])
   })
@@ -46,7 +46,7 @@ describe('endpoints > recipes', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/recipes/search')
 
-    reqMock.addResponse([1, 2, 3])
+    fetchMock.addResponse([1, 2, 3])
     let content = await endpoint.output(123)
     expect(content).to.deep.equal([1, 2, 3])
   })

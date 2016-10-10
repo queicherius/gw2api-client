@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class PvpEndpoint extends AbstractEndpoint {
+export default class PvpEndpoint extends AbstractEndpoint {
   amulets () {
     return new AmuletsEndpoint(this.client)
   }
@@ -67,5 +67,3 @@ class StatsEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 }
-
-module.exports = PvpEndpoint

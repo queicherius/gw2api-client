@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = require('../../src/endpoints/files.js')
+import {expect} from 'chai'
+import {mockClient, fetchMock} from '../mocks/client.mock'
+import Module from '../../src/endpoints/files'
 
 describe('endpoints > files', () => {
   let endpoint
   beforeEach(() => {
     endpoint = new Module(mockClient)
-    reqMock.reset()
+    fetchMock.reset()
   })
 
   it('test /v2/files', async () => {
@@ -18,7 +18,7 @@ describe('endpoints > files', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/files')
 
-    reqMock.addResponse(['map_complete', 'map_dungeon', 'map_heart_empty'])
+    fetchMock.addResponse(['map_complete', 'map_dungeon', 'map_heart_empty'])
     let content = await endpoint.ids()
     expect(content[0]).to.equal('map_complete')
   })

@@ -1,6 +1,9 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
+import CharactersEndpoint from './characters'
+import PvpEndpoint from './pvp'
+import CommerceEndpoint from './commerce'
 
-class AccountEndpoint extends AbstractEndpoint {
+export default class AccountEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account'
@@ -15,8 +18,8 @@ class AccountEndpoint extends AbstractEndpoint {
     return new BankEndpoint(this.client)
   }
 
-  characters () {
-    return new (require('./characters.js'))(this.client)
+  characters (name) {
+    return new CharactersEndpoint(this.client, name)
   }
 
   dyes () {
@@ -48,7 +51,7 @@ class AccountEndpoint extends AbstractEndpoint {
   }
 
   pvp () {
-    return new (require('./pvp.js'))(this.client)
+    return new PvpEndpoint(this.client)
   }
 
   recipes () {
@@ -64,7 +67,7 @@ class AccountEndpoint extends AbstractEndpoint {
   }
 
   transactions () {
-    return new (require('./commerce.js'))(this.client).transactions()
+    return new CommerceEndpoint(this.client).transactions()
   }
 
   wallet () {
@@ -175,5 +178,3 @@ class WalletEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
   }
 }
-
-module.exports = AccountEndpoint

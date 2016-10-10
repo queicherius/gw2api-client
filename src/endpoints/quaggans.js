@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class QuaggansEndpoint extends AbstractEndpoint {
+export default class QuaggansEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/quaggans'
@@ -8,5 +8,3 @@ class QuaggansEndpoint extends AbstractEndpoint {
     this.isBulk = true
   }
 }
-
-module.exports = QuaggansEndpoint

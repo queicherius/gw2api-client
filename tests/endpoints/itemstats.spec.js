@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const {mockClient, reqMock} = require('../mocks/client.mock.js')
-const Module = require('../../src/endpoints/itemstats.js')
+import {expect} from 'chai'
+import {mockClient, fetchMock} from '../mocks/client.mock'
+import Module from '../../src/endpoints/itemstats'
 
 describe('endpoints > itemstats', () => {
   let endpoint
   beforeEach(() => {
     endpoint = new Module(mockClient)
-    reqMock.reset()
+    fetchMock.reset()
   })
 
   it('test /v2/itemstats', async () => {
@@ -18,7 +18,7 @@ describe('endpoints > itemstats', () => {
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/itemstats')
 
-    reqMock.addResponse({id: 1, name: 'Healing'})
+    fetchMock.addResponse({id: 1, name: 'Healing'})
     let content = await endpoint.get(1)
     expect(content.name).to.equal('Healing')
   })

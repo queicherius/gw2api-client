@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class EmblemEndpoint extends AbstractEndpoint {
+export default class EmblemEndpoint extends AbstractEndpoint {
   backgrounds () {
     return new LayersEndpoint(this.client, 'backgrounds')
   }
@@ -13,10 +13,8 @@ class EmblemEndpoint extends AbstractEndpoint {
 class LayersEndpoint extends AbstractEndpoint {
   constructor (client, layer) {
     super(client)
-    this.url = '/v2/emblem/' + layer
+    this.url = `/v2/emblem/${layer}`
     this.isPaginated = true
     this.isBulk = true
   }
 }
-
-module.exports = EmblemEndpoint

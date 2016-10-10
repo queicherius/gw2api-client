@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class AchievementsEndpoint extends AbstractEndpoint {
+export default class AchievementsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements'
@@ -60,5 +60,3 @@ class DailyTomorrowEndpoint extends AbstractEndpoint {
     this.url = '/v2/achievements/daily/tomorrow'
   }
 }
-
-module.exports = AchievementsEndpoint

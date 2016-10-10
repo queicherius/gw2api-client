@@ -1,23 +1,23 @@
 /* eslint-env node, mocha */
-const expect = require('chai').expect
-const Module = require('../src/client.js')
+import {expect} from 'chai'
+import Module from '../src/client'
 
 describe('client', () => {
-  var client
+  let client
   beforeEach(() => {
     client = new Module()
   })
 
   it('can set a language', () => {
-    let x = client.language('de')
+    let api = client.language('de')
     expect(client.lang).to.equal('de')
-    expect(x).to.be.an.instanceof(Module)
+    expect(api).to.be.an.instanceof(Module)
   })
 
   it('can set an api key', () => {
-    let x = client.authenticate('key')
+    let api = client.authenticate('key')
     expect(client.apiKey).to.equal('key')
-    expect(x).to.be.an.instanceof(Module)
+    expect(api).to.be.an.instanceof(Module)
   })
 
   it('can get the account endpoint', () => {

@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class MinisEndpoint extends AbstractEndpoint {
+export default class MinisEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/minis'
@@ -9,5 +9,3 @@ class MinisEndpoint extends AbstractEndpoint {
     this.isLocalized = true
   }
 }
-
-module.exports = MinisEndpoint

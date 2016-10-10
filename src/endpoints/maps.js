@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class MapsEndpoint extends AbstractEndpoint {
+export default class MapsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/maps'
@@ -10,5 +10,3 @@ class MapsEndpoint extends AbstractEndpoint {
     this.isLocalized = true
   }
 }
-
-module.exports = MapsEndpoint

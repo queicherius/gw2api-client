@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class BuildEndpoint extends AbstractEndpoint {
+export default class BuildEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/build'
@@ -10,5 +10,3 @@ class BuildEndpoint extends AbstractEndpoint {
     return (await this.request(this.url)).id
   }
 }
-
-module.exports = BuildEndpoint

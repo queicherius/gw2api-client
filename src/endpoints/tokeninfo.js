@@ -1,11 +1,9 @@
-const AbstractEndpoint = require('../endpoint.js')
+import AbstractEndpoint from '../endpoint'
 
-class TokeninfoEndpoint extends AbstractEndpoint {
+export default class TokeninfoEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/tokeninfo'
     this.isAuthenticated = true
   }
 }
-
-module.exports = TokeninfoEndpoint

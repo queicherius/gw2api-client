@@ -1,9 +1,9 @@
-const reqMock = require('lets-fetch/mock')
+import fetch from 'lets-fetch/mock'
 
-const mockClient = {
+export const mockClient = {
   lang: false,
   apiKey: false,
-  fetch: reqMock,
+  fetch: fetch,
   language: function (lang) {
     this.lang = lang
   },
@@ -12,4 +12,4 @@ const mockClient = {
   }
 }
 
-module.exports = {mockClient, reqMock}
+export const fetchMock = fetch

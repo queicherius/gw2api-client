@@ -1,5 +1,6 @@
 import parseUrl from 'url-parse'
-import {chunk, unique, flatten} from './helpers'
+import unique from 'uniq'
+import {chunk, flatten, sortByIdList} from './helpers'
 
 export default class AbstractEndpoint {
   constructor (client) {
@@ -105,6 +106,9 @@ export default class AbstractEndpoint {
       return Promise.resolve([])
     }
 
+    // Always only work on unique ids, since that's how the API works
+    unique(ids)
+
     // There is no expiry set, so always use the live data
     if (!this.expiry) {
       return this._many(ids)
@@ -119,14 +123,25 @@ export default class AbstractEndpoint {
         return cached
       }
 
-      const cachedIds = cached.map(x => x.id)
-      const missingIds = ids.filter(x => cachedIds.indexOf(x) === -1)
-
+      const missingIds = getMissingIds(ids, cached)
       return this._many(missingIds).then(content => {
         const cacheContent = content.map(value => [this.cacheHash(value.id), value, this.expiry])
         this.cache.mset(cacheContent)
-        return [].concat(cached, content)
+
+        // Merge the new content with the cached content and guarantee element order
+        content = content.concat(cached)
+        return sortByIdList(content, ids)
       })
+    }
+
+    // Find the ids that are missing in the cached data
+    const getMissingIds = (ids, cached) => {
+      const cachedIds = {}
+      cached.map(x => {
+        cachedIds[x.id] = 1
+      })
+
+      return ids.filter(x => cachedIds[x] !== 1)
     }
 
     return this.cache.mget(hashes).then(handleCacheContent)
@@ -134,7 +149,7 @@ export default class AbstractEndpoint {
 
   _many (ids) {
     // Chunk the requests to the max page size
-    let pages = chunk(unique(ids), this.maxPageSize)
+    let pages = chunk(ids, this.maxPageSize)
     let requests = pages.map(page => `${this.url}?ids=${page.join(',')}`)
 
     // Work on all requests in parallel and then flatten the responses into one

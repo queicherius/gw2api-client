@@ -124,7 +124,7 @@ describe('abstract endpoint', () => {
       endpoint.url = '/v2/test'
       fetchMock.addResponse(content)
 
-      let entry = await endpoint.many([1, 2])
+      let entry = await endpoint.many([1, 2, 1])
       expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?ids=1,2')
       expect(fetchMock.urls().length).to.equal(1)
       expect(entry).to.deep.equal(content)
@@ -167,7 +167,7 @@ describe('abstract endpoint', () => {
       fetchMock.addResponse(content)
 
       let entry = await endpoint.many([1, 2, 3])
-      let entryShouldCache = await endpoint.many([2, 3])
+      let entryShouldCache = await endpoint.many([2, 3, 2])
       let bulkEntriesInCache = [
         await endpoint.cache.get('https://api.guildwars2.com/v2/test:1'),
         await endpoint.cache.get('https://api.guildwars2.com/v2/test:2'),
@@ -178,6 +178,37 @@ describe('abstract endpoint', () => {
       expect(fetchMock.urls().length).to.equal(1)
       expect(entry).to.deep.equal(content)
       expect(entryShouldCache).to.deep.equal(content.slice(1))
+      expect(bulkEntriesInCache).to.deep.equal(content)
+    })
+
+    it('partial caching', async () => {
+      let content = [
+        {id: 1, name: 'foo'},
+        {id: 2, name: 'bar'},
+        {id: 3, name: 'fooo'},
+        {id: 4, name: 'xd'}
+      ]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.expiry = 60
+      fetchMock.addResponse(content.slice(1, 3))
+      fetchMock.addResponse(content.slice(0, 1).concat(content.slice(3, 4)))
+
+      let entry = await endpoint.many([2, 3])
+      let entryShouldCache = await endpoint.many([1, 2, 3, 4])
+      let bulkEntriesInCache = [
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:1'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:2'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:3'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:4')
+      ]
+
+      expect(fetchMock.urls()).to.deep.equal([
+        'https://api.guildwars2.com/v2/test?ids=2,3',
+        'https://api.guildwars2.com/v2/test?ids=1,4'
+      ])
+      expect(entry).to.deep.equal(content.slice(1, 3))
+      expect(entryShouldCache, 'merged entries in the same order').to.deep.equal(content)
       expect(bulkEntriesInCache).to.deep.equal(content)
     })
 

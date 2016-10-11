@@ -470,13 +470,13 @@ describe('abstract endpoint', () => {
     it('sets the language header for localized endpoints', () => {
       endpoint.isLocalized = true
       endpoint.language('de')
-      let url = endpoint.buildUrl('/test')
+      let url = endpoint._buildUrl('/test')
       expect(url).to.equal('https://api.guildwars2.com/test?lang=de')
     })
 
     it('doesn\'t set the language header for non localized endpoints', () => {
       endpoint.language('de')
-      let url = endpoint.buildUrl('/test')
+      let url = endpoint._buildUrl('/test')
       expect(url).to.equal('https://api.guildwars2.com/test')
     })
 
@@ -489,13 +489,13 @@ describe('abstract endpoint', () => {
     it('sets the authorization header for authenticated endpoints', () => {
       endpoint.isAuthenticated = true
       endpoint.authenticate('key')
-      let url = endpoint.buildUrl('/test')
+      let url = endpoint._buildUrl('/test')
       expect(url).to.equal('https://api.guildwars2.com/test?access_token=key')
     })
 
     it('doesn\'t set the authorization header for non authenticated endpoints', () => {
       endpoint.authenticate('key')
-      let url = endpoint.buildUrl('/test')
+      let url = endpoint._buildUrl('/test')
       expect(url).to.equal('https://api.guildwars2.com/test')
     })
 
@@ -503,7 +503,7 @@ describe('abstract endpoint', () => {
       endpoint.isAuthenticated = true
       endpoint.isOptionallyAuthenticated = true
       endpoint.authenticate('key')
-      let url = endpoint.buildUrl('/test')
+      let url = endpoint._buildUrl('/test')
       expect(url).to.equal('https://api.guildwars2.com/test?access_token=key')
     })
 
@@ -511,7 +511,7 @@ describe('abstract endpoint', () => {
       endpoint.isAuthenticated = true
       endpoint.isOptionallyAuthenticated = true
       endpoint.authenticate()
-      let url = endpoint.buildUrl('/test')
+      let url = endpoint._buildUrl('/test')
       expect(url).to.equal('https://api.guildwars2.com/test')
     })
 
@@ -520,7 +520,7 @@ describe('abstract endpoint', () => {
       endpoint.authenticate('key')
       endpoint.isLocalized = true
       endpoint.language('de')
-      let url = endpoint.buildUrl('/test?page=0')
+      let url = endpoint._buildUrl('/test?page=0')
       expect(url).to.equal('https://api.guildwars2.com/test?page=0&access_token=key&lang=de')
     })
   })
@@ -535,7 +535,7 @@ describe('abstract endpoint', () => {
         }
       })
 
-      let entry = await endpoint.request('/v2/test', 'response')
+      let entry = await endpoint._request('/v2/test', 'response')
       expect(entry.json()).to.deep.equal([1, 2, 3])
       expect(entry.headers.get()).to.equal(8)
     })
@@ -545,7 +545,7 @@ describe('abstract endpoint', () => {
       endpoint.language('en')
       fetchMock.addResponse({foo: 'bar'})
 
-      let entry = await endpoint.request('/v2/test')
+      let entry = await endpoint._request('/v2/test')
       expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?lang=en')
       expect(entry).to.deep.equal({foo: 'bar'})
     })
@@ -559,7 +559,7 @@ describe('abstract endpoint', () => {
         }
       })
 
-      let entries = await endpoint.requestMany(['/v2/test'], 'response')
+      let entries = await endpoint._requestMany(['/v2/test'], 'response')
       expect(entries[0].json()).to.deep.equal([1, 2, 3])
       expect(entries[0].headers.get()).to.equal(8)
     })
@@ -569,7 +569,7 @@ describe('abstract endpoint', () => {
       endpoint.language('en')
       fetchMock.addResponse({foo: 'bar'})
 
-      let entry = await endpoint.requestMany(['/v2/test'])
+      let entry = await endpoint._requestMany(['/v2/test'])
       expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?lang=en')
       expect(entry).to.deep.equal([{foo: 'bar'}])
     })

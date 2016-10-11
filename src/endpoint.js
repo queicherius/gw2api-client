@@ -30,12 +30,12 @@ export default class AbstractEndpoint {
   }
 
   // Get a cache hash for an identifier
-  cacheHash (id) {
+  _cacheHash (id) {
     let hash = id ? ':' + id : ''
     return this.baseUrl + this.url + hash
   }
 
-  // All ids of this endpoint
+  // Get all ids
   ids () {
     if (!this.isBulk) {
       return Promise.reject(new Error('"ids" is only available for bulk expanding endpoints'))
@@ -47,7 +47,7 @@ export default class AbstractEndpoint {
     }
 
     // Get as much as possibly out of the cache
-    const hash = this.cacheHash('ids')
+    const hash = this._cacheHash('ids')
     const handleCacheContent = (cached) => {
       if (cached) {
         return cached
@@ -62,8 +62,9 @@ export default class AbstractEndpoint {
     return this.cache.get(hash).then(handleCacheContent)
   }
 
+  // Get all ids from the live API
   _ids () {
-    return this.request(this.url)
+    return this._request(this.url)
   }
 
   // Get a single entry by id
@@ -78,7 +79,7 @@ export default class AbstractEndpoint {
     }
 
     // Get as much as possibly out of the cache
-    const hash = this.cacheHash(id)
+    const hash = this._cacheHash(id)
     const handleCacheContent = (cached) => {
       if (cached) {
         return cached
@@ -93,19 +94,20 @@ export default class AbstractEndpoint {
     return this.cache.get(hash).then(handleCacheContent)
   }
 
+  // Get a single entry by id from the live API
   _get (id, url) {
     // Request the single id if the endpoint a bulk endpoint
     if (this.isBulk && !url) {
-      return this.request(`${this.url}?id=${id}`)
+      return this._request(`${this.url}?id=${id}`)
     }
 
     // We are dealing with a custom url instead
     if (url) {
-      return this.request(this.url + id)
+      return this._request(this.url + id)
     }
 
     // Just request the base url
-    return this.request(this.url)
+    return this._request(this.url)
   }
 
   // Get multiple entries by ids
@@ -128,7 +130,7 @@ export default class AbstractEndpoint {
     }
 
     // Get as much as possibly out of the cache
-    const hashes = ids.map(id => this.cacheHash(id))
+    const hashes = ids.map(id => this._cacheHash(id))
     const handleCacheContent = (cached) => {
       cached = cached.filter(x => x)
 
@@ -138,7 +140,7 @@ export default class AbstractEndpoint {
 
       const missingIds = getMissingIds(ids, cached)
       return this._many(missingIds).then(content => {
-        const cacheContent = content.map(value => [this.cacheHash(value.id), value, this.expiry])
+        const cacheContent = content.map(value => [this._cacheHash(value.id), value, this.expiry])
         this.cache.mset(cacheContent)
 
         // Merge the new content with the cached content and guarantee element order
@@ -160,13 +162,14 @@ export default class AbstractEndpoint {
     return this.cache.mget(hashes).then(handleCacheContent)
   }
 
+  // Get multiple entries by ids from the live API
   _many (ids) {
     // Chunk the requests to the max page size
     let pages = chunk(ids, this.maxPageSize)
     let requests = pages.map(page => `${this.url}?ids=${page.join(',')}`)
 
     // Work on all requests in parallel and then flatten the responses into one
-    return this.requestMany(requests).then(responses => flatten(responses))
+    return this._requestMany(requests).then(responses => flatten(responses))
   }
 
   // Get a single page
@@ -189,7 +192,7 @@ export default class AbstractEndpoint {
     }
 
     // Get as much as possibly out of the cache
-    const hash = this.cacheHash('page-' + page + '/' + size)
+    const hash = this._cacheHash('page-' + page + '/' + size)
     const handleCacheContent = (cached) => {
       if (cached) {
         return cached
@@ -199,7 +202,7 @@ export default class AbstractEndpoint {
         let cacheContent = [[hash, content, this.expiry]]
 
         if (this.isBulk) {
-          cacheContent = cacheContent.concat(content.map(value => [this.cacheHash(value.id), value, this.expiry]))
+          cacheContent = cacheContent.concat(content.map(value => [this._cacheHash(value.id), value, this.expiry]))
         }
 
         this.cache.mset(cacheContent)
@@ -210,8 +213,9 @@ export default class AbstractEndpoint {
     return this.cache.get(hash).then(handleCacheContent)
   }
 
+  // Get a single page from the live API
   _page (page, size) {
-    return this.request(`${this.url}?page=${page}&page_size=${size}`)
+    return this._request(`${this.url}?page=${page}&page_size=${size}`)
   }
 
   // Get all entries
@@ -226,7 +230,7 @@ export default class AbstractEndpoint {
     }
 
     // Get as much as possibly out of the cache
-    const hash = this.cacheHash('all')
+    const hash = this._cacheHash('all')
     const handleCacheContent = (cached) => {
       if (cached) {
         return cached
@@ -236,7 +240,7 @@ export default class AbstractEndpoint {
         let cacheContent = [[hash, content, this.expiry]]
 
         if (this.isBulk) {
-          cacheContent = cacheContent.concat(content.map(value => [this.cacheHash(value.id), value, this.expiry]))
+          cacheContent = cacheContent.concat(content.map(value => [this._cacheHash(value.id), value, this.expiry]))
         }
 
         this.cache.mset(cacheContent)
@@ -247,15 +251,16 @@ export default class AbstractEndpoint {
     return this.cache.get(hash).then(handleCacheContent)
   }
 
+  // Get all entries from the live API
   _all () {
     // Use bulk expansion if the endpoint supports the "all" keyword
     if (this.isBulk && this.supportsBulkAll) {
-      return this.request(`${this.url}?ids=all`)
+      return this._request(`${this.url}?ids=all`)
     }
 
     // Get everything via all pages instead
     let totalEntries
-    return this.request(`${this.url}?page=0&page_size=${this.maxPageSize}`, 'response')
+    return this._request(`${this.url}?page=0&page_size=${this.maxPageSize}`, 'response')
       .then(firstPage => {
         // Get the total number of entries off the first page's headers
         totalEntries = firstPage.headers.get('X-Result-Total')
@@ -273,23 +278,23 @@ export default class AbstractEndpoint {
           requests.push(`${this.url}?page=${page}&page_size=${this.maxPageSize}`)
         }
 
-        return this.requestMany(requests).then(responses => result.concat(flatten(responses)))
+        return this._requestMany(requests).then(responses => result.concat(flatten(responses)))
       })
   }
 
-  // Executes a single request
-  request (url, type = 'json') {
-    return this.fetch.single(this.buildUrl(url), {type})
+  // Execute a single request
+  _request (url, type = 'json') {
+    return this.fetch.single(this._buildUrl(url), {type})
   }
 
-  // Executes multiple requests in parallel
-  requestMany (urls, type = 'json') {
-    urls = urls.map(url => this.buildUrl(url))
+  // Execute multiple requests in parallel
+  _requestMany (urls, type = 'json') {
+    urls = urls.map(url => this._buildUrl(url))
     return this.fetch.many(urls, {type})
   }
 
-  // Builds the headers for localization and authentication
-  buildUrl (url) {
+  // Build the headers for localization and authentication
+  _buildUrl (url) {
     // Add the base url
     url = this.baseUrl + url
 

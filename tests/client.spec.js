@@ -20,6 +20,13 @@ describe('client', () => {
     expect(api).to.be.an.instanceof(Module)
   })
 
+  it('can set a cache handler', () => {
+    let cacheHandler = {set: () => false, get: () => false}
+    let api = client.cacheStorage(cacheHandler)
+    expect(client.cache).to.deep.equal(cacheHandler)
+    expect(api).to.be.an.instanceof(Module)
+  })
+
   it('can get the account endpoint', () => {
     let endpoint = client.account()
     expect(endpoint.url).to.equal('/v2/account')

@@ -19,6 +19,7 @@ describe('abstract endpoint', () => {
   beforeEach(() => {
     endpoint = new Module(mockClient)
     fetchMock.reset()
+    endpoint.cache.flush()
   })
 
   describe('ids', () => {
@@ -28,9 +29,27 @@ describe('abstract endpoint', () => {
       endpoint.url = '/v2/test'
       fetchMock.addResponse(content)
 
-      let ids = await endpoint.ids()
+      let entry = await endpoint.ids()
       expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test')
-      expect(ids).to.deep.equal(content)
+      expect(entry).to.deep.equal(content)
+    })
+
+    it('caching', async () => {
+      let content = [1, 2]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.expiry = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.ids()
+      let entryShouldCache = await endpoint.ids()
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:ids')
+
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test')
+      expect(fetchMock.urls().length).to.equal(1)
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
     })
 
     it('only for bulk expanding', async () => {
@@ -58,6 +77,43 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.get()
       expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test')
       expect(entry).to.deep.equal(content)
+    })
+
+    it('caching for bulk expanding', async () => {
+      let content = {id: 1, name: 'foo'}
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.expiry = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.get(1)
+      let entryShouldCache = await endpoint.get(1)
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:1')
+
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?id=1')
+      expect(fetchMock.urls().length).to.equal(1)
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+    })
+
+    it('caching for non bulk expanding', async () => {
+      let content = {id: 1, name: 'foo'}
+      endpoint.url = '/v2/test'
+      endpoint.expiry = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.get()
+      let entryShouldCache = await endpoint.get()
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test')
+      let bulkEntryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:1')
+
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test')
+      expect(fetchMock.urls().length).to.equal(1)
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+      expect(bulkEntryInCache).to.deep.equal(undefined)
     })
   })
 
@@ -99,6 +155,32 @@ describe('abstract endpoint', () => {
       expect(entry).to.deep.equal([])
     })
 
+    it('caching', async () => {
+      let content = [
+        {id: 1, name: 'foo'},
+        {id: 2, name: 'bar'},
+        {id: 3, name: 'fooo'}
+      ]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.expiry = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.many([1, 2, 3])
+      let entryShouldCache = await endpoint.many([2, 3])
+      let bulkEntriesInCache = [
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:1'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:2'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:3')
+      ]
+
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?ids=1,2,3')
+      expect(fetchMock.urls().length).to.equal(1)
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldCache).to.deep.equal(content.slice(1))
+      expect(bulkEntriesInCache).to.deep.equal(content)
+    })
+
     it('only available for bulk expanding', async () => {
       await expectError(() => endpoint.many([1, 2]))
     })
@@ -114,6 +196,59 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.page(0, 3)
       expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?page=0&page_size=3')
       expect(entry).to.deep.equal(content)
+    })
+
+    it('caching for non bulk endpoints', async () => {
+      let content = [1, 2, 3]
+      endpoint.isPaginated = true
+      endpoint.url = '/v2/test'
+      endpoint.expiry = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.page(0, 3)
+      let entryShouldCache = await endpoint.page(0, 3)
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:page-0/3')
+      let bulkEntriesInCache = [
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:1'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:2'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:3')
+      ]
+
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?page=0&page_size=3')
+      expect(fetchMock.urls().length).to.equal(1)
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+      expect(bulkEntriesInCache.filter(x => x).length).to.deep.equal(0)
+    })
+
+    it('caching for bulk endpoints', async () => {
+      let content = [
+        {id: 1, name: 'foo'},
+        {id: 2, name: 'bar'},
+        {id: 3, name: 'fooo'}
+      ]
+      endpoint.isPaginated = true
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.expiry = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.page(0, 3)
+      let entryShouldCache = await endpoint.page(0, 3)
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:page-0/3')
+      let bulkEntriesInCache = [
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:1'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:2'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:3')
+      ]
+
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?page=0&page_size=3')
+      expect(fetchMock.urls().length).to.equal(1)
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+      expect(bulkEntriesInCache).to.deep.equal(content)
     })
 
     it('throws an error for out of range size', async () => {
@@ -189,14 +324,72 @@ describe('abstract endpoint', () => {
     })
 
     it('support for bulk expanding with bulk all', async () => {
+      let content = [1, 2, 3]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      fetchMock.addResponse([1, 2, 3])
+      fetchMock.addResponse(content)
 
       let entry = await endpoint.all()
       expect(fetchMock.urls().length).to.equal(1)
       expect(fetchMock.urls()[0]).to.equal('https://api.guildwars2.com/v2/test?ids=all')
-      expect(entry).to.deep.equal([1, 2, 3])
+      expect(entry).to.deep.equal(content)
+    })
+
+    it('caching for non bulk endpoints', async () => {
+      let content = [1, 2, 3]
+      endpoint.isPaginated = true
+      endpoint.url = '/v2/test'
+      endpoint.expiry = 60
+      fetchMock.addResponse({
+        json: () => content,
+        headers: {
+          get: () => 3
+        }
+      })
+
+      let entry = await endpoint.all()
+      let entryShouldCache = await endpoint.all()
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:all')
+      let bulkEntriesInCache = [
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:1'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:2'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:3')
+      ]
+
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?page=0&page_size=200')
+      expect(fetchMock.urls().length).to.equal(1)
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+      expect(bulkEntriesInCache.filter(x => x).length).to.deep.equal(0)
+    })
+
+    it('caching for bulk endpoints', async () => {
+      let content = [
+        {id: 1, name: 'foo'},
+        {id: 2, name: 'bar'},
+        {id: 3, name: 'fooo'}
+      ]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.expiry = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.all()
+      let entryShouldCache = await endpoint.all()
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:all')
+      let cacheEntries = [
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:1'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:2'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:3')
+      ]
+
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?ids=all')
+      expect(fetchMock.urls().length).to.equal(1)
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+      expect(cacheEntries).to.deep.equal(content)
     })
 
     it('only for bulk expanding and paginated', async () => {

@@ -67,10 +67,14 @@ export default class AbstractEndpoint {
   }
 
   // Get a single entry by id
-  get (id) {
+  get (id, url = false) {
+    if (!id && this.isBulk && !url) {
+      return Promise.reject(new Error('"get" requires an id'))
+    }
+
     // There is no expiry set, so always use the live data
     if (!this.expiry) {
-      return this._get(id)
+      return this._get(id, url)
     }
 
     // Get as much as possibly out of the cache
@@ -80,7 +84,7 @@ export default class AbstractEndpoint {
         return cached
       }
 
-      return this._get(id).then(content => {
+      return this._get(id, url).then(content => {
         this.cache.set(hash, content, this.expiry)
         return content
       })
@@ -89,10 +93,19 @@ export default class AbstractEndpoint {
     return this.cache.get(hash).then(handleCacheContent)
   }
 
-  _get (id) {
-    return this.isBulk
-      ? this.request(`${this.url}?id=${id}`)
-      : this.request(this.url)
+  _get (id, url) {
+    // Request the single id if the endpoint a bulk endpoint
+    if (this.isBulk && !url) {
+      return this.request(`${this.url}?id=${id}`)
+    }
+
+    // We are dealing with a custom url instead
+    if (url) {
+      return this.request(this.url + id)
+    }
+
+    // Just request the base url
+    return this.request(this.url)
   }
 
   // Get multiple entries by ids

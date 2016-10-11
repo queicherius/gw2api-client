@@ -67,7 +67,7 @@ class SearchEndpoint extends AbstractEndpoint {
   }
 
   get () {
-    return this.request(this.url).then(result => result[0])
+    return super.get().then(result => result[0])
   }
 }
 

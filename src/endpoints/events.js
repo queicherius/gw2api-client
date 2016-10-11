@@ -7,12 +7,12 @@ export default class EventsEndpoint extends AbstractEndpoint {
   }
 
   all () {
-    return this.request(this.url)
+    return super.get()
       .then(transformV1Format)
   }
 
   get (id) {
-    return this.request(`${this.url}?event_id=${id}`)
+    return super.get(`?event_id=${id}`, true)
       .then(json => transformV1Format(json)[0])
   }
 }

@@ -38,11 +38,11 @@ class ExchangeEndpoint extends AbstractEndpoint {
   }
 
   gems (quantity) {
-    return this.request(`${this.url}/gems?quantity=${quantity}`)
+    return super.get(`/gems?quantity=${quantity}`, true)
   }
 
   coins (quantity) {
-    return this.request(`${this.url}/coins?quantity=${quantity}`)
+    return super.get(`/coins?quantity=${quantity}`, true)
   }
 }
 

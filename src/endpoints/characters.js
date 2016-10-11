@@ -56,7 +56,7 @@ class BackstoryEndpoint extends AbstractEndpoint {
   }
 
   get () {
-    return this.request(this.url).then(result => result.backstory)
+    return super.get().then(result => result.backstory)
   }
 }
 
@@ -76,7 +76,7 @@ class CraftingEndpoint extends AbstractEndpoint {
   }
 
   get () {
-    return this.request(this.url).then(result => result.crafting)
+    return super.get().then(result => result.crafting)
   }
 }
 
@@ -88,7 +88,7 @@ class EquipmentEndpoint extends AbstractEndpoint {
   }
 
   get () {
-    return this.request(this.url).then(result => result.equipment)
+    return super.get().then(result => result.equipment)
   }
 }
 
@@ -108,7 +108,7 @@ class InventoryEndpoint extends AbstractEndpoint {
   }
 
   get () {
-    return this.request(this.url).then(result => result.bags)
+    return super.get().then(result => result.bags)
   }
 }
 
@@ -120,7 +120,7 @@ class RecipesEndpoint extends AbstractEndpoint {
   }
 
   get () {
-    return this.request(this.url).then(result => result.recipes)
+    return super.get().then(result => result.recipes)
   }
 }
 
@@ -132,7 +132,7 @@ class SpecializationsEndpoint extends AbstractEndpoint {
   }
 
   get () {
-    return this.request(this.url).then(result => result.specializations)
+    return super.get().then(result => result.specializations)
   }
 }
 
@@ -144,6 +144,6 @@ class TrainingEndpoint extends AbstractEndpoint {
   }
 
   get () {
-    return this.request(this.url).then(result => result.training)
+    return super.get().then(result => result.training)
   }
 }

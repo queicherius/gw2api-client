@@ -7,6 +7,6 @@ export default class BuildEndpoint extends AbstractEndpoint {
   }
 
   get () {
-    return this.request(this.url).then(result => result.id)
+    return super.get().then(result => result.id)
   }
 }

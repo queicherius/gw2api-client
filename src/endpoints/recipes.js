@@ -21,10 +21,10 @@ class SearchEndpoint extends AbstractEndpoint {
   }
 
   input (id) {
-    return this.request(`${this.url}?input=${id}`)
+    return super.get(`?input=${id}`, true)
   }
 
   output (id) {
-    return this.request(`${this.url}?output=${id}`)
+    return super.get(`?output=${id}`, true)
   }
 }

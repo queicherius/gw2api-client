@@ -79,6 +79,16 @@ describe('abstract endpoint', () => {
       expect(entry).to.deep.equal(content)
     })
 
+    it('support for non bulk expanding with custom url', async () => {
+      let content = {id: 1, name: 'foo'}
+      endpoint.url = '/v2/test'
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.get('/bar?output_id=123&input_id=456', true)
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test/bar?output_id=123&input_id=456')
+      expect(entry).to.deep.equal(content)
+    })
+
     it('caching for bulk expanding', async () => {
       let content = {id: 1, name: 'foo'}
       endpoint.isBulk = true
@@ -114,6 +124,28 @@ describe('abstract endpoint', () => {
       expect(entryShouldCache).to.deep.equal(content)
       expect(entryInCache).to.deep.equal(content)
       expect(bulkEntryInCache).to.deep.equal(undefined)
+    })
+
+    it('caching for non bulk expanding with custom url', async () => {
+      let content = {id: 1, name: 'foo'}
+      endpoint.url = '/v2/test'
+      endpoint.expiry = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.get('/bar?output_id=123&input_id=456', true)
+      let entryShouldCache = await endpoint.get('/bar?output_id=123&input_id=456', true)
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:/bar?output_id=123&input_id=456')
+
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test/bar?output_id=123&input_id=456')
+      expect(fetchMock.urls().length).to.equal(1)
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+    })
+
+    it('requires an id for bulk expanding', async () => {
+      endpoint.isBulk = true
+      await expectError(() => endpoint.get())
     })
   })
 

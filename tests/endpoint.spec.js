@@ -38,7 +38,7 @@ describe('abstract endpoint', () => {
       let content = [1, 2]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.expiry = 60
+      endpoint.cacheTime = 60
       fetchMock.addResponse(content)
 
       let entry = await endpoint.ids()
@@ -93,7 +93,7 @@ describe('abstract endpoint', () => {
       let content = {id: 1, name: 'foo'}
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.expiry = 60
+      endpoint.cacheTime = 60
       fetchMock.addResponse(content)
 
       let entry = await endpoint.get(1)
@@ -110,7 +110,7 @@ describe('abstract endpoint', () => {
     it('caching for non bulk expanding', async () => {
       let content = {id: 1, name: 'foo'}
       endpoint.url = '/v2/test'
-      endpoint.expiry = 60
+      endpoint.cacheTime = 60
       fetchMock.addResponse(content)
 
       let entry = await endpoint.get()
@@ -129,7 +129,7 @@ describe('abstract endpoint', () => {
     it('caching for non bulk expanding with custom url', async () => {
       let content = {id: 1, name: 'foo'}
       endpoint.url = '/v2/test'
-      endpoint.expiry = 60
+      endpoint.cacheTime = 60
       fetchMock.addResponse(content)
 
       let entry = await endpoint.get('/bar?output_id=123&input_id=456', true)
@@ -195,7 +195,7 @@ describe('abstract endpoint', () => {
       ]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.expiry = 60
+      endpoint.cacheTime = 60
       fetchMock.addResponse(content)
 
       let entry = await endpoint.many([1, 2, 3])
@@ -222,7 +222,7 @@ describe('abstract endpoint', () => {
       ]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.expiry = 60
+      endpoint.cacheTime = 60
       fetchMock.addResponse(content.slice(1, 3))
       fetchMock.addResponse(content.slice(0, 1).concat(content.slice(3, 4)))
 
@@ -265,7 +265,7 @@ describe('abstract endpoint', () => {
       let content = [1, 2, 3]
       endpoint.isPaginated = true
       endpoint.url = '/v2/test'
-      endpoint.expiry = 60
+      endpoint.cacheTime = 60
       fetchMock.addResponse(content)
 
       let entry = await endpoint.page(0, 3)
@@ -294,7 +294,7 @@ describe('abstract endpoint', () => {
       endpoint.isPaginated = true
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.expiry = 60
+      endpoint.cacheTime = 60
       fetchMock.addResponse(content)
 
       let entry = await endpoint.page(0, 3)
@@ -402,7 +402,7 @@ describe('abstract endpoint', () => {
       let content = [1, 2, 3]
       endpoint.isPaginated = true
       endpoint.url = '/v2/test'
-      endpoint.expiry = 60
+      endpoint.cacheTime = 60
       fetchMock.addResponse({
         json: () => content,
         headers: {
@@ -435,7 +435,7 @@ describe('abstract endpoint', () => {
       ]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.expiry = 60
+      endpoint.cacheTime = 60
       fetchMock.addResponse(content)
 
       let entry = await endpoint.all()

@@ -5,5 +5,6 @@ export default class TokeninfoEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/tokeninfo'
     this.isAuthenticated = true
+    this.cacheTime = 60
   }
 }

@@ -8,6 +8,7 @@ export default class AchievementsEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.supportsBulkAll = false
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 
   categories () {
@@ -34,6 +35,7 @@ class CategoriesEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }
 
@@ -44,6 +46,7 @@ class GroupsEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }
 
@@ -51,6 +54,7 @@ class DailyEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements/daily'
+    this.cacheTime = 60 * 60
   }
 }
 
@@ -58,5 +62,6 @@ class DailyTomorrowEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements/daily/tomorrow'
+    this.cacheTime = 60 * 60
   }
 }

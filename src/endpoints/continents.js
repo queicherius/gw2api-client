@@ -7,6 +7,7 @@ export default class ContinentsEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 
   floors (id) {
@@ -20,5 +21,6 @@ class FloorsEndpoint extends AbstractEndpoint {
     this.url = `/v2/continents/${continentId}/floors`
     this.isPaginated = true
     this.isBulk = true
+    this.cacheTime = 24 * 60 * 60
   }
 }

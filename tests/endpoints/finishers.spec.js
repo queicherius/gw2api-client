@@ -16,6 +16,7 @@ describe('endpoints > finishers', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/finishers')
 
     fetchMock.addResponse({id: 1, name: 'Rabbit Rank Finisher'})

@@ -7,6 +7,7 @@ export default class GuildEndpoint extends AbstractEndpoint {
     this.url = '/v2/guild'
     this.isAuthenticated = true
     this.isOptionallyAuthenticated = true
+    this.cacheTime = 60 * 60
   }
 
   permissions () {
@@ -57,6 +58,7 @@ class PermissionsEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }
 
@@ -64,6 +66,7 @@ class SearchEndpoint extends AbstractEndpoint {
   constructor (client, name) {
     super(client)
     this.url = `/v2/guild/search?name=${encodeURIComponent(name)}`
+    this.cacheTime = 60 * 60
   }
 
   get () {
@@ -78,6 +81,7 @@ class AllUpgradesEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }
 
@@ -86,6 +90,7 @@ class LogEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/guild/${encodeURIComponent(id)}/log`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -94,6 +99,7 @@ class MembersEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/guild/${encodeURIComponent(id)}/members`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -102,6 +108,7 @@ class RanksEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/guild/${encodeURIComponent(id)}/ranks`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -110,6 +117,7 @@ class StashEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/guild/${encodeURIComponent(id)}/stash`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -118,6 +126,7 @@ class TeamsEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/guild/${encodeURIComponent(id)}/teams`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -126,6 +135,7 @@ class TreasuryEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/guild/${encodeURIComponent(id)}/treasury`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -134,5 +144,6 @@ class UpgradesEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/guild/${encodeURIComponent(id)}/upgrades`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }

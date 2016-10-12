@@ -8,6 +8,7 @@ export default class AccountEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 
   achievements () {
@@ -80,6 +81,7 @@ class AchievementsEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/achievements'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -88,6 +90,7 @@ class BankEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/bank'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -96,6 +99,7 @@ class DyesEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/dyes'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -104,6 +108,7 @@ class FinishersEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/finishers'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -112,6 +117,7 @@ class InventoryEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/inventory'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -120,6 +126,7 @@ class MasteriesEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/masteries'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -128,6 +135,7 @@ class MaterialsEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/materials'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -136,6 +144,7 @@ class MinisEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/minis'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -144,6 +153,7 @@ class OutfitsEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/outfits'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -152,6 +162,7 @@ class RecipesEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/recipes'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -160,6 +171,7 @@ class SkinsEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/skins'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -168,6 +180,7 @@ class TitlesEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/titles'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -176,5 +189,6 @@ class WalletEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/wallet'
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }

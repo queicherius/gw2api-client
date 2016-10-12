@@ -7,6 +7,7 @@ export default class RecipesEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.supportsBulkAll = false
+    this.cacheTime = 24 * 60 * 60
   }
 
   search () {
@@ -18,6 +19,7 @@ class SearchEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/recipes/search'
+    this.cacheTime = 24 * 60 * 60
   }
 
   input (id) {

@@ -18,6 +18,7 @@ class AnswersEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.supportsBulkAll = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }
 
@@ -29,5 +30,6 @@ class QuestionsEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.supportsBulkAll = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }

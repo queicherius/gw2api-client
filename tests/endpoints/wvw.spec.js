@@ -18,6 +18,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/wvw/abilities')
 
     fetchMock.addResponse({id: 1, name: 'Guard Killer'})
@@ -33,6 +34,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/wvw/matches')
 
     fetchMock.addResponse({id: '2-6', scores: {red: 123, blue: 456, green: 789}})
@@ -48,6 +50,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/wvw/objectives')
 
     fetchMock.addResponse([{id: '968-98', name: 'Wurm Tunnel'}])

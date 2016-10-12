@@ -15,6 +15,7 @@ describe('endpoints > tokeninfo', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/tokeninfo')
 
     fetchMock.addResponse({id: 'uuid', name: 'public key', permissions: ['account']})

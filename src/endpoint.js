@@ -41,8 +41,8 @@ export default class AbstractEndpoint {
       return Promise.reject(new Error('"ids" is only available for bulk expanding endpoints'))
     }
 
-    // There is no expiry set, so always use the live data
-    if (!this.expiry) {
+    // There is no cache time set, so always use the live data
+    if (!this.cacheTime) {
       return this._ids()
     }
 
@@ -54,7 +54,7 @@ export default class AbstractEndpoint {
       }
 
       return this._ids().then(content => {
-        this.cache.set(hash, content, this.expiry)
+        this.cache.set(hash, content, this.cacheTime)
         return content
       })
     }
@@ -73,8 +73,8 @@ export default class AbstractEndpoint {
       return Promise.reject(new Error('"get" requires an id'))
     }
 
-    // There is no expiry set, so always use the live data
-    if (!this.expiry) {
+    // There is no cache time set, so always use the live data
+    if (!this.cacheTime) {
       return this._get(id, url)
     }
 
@@ -86,7 +86,7 @@ export default class AbstractEndpoint {
       }
 
       return this._get(id, url).then(content => {
-        this.cache.set(hash, content, this.expiry)
+        this.cache.set(hash, content, this.cacheTime)
         return content
       })
     }
@@ -124,8 +124,8 @@ export default class AbstractEndpoint {
     // Always only work on unique ids, since that's how the API works
     unique(ids)
 
-    // There is no expiry set, so always use the live data
-    if (!this.expiry) {
+    // There is no cache time set, so always use the live data
+    if (!this.cacheTime) {
       return this._many(ids)
     }
 
@@ -140,7 +140,7 @@ export default class AbstractEndpoint {
 
       const missingIds = getMissingIds(ids, cached)
       return this._many(missingIds).then(content => {
-        const cacheContent = content.map(value => [this._cacheHash(value.id), value, this.expiry])
+        const cacheContent = content.map(value => [this._cacheHash(value.id), value, this.cacheTime])
         this.cache.mset(cacheContent)
 
         // Merge the new content with the cached content and guarantee element order
@@ -186,8 +186,8 @@ export default class AbstractEndpoint {
       return Promise.reject(new Error('page has to be 0 or greater'))
     }
 
-    // There is no expiry set, so always use the live data
-    if (!this.expiry) {
+    // There is no cache time set, so always use the live data
+    if (!this.cacheTime) {
       return this._page(page, size)
     }
 
@@ -199,10 +199,10 @@ export default class AbstractEndpoint {
       }
 
       return this._page(page, size).then(content => {
-        let cacheContent = [[hash, content, this.expiry]]
+        let cacheContent = [[hash, content, this.cacheTime]]
 
         if (this.isBulk) {
-          cacheContent = cacheContent.concat(content.map(value => [this._cacheHash(value.id), value, this.expiry]))
+          cacheContent = cacheContent.concat(content.map(value => [this._cacheHash(value.id), value, this.cacheTime]))
         }
 
         this.cache.mset(cacheContent)
@@ -224,8 +224,8 @@ export default class AbstractEndpoint {
       return Promise.reject(new Error('"all" is only available for bulk expanding or paginated endpoints'))
     }
 
-    // There is no expiry set, so always use the live data
-    if (!this.expiry) {
+    // There is no cache time set, so always use the live data
+    if (!this.cacheTime) {
       return this._all()
     }
 
@@ -237,10 +237,10 @@ export default class AbstractEndpoint {
       }
 
       return this._all().then(content => {
-        let cacheContent = [[hash, content, this.expiry]]
+        let cacheContent = [[hash, content, this.cacheTime]]
 
         if (this.isBulk) {
-          cacheContent = cacheContent.concat(content.map(value => [this._cacheHash(value.id), value, this.expiry]))
+          cacheContent = cacheContent.concat(content.map(value => [this._cacheHash(value.id), value, this.cacheTime]))
         }
 
         this.cache.mset(cacheContent)

@@ -8,5 +8,6 @@ export default class MapsEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.supportsBulkAll = false
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }

@@ -51,7 +51,68 @@ flow.parallel([
 
 ### Caching
 
-**TODO: Write documentation**
+By default all requests get send to the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./endpoints.md).
+
+```js
+import memoryStorage from 'gw2api-client/build/cache/memory'
+api.cacheStorage(memoryStorage())
+
+// This will only call the official API once
+api().items().ids()
+api().items().ids()
+
+// When the cache expired this will call the official API again
+api().items().ids()
+
+// Skip the cache if you want guaranteed live data
+api().items().live().ids()
+```
+
+#### Cache Storages
+
+This are the cache storages included in this module. Feel free to write your own implementation! (Please send a PR :<3:.)
+
+**`gw2api-client/build/cache/null`**
+
+Does no caching at all. The default storage.
+
+```js
+import nullStorage from 'gw2api-client/build/cache/null'
+api.cacheStorage(nullStorage())
+```
+
+**`gw2api-client/build/cache/memory`**
+
+Caches the data using a basic RAM hashmap.
+
+```js
+import memoryStorage from 'gw2api-client/build/cache/memory'
+api.cacheStorage(memoryStorage())
+```
+
+**Custom**
+
+A custom storage has to be a method which can take some configuration object:
+
+```js
+function myCustomStorage (config) {
+  // Do configuration things
+  return {
+    get: (key) => ...,
+    ...
+  }
+}
+
+api.cacheStorage(myCustomStorage({foo: 'bar'}))
+```
+
+This function has to return an object containing implementations of the following methods, which all have to return a `Promise` object.
+
+- `get(key)` - Gets a single value by key. Resolves `false` if the value does not exist or is expired.
+- `mget([key, key, ...])` - Gets multiple values by keys. Resolves an array. Missing and expired elements are either not included in the return array or set to `false`.
+- `set(key, value, expiresInSeconds)` - Sets a single value by key.
+- `mset([[key, value, expiresInSeconds], ...])` - Sets multiple values.
+- `flush()` - Completely clears the cache data (only needed for tests)
 
 ### Error handling
 
@@ -111,7 +172,7 @@ api().items().ids()
 
 ### Extending
 
-You can extend or overwrite the API client with your own endpoints if you wish so. The only thing that is required, is an extension of `AbstractEndpoint` to provide all the logic for pagination, bulk, localization etc.
+You can extend or overwrite the API client with your own endpoints if you wish so. The only thing that is required, is an extension of `AbstractEndpoint` to provide all the logic for pagination, bulk, localisation, caching etc.
 
 If you need more specific ways to handle data then the previously defined ones, take a look at how the existing endpoints handle these cases (e.g. in `/src/endpoints/recipes.js`)
 
@@ -132,6 +193,7 @@ class ItemsEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.supportsBulkAll = false
     this.isLocalized = true
+    this.cacheTime = 5 * 60
   }
 }
 

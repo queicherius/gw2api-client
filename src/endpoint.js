@@ -15,6 +15,7 @@ export default class AbstractEndpoint {
     this.isLocalized = false
     this.isAuthenticated = false
     this.isOptionallyAuthenticated = false
+    this._skipCache = false
   }
 
   // Set the language for locale-aware endpoints
@@ -26,6 +27,12 @@ export default class AbstractEndpoint {
   // Set the api key for authenticated endpoints
   authenticate (apiKey) {
     this.client.authenticate(apiKey)
+    return this
+  }
+
+  // Skip caching and get the live data
+  live () {
+    this._skipCache = true
     return this
   }
 
@@ -59,7 +66,9 @@ export default class AbstractEndpoint {
       })
     }
 
-    return this.cache.get(hash).then(handleCacheContent)
+    return this._skipCache
+      ? Promise.resolve(false).then(handleCacheContent)
+      : this.cache.get(hash).then(handleCacheContent)
   }
 
   // Get all ids from the live API
@@ -91,7 +100,9 @@ export default class AbstractEndpoint {
       })
     }
 
-    return this.cache.get(hash).then(handleCacheContent)
+    return this._skipCache
+      ? Promise.resolve(false).then(handleCacheContent)
+      : this.cache.get(hash).then(handleCacheContent)
   }
 
   // Get a single entry by id from the live API
@@ -159,7 +170,9 @@ export default class AbstractEndpoint {
       return ids.filter(x => cachedIds[x] !== 1)
     }
 
-    return this.cache.mget(hashes).then(handleCacheContent)
+    return this._skipCache
+      ? Promise.resolve([]).then(handleCacheContent)
+      : this.cache.mget(hashes).then(handleCacheContent)
   }
 
   // Get multiple entries by ids from the live API
@@ -210,7 +223,9 @@ export default class AbstractEndpoint {
       })
     }
 
-    return this.cache.get(hash).then(handleCacheContent)
+    return this._skipCache
+      ? Promise.resolve(false).then(handleCacheContent)
+      : this.cache.get(hash).then(handleCacheContent)
   }
 
   // Get a single page from the live API
@@ -248,7 +263,9 @@ export default class AbstractEndpoint {
       })
     }
 
-    return this.cache.get(hash).then(handleCacheContent)
+    return this._skipCache
+      ? Promise.resolve(false).then(handleCacheContent)
+      : this.cache.get(hash).then(handleCacheContent)
   }
 
   // Get all entries from the live API

@@ -52,6 +52,27 @@ describe('abstract endpoint', () => {
       expect(entryInCache).to.deep.equal(content)
     })
 
+    it('live', async () => {
+      let content = [1, 2]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(content)
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.live().ids()
+      let entryShouldBeLive = await endpoint.live().ids()
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:ids')
+
+      expect(fetchMock.urls()).to.deep.equal([
+        'https://api.guildwars2.com/v2/test',
+        'https://api.guildwars2.com/v2/test'
+      ])
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldBeLive).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+    })
+
     it('only for bulk expanding', async () => {
       await expectError(() => endpoint.ids())
     })
@@ -140,6 +161,27 @@ describe('abstract endpoint', () => {
       expect(fetchMock.urls().length).to.equal(1)
       expect(entry).to.deep.equal(content)
       expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+    })
+
+    it('live', async () => {
+      let content = {id: 1, name: 'foo'}
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(content)
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.live().get(1)
+      let entryShouldBeLive = await endpoint.live().get(1)
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:1')
+
+      expect(fetchMock.urls()).to.deep.equal([
+        'https://api.guildwars2.com/v2/test?id=1',
+        'https://api.guildwars2.com/v2/test?id=1'
+      ])
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldBeLive).to.deep.equal(content)
       expect(entryInCache).to.deep.equal(content)
     })
 
@@ -244,6 +286,35 @@ describe('abstract endpoint', () => {
       expect(bulkEntriesInCache).to.deep.equal(content)
     })
 
+    it('live', async () => {
+      let content = [
+        {id: 1, name: 'foo'},
+        {id: 2, name: 'bar'},
+        {id: 3, name: 'fooo'}
+      ]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(content)
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.live().many([1, 2, 3])
+      let entryShouldBeLive = await endpoint.live().many([1, 2, 3])
+      let bulkEntriesInCache = [
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:1'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:2'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:3')
+      ]
+
+      expect(fetchMock.urls()).to.deep.equal([
+        'https://api.guildwars2.com/v2/test?ids=1,2,3',
+        'https://api.guildwars2.com/v2/test?ids=1,2,3'
+      ])
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldBeLive).to.deep.equal(content)
+      expect(bulkEntriesInCache).to.deep.equal(content)
+    })
+
     it('only available for bulk expanding', async () => {
       await expectError(() => endpoint.many([1, 2]))
     })
@@ -310,6 +381,38 @@ describe('abstract endpoint', () => {
       expect(fetchMock.urls().length).to.equal(1)
       expect(entry).to.deep.equal(content)
       expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+      expect(bulkEntriesInCache).to.deep.equal(content)
+    })
+
+    it('live', async () => {
+      let content = [
+        {id: 1, name: 'foo'},
+        {id: 2, name: 'bar'},
+        {id: 3, name: 'fooo'}
+      ]
+      endpoint.isPaginated = true
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(content)
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.live().page(0, 3)
+      let entryShouldBeLive = await endpoint.live().page(0, 3)
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:page-0/3')
+      let bulkEntriesInCache = [
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:1'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:2'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:3')
+      ]
+
+      expect(fetchMock.urls()).to.deep.equal([
+        'https://api.guildwars2.com/v2/test?page=0&page_size=3',
+        'https://api.guildwars2.com/v2/test?page=0&page_size=3'
+      ])
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldBeLive).to.deep.equal(content)
       expect(entryInCache).to.deep.equal(content)
       expect(bulkEntriesInCache).to.deep.equal(content)
     })
@@ -451,6 +554,37 @@ describe('abstract endpoint', () => {
       expect(fetchMock.urls().length).to.equal(1)
       expect(entry).to.deep.equal(content)
       expect(entryShouldCache).to.deep.equal(content)
+      expect(entryInCache).to.deep.equal(content)
+      expect(cacheEntries).to.deep.equal(content)
+    })
+
+    it('live', async () => {
+      let content = [
+        {id: 1, name: 'foo'},
+        {id: 2, name: 'bar'},
+        {id: 3, name: 'fooo'}
+      ]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(content)
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.live().all()
+      let entryShouldBeLive = await endpoint.live().all()
+      let entryInCache = await endpoint.cache.get('https://api.guildwars2.com/v2/test:all')
+      let cacheEntries = [
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:1'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:2'),
+        await endpoint.cache.get('https://api.guildwars2.com/v2/test:3')
+      ]
+
+      expect(fetchMock.urls()).to.deep.equal([
+        'https://api.guildwars2.com/v2/test?ids=all',
+        'https://api.guildwars2.com/v2/test?ids=all'
+      ])
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldBeLive).to.deep.equal(content)
       expect(entryInCache).to.deep.equal(content)
       expect(cacheEntries).to.deep.equal(content)
     })

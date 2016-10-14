@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "lets-fetch": "^2.0.0",
+    "promise-control-flow": "^1.2.3",
     "uniq": "^1.0.1",
     "url-parse": "^1.1.3"
   },

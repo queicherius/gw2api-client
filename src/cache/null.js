@@ -1,8 +1,25 @@
-export default {
-  get: (key) => promisify(false),
-  set: (key, value) => promisify(false),
-  mget: (keys) => promisify([]),
-  mset: (array) => false
+export default function () {
+  return {get, set, mget, mset, flush}
+}
+
+function get (key) {
+  return promisify(false)
+}
+
+function set (key, value, expiry) {
+  return promisify(true)
+}
+
+function mget (keys) {
+  return promisify([])
+}
+
+function mset (values) {
+  return promisify(true)
+}
+
+function flush () {
+  return promisify(true)
 }
 
 function promisify (value) {

@@ -1,5 +1,5 @@
 import fetch from 'lets-fetch'
-import cache from './cache/memory'
+import cache from './cache/null'
 import AccountEndpoint from './endpoints/account'
 import AchievementsEndpoint from './endpoints/achievements'
 import BackstoryEndpoint from './endpoints/backstory'
@@ -42,7 +42,7 @@ export default class Client {
     this.lang = 'en'
     this.apiKey = false
     this.fetch = fetch
-    this.cache = cache
+    this.cache = cache()
   }
 
   // Set the language for locale-aware endpoints

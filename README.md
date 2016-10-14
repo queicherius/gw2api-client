@@ -59,6 +59,7 @@ api.cacheStorage(memoryStorage())
 
 // This will only call the official API once
 api().items().ids()
+// ...
 api().items().ids()
 
 // When the cache expired this will call the official API again
@@ -67,6 +68,8 @@ api().items().ids()
 // Skip the cache if you want guaranteed live data
 api().items().live().ids()
 ```
+
+> **Note:** Since the cache storage save is asynchronous in the background (during which the API function already returns a result), it *can* happen that some data gets requested twice if you request it in rapid succession.
 
 #### Cache Storages
 

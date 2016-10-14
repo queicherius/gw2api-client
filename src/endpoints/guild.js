@@ -63,14 +63,15 @@ class PermissionsEndpoint extends AbstractEndpoint {
 }
 
 class SearchEndpoint extends AbstractEndpoint {
-  constructor (client, name) {
+  constructor (client) {
     super(client)
-    this.url = `/v2/guild/search?name=${encodeURIComponent(name)}`
+    this.url = '/v2/guild/search'
     this.cacheTime = 60 * 60
   }
 
-  get () {
-    return super.get().then(result => result[0])
+  name (name) {
+    return super.get(`?name=${encodeURIComponent(name)}`, true)
+      .then(result => result[0])
   }
 }
 

@@ -40,17 +40,17 @@ describe('endpoints > guild', () => {
   })
 
   it('test /v2/guild/search', async () => {
-    endpoint = endpoint.search('Baws Like')
+    endpoint = endpoint.search()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.cacheTime).to.not.be.undefined
-    expect(endpoint.url).to.equal('/v2/guild/search?name=Baws%20Like')
+    expect(endpoint.url).to.equal('/v2/guild/search')
 
     fetchMock.addResponse(['F8CDF1E0-2D64-4D71-81E2-049B0796B7AE'])
-    let content = await endpoint.get()
+    let content = await endpoint.name('Baws Like')
     expect(content).to.equal('F8CDF1E0-2D64-4D71-81E2-049B0796B7AE')
   })
 

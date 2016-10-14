@@ -40,6 +40,10 @@ export default class CharactersEndpoint extends AbstractEndpoint {
     return new RecipesEndpoint(this.client, this.name)
   }
 
+  skills () {
+    return new SkillsEndpoint(this.client, this.name)
+  }
+
   specializations () {
     return new SpecializationsEndpoint(this.client, this.name)
   }
@@ -129,6 +133,19 @@ class RecipesEndpoint extends AbstractEndpoint {
 
   get () {
     return super.get().then(result => result.recipes)
+  }
+}
+
+class SkillsEndpoint extends AbstractEndpoint {
+  constructor (client, character) {
+    super(client)
+    this.url = `/v2/characters/${encodeURIComponent(character)}/skills`
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+
+  get () {
+    return super.get().then(result => result.skills)
   }
 }
 

@@ -67,8 +67,7 @@ api.account().bank()
   })
 ```
 
-The API can throw server errors (status >= `500`) that don't have a `text` property set.
-However, most of the time it responds with one of the following errors:
+The API can throw server errors (status >= 500) that don't have a `text` property set. However, most of the time it responds with one of the following errors:
 
 - `endpoint requires authentication`
 - `invalid key`
@@ -81,7 +80,34 @@ However, most of the time it responds with one of the following errors:
 
 ### Retrying
 
-**TODO: Write documentation**
+By accessing the `fetch` instance, you can enable retrying in case the API or the user has problems getting a valid response. You can find the full documentation for retrying [here](https://github.com/queicherius/lets-fetch#retrying).
+
+```js
+import client from 'gw2api-client'
+
+// Get an instance of an API client
+let api = client()
+
+// Retry up to 3 times if the status indicates an request error
+api.fetch.retry((tries, err) => {
+  if (tries > 3) { 
+    return false
+  }
+
+  const res = err.response
+  if (res && (res.status < 400 || res.status === 403)) {
+    return false
+  }
+
+  return true
+})
+
+// Wait in between retries
+api.fetch.retryWait((tries) => tries * 100)
+
+// This request will now retry if it fails
+api().items().ids()
+```
 
 ### Extending
 
@@ -121,10 +147,7 @@ api.items().many([123, 456])
 
 ### Mocking
 
-If you want to mock this module in your tests, you can replace the underlying 
-request library with the provided mock module, e.g. using [rewire](https://github.com/speedskater/babel-plugin-rewire).
-
-You can find all available mock methods here: https://github.com/queicherius/lets-fetch#mocking
+If you want to mock this module in your tests, you can replace the underlying request library with the provided mock module, e.g. using [rewire](https://github.com/speedskater/babel-plugin-rewire). You can find all available mock methods [here](https://github.com/queicherius/lets-fetch#mocking).
 
 ```js
 import fetchMock from 'lets-fetch/mock'

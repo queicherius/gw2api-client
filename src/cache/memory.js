@@ -1,5 +1,5 @@
 import flow from 'promise-control-flow'
-const gcTickTime = 60 * 1000
+const gcTickTime = 5 * 60 * 1000
 
 export default function () {
   // Scope the storage to the function, so multiple instances don't interfere

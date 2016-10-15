@@ -80,8 +80,8 @@ This are the cache storages included in this module. Feel free to write your own
 The default storage, does no caching at all.
 
 ```js
-import nullStorage from 'gw2api-client/build/cache/null'
-api.cacheStorage(nullStorage())
+import cacheNull from 'gw2api-client/build/cache/null'
+api.cacheStorage(cacheNull())
 ```
 
 **`gw2api-client/build/cache/memory`**
@@ -89,24 +89,33 @@ api.cacheStorage(nullStorage())
 Caches the data a basic in-memory storage.
 
 ```js
-import memoryStorage from 'gw2api-client/build/cache/memory'
-api.cacheStorage(memoryStorage())
+import cacheMemory from 'gw2api-client/build/cache/memory'
+api.cacheStorage(cacheMemory())
+```
+
+**`gw2api-client/build/cache/localStorage`**
+
+Caches the data using [localStorage](https://developer.mozilla.org/en/docs/Web/API/Window/localStorage) and memory. Requires a configuration parameter with `localStorage` (or an equivalent interface, like [this](https://www.npmjs.com/package/node-localstorage)) and can take an optional `prefix`.
+
+```js
+import cacheLocalStorage from 'gw2api-client/build/cache/localStorage'
+api.cacheStorage(cacheLocalStorage({localStorage: window.localStorage, prefix: 'optional-prefix-'}))
 ```
 
 **`gw2api-client/build/cache/redis`**
 
-Caches the data using [Redis](https://redis.io). Requires a configuration parameter with an instance of [node_redis](https://github.com/NodeRedis/node_redis).
+Caches the data using [Redis](https://redis.io). Requires a configuration parameter with an instance of [node_redis](https://github.com/NodeRedis/node_redis) and can take an optional `prefix`.
 
 ```js
 import redis from 'redis'
-import redisStorage from 'gw2api-client/build/cache/redis'
+import cacheRedis from 'gw2api-client/build/cache/redis'
 
 // Create the redis client
 // See https://github.com/NodeRedis/node_redis#rediscreateclient
 const client = redis()
 
 // Attach the storage
-api.cacheStorage(redisStorage({redis: client}))
+api.cacheStorage(cacheRedis({redis: client, prefix: 'optional-prefix-'}))
 ```
 
 **Custom**
@@ -114,7 +123,7 @@ api.cacheStorage(redisStorage({redis: client}))
 A custom storage has to be a method which can take a configuration object:
 
 ```js
-function myCustomStorage (config) {
+function cacheCustom (config) {
   // Do configuration things
   return {
     get: (key) => ...,
@@ -122,7 +131,7 @@ function myCustomStorage (config) {
   }
 }
 
-api.cacheStorage(myCustomStorage({foo: 'bar'}))
+api.cacheStorage(cacheCustom({foo: 'bar'}))
 ```
 
 This function has to return an object containing implementations of the following methods, which all have to return a `Promise` object.

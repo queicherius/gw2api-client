@@ -68,7 +68,7 @@ import localForage from 'localforage'
 import cacheLocalForage from 'gw2api-client/build/cache/localForage'
 
 const options = {
-  localForage: localforage.createInstance(),
+  localForage: localForage.createInstance(),
   prefix: 'optional-prefix-',
   gcTick: 5 * 60 * 1000
 }
@@ -92,7 +92,7 @@ import redis from 'redis'
 import cacheRedis from 'gw2api-client/build/cache/redis'
 
 const options = {
-  redis: redis(),
+  redis: redis.createClient(),
   prefix: 'optional-prefix-'
 }
 
@@ -103,11 +103,13 @@ api.cacheStorage(cacheRedis(options))
 
 ### Custom
 
-A custom storage has to be a method which can take a configuration object:
+You can write a custom storage to fit your architecture. It has to be a function which takes a configuration object:
 
 ```js
 function cacheCustom (config) {
-  // Do configuration things
+  // Do configuration things with the `config` object ...
+  
+  // Return an object with the implementations
   return {
     get: (key) => ...,
     ...
@@ -117,7 +119,7 @@ function cacheCustom (config) {
 api.cacheStorage(cacheCustom({foo: 'bar'}))
 ```
 
-This function has to return an object containing implementations of the following methods, which all have to return a `Promise` object.
+This function has to return an object containing implementations of the following functions, which all have to return a `Promise` object.
 
 - `get(key)` - Gets a single value by key. Resolves `null` if the value does not exist or is expired.
 - `mget([key, key, ...])` - Gets multiple values by keys. Resolves an array. Missing and expired elements are either not included in the return array or set to `null`.

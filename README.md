@@ -47,13 +47,13 @@ flow.parallel([
 
 ### Endpoints
 
-**[You can find all endpoints with their respective function calls in this document.](./endpoints.md)**
+**[You can find all endpoints with their respective function calls in this document.](./docs/endpoints.md)**
 
 ### Caching
 
-**[You can find all cache storages (and the interface for custom ones) in this document.](./cache-storages.md)**
+**[You can find all cache storages (and the interface for custom ones) in this document.](./docs/cache-storages.md)**
 
-By default all requests get send to the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./endpoints.md).
+By default all requests get send to the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./docs/endpoints.md).
 
 ```js
 import cacheMemory from 'gw2api-client/build/cache/memory'

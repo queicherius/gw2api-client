@@ -5,3 +5,5 @@ after_script: "$(npm bin)/codecov"
 branches:
   only:
     - master
+services:
+  - redis-server

@@ -11,7 +11,7 @@ describe('cache > null', function () {
   it('can set and get a single value', async () => {
     await cache.set('foo', 'bar', 1)
     let cached = await cache.get('foo')
-    expect(cached).to.equal(false)
+    expect(cached).to.equal(null)
   })
 
   it('can set and get multiple value', async () => {

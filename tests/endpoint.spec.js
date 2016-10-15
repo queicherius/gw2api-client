@@ -154,7 +154,7 @@ describe('abstract endpoint', () => {
       expect(entry).to.deep.equal(content)
       expect(entryShouldCache).to.deep.equal(content)
       expect(entryInCache).to.deep.equal(content)
-      expect(bulkEntryInCache).to.deep.equal(false)
+      expect(bulkEntryInCache).to.deep.equal(null)
     })
 
     it('caching for non bulk expanding with custom url', async () => {

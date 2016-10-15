@@ -3,25 +3,21 @@ export default function () {
 }
 
 function get (key) {
-  return promisify(false)
+  return Promise.resolve(null)
 }
 
 function set (key, value, expiry) {
-  return promisify(true)
+  return Promise.resolve(true)
 }
 
 function mget (keys) {
-  return promisify([])
+  return Promise.resolve([])
 }
 
 function mset (values) {
-  return promisify(true)
+  return Promise.resolve(true)
 }
 
 function flush () {
-  return promisify(true)
-}
-
-function promisify (value) {
-  return new Promise(resolve => resolve(value))
+  return Promise.resolve(true)
 }

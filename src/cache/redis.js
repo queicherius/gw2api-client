@@ -1,0 +1,87 @@
+let redisClient
+let prefix
+
+export default function (configuration) {
+  configuration = {prefix: 'gw2api-', ...configuration}
+
+  if (!configuration.redis) {
+    throw new Error('The `redis` cache storage requires a `redis` instance')
+  }
+
+  redisClient = configuration.redis
+  prefix = configuration.prefix
+
+  return {get, set, mget, mset, flush}
+}
+
+function get (key) {
+  return new Promise((resolve, reject) => {
+    redisClient.get(prefix + key, (err, value) => {
+      if (err) return reject(err)
+      return resolve(JSON.parse(value))
+    })
+  })
+}
+
+function set (key, value, expiry) {
+  return new Promise((resolve, reject) => {
+    redisClient.set(prefix + key, JSON.stringify(value), (err) => {
+      if (err) return reject(err)
+      redisClient.expire(prefix + key, expiry)
+      return resolve()
+    })
+  })
+}
+
+function mget (keys) {
+  keys = keys.map(key => prefix + key)
+
+  return new Promise((resolve, reject) => {
+    redisClient.mget(keys, (err, results) => {
+      if (err) return reject(err)
+      return resolve(results.map(x => JSON.parse(x)))
+    })
+  })
+}
+
+function mset (values) {
+  const redisCommands = values
+    .map(value => [prefix + value[0], JSON.stringify(value[1])])
+    .reduce((a, b) => a.concat(b), [])
+
+  return new Promise((resolve, reject) => {
+    redisClient.mset(redisCommands, (err) => {
+      if (err) return reject(err)
+
+      // Set the expire time of all keys in batch
+      let batch = redisClient.batch()
+      values.map(value => {
+        batch.expire(prefix + value[0], value[2])
+      })
+
+      batch.exec(err => {
+        if (err) return reject(err)
+        return resolve()
+      })
+    })
+  })
+}
+
+function flush () {
+  return new Promise((resolve, reject) => {
+    redisClient.keys(prefix + '*', function (err, keys) {
+      if (err) return reject(err)
+
+      // Delete the matched keys in batch
+      let batch = redisClient.batch()
+      keys.map(key => {
+        batch.del(key)
+      })
+
+      batch.exec(err => {
+        if (err) return reject(err)
+        return resolve()
+      })
+    })
+  })
+}

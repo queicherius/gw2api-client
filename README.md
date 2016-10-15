@@ -77,7 +77,7 @@ This are the cache storages included in this module. Feel free to write your own
 
 **`gw2api-client/build/cache/null`**
 
-Does no caching at all. The default storage.
+The default storage, does no caching at all.
 
 ```js
 import nullStorage from 'gw2api-client/build/cache/null'
@@ -86,16 +86,32 @@ api.cacheStorage(nullStorage())
 
 **`gw2api-client/build/cache/memory`**
 
-Caches the data using a basic RAM hashmap.
+Caches the data a basic in-memory storage.
 
 ```js
 import memoryStorage from 'gw2api-client/build/cache/memory'
 api.cacheStorage(memoryStorage())
 ```
 
+**`gw2api-client/build/cache/redis`**
+
+Caches the data using [Redis](https://redis.io). Requires a configuration parameter with an instance of [node_redis](https://github.com/NodeRedis/node_redis).
+
+```js
+import redis from 'redis'
+import redisStorage from 'gw2api-client/build/cache/redis'
+
+// Create the redis client
+// See https://github.com/NodeRedis/node_redis#rediscreateclient
+const client = redis()
+
+// Attach the storage
+api.cacheStorage(redisStorage({redis: client}))
+```
+
 **Custom**
 
-A custom storage has to be a method which can take some configuration object:
+A custom storage has to be a method which can take a configuration object:
 
 ```js
 function myCustomStorage (config) {
@@ -111,8 +127,8 @@ api.cacheStorage(myCustomStorage({foo: 'bar'}))
 
 This function has to return an object containing implementations of the following methods, which all have to return a `Promise` object.
 
-- `get(key)` - Gets a single value by key. Resolves `false` if the value does not exist or is expired.
-- `mget([key, key, ...])` - Gets multiple values by keys. Resolves an array. Missing and expired elements are either not included in the return array or set to `false`.
+- `get(key)` - Gets a single value by key. Resolves `null` if the value does not exist or is expired.
+- `mget([key, key, ...])` - Gets multiple values by keys. Resolves an array. Missing and expired elements are either not included in the return array or set to `null`.
 - `set(key, value, expiresInSeconds)` - Sets a single value by key.
 - `mset([[key, value, expiresInSeconds], ...])` - Sets multiple values.
 - `flush()` - Completely clears the cache data (only needed for tests)

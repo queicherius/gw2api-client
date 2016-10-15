@@ -1,18 +1,22 @@
 /* eslint-env node, mocha */
 import {expect} from 'chai'
-import storage from '../../src/cache/memory'
-storage.__set__('gcTickTime', 1000)
-const cache = storage()
+import storage from '../../src/cache/redis'
+import redis from 'redis'
+const cache = storage({redis: redis.createClient()})
 
 function wait (ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-describe('cache > memory', function () {
+describe('cache > redis', function () {
   this.timeout(5000)
 
   beforeEach(() => {
     cache.flush()
+  })
+
+  it('requires an configuration object', () => {
+    expect(() => storage()).to.throw()
   })
 
   it('can flush the cache', async () => {
@@ -24,14 +28,6 @@ describe('cache > memory', function () {
 
     let cachedFlushed = await cache.get('foo')
     expect(cachedFlushed).to.equal(null)
-  })
-
-  it('triggers garbage collection', async () => {
-    await cache.set('foo', 'bar', 1)
-    await wait(3000)
-
-    let keys = Object.keys(cache._storage)
-    expect(keys).to.deep.equal([])
   })
 
   it('can set and get a single value', async () => {

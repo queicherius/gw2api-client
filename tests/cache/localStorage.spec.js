@@ -2,8 +2,7 @@
 import {expect} from 'chai'
 import storage from '../../src/cache/localStorage'
 import localStorage from 'localstorage-memory'
-storage.__set__('gcTickTime', 1000)
-const cache = storage({localStorage: localStorage})
+const cache = storage({localStorage: localStorage, gcTick: 500})
 
 function wait (ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -50,7 +49,7 @@ describe('cache > localStorage', function () {
     expect(cachedExpired, 'cachedExpired').to.equal(null)
   })
 
-  it('can set and get multiple value', async () => {
+  it('can set and get multiple values', async () => {
     await cache.set('abc', {foo: 'bar'}, 1)
     await cache.mset([['foo', 'bar', 1], ['herp', {derp: 1}, 1]])
 

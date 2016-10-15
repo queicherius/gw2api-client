@@ -71,11 +71,7 @@ api().items().live().ids()
 
 > **Note:** Since the cache storage save is asynchronous in the background (during which the API function already returns a result), it *can* happen that some data gets requested twice if you request it in rapid succession.
 
-#### Cache Storages
-
-This are the cache storages included in this module. Feel free to write your own implementation! (Please send a PR :<3:.)
-
-**`gw2api-client/build/cache/null`**
+#### `gw2api-client/build/cache/null`
 
 The default storage, does no caching at all.
 
@@ -84,41 +80,70 @@ import cacheNull from 'gw2api-client/build/cache/null'
 api.cacheStorage(cacheNull())
 ```
 
-**`gw2api-client/build/cache/memory`**
+#### `gw2api-client/build/cache/memory`
 
 Caches the data a basic in-memory storage.
 
+**Options:**
+
+- `gcTick` *(optional)* - How often the garbage collection should clean out expired data (in ms). Defaults to `5 * 60 * 1000`.
+
 ```js
 import cacheMemory from 'gw2api-client/build/cache/memory'
-api.cacheStorage(cacheMemory())
+
+const options = {
+  gcTick: 5 * 60 * 1000
+}
+
+api.cacheStorage(cacheMemory(options))
 ```
 
-**`gw2api-client/build/cache/localStorage`**
+#### `gw2api-client/build/cache/localStorage`
 
-Caches the data using [localStorage](https://developer.mozilla.org/en/docs/Web/API/Window/localStorage) and memory. Requires a configuration parameter with `localStorage` (or an equivalent interface, like [this](https://www.npmjs.com/package/node-localstorage)) and can take an optional `prefix`.
+Caches the data using [localStorage](https://developer.mozilla.org/en/docs/Web/API/Window/localStorage).
+
+**Options:**
+
+- `localStorage` - The browser's `window.localStorage` (or an equivalent interface, like [this](https://www.npmjs.com/package/node-localstorage))
+- `prefix` *(optional)* - The prefix for the cache keys. Defaults to `gw2api-`.
+- `gcTick` *(optional)* - How often the garbage collection should clean out expired data (in ms). Defaults to `5 * 60 * 1000`.
 
 ```js
 import cacheLocalStorage from 'gw2api-client/build/cache/localStorage'
-api.cacheStorage(cacheLocalStorage({localStorage: window.localStorage, prefix: 'optional-prefix-'}))
+
+const options = {
+  localStorage: window.localStorage,
+  prefix: 'optional-prefix-',
+  gcTick: 5 * 60 * 1000
+}
+
+api.cacheStorage(cacheLocalStorage(options))
 ```
 
-**`gw2api-client/build/cache/redis`**
+#### `gw2api-client/build/cache/redis`
 
-Caches the data using [Redis](https://redis.io). Requires a configuration parameter with an instance of [node_redis](https://github.com/NodeRedis/node_redis) and can take an optional `prefix`.
+Caches the data using [Redis](https://redis.io).
+
+**Options:**
+
+- `redis` - An instance of [node_redis](https://github.com/NodeRedis/node_redis)
+- `prefix` *(optional)* - The prefix for the cache keys. Defaults to `gw2api-`.
 
 ```js
 import redis from 'redis'
 import cacheRedis from 'gw2api-client/build/cache/redis'
 
-// Create the redis client
-// See https://github.com/NodeRedis/node_redis#rediscreateclient
-const client = redis()
+const options = {
+  redis: redis(),
+  prefix: 'optional-prefix-'
+}
 
-// Attach the storage
-api.cacheStorage(cacheRedis({redis: client, prefix: 'optional-prefix-'}))
+api.cacheStorage(cacheRedis(options))
 ```
 
-**Custom**
+#### Custom
+
+<sub>Please send a PRs! :<3:</sub>
 
 A custom storage has to be a method which can take a configuration object:
 
@@ -140,7 +165,7 @@ This function has to return an object containing implementations of the followin
 - `mget([key, key, ...])` - Gets multiple values by keys. Resolves an array. Missing and expired elements are either not included in the return array or set to `null`.
 - `set(key, value, expiresInSeconds)` - Sets a single value by key.
 - `mset([[key, value, expiresInSeconds], ...])` - Sets multiple values.
-- `flush()` - Completely clears the cache data (only needed for tests)
+- `flush()` - Completely clears the cache data (only needed for tests).
 
 ### Error handling
 

@@ -1,8 +1,7 @@
 import flow from 'promise-control-flow'
-const gcTickTime = 5 * 60 * 1000
 
 export default function (configuration) {
-  configuration = {prefix: 'gw2api-', ...configuration}
+  configuration = {prefix: 'gw2api-', gcTick: 5 * 60 * 1000, ...configuration}
 
   if (!configuration.localStorage) {
     throw new Error('The `localStorage` cache storage requires a `localStorage` instance')
@@ -68,7 +67,7 @@ export default function (configuration) {
         storage.removeItem(key)
       }
     }
-  }, gcTickTime)
+  }, configuration.gcTick)
 
   return {get, set, mget, mset, flush}
 }

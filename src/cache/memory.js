@@ -1,7 +1,8 @@
 import flow from 'promise-control-flow'
-const gcTickTime = 5 * 60 * 1000
 
-export default function () {
+export default function (configuration) {
+  configuration = {gcTick: 5 * 60 * 1000, ...configuration}
+
   // Scope the storage to the function, so multiple instances don't interfere
   let _storage = {}
 
@@ -40,7 +41,7 @@ export default function () {
         delete _storage[i]
       }
     }
-  }, gcTickTime)
+  }, configuration.gcTick)
 
   return {get, set, mget, mset, flush, _storage}
 }

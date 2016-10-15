@@ -13,14 +13,15 @@ export default function (configuration) {
   function get (key) {
     let now = (new Date()).getTime()
 
-    return storage.getItem(prefix + key).then(value => {
-      if (!value) {
-        return null
-      }
+    return storage.getItem(prefix + key)
+      .then(value => {
+        if (!value) {
+          return null
+        }
 
-      value = JSON.parse(value)
-      return value && value.expiry > now ? value.value : null
-    })
+        value = JSON.parse(value)
+        return value && value.expiry > now ? value.value : null
+      })
   }
 
   function set (key, value, expiry) {
@@ -41,6 +42,34 @@ export default function (configuration) {
   function flush () {
     return storage.clear()
   }
+
+  function garbageCollection () {
+    let now = (new Date()).getTime()
+
+    function handleKey (key) {
+      // Only check local storage keys that still exist and seem to be caching keys
+      if (!key || key.indexOf(prefix) !== 0) {
+        return Promise.resolve()
+      }
+
+      // Remove the keys that are expired (and ignore race condition errors)
+      return storage.getItem(key).then(value => {
+        if (value && JSON.parse(value).expiry < now) {
+          return storage.removeItem(key).catch(() => false)
+        }
+
+        return Promise.resolve()
+      })
+    }
+
+    return storage.keys().then(keys => {
+      let promises = keys.map(key => () => handleKey(key))
+      return flow.parallel(promises)
+    })
+  }
+
+  setInterval(garbageCollection, configuration.gcTick)
+  garbageCollection()
 
   return {get, set, mget, mset, flush}
 }

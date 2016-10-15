@@ -4,6 +4,8 @@ export default {
   setItem: (key, value) => Promise.resolve(localStorage.setItem(key, value)),
   getItem: (key) => Promise.resolve(localStorage.getItem(key)),
   removeItem: (key) => Promise.resolve(localStorage.removeItem(key)),
+  key: (index) => Promise.resolve(localStorage.key(index)),
+  length: () => Promise.resolve(localStorage.length),
   keys: () => {
     let keys = []
 

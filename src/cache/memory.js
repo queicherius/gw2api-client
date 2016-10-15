@@ -34,5 +34,22 @@ export default function (configuration) {
     return Promise.resolve(true)
   }
 
-  return {get, set, mget, mset, flush, _storage}
+  function _getStorage () {
+    return _storage
+  }
+
+  function garbageCollection () {
+    let now = (new Date()).getTime()
+
+    for (var i in _storage) {
+      if (_storage[i].expiry < now) {
+        delete _storage[i]
+      }
+    }
+  }
+
+  setInterval(garbageCollection, configuration.gcTick)
+  garbageCollection()
+
+  return {get, set, mget, mset, flush, _getStorage}
 }

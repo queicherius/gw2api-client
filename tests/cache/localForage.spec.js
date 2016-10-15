@@ -28,28 +28,38 @@ describe('cache > localForage', function () {
   })
 
   it('can set and get a single value', async () => {
-    await cache.set('foo', 'bar', 1)
+    await cache.set('foo', 'bar', 2)
     let cachedFresh = await cache.get('foo')
     expect(cachedFresh, 'cachedFresh').to.equal('bar')
 
-    await wait(2000)
+    await wait(3000)
 
     let cachedExpired = await cache.get('foo')
     expect(cachedExpired, 'cachedExpired').to.equal(null)
   })
 
   it('can set and get multiple values', async () => {
-    await cache.set('abc', {foo: 'bar'}, 1)
-    await cache.mset([['foo', 'bar', 1], ['herp', {derp: 1}, 1]])
+    await cache.set('abc', {foo: 'bar'}, 2)
+    await cache.mset([['foo', 'bar', 2], ['herp', {derp: 1}, 2]])
 
     let cachedFresh = await cache.get('abc')
     expect(cachedFresh, 'cachedFresh').to.deep.equal({foo: 'bar'})
     let cachedFreshMany = await cache.mget(['foo', 'herp', 'abc'])
     expect(cachedFreshMany, 'cachedFreshMany').to.deep.equal(['bar', {derp: 1}, {foo: 'bar'}])
 
-    await wait(2000)
+    await wait(3000)
 
     let cachedExpired = await cache.mget(['foo', 'herp', 'abc'])
     expect(cachedExpired.filter(x => x), 'cachedExpired').to.deep.equal([])
+  })
+
+  it('triggers garbage collection', async () => {
+    await cache.set('foo', 'bar', 1)
+    await cache.set('herp', 'derp', 10)
+    await localForageMock.setItem('lol', 'xd')
+    await wait(3000)
+
+    let keys = await localForageMock.keys()
+    expect(keys).to.deep.equal(['gw2api-herp', 'lol'])
   })
 })

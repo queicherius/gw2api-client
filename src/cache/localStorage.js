@@ -51,5 +51,28 @@ export default function (configuration) {
     return Promise.resolve(true)
   }
 
+  function garbageCollection () {
+    let now = (new Date()).getTime()
+    let length = storage.length
+
+    for (var i = 0; i !== length; i++) {
+      let key = storage.key(i)
+
+      // Only check local storage keys that still exist and seem to be caching keys
+      if (!key || key.indexOf(prefix) !== 0) {
+        continue
+      }
+
+      // Remove the keys that are expired
+      let value = storage.getItem(key)
+      if (value && JSON.parse(value).expiry < now) {
+        storage.removeItem(key)
+      }
+    }
+  }
+
+  setInterval(garbageCollection, configuration.gcTick)
+  garbageCollection()
+
   return {get, set, mget, mset, flush}
 }

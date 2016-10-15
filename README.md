@@ -120,6 +120,29 @@ const options = {
 api.cacheStorage(cacheLocalStorage(options))
 ```
 
+#### `gw2api-client/build/cache/localForage`
+
+Caches the data using [localForage](https://github.com/localForage/localForage).
+
+**Options:**
+
+- `localForage` - An instance of [localForage](https://github.com/localForage/localForage).
+- `prefix` *(optional)* - The prefix for the cache keys. Defaults to `gw2api-`.
+- `gcTick` *(optional)* - How often the garbage collection should clean out expired data (in ms). Defaults to `5 * 60 * 1000`.
+
+```js
+import localForage from 'localforage'
+import cacheLocalForage from 'gw2api-client/build/cache/localForage'
+
+const options = {
+  localForage: localforage.createInstance(),
+  prefix: 'optional-prefix-',
+  gcTick: 5 * 60 * 1000
+}
+
+api.cacheStorage(cacheLocalForage(options))
+```
+
 #### `gw2api-client/build/cache/redis`
 
 Caches the data using [Redis](https://redis.io).

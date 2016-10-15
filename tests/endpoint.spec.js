@@ -2,6 +2,7 @@
 import {expect} from 'chai'
 import {mockClient, fetchMock} from './mocks/client.mock'
 import Module from '../src/endpoint'
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 async function expectError (callback) {
   let err
@@ -12,12 +13,6 @@ async function expectError (callback) {
   }
   expect(err).to.exist
   expect(err).to.be.an.instanceof(Error)
-}
-
-function wait (ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms)
-  })
 }
 
 describe('abstract endpoint', () => {

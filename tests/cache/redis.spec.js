@@ -3,10 +3,7 @@ import {expect} from 'chai'
 import storage from '../../src/cache/redis'
 import redis from 'redis'
 const cache = storage({redis: redis.createClient()})
-
-function wait (ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 describe('cache > redis', function () {
   this.timeout(5000)

@@ -3,37 +3,29 @@ import flow from 'promise-control-flow'
 export default function (configuration) {
   configuration = {prefix: 'gw2api-', gcTick: 5 * 60 * 1000, ...configuration}
 
-  if (!configuration.localStorage) {
-    throw new Error('The `localStorage` cache storage requires a `localStorage` instance')
+  if (!configuration.localForage) {
+    throw new Error('The `localForage` cache storage requires a `localForage` instance')
   }
 
-  let storage = configuration.localStorage
+  let storage = configuration.localForage
   let prefix = configuration.prefix
 
   function get (key) {
     let now = (new Date()).getTime()
-    let value
 
-    try {
-      value = JSON.parse(storage.getItem(prefix + key))
-    } catch (err) {
-      value = null
-    }
+    return storage.getItem(prefix + key).then(value => {
+      if (!value) {
+        return null
+      }
 
-    value = value && value.expiry > now ? value.value : null
-    return Promise.resolve(value)
+      value = JSON.parse(value)
+      return value && value.expiry > now ? value.value : null
+    })
   }
 
   function set (key, value, expiry) {
     value = {value, expiry: (new Date()).getTime() + expiry * 1000}
-
-    try {
-      storage.setItem(prefix + key, JSON.stringify(value))
-    } catch (err) {
-      // Since it is super easy to smash the quota, ignore that
-    }
-
-    return Promise.resolve(true)
+    return storage.setItem(prefix + key, JSON.stringify(value))
   }
 
   function mget (keys) {
@@ -47,8 +39,7 @@ export default function (configuration) {
   }
 
   function flush () {
-    storage.clear()
-    return Promise.resolve(true)
+    return storage.clear()
   }
 
   return {get, set, mget, mset, flush}

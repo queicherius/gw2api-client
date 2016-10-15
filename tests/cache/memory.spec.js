@@ -2,10 +2,7 @@
 import {expect} from 'chai'
 import storage from '../../src/cache/memory'
 const cache = storage({gcTick: 500})
-
-function wait (ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 describe('cache > memory', function () {
   this.timeout(5000)
@@ -23,13 +20,6 @@ describe('cache > memory', function () {
 
     let cachedFlushed = await cache.get('foo')
     expect(cachedFlushed, 'cachedFlushed').to.equal(null)
-  })
-
-  it('triggers garbage collection', async () => {
-    await cache.set('foo', 'bar', 1)
-    await wait(3000)
-
-    expect(Object.keys(cache._storage).length).to.equal(0)
   })
 
   it('can set and get a single value', async () => {

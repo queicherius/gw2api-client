@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 import {expect} from 'chai'
-import storage from '../../src/cache/localStorage'
-import localStorage from 'localstorage-memory'
-const cache = storage({localStorage: localStorage, gcTick: 500})
+import storage from '../../src/cache/localForage'
+import localForageMock from '../mocks/localForage.mock'
+const cache = storage({localForage: localForageMock, gcTick: 500})
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-describe('cache > localStorage', function () {
+describe('cache > localForage', function () {
   this.timeout(5000)
 
   beforeEach(() => {

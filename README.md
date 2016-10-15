@@ -51,11 +51,13 @@ flow.parallel([
 
 ### Caching
 
+**[You can find all cache storages (and the interface for custom ones) in this document.](./cache-storages.md)**
+
 By default all requests get send to the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./endpoints.md).
 
 ```js
-import memoryStorage from 'gw2api-client/build/cache/memory'
-api.cacheStorage(memoryStorage())
+import cacheMemory from 'gw2api-client/build/cache/memory'
+api.cacheStorage(cacheMemory())
 
 // This will only call the official API once
 api().items().ids()
@@ -69,126 +71,21 @@ api().items().ids()
 api().items().live().ids()
 ```
 
-> **Note:** Since the cache storage save is asynchronous in the background (during which the API function already returns a result), it *can* happen that some data gets requested twice if you request it in rapid succession.
-
-#### `gw2api-client/build/cache/null`
-
-The default storage, does no caching at all.
-
-```js
-import cacheNull from 'gw2api-client/build/cache/null'
-api.cacheStorage(cacheNull())
-```
-
-#### `gw2api-client/build/cache/memory`
-
-Caches the data a basic in-memory storage.
-
-**Options:**
-
-- `gcTick` *(optional)* - How often the garbage collection should clean out expired data (in ms). Defaults to `5 * 60 * 1000`.
+You can also chain multiple cache storages together. In this case, when setting a value it gets set in all storages, and when getting a value the first storage in the list that responds with a non-null value will get used.
 
 ```js
 import cacheMemory from 'gw2api-client/build/cache/memory'
-
-const options = {
-  gcTick: 5 * 60 * 1000
-}
-
-api.cacheStorage(cacheMemory(options))
-```
-
-#### `gw2api-client/build/cache/localStorage`
-
-Caches the data using [localStorage](https://developer.mozilla.org/en/docs/Web/API/Window/localStorage).
-
-**Options:**
-
-- `localStorage` - The browser's `window.localStorage` (or an equivalent interface, like [this](https://www.npmjs.com/package/node-localstorage))
-- `prefix` *(optional)* - The prefix for the cache keys. Defaults to `gw2api-`.
-- `gcTick` *(optional)* - How often the garbage collection should clean out expired data (in ms). Defaults to `5 * 60 * 1000`.
-
-```js
 import cacheLocalStorage from 'gw2api-client/build/cache/localStorage'
 
-const options = {
-  localStorage: window.localStorage,
-  prefix: 'optional-prefix-',
-  gcTick: 5 * 60 * 1000
-}
-
-api.cacheStorage(cacheLocalStorage(options))
+// Save in memory and local storage
+// Try to answer from memory first, then from local storage and then hit the API
+api.cacheStorage([
+  cacheMemory(),
+  cacheLocalStorage()
+])
 ```
 
-#### `gw2api-client/build/cache/localForage`
-
-Caches the data using [localForage](https://github.com/localForage/localForage).
-
-**Options:**
-
-- `localForage` - An instance of [localForage](https://github.com/localForage/localForage).
-- `prefix` *(optional)* - The prefix for the cache keys. Defaults to `gw2api-`.
-- `gcTick` *(optional)* - How often the garbage collection should clean out expired data (in ms). Defaults to `5 * 60 * 1000`.
-
-```js
-import localForage from 'localforage'
-import cacheLocalForage from 'gw2api-client/build/cache/localForage'
-
-const options = {
-  localForage: localforage.createInstance(),
-  prefix: 'optional-prefix-',
-  gcTick: 5 * 60 * 1000
-}
-
-api.cacheStorage(cacheLocalForage(options))
-```
-
-#### `gw2api-client/build/cache/redis`
-
-Caches the data using [Redis](https://redis.io).
-
-**Options:**
-
-- `redis` - An instance of [node_redis](https://github.com/NodeRedis/node_redis)
-- `prefix` *(optional)* - The prefix for the cache keys. Defaults to `gw2api-`.
-
-```js
-import redis from 'redis'
-import cacheRedis from 'gw2api-client/build/cache/redis'
-
-const options = {
-  redis: redis(),
-  prefix: 'optional-prefix-'
-}
-
-api.cacheStorage(cacheRedis(options))
-```
-
-#### Custom
-
-<sub>Please send a PRs! :<3:</sub>
-
-A custom storage has to be a method which can take a configuration object:
-
-```js
-function cacheCustom (config) {
-  // Do configuration things
-  return {
-    get: (key) => ...,
-    ...
-  }
-}
-
-api.cacheStorage(cacheCustom({foo: 'bar'}))
-```
-
-This function has to return an object containing implementations of the following methods, which all have to return a `Promise` object.
-
-- `get(key)` - Gets a single value by key. Resolves `null` if the value does not exist or is expired.
-- `mget([key, key, ...])` - Gets multiple values by keys. Resolves an array. Missing and expired elements are either not included in the return array or set to `null`.
-- `set(key, value, expiresInSeconds)` - Sets a single value by key.
-- `mset([[key, value, expiresInSeconds], ...])` - Sets multiple values.
-- `flush()` - Completely clears the cache data (only needed for tests).
+> **Note:** Since the cache storage save is asynchronous in the background (during which the API function already returns a result), it *can* happen that some data gets requested twice if you request it in rapid succession.
 
 ### Error handling
 

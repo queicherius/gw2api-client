@@ -8,7 +8,6 @@ export default {
   length: () => Promise.resolve(localStorage.length),
   keys: () => {
     let keys = []
-
     for (var i = 0; i !== localStorage.length; i++) {
       keys.push(localStorage.key(i))
     }

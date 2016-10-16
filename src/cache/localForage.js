@@ -46,7 +46,7 @@ export default function (configuration) {
   function garbageCollection () {
     let now = (new Date()).getTime()
 
-    function handleKey (key) {
+    const handleKey = (key) => {
       // Only check local storage keys that still exist and seem to be caching keys
       if (!key || key.indexOf(prefix) !== 0) {
         return Promise.resolve()

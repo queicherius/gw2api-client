@@ -1,6 +1,6 @@
 ### `gw2api-client/build/cache/null`
 
-The default storage, does no caching at all.
+The default storage. Does no caching at all.
 
 ```js
 import cacheNull from 'gw2api-client/build/cache/null'
@@ -11,7 +11,7 @@ api.cacheStorage(cacheNull())
 
 ### `gw2api-client/build/cache/memory`
 
-Caches the data a basic in-memory storage.
+Caches the data using a basic in-memory storage.
 
 **Options:**
 
@@ -35,7 +35,7 @@ Caches the data using [localStorage](https://developer.mozilla.org/en/docs/Web/A
 
 **Options:**
 
-- `localStorage` - The browser's `window.localStorage` (or an equivalent interface, like [this](https://www.npmjs.com/package/node-localstorage))
+- `localStorage` - The browser's `window.localStorage` (or equivalent interface, like [node-localstorage](https://www.npmjs.com/package/node-localstorage))
 - `prefix` *(optional)* - The prefix for the cache keys. Defaults to `gw2api-`.
 - `gcTick` *(optional)* - How often the garbage collection should clean out expired data (in ms). Defaults to `5 * 60 * 1000`.
 
@@ -121,8 +121,8 @@ api.cacheStorage(cacheCustom({foo: 'bar'}))
 
 This function has to return an object containing implementations of the following functions, which all have to return a `Promise` object.
 
-- `get(key)` - Gets a single value by key. Resolves `null` if the value does not exist or is expired.
-- `mget([key, key, ...])` - Gets multiple values by keys. Resolves an array. Missing and expired elements have to be set to `null`. Has to maintain order of keys => values.
+- `get(key)` - Gets a single value by key. Has to resolve to `null` if the value does not exist or is expired.
+- `mget([key, key, ...])` - Gets multiple values by keys. Resolves an array. Missing and expired elements have to be set to `null`. Has to maintain the order of keys when resolving into values.
 - `set(key, value, expiresInSeconds)` - Sets a single value by key.
 - `mset([[key, value, expiresInSeconds], ...])` - Sets multiple values.
-- `flush()` - Completely clears the cache data (only needed for tests).
+- `flush()` - Clears the cache data (only needed for tests).

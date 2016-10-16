@@ -47,7 +47,7 @@ export default class AbstractEndpoint {
       return this._ids()
     }
 
-    // Get as much as possibly out of the cache
+    // Get as much as possible out of the cache
     const hash = this._cacheHash('ids')
     const handleCacheContent = (cached) => {
       if (cached) {
@@ -81,7 +81,7 @@ export default class AbstractEndpoint {
       return this._get(id, url)
     }
 
-    // Get as much as possibly out of the cache
+    // Get as much as possible out of the cache
     const hash = this._cacheHash(id)
     const handleCacheContent = (cached) => {
       if (cached) {
@@ -134,7 +134,7 @@ export default class AbstractEndpoint {
       return this._many(ids)
     }
 
-    // Get as much as possibly out of the cache
+    // Get as much as possible out of the cache
     const hashes = ids.map(id => this._cacheHash(id))
     const handleCacheContent = (cached) => {
       cached = cached.filter(x => x)
@@ -198,7 +198,7 @@ export default class AbstractEndpoint {
       return this._page(page, size)
     }
 
-    // Get as much as possibly out of the cache
+    // Get as much as possible out of the cache
     const hash = this._cacheHash('page-' + page + '/' + size)
     const handleCacheContent = (cached) => {
       if (cached) {
@@ -238,7 +238,7 @@ export default class AbstractEndpoint {
       return this._all()
     }
 
-    // Get as much as possibly out of the cache
+    // Get as much as possible out of the cache
     const hash = this._cacheHash('all')
     const handleCacheContent = (cached) => {
       if (cached) {
@@ -364,7 +364,8 @@ export default class AbstractEndpoint {
     let parsedUrl = parseUrl(url, true)
     let query = parsedUrl.query
 
-    // Only set the API key for authenticated endpoints, when it is required or set on the client
+    // Only set the API key for authenticated endpoints,
+    // when it is required or optional and set on the client
     const usesApiKey = this.isAuthenticated &&
       (!this.isOptionallyAuthenticated || this.client.apiKey !== undefined)
 

@@ -47,13 +47,13 @@ flow.parallel([
 
 ### Endpoints
 
-**[You can find all endpoints with their respective function calls in this document.](./docs/endpoints.md)**
+**[You can find all endpoints and their respective function calls in this document.](./docs/endpoints.md)**
 
 ### Caching
 
 **[You can find all cache storages (and the interface for custom ones) in this document.](./docs/cache-storages.md)**
 
-By default all requests get send to the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./docs/endpoints.md).
+By default calling any endpoint requests data from the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./docs/endpoints.md).
 
 ```js
 import cacheMemory from 'gw2api-client/build/cache/memory'
@@ -64,14 +64,14 @@ api().items().ids()
 // ...
 api().items().ids()
 
-// When the cache expired this will call the official API again
+// When the cache expires, this will call the official API again
 api().items().ids()
 
-// Skip the cache if you want guaranteed live data
+// You can skip the cache for guaranteed live data
 api().items().live().ids()
 ```
 
-You can also chain multiple cache storages together. In this case, when setting a value it gets set in all storages, and when getting a value the first storage in the list that responds with a non-null value will get used.
+You can also chain multiple cache storages together. In this case, the cache gets saved in all storages and read from the first storage in the list answering with a valid value.
 
 ```js
 import cacheMemory from 'gw2api-client/build/cache/memory'
@@ -139,15 +139,15 @@ api.fetch.retry((tries, err) => {
 // Wait in between retries
 api.fetch.retryWait((tries) => tries * 100)
 
-// This request will now retry if it fails
+// This request will now retry if it fails (e.g. API issues)
 api().items().ids()
 ```
 
 ### Extending
 
-You can extend or overwrite the API client with your own endpoints if you wish so. The only thing that is required, is an extension of `AbstractEndpoint` to provide all the logic for pagination, bulk, localisation, caching etc.
+You can extend or overwrite the API client with your own endpoints if you wish so. The only thing that is required is an extension of `AbstractEndpoint` to provide all the logic for pagination, bulk, localisation, caching and so on.
 
-If you need more specific ways to handle data then the previously defined ones, take a look at how the existing endpoints handle these cases (e.g. in `/src/endpoints/recipes.js`)
+If you need more specific ways to handle data then the already defined ones, take a look at how the existing endpoints handle these edge cases (e.g. in `/src/endpoints/recipes.js`).
 
 ```js
 import client from 'gw2api-client'
@@ -182,7 +182,7 @@ api.items().many([123, 456])
 
 ### Mocking
 
-If you want to mock this module in your tests, you can replace the underlying request library with the provided mock module, e.g. using [rewire](https://github.com/speedskater/babel-plugin-rewire). You can find all available mock methods [here](https://github.com/queicherius/lets-fetch#mocking).
+If you want to mock this module in your tests, you can replace the underlying `lets-fetch` library with the provided mock module, e.g. using [rewire](https://github.com/speedskater/babel-plugin-rewire). You can find all available mock methods [here](https://github.com/queicherius/lets-fetch#mocking).
 
 ```js
 import fetchMock from 'lets-fetch/mock'

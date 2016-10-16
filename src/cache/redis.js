@@ -63,7 +63,7 @@ export default function (configuration) {
 
   function flush () {
     return new Promise((resolve, reject) => {
-      redisClient.keys(prefix + '*', function (err, keys) {
+      redisClient.keys(prefix + '*', (err, keys) => {
         if (err) return reject(err)
 
         // Delete the matched keys in batch

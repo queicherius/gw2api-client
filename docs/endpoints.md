@@ -6,14 +6,14 @@
 
 These endpoints support requesting resources by using their identifiers. You can use the following methods with bulk expanding endpoints:
 
-- `all()`  - Get all entries
+- `all()` - Get all entries
 - `ids()` - Get all ids
 - `get(:id)` - Get a single entry by id
 - `many([:id, :id])` - Get multiple entries by ids
 
 ### Paginated
 
-These endpoint support requesting "pages", which contain multiple resources. You can use the following methods with paginated endpoints:
+These endpoints support requesting pages, which contain multiple resources. You can use the following methods with paginated endpoints:
 
 - `all()` - Get all entries
 - `page(:page)` - Get a page of entries (with the current maximum page size of 200)
@@ -21,7 +21,7 @@ These endpoint support requesting "pages", which contain multiple resources. You
 
 ### Basic
 
-If endpoints are neither bulk expanding nor paginated, you can access the resource using the `get()` method. There are some exceptions to this, which are documented in the "Available Endpoints" section below.
+If endpoints are neither bulk expanding nor paginated, you can usually access the resource using the `get()` method. There are some exceptions to this, which are documented in the "Available Endpoints" section below.
 
 ### Authenticated
 
@@ -42,7 +42,7 @@ client.language('de')
 ## Available Endpoints
 
 - [`api().account()`](#apiaccount) - Information about the player's account.
-- [`api().account().achievements()`](#apiaccountachievements) - The account's progress towards all their achievements.
+- [`api().account().achievements()`](#apiaccountachievements) - The account's progress towards their achievements.
 - [`api().account().bank()`](#apiaccountbank) - The items stored in the player's bank.
 - [`api().account().characters()`](#apiaccountcharacters) - Alternative method of calling [`api().characters()`](#apicharacters).
 - [`api().account().dyes()`](#apiaccountdyes) - The unlocked dyes of the account.
@@ -77,7 +77,7 @@ client.language('de')
 - [`api().characters(:name).skills()`](#apicharactersnameskills) - Skills in use by a single character.
 - [`api().characters(:name).specializations()`](#apicharactersnamespecializations) - Specialization information of a single character.
 - [`api().characters(:name).training()`](#apicharactersnametraining) - Mastery training information of a single character.
-- [`api().colors()`](#apicolors) - Informations about dye colors, including their color component information.
+- [`api().colors()`](#apicolors) - Information about dye colors, including their color component information.
 - [`api().commerce().exchange()`](#apicommerceexchange) - Current exchange rates for coins to gems and gems to coins.
 - [`api().commerce().listings()`](#apicommercelistings) - Current buy and sell listings from the trading post.
 - [`api().commerce().prices()`](#apicommerceprices) - Current aggregated buy and sell listing information from the trading post.
@@ -154,7 +154,7 @@ client.language('de')
 
 ### `api().account().achievements()`
 
-> The account's progress towards all their achievements.
+> The account's progress towards their achievements.
 
 - **API-URL:** [/v2/account/achievements](https://api.guildwars2.com/v2/account/achievements)
 - **Paginated:** No
@@ -658,7 +658,7 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ### `api().colors()`
 
-> Informations about dye colors, including their color component information.
+> Information about dye colors, including their color component information.
 
 - **API-URL:** [/v2/colors](https://api.guildwars2.com/v2/colors)
 - **Paginated:** Yes

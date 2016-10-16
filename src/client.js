@@ -1,4 +1,5 @@
 import fetch from 'lets-fetch'
+import flow from 'promise-control-flow'
 import nullCache from './cache/null'
 import AccountEndpoint from './endpoints/account'
 import AchievementsEndpoint from './endpoints/achievements'
@@ -61,6 +62,29 @@ export default class Client {
   cacheStorage (caches) {
     this.caches = [].concat(caches)
     return this
+  }
+
+  // Make sure we get the new content if the game updates
+  flushCacheIfGameUpdated () {
+    const buildEndpoint = this.build()
+    const promises = {
+      cacheBuildId: () => buildEndpoint._cacheGetSingle('cacheBuildId'),
+      buildId: () => buildEndpoint.live().get()
+    }
+
+    return flow.parallel(promises).then(resp => {
+      let flushPromises = []
+
+      // Flush the caches if the cached build id is set (as a safety measure)
+      // and the cached build id is older than the current one
+      if (resp.cacheBuildId && resp.cacheBuildId < resp.buildId) {
+        flushPromises = this.caches.map(cache => () => cache.flush())
+      }
+
+      // Flush the caches (if needed) and save the current build id
+      return flow.parallel(flushPromises)
+        .then(() => buildEndpoint._cacheSetSingle('cacheBuildId', resp.buildId))
+    })
   }
 
   // All the different API endpoints

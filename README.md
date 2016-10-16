@@ -53,7 +53,7 @@ flow.parallel([
 
 **[You can find all cache storages (and the interface for custom ones) in this document.](./docs/cache-storages.md)**
 
-By default calling any endpoint requests data from the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./docs/endpoints.md).
+By default, calling any endpoint requests data from the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./docs/endpoints.md).
 
 ```js
 import cacheMemory from 'gw2api-client/build/cache/memory'
@@ -71,7 +71,9 @@ api().items().ids()
 api().items().live().ids()
 ```
 
-You can also chain multiple cache storages together. In this case, the cache gets saved in all storages and read from the first storage in the list answering with a valid value.
+> **Note:** The cache storage save is asynchronous in the background. During this time, the API function already resolves a result for best performance. Therefore it *can* happen that some data gets requested twice, if you request it in rapid succession.
+
+You can also chain multiple cache storages together. In this case, the cache gets saved in all storages and read from the first storage in the list answering with a valid value. The more persistent and more reliable cache storages should therefore be on the end of the list and the fastest (e.g. memory) should be at the start of the list.
 
 ```js
 import cacheMemory from 'gw2api-client/build/cache/memory'
@@ -85,7 +87,14 @@ api.cacheStorage([
 ])
 ```
 
-> **Note:** Since the cache storage save is asynchronous in the background (during which the API function already returns a result), it *can* happen that some data gets requested twice if you request it in rapid succession.
+The cache uses expiration times and not the build number, because the content of the API can update independently of the build id. This is caused by the internal whitelisting of the API. However, if you want your cache to invalidate when there is a game update, this is easily possible too:
+
+```js
+// configure api.cacheStorage(...) beforehand
+
+// Check the build every minute and flush the cache if it updated
+setInterval(() => api.flushCacheIfGameUpdated(), 60 * 1000)
+```
 
 ### Error handling
 
@@ -188,8 +197,8 @@ If you want to mock this module in your tests, you can replace the underlying `l
 import fetchMock from 'lets-fetch/mock'
 import file from './some/file/using/gw2api/client.js'
 
-// Get the variable "api" (which is the initialized api client)
-// and replace the fetch method with the fetchMock
+// Get the variable "api" (which would be the initialized api client
+// in your own code) and replace the fetch method with the fetchMock
 file.__get__('api').fetch = fetchMock
 
 // Use the fetch mock methods as described in the link above

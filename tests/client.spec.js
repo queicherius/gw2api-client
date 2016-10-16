@@ -1,6 +1,9 @@
 /* eslint-env node, mocha */
 import {expect} from 'chai'
+import nullCache from '../src/cache/null'
+import memoryCache from '../src/cache/memory'
 import Module from '../src/client'
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 describe('client', () => {
   let client
@@ -28,6 +31,54 @@ describe('client', () => {
 
     client.cacheStorage([cacheHandler, cacheHandler])
     expect(client.caches).to.deep.equal([cacheHandler, cacheHandler])
+  })
+
+  it('can flush the caches if there is a game update', async () => {
+    const tmp = client.build
+    client.caches = [nullCache(), memoryCache(), memoryCache()]
+
+    // Mock the build endpoint
+    let savedBuildId = null
+    let buildMock = {
+      live: () => ({get: () => Promise.resolve(123)}),
+      _cacheGetSingle: (key) => Promise.resolve(null),
+      _cacheSetSingle: (key, value) => {
+        savedBuildId = value
+        Promise.resolve(null)
+      }
+    }
+    client.build = () => buildMock
+
+    // Add some random cache entries
+    await client.caches[1].set('foo', 'bar', 60 * 60)
+    await client.caches[2].set('herp', 'derp', 60 * 60)
+    await wait(50)
+
+    // Cached is not set, expect the caches to still be there
+    await client.flushCacheIfGameUpdated()
+    expect(await client.caches[1].get('foo')).to.equal('bar')
+    expect(await client.caches[2].get('herp')).to.equal('derp')
+    expect(savedBuildId).to.equal(123)
+    await wait(50)
+
+    // Cached and live is the same, expect the caches to still be there
+    buildMock._cacheGetSingle = (key) => Promise.resolve(456)
+    buildMock.live = () => ({get: () => Promise.resolve(456)})
+    await client.flushCacheIfGameUpdated()
+    expect(await client.caches[1].get('foo')).to.equal('bar')
+    expect(await client.caches[2].get('herp')).to.equal('derp')
+    expect(savedBuildId).to.equal(456)
+    await wait(50)
+
+    // Live is newer, expect the caches to be flushed
+    buildMock.live = () => ({get: () => Promise.resolve(789)})
+    await client.flushCacheIfGameUpdated()
+    expect(await client.caches[1].get('foo')).to.equal(null)
+    expect(await client.caches[2].get('herp')).to.equal(null)
+    expect(savedBuildId).to.equal(789)
+    await wait(50)
+
+    client.build = tmp
   })
 
   it('can get the account endpoint', () => {

@@ -5,8 +5,6 @@ import {chunk, flatten, sortByIdList} from './helpers'
 export default class AbstractEndpoint {
   constructor (client) {
     this.client = client
-    this.fetch = client.fetch
-    this.caches = client.caches
     this.baseUrl = 'https://api.guildwars2.com'
     this.isPaginated = false
     this.maxPageSize = 200
@@ -295,19 +293,19 @@ export default class AbstractEndpoint {
 
   // Set a single cache key in all connected cache storages
   _cacheSetSingle (key, value) {
-    this.caches.map(cache => cache.set(key, value, this.cacheTime))
+    this.client.caches.map(cache => cache.set(key, value, this.cacheTime))
   }
 
   // Set multiples cache key in all connected cache storages
   _cacheSetMany (values) {
     values = values.map(value => [value[0], value[1], this.cacheTime])
-    this.caches.map(cache => cache.mset(values))
+    this.client.caches.map(cache => cache.mset(values))
   }
 
   // Get a cached value out of the first possible connected cache storages
   _cacheGetSingle (key, index = 0) {
-    return this.caches[index].get(key).then(value => {
-      if (value || index === this.caches.length - 1) {
+    return this.client.caches[index].get(key).then(value => {
+      if (value || index === this.client.caches.length - 1) {
         return value
       }
 
@@ -317,11 +315,11 @@ export default class AbstractEndpoint {
 
   // Get multiple cached values out of the first possible connected cache storages
   _cacheGetMany (keys, index = 0) {
-    return this.caches[index].mget(keys).then(values => {
+    return this.client.caches[index].mget(keys).then(values => {
       const cleanValues = values.filter(x => x)
 
       // We got all the requested keys or are through all storages
-      if (cleanValues.length === keys.length || index === this.caches.length - 1) {
+      if (cleanValues.length === keys.length || index === this.client.caches.length - 1) {
         return values
       }
 
@@ -346,13 +344,13 @@ export default class AbstractEndpoint {
 
   // Execute a single request
   _request (url, type = 'json') {
-    return this.fetch.single(this._buildUrl(url), {type})
+    return this.client.fetch.single(this._buildUrl(url), {type})
   }
 
   // Execute multiple requests in parallel
   _requestMany (urls, type = 'json') {
     urls = urls.map(url => this._buildUrl(url))
-    return this.fetch.many(urls, {type})
+    return this.client.fetch.many(urls, {type})
   }
 
   // Build the headers for localization and authentication

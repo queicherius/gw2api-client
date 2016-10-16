@@ -1,11 +1,12 @@
 import fetch from 'lets-fetch/mock'
-import cache from '../../src/cache/memory'
+import nullCache from '../../src/cache/null'
+import memoryCache from '../../src/cache/memory'
 
 export const mockClient = {
   lang: false,
   apiKey: false,
   fetch: fetch,
-  cache: cache(),
+  caches: [nullCache(), memoryCache(), memoryCache()],
   language: function (lang) {
     this.lang = lang
   },

@@ -11,7 +11,8 @@ function set (key, value, expiry) {
 }
 
 function mget (keys) {
-  return Promise.resolve([])
+  const values = keys.map(x => null)
+  return Promise.resolve(values)
 }
 
 function mset (values) {

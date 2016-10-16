@@ -17,6 +17,6 @@ describe('cache > null', function () {
   it('can set and get multiple values', async () => {
     await cache.mset(['foo', 'bar', 1], ['herp', 'derp', 1])
     let cached = await cache.mget(['foo', 'herp'])
-    expect(cached.filter(x => x)).to.deep.equal([])
+    expect(cached).to.deep.equal([null, null])
   })
 })

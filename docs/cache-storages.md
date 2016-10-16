@@ -122,7 +122,7 @@ api.cacheStorage(cacheCustom({foo: 'bar'}))
 This function has to return an object containing implementations of the following functions, which all have to return a `Promise` object.
 
 - `get(key)` - Gets a single value by key. Resolves `null` if the value does not exist or is expired.
-- `mget([key, key, ...])` - Gets multiple values by keys. Resolves an array. Missing and expired elements are either not included in the return array or set to `null`.
+- `mget([key, key, ...])` - Gets multiple values by keys. Resolves an array. Missing and expired elements have to be set to `null`. Has to maintain order of keys => values.
 - `set(key, value, expiresInSeconds)` - Sets a single value by key.
 - `mset([[key, value, expiresInSeconds], ...])` - Sets multiple values.
 - `flush()` - Completely clears the cache data (only needed for tests).

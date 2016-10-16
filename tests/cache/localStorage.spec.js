@@ -50,7 +50,7 @@ describe('cache > localStorage', function () {
     await wait(3000)
 
     let cachedExpired = await cache.mget(['foo', 'herp', 'abc'])
-    expect(cachedExpired.filter(x => x), 'cachedExpired').to.deep.equal([])
+    expect(cachedExpired, 'cachedExpired').to.deep.equal([null, null, null])
   })
 
   it('triggers garbage collection', async () => {

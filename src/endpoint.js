@@ -6,7 +6,7 @@ export default class AbstractEndpoint {
   constructor (client) {
     this.client = client
     this.fetch = client.fetch
-    this.cache = client.cache
+    this.caches = client.caches
     this.baseUrl = 'https://api.guildwars2.com'
     this.isPaginated = false
     this.maxPageSize = 200
@@ -36,12 +36,6 @@ export default class AbstractEndpoint {
     return this
   }
 
-  // Get a cache hash for an identifier
-  _cacheHash (id) {
-    let hash = id ? ':' + id : ''
-    return this.baseUrl + this.url + hash
-  }
-
   // Get all ids
   ids () {
     if (!this.isBulk) {
@@ -61,14 +55,14 @@ export default class AbstractEndpoint {
       }
 
       return this._ids().then(content => {
-        this.cache.set(hash, content, this.cacheTime)
+        this._cacheSetSingle(hash, content)
         return content
       })
     }
 
     return this._skipCache
       ? Promise.resolve(false).then(handleCacheContent)
-      : this.cache.get(hash).then(handleCacheContent)
+      : this._cacheGetSingle(hash).then(handleCacheContent)
   }
 
   // Get all ids from the live API
@@ -95,14 +89,14 @@ export default class AbstractEndpoint {
       }
 
       return this._get(id, url).then(content => {
-        this.cache.set(hash, content, this.cacheTime)
+        this._cacheSetSingle(hash, content)
         return content
       })
     }
 
     return this._skipCache
       ? Promise.resolve(false).then(handleCacheContent)
-      : this.cache.get(hash).then(handleCacheContent)
+      : this._cacheGetSingle(hash).then(handleCacheContent)
   }
 
   // Get a single entry by id from the live API
@@ -151,8 +145,8 @@ export default class AbstractEndpoint {
 
       const missingIds = getMissingIds(ids, cached)
       return this._many(missingIds).then(content => {
-        const cacheContent = content.map(value => [this._cacheHash(value.id), value, this.cacheTime])
-        this.cache.mset(cacheContent)
+        const cacheContent = content.map(value => [this._cacheHash(value.id), value])
+        this._cacheSetMany(cacheContent)
 
         // Merge the new content with the cached content and guarantee element order
         content = content.concat(cached)
@@ -172,7 +166,7 @@ export default class AbstractEndpoint {
 
     return this._skipCache
       ? Promise.resolve([]).then(handleCacheContent)
-      : this.cache.mget(hashes).then(handleCacheContent)
+      : this._cacheGetMany(hashes).then(handleCacheContent)
   }
 
   // Get multiple entries by ids from the live API
@@ -212,20 +206,20 @@ export default class AbstractEndpoint {
       }
 
       return this._page(page, size).then(content => {
-        let cacheContent = [[hash, content, this.cacheTime]]
+        let cacheContent = [[hash, content]]
 
         if (this.isBulk) {
-          cacheContent = cacheContent.concat(content.map(value => [this._cacheHash(value.id), value, this.cacheTime]))
+          cacheContent = cacheContent.concat(content.map(value => [this._cacheHash(value.id), value]))
         }
 
-        this.cache.mset(cacheContent)
+        this._cacheSetMany(cacheContent)
         return content
       })
     }
 
     return this._skipCache
       ? Promise.resolve(false).then(handleCacheContent)
-      : this.cache.get(hash).then(handleCacheContent)
+      : this._cacheGetSingle(hash).then(handleCacheContent)
   }
 
   // Get a single page from the live API
@@ -252,20 +246,20 @@ export default class AbstractEndpoint {
       }
 
       return this._all().then(content => {
-        let cacheContent = [[hash, content, this.cacheTime]]
+        let cacheContent = [[hash, content]]
 
         if (this.isBulk) {
-          cacheContent = cacheContent.concat(content.map(value => [this._cacheHash(value.id), value, this.cacheTime]))
+          cacheContent = cacheContent.concat(content.map(value => [this._cacheHash(value.id), value]))
         }
 
-        this.cache.mset(cacheContent)
+        this._cacheSetMany(cacheContent)
         return content
       })
     }
 
     return this._skipCache
       ? Promise.resolve(false).then(handleCacheContent)
-      : this.cache.get(hash).then(handleCacheContent)
+      : this._cacheGetSingle(hash).then(handleCacheContent)
   }
 
   // Get all entries from the live API
@@ -297,6 +291,57 @@ export default class AbstractEndpoint {
 
         return this._requestMany(requests).then(responses => result.concat(flatten(responses)))
       })
+  }
+
+  // Set a single cache key in all connected cache storages
+  _cacheSetSingle (key, value) {
+    this.caches.map(cache => cache.set(key, value, this.cacheTime))
+  }
+
+  // Set multiples cache key in all connected cache storages
+  _cacheSetMany (values) {
+    values = values.map(value => [value[0], value[1], this.cacheTime])
+    this.caches.map(cache => cache.mset(values))
+  }
+
+  // Get a cached value out of the first possible connected cache storages
+  _cacheGetSingle (key, index = 0) {
+    return this.caches[index].get(key).then(value => {
+      if (value || index === this.caches.length - 1) {
+        return value
+      }
+
+      return this._cacheGetSingle(key, ++index)
+    })
+  }
+
+  // Get multiple cached values out of the first possible connected cache storages
+  _cacheGetMany (keys, index = 0) {
+    return this.caches[index].mget(keys).then(values => {
+      const cleanValues = values.filter(x => x)
+
+      // We got all the requested keys or are through all storages
+      if (cleanValues.length === keys.length || index === this.caches.length - 1) {
+        return values
+      }
+
+      // Try to ask the next storage for the keys that we didn't get
+      let missingKeys = values
+        .map((value, i) => value ? false : keys[i])
+        .filter(value => value)
+
+      // Then merge the values of the next storage into the missing slots
+      return this._cacheGetMany(missingKeys, ++index).then(missingValues => {
+        let i = 0
+        return values.map(value => value || missingValues[i++])
+      })
+    })
+  }
+
+  // Get a cache hash for an identifier
+  _cacheHash (id) {
+    let hash = id ? ':' + id : ''
+    return this.baseUrl + this.url + hash
   }
 
   // Execute a single request

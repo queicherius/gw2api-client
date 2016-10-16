@@ -16,6 +16,7 @@ describe('endpoints > files', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/files')
 
     fetchMock.addResponse(['map_complete', 'map_dungeon', 'map_heart_empty'])

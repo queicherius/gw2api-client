@@ -6,5 +6,6 @@ export default class QuaggansEndpoint extends AbstractEndpoint {
     this.url = '/v2/quaggans'
     this.isPaginated = true
     this.isBulk = true
+    this.cacheTime = 24 * 60 * 60
   }
 }

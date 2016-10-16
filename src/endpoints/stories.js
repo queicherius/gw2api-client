@@ -7,6 +7,7 @@ export default class StoriesEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 
   seasons () {
@@ -21,5 +22,6 @@ class SeasonsEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }

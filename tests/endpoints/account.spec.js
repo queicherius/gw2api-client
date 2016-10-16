@@ -15,6 +15,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account')
 
     fetchMock.addResponse({id: 'unique-identifier', name: 'Account.1234', world: 1007})
@@ -29,6 +30,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/achievements')
 
     fetchMock.addResponse([{id: 1, current: 487, max: 1000, done: false}])
@@ -43,6 +45,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/bank')
 
     fetchMock.addResponse([null, null, {id: 123, count: 1}])
@@ -62,6 +65,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/dyes')
 
     fetchMock.addResponse([2, 3, 4])
@@ -76,6 +80,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/finishers')
 
     fetchMock.addResponse([2, 3, 4])
@@ -90,6 +95,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/inventory')
 
     fetchMock.addResponse([
@@ -110,6 +116,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/masteries')
 
     fetchMock.addResponse([{id: 1, level: 4}, {id: 2, level: 5}])
@@ -124,6 +131,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/materials')
 
     fetchMock.addResponse([{id: 12134, category: 5, count: 2}])
@@ -138,6 +146,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/minis')
 
     fetchMock.addResponse([2, 3, 4, 5])
@@ -152,6 +161,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/outfits')
 
     fetchMock.addResponse([2, 3, 4, 5])
@@ -171,6 +181,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/recipes')
 
     fetchMock.addResponse([2, 3, 4, 5])
@@ -185,6 +196,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/skins')
 
     fetchMock.addResponse([1, 2, 3])
@@ -199,6 +211,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/titles')
 
     fetchMock.addResponse([2, 3, 4, 5])
@@ -218,6 +231,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/account/wallet')
 
     fetchMock.addResponse([{id: 1, value: 48043252}, {id: 2, value: 1956351}])

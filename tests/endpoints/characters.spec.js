@@ -16,6 +16,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.supportsBulkAll).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/characters')
 
     fetchMock.addResponse(['Character Name'])
@@ -24,13 +25,14 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/backstory', async () => {
-    endpoint = (new Module(mockClient, 'Nâme')).backstory()
+    endpoint = (new Module(mockClient, 'Random Nâme')).backstory()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/backstory')
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/backstory')
 
     fetchMock.addResponse({backstory: [1, 2, 3]})
     let content = await endpoint.get()
@@ -38,27 +40,29 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/core', async () => {
-    endpoint = (new Module(mockClient, 'Nâme')).core()
+    endpoint = (new Module(mockClient, 'Random Nâme')).core()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/core')
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/core')
 
-    fetchMock.addResponse({name: 'Nâme', race: 'Asura'})
+    fetchMock.addResponse({name: 'Random Nâme', race: 'Asura'})
     let content = await endpoint.get()
-    expect(content).to.deep.equal({name: 'Nâme', race: 'Asura'})
+    expect(content).to.deep.equal({name: 'Random Nâme', race: 'Asura'})
   })
 
   it('test /v2/characters/:id/crafting', async () => {
-    endpoint = (new Module(mockClient, 'Nâme')).crafting()
+    endpoint = (new Module(mockClient, 'Random Nâme')).crafting()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/crafting')
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/crafting')
 
     fetchMock.addResponse({crafting: [{discipline: 'Artificer', rating: 50}]})
     let content = await endpoint.get()
@@ -66,13 +70,14 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/equipment', async () => {
-    endpoint = (new Module(mockClient, 'Nâme')).equipment()
+    endpoint = (new Module(mockClient, 'Random Nâme')).equipment()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/equipment')
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/equipment')
 
     fetchMock.addResponse({equipment: [{id: 123, slot: 'Coat'}]})
     let content = await endpoint.get()
@@ -80,13 +85,14 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/heropoints', async () => {
-    endpoint = (new Module(mockClient, 'Nâme')).heropoints()
+    endpoint = (new Module(mockClient, 'Random Nâme')).heropoints()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/heropoints')
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/heropoints')
 
     fetchMock.addResponse(['0-0', '0-2'])
     let content = await endpoint.get()
@@ -94,13 +100,14 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/inventory', async () => {
-    endpoint = (new Module(mockClient, 'Nâme')).inventory()
+    endpoint = (new Module(mockClient, 'Random Nâme')).inventory()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/inventory')
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/inventory')
 
     fetchMock.addResponse({bags: [{id: 123, size: 4, inventory: [null, {id: 123, count: 10}]}]})
     let content = await endpoint.get()
@@ -108,27 +115,44 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/recipes', async () => {
-    endpoint = (new Module(mockClient, 'Nâme')).recipes()
+    endpoint = (new Module(mockClient, 'Random Nâme')).recipes()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/recipes')
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/recipes')
 
     fetchMock.addResponse({recipes: [1, 2, 3]})
     let content = await endpoint.get()
     expect(content).to.deep.equal([1, 2, 3])
   })
 
-  it('test /v2/characters/:id/specializations', async () => {
-    endpoint = (new Module(mockClient, 'Nâme')).specializations()
+  it('test /v2/characters/:id/skills', async () => {
+    endpoint = (new Module(mockClient, 'Random Nâme')).skills()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/specializations')
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/skills')
+
+    fetchMock.addResponse({skills: {pve: {heal: 29535}}})
+    let content = await endpoint.get()
+    expect(content.pve.heal).to.equal(29535)
+  })
+
+  it('test /v2/characters/:id/specializations', async () => {
+    endpoint = (new Module(mockClient, 'Random Nâme')).specializations()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/specializations')
 
     fetchMock.addResponse({specializations: {pve: [{id: 41, traits: [1, 2, 3]}]}})
     let content = await endpoint.get()
@@ -136,13 +160,14 @@ describe('endpoints > characters', () => {
   })
 
   it('test /v2/characters/:id/training', async () => {
-    endpoint = (new Module(mockClient, 'Nâme')).training()
+    endpoint = (new Module(mockClient, 'Random Nâme')).training()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.url).to.equal('/v2/characters/N%C3%A2me/training')
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/training')
 
     fetchMock.addResponse({training: [{id: 60, spent: 20, done: true}]})
     let content = await endpoint.get()

@@ -7,5 +7,6 @@ export default class MaterialsEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }

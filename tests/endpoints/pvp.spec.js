@@ -18,6 +18,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/pvp/amulets')
 
     fetchMock.addResponse({id: 4, name: 'Assassin Amulet'})
@@ -33,6 +34,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/pvp/games')
 
     fetchMock.addResponse(['uuid1', 'uuid2'])
@@ -48,6 +50,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/pvp/seasons')
 
     fetchMock.addResponse({id: 'S0ME-UU1D', name: 'PvP League Season Four'})
@@ -62,6 +65,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/pvp/standings')
 
     fetchMock.addResponse([{season_id: 'UUID', current: {tier: 1}}])
@@ -76,6 +80,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/pvp/stats')
 
     fetchMock.addResponse({pvp_rank: 80})

@@ -16,5 +16,6 @@ class LayersEndpoint extends AbstractEndpoint {
     this.url = `/v2/emblem/${layer}`
     this.isPaginated = true
     this.isBulk = true
+    this.cacheTime = 24 * 60 * 60
   }
 }

@@ -21,6 +21,7 @@ class AbilitiesEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }
 
@@ -30,6 +31,7 @@ class MatchesEndpoint extends AbstractEndpoint {
     this.url = '/v2/wvw/matches'
     this.isPaginated = true
     this.isBulk = true
+    this.cacheTime = 60
   }
 }
 
@@ -40,5 +42,6 @@ class ObjectivesEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }

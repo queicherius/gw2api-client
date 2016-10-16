@@ -35,14 +35,15 @@ class ExchangeEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/commerce/exchange'
+    this.cacheTime = 10 * 60
   }
 
   gems (quantity) {
-    return this.request(`${this.url}/gems?quantity=${quantity}`)
+    return super.get(`/gems?quantity=${quantity}`, true)
   }
 
   coins (quantity) {
-    return this.request(`${this.url}/coins?quantity=${quantity}`)
+    return super.get(`/coins?quantity=${quantity}`, true)
   }
 }
 
@@ -53,6 +54,7 @@ class ListingsEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.supportsBulkAll = false
+    this.cacheTime = 60
   }
 }
 
@@ -63,6 +65,7 @@ class PricesEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.supportsBulkAll = false
+    this.cacheTime = 60
   }
 }
 
@@ -72,5 +75,6 @@ class TransactionsEndpoint extends AbstractEndpoint {
     this.url = `/v2/commerce/transactions/${type}/${list}`
     this.isPaginated = true
     this.isAuthenticated = true
+    this.cacheTime = 10 * 60
   }
 }

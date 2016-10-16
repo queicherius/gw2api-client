@@ -4,16 +4,15 @@ export default class EventsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v1/event_details.json'
+    this.cacheTime = 24 * 60 * 60
   }
 
   all () {
-    return this.request(this.url)
-      .then(transformV1Format)
+    return super.get().then(transformV1Format)
   }
 
   get (id) {
-    return this.request(`${this.url}?event_id=${id}`)
-      .then(json => transformV1Format(json)[0])
+    return super.get(`?event_id=${id}`, true).then(json => transformV1Format(json)[0])
   }
 }
 

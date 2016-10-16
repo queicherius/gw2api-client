@@ -39,9 +39,53 @@ api.items().ids()
 // for that, since language and key are connected to the client instance
 flow.parallel([
   () => client().language('en').items().all(),
-  () => client().language('de').items().all()
+  () => client().language('de').items().all(),
+  () => client().language('fr').items().all(),
+  () => client().language('es').items().all()
 ])
 ```
+
+### Endpoints
+
+**[You can find all endpoints and their respective function calls in this document.](./docs/endpoints.md)**
+
+### Caching
+
+**[You can find all cache storages (and the interface for custom ones) in this document.](./docs/cache-storages.md)**
+
+By default calling any endpoint requests data from the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./docs/endpoints.md).
+
+```js
+import cacheMemory from 'gw2api-client/build/cache/memory'
+api.cacheStorage(cacheMemory())
+
+// This will only call the official API once
+api().items().ids()
+// ...
+api().items().ids()
+
+// When the cache expires, this will call the official API again
+api().items().ids()
+
+// You can skip the cache for guaranteed live data
+api().items().live().ids()
+```
+
+You can also chain multiple cache storages together. In this case, the cache gets saved in all storages and read from the first storage in the list answering with a valid value.
+
+```js
+import cacheMemory from 'gw2api-client/build/cache/memory'
+import cacheLocalStorage from 'gw2api-client/build/cache/localStorage'
+
+// Save in memory and local storage
+// Try to answer from memory first, then from local storage and then hit the API
+api.cacheStorage([
+  cacheMemory(),
+  cacheLocalStorage()
+])
+```
+
+> **Note:** Since the cache storage save is asynchronous in the background (during which the API function already returns a result), it *can* happen that some data gets requested twice if you request it in rapid succession.
 
 ### Error handling
 
@@ -57,8 +101,7 @@ api.account().bank()
   })
 ```
 
-The API can throw server errors (status >= `500`) that don't have a `text` property set.
-However, most of the time it responds with one of the following errors:
+The API can throw server errors (status >= 500) that don't have a `text` property set. However, most of the time it responds with one of the following errors:
 
 - `endpoint requires authentication`
 - `invalid key`
@@ -69,11 +112,42 @@ However, most of the time it responds with one of the following errors:
 - `no such id`
 - `all ids provided are invalid`
 
+### Retrying
+
+By accessing the `fetch` instance, you can enable retrying in case the API or the user has problems getting a valid response. You can find the full documentation for retrying [here](https://github.com/queicherius/lets-fetch#retrying).
+
+```js
+import client from 'gw2api-client'
+
+// Get an instance of an API client
+let api = client()
+
+// Retry up to 3 times if the status indicates an request error
+api.fetch.retry((tries, err) => {
+  if (tries > 3) { 
+    return false
+  }
+
+  const res = err.response
+  if (res && (res.status < 400 || res.status === 403)) {
+    return false
+  }
+
+  return true
+})
+
+// Wait in between retries
+api.fetch.retryWait((tries) => tries * 100)
+
+// This request will now retry if it fails (e.g. API issues)
+api().items().ids()
+```
+
 ### Extending
 
-You can extend or overwrite the API client with your own endpoints if you wish so. The only thing that is required, is an extension of `AbstractEndpoint` to provide all the logic for pagination, bulk, localization etc.
+You can extend or overwrite the API client with your own endpoints if you wish so. The only thing that is required is an extension of `AbstractEndpoint` to provide all the logic for pagination, bulk, localisation, caching and so on.
 
-If you need more specific ways to handle data then the previously defined ones, take a look at how the existing endpoints handle these cases (e.g. in `/src/endpoints/recipes.js`)
+If you need more specific ways to handle data then the already defined ones, take a look at how the existing endpoints handle these edge cases (e.g. in `/src/endpoints/recipes.js`).
 
 ```js
 import client from 'gw2api-client'
@@ -92,6 +166,7 @@ class ItemsEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.supportsBulkAll = false
     this.isLocalized = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -107,10 +182,7 @@ api.items().many([123, 456])
 
 ### Mocking
 
-If you want to mock this module in your tests, you can replace the underlying 
-request library with the provided mock module, e.g. using [rewire](https://github.com/speedskater/babel-plugin-rewire).
-
-You can find all available mock methods here: https://github.com/queicherius/lets-fetch#mocking
+If you want to mock this module in your tests, you can replace the underlying `lets-fetch` library with the provided mock module, e.g. using [rewire](https://github.com/speedskater/babel-plugin-rewire). You can find all available mock methods [here](https://github.com/queicherius/lets-fetch#mocking).
 
 ```js
 import fetchMock from 'lets-fetch/mock'
@@ -123,382 +195,9 @@ file.__get__('api').fetch = fetchMock
 // Use the fetch mock methods as described in the link above
 ```
 
-## Endpoint Overview
-
-```js
-// Url: /v2/account
-// Flags: 🔒
-client.account()
-
-// Url: /v2/account/achievements
-// Flags: 🔒
-client.account().achievements()
-
-// Url: /v2/account/bank
-// Flags: 🔒
-client.account().bank()
-
-// Url: /v2/account/dyes
-// Flags: 🔒
-client.account().dyes()
-
-// Url: /v2/account/finishers
-// Flags: 🔒
-client.account().finishers()
-
-// Url: /v2/account/inventory
-// Flags: 🔒
-client.account().inventory()
-
-// Url: /v2/account/masteries
-// Flags: 🔒
-client.account().masteries()
-
-// Url: /v2/account/materials
-// Flags: 🔒
-client.account().materials()
-
-// Url: /v2/account/minis
-// Flags: 🔒
-client.account().minis()
-
-// Url: /v2/account/outfits
-// Flags: 🔒
-client.account().outfits()
-
-// Url: /v2/account/recipes
-// Flags: 🔒
-client.account().recipes()
-
-// Url: /v2/account/skins
-// Flags: 🔒
-client.account().skins()
-
-// Url: /v2/account/titles
-// Flags: 🔒
-client.account().titles()
-
-// Url: /v2/account/wallet
-// Flags: 🔒
-client.account().wallet()
-
-// Url: /v2/achievements
-// Flags: 📦📄🌏
-client.achievements()
-
-// Url: /v2/achievements/categories
-// Flags: 📦📄🌏
-client.achievements().categories()
-
-// Url: /v2/achievements/daily
-client.achievements().daily()
-
-// Url: /v2/achievements/dailyTomorrow
-client.achievements().dailyTomorrow()
-
-// Url: /v2/achievements/groups
-// Flags: 📦📄🌏
-client.achievements().groups()
-
-// Url: /v2/backstory/answers
-// Flags: 📦📄🌏
-client.backstory().answers()
-
-// Url: /v2/backstory/questions
-// Flags: 📦📄🌏
-client.backstory().questions()
-
-// Url: /v2/build
-client.build()
-
-// Url: /v2/characters
-// Flags: 🔒📦📄
-client.characters()
-
-// Url: /v2/characters/CHARACTER_NAME/backstory
-// Flags: 🔒
-client.characters('CHARACTER_NAME').backstory()
-
-// Url: /v2/characters/CHARACTER_NAME/core
-// Flags: 🔒
-client.characters('CHARACTER_NAME').core()
-
-// Url: /v2/characters/CHARACTER_NAME/crafting
-// Flags: 🔒
-client.characters('CHARACTER_NAME').crafting()
-
-// Url: /v2/characters/CHARACTER_NAME/equipment
-// Flags: 🔒
-client.characters('CHARACTER_NAME').equipment()
-
-// Url: /v2/characters/CHARACTER_NAME/heropoints
-// Flags: 🔒
-client.characters('CHARACTER_NAME').heropoints()
-
-// Url: /v2/characters/CHARACTER_NAME/inventory
-// Flags: 🔒
-client.characters('CHARACTER_NAME').inventory()
-
-// Url: /v2/characters/CHARACTER_NAME/recipes
-// Flags: 🔒
-client.characters('CHARACTER_NAME').recipes()
-
-// Url: /v2/characters/CHARACTER_NAME/specializations
-// Flags: 🔒
-client.characters('CHARACTER_NAME').specializations()
-
-// Url: /v2/characters/CHARACTER_NAME/training
-// Flags: 🔒
-client.characters('CHARACTER_NAME').training()
-
-// Url: /v2/colors
-// Flags: 📦📄🌏
-client.colors()
-
-// Url: /v2/commerce/exchange
-client.commerce().exchange().gems('AMOUNT')
-client.commerce().exchange().gold('AMOUNT')
-
-// Url: /v2/commerce/listings
-// Flags: 📦📄
-client.commerce().listings()
-
-// Url: /v2/commerce/prices
-// Flags: 📦📄
-client.commerce().prices()
-
-// Url: /v2/commerce/prices/transactions/current/buys
-// Flags: 🔒📄
-client.commerce().transactions().current().buys()
-
-// Url: /v2/commerce/prices/transactions/current/sells
-// Flags: 🔒📄
-client.commerce().transactions().current().sells()
-
-// Url: /v2/commerce/prices/transactions/history/buys
-// Flags: 🔒📄
-client.commerce().transactions().history().buys()
-
-// Url: /v2/commerce/prices/transactions/history/sells
-// Flags: 🔒📄
-client.commerce().transactions().history().sells()
-
-// Url: /v2/continents
-// Flags: 📦📄🌏
-client.continents()
-
-// Url: /v2/currencies
-// Flags: 📦📄🌏
-client.currencies()
-
-// Url: /v2/emblem/foreground
-// Flags: 📦📄
-client.emblem().foreground()
-
-// Url: /v2/emblem/background
-// Flags: 📦📄
-client.emblem().background()
-
-// Url: /v2/files
-// Flags: 📦📄
-client.files()
-
-// Url: /v2/finishers
-// Flags: 📦📄🌏
-client.finishers()
-
-// Url: /v2/guild
-// Flags: 🔒
-client.guild()
-
-// Url: /v2/guild/permissions
-// Flags: 📦📄🌏
-client.guild().permissions()
-
-// Url: /v2/guild/search?name=GUILD_NAME
-client.guild().search('GUILD_NAME')
-
-// Url: /v2/guild/upgrades
-// Flags: 📦📄🌏
-client.guild().upgrades()
-
-// Url: /v2/guild/GUILD_ID/log
-// Flags: 🔒
-client.guild('GUILD_ID').log()
-
-// Url: /v2/guild/GUILD_ID/members
-// Flags: 🔒
-client.guild('GUILD_ID').members()
-
-// Url: /v2/guild/GUILD_ID/ranks
-// Flags: 🔒
-client.guild('GUILD_ID').ranks()
-
-// Url: /v2/guild/GUILD_ID/stash
-// Flags: 🔒
-client.guild('GUILD_ID').stash()
-
-// Url: /v2/guild/GUILD_ID/teams
-// Flags: 🔒
-client.guild('GUILD_ID').teams()
-
-// Url: /v2/guild/GUILD_ID/treasury
-// Flags: 🔒
-client.guild('GUILD_ID').treasury()
-
-// Url: /v2/guild/GUILD_ID/upgrades
-// Flags: 🔒
-client.guild('GUILD_ID').upgrades()
-
-// Url: /v2/items
-// Flags: 📦📄🌏
-client.items()
-
-// Url: /v2/itemstats
-// Flags: 📦📄🌏
-client.itemstats()
-
-// Url: /v2/legends
-// Flags: 📦📄
-client.legends()
-
-// Url: /v2/maps
-// Flags: 📦📄🌏
-client.maps()
-
-// Url: /v2/masteries
-// Flags: 📦📄🌏
-client.masteries()
-
-// Url: /v2/materials
-// Flags: 📦📄🌏
-client.materials()
-
-// Url: /v2/minis
-// Flags: 📦📄🌏
-client.minis()
-
-// Url: /v2/pets
-// Flags: 📦📄🌏
-client.pets()
-
-// Url: /v2/professions
-// Flags: 📦📄🌏
-client.professions()
-
-// Url: /v2/pvp/amulets
-// Flags: 📦📄🌏
-client.pvp().amulets()
-
-// Url: /v2/pvp/games
-// Flags: 🔒📦📄
-client.pvp().games()
-
-// Url: /v2/pvp/seasons
-// Flags: 📦📄🌏
-client.pvp().seasons()
-
-// Url: /v2/pvp/standings
-// Flags: 🔒
-client.pvp().standings()
-
-// Url: /v2/pvp/stats
-// Flags: 🔒
-client.pvp().stats()
-
-// Url: /v2/quaggans
-// Flags: 📦📄
-client.quaggans()
-
-// Url: /v2/recipes
-// Flags: 📦📄
-client.recipes()
-
-// Url: /v2/recipes/search
-client.recipes().search().input('ITEM_ID')
-client.recipes().search().output('ITEM_ID')
-
-// Url: /v2/skills
-// Flags: 📦📄🌏
-client.skills()
-
-// Url: /v2/skins
-// Flags: 📦📄🌏
-client.skins()
-
-// Url: /v2/specializations
-// Flags: 📦📄🌏
-client.specializations()
-
-// Url: /v2/stories
-// Flags: 📦📄🌏
-client.stories()
-
-// Url: /v2/stories/seasons
-// Flags: 📦📄🌏
-client.stories().seasons()
-
-// Url: /v2/titles
-// Flags: 📦📄🌏
-client.titles()
-
-// Url: /v2/tokeninfo
-// Flags: 🔒
-client.tokeninfo()
-
-// Url: /v2/traits
-// Flags: 📦📄🌏
-client.traits()
-
-// Url: /v2/worlds
-// Flags: 📦📄🌏
-client.worlds()
-
-// Url: /v2/wvw/abilities
-// Flags: 📦📄🌏
-client.wvw().abilities()
-
-// Url: /v2/wvw/matches
-// Flags: 📦📄
-client.wvw().matches()
-
-// Url: /v2/wvw/objectives
-// Flags: 📦📄🌏
-client.wvw().objectives()
-```
-
-### Flags
-
-> If an endpoint has no 📦 or 📄 flags, you can usually use it with the `get()` method
-
-#### 🔒 Authenticated
-
-This endpoint requires you to authenticate the client beforehand, using `client.authenticate(api-key)`.
-
-#### 📦 Bulk
-
-This endpoint supports bulk expansion. This enables the following methods:
-
-- `all()` Get all entries.
-- `ids()` Get all ids.
-- `get(:id)` Get a single entry by id.
-- `many([:id, :id, :id])` Get multiple entries by id.
-
-#### 📄 Paginated
-
-This endpoint support pagination. This enables the following methods:
-
-- `all()` Get all entries. 
-- `page(:page)` Get a page of entries (with a default maximum size).
-- `page(:page, :size)` Get a page of entries with a specific size.
-
-#### 🌏 Localized
-
-This endpoint supports localisation. You may localize your client beforehand, using `client.language('de')`
-
 ## Tests
 
-```
+```bash
 npm test
 ```
 

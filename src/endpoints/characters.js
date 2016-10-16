@@ -9,6 +9,7 @@ export default class CharactersEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.supportsBulkAll = false
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 
   backstory () {
@@ -39,6 +40,10 @@ export default class CharactersEndpoint extends AbstractEndpoint {
     return new RecipesEndpoint(this.client, this.name)
   }
 
+  skills () {
+    return new SkillsEndpoint(this.client, this.name)
+  }
+
   specializations () {
     return new SpecializationsEndpoint(this.client, this.name)
   }
@@ -53,10 +58,11 @@ class BackstoryEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/characters/${encodeURIComponent(character)}/backstory`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 
   get () {
-    return this.request(this.url).then(result => result.backstory)
+    return super.get().then(result => result.backstory)
   }
 }
 
@@ -65,6 +71,7 @@ class CoreEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/characters/${encodeURIComponent(character)}/core`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -73,10 +80,11 @@ class CraftingEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/characters/${encodeURIComponent(character)}/crafting`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 
   get () {
-    return this.request(this.url).then(result => result.crafting)
+    return super.get().then(result => result.crafting)
   }
 }
 
@@ -85,10 +93,11 @@ class EquipmentEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/characters/${encodeURIComponent(character)}/equipment`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 
   get () {
-    return this.request(this.url).then(result => result.equipment)
+    return super.get().then(result => result.equipment)
   }
 }
 
@@ -97,6 +106,7 @@ class HeropointsEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/characters/${encodeURIComponent(character)}/heropoints`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 
@@ -105,10 +115,11 @@ class InventoryEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/characters/${encodeURIComponent(character)}/inventory`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 
   get () {
-    return this.request(this.url).then(result => result.bags)
+    return super.get().then(result => result.bags)
   }
 }
 
@@ -117,10 +128,24 @@ class RecipesEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/characters/${encodeURIComponent(character)}/recipes`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 
   get () {
-    return this.request(this.url).then(result => result.recipes)
+    return super.get().then(result => result.recipes)
+  }
+}
+
+class SkillsEndpoint extends AbstractEndpoint {
+  constructor (client, character) {
+    super(client)
+    this.url = `/v2/characters/${encodeURIComponent(character)}/skills`
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+
+  get () {
+    return super.get().then(result => result.skills)
   }
 }
 
@@ -129,10 +154,11 @@ class SpecializationsEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/characters/${encodeURIComponent(character)}/specializations`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 
   get () {
-    return this.request(this.url).then(result => result.specializations)
+    return super.get().then(result => result.specializations)
   }
 }
 
@@ -141,9 +167,10 @@ class TrainingEndpoint extends AbstractEndpoint {
     super(client)
     this.url = `/v2/characters/${encodeURIComponent(character)}/training`
     this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 
   get () {
-    return this.request(this.url).then(result => result.training)
+    return super.get().then(result => result.training)
   }
 }

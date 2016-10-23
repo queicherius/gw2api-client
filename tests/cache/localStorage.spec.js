@@ -60,7 +60,7 @@ describe('cache > localStorage', function () {
     await wait(3000)
 
     let keys = []
-    for (var i = 0; i !== localStorage.length; i++) {
+    for (let i = 0; i !== localStorage.length; i++) {
       keys.push(localStorage.key(i))
     }
 

@@ -31,7 +31,7 @@ class MatchesEndpoint extends AbstractEndpoint {
     this.url = '/v2/wvw/matches'
     this.isPaginated = true
     this.isBulk = true
-    this.cacheTime = 60
+    this.cacheTime = 30
   }
 }
 

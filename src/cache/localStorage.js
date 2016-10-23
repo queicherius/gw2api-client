@@ -55,7 +55,7 @@ export default function (configuration) {
     let now = (new Date()).getTime()
     let length = storage.length
 
-    for (var i = 0; i !== length; i++) {
+    for (let i = 0; i !== length; i++) {
       let key = storage.key(i)
 
       // Only check local storage keys that still exist and seem to be caching keys

@@ -54,7 +54,7 @@ class ListingsEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.supportsBulkAll = false
-    this.cacheTime = 60
+    this.cacheTime = 2 * 60
   }
 }
 

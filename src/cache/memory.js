@@ -41,7 +41,7 @@ export default function (configuration) {
   function garbageCollection () {
     let now = (new Date()).getTime()
 
-    for (var i in _storage) {
+    for (let i in _storage) {
       if (_storage[i].expiry < now) {
         delete _storage[i]
       }

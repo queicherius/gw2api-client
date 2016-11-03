@@ -338,7 +338,16 @@ export default class AbstractEndpoint {
 
   // Get a cache hash for an identifier
   _cacheHash (id) {
-    let hash = id ? ':' + id : ''
+    let hash = ''
+
+    if (id) {
+      hash += ':' + id
+    }
+
+    if (this.isLocalized) {
+      hash += ':' + this.client.lang
+    }
+
     return this.baseUrl + this.url + hash
   }
 

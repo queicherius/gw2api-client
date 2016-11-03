@@ -611,9 +611,39 @@ describe('abstract endpoint', () => {
     })
   })
 
-  describe('_cache*', () => {
+  describe('caching', () => {
     beforeEach(() => {
       endpoint.cacheTime = 60 * 60
+    })
+
+    it('includes the language into the caching key', async () => {
+      let contentEn = {id: 1, name: 'Good Day'}
+      let contentDe = {id: 1, name: 'Guten Tag'}
+      endpoint.isLocalized = true
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(contentEn)
+      fetchMock.addResponse(contentDe)
+
+      let entryEn = await endpoint.get(1)
+      await wait(50)
+      let entryShouldCacheEn = await endpoint.get(1)
+      let entryInCacheEn = await endpoint._cacheGetSingle('https://api.guildwars2.com/v2/test:1:en')
+
+      let entryDe = await endpoint.language('de').get(1)
+      await wait(50)
+      let entryShouldCacheDe = await endpoint.language('de').get(1)
+      let entryInCacheDe = await endpoint._cacheGetSingle('https://api.guildwars2.com/v2/test:1:de')
+
+      expect(fetchMock.urls().length).to.equal(2)
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?id=1&lang=de')
+      expect(entryEn, 'entry en').to.deep.equal(contentEn)
+      expect(entryShouldCacheEn, 'from cache en').to.deep.equal(contentEn)
+      expect(entryInCacheEn, 'in cache en').to.deep.equal(contentEn)
+      expect(entryDe, 'entry de').to.deep.equal(contentDe)
+      expect(entryShouldCacheDe, 'from cache de').to.deep.equal(contentDe)
+      expect(entryInCacheDe, 'in cache de').to.deep.equal(contentDe)
     })
 
     it('single sets in all connected cache storages', async () => {
@@ -655,7 +685,7 @@ describe('abstract endpoint', () => {
     })
   })
 
-  describe('_request*', () => {
+  describe('requests', () => {
     it('gives the type to the underlying api for single requests', async () => {
       endpoint.isLocalized = true
       fetchMock.addResponse({

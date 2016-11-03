@@ -3,7 +3,7 @@ import nullCache from '../../src/cache/null'
 import memoryCache from '../../src/cache/memory'
 
 export const mockClient = {
-  lang: false,
+  lang: 'en',
   apiKey: false,
   fetch: fetch,
   caches: [nullCache(), memoryCache(), memoryCache()],

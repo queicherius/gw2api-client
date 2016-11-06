@@ -19,9 +19,10 @@ describe('endpoints > guild', () => {
     expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/guild')
 
-    fetchMock.addResponse({id: 'guid', name: 'Baws Like', tag: 'BAWS'})
-    let content = await endpoint.get()
+    fetchMock.addResponse({id: 'S0ME-UU1D', name: 'Baws Like', tag: 'BAWS'})
+    let content = await endpoint.get('S0ME-UU1D')
     expect(content.name).to.equal('Baws Like')
+    expect(fetchMock.lastUrl()).to.contain('/v2/guild/S0ME-UU1D')
   })
 
   it('test /v2/guild/permissions', async () => {

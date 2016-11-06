@@ -10,6 +10,10 @@ export default class GuildEndpoint extends AbstractEndpoint {
     this.cacheTime = 60 * 60
   }
 
+  get (id) {
+    return super.get(`/${id}`, true)
+  }
+
   permissions () {
     return new PermissionsEndpoint(this.client)
   }

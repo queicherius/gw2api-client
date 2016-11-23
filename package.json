@@ -15,7 +15,9 @@
     "url": "https://github.com/gw2efficiency/gw2api-client"
   },
   "dependencies": {
+    "flat": "^2.0.1",
     "lets-fetch": "^2.0.0",
+    "lodash.get": "^4.4.2",
     "promise-control-flow": "^1.2.3",
     "uniq": "^1.0.1",
     "url-parse": "^1.1.3"

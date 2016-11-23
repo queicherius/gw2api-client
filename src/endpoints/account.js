@@ -2,6 +2,7 @@ import AbstractEndpoint from '../endpoint'
 import CharactersEndpoint from './characters'
 import PvpEndpoint from './pvp'
 import CommerceEndpoint from './commerce'
+import accountBlob from './account-blob.js'
 
 export default class AccountEndpoint extends AbstractEndpoint {
   constructor (client) {
@@ -73,6 +74,11 @@ export default class AccountEndpoint extends AbstractEndpoint {
 
   wallet () {
     return new WalletEndpoint(this.client)
+  }
+
+  // All data available for the account in a single object
+  blob () {
+    return accountBlob(this.client)
   }
 }
 

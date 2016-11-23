@@ -147,6 +147,8 @@ client.language('de')
 - **Authenticated:** Yes
 - **Localized:** No
 - **Cache time:** 5 minutes
+- **This endpoint additionally exposes the following methods:**
+  - `blob()` - All data available for the account in a single object
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

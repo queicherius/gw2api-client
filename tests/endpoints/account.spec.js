@@ -297,7 +297,6 @@ describe('endpoints > account', () => {
       },
       dyes: [1, 2, 3],
       finishers: [1, 2, 3],
-      inventory: [{id: 123, foo: 'bar'}],
       materials: [{id: 123, foo: 'bar'}],
       minis: [1, 2, 3],
       outfits: [1, 2, 3],
@@ -307,6 +306,7 @@ describe('endpoints > account', () => {
         stats: [{id: 123, foo: 'bar'}]
       },
       recipes: [1, 2, 3],
+      shared: [{id: 123, foo: 'bar'}],
       skins: [1, 2, 3],
       titles: null,
       wallet: [{id: 123, foo: 'bar'}],

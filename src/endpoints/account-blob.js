@@ -13,7 +13,6 @@ export default function (client) {
     dyes: wrap(() => client.account().dyes().get()),
     finishers: wrap(() => client.account().finishers().get()),
     guilds: wrap(() => accountGuilds(client)),
-    inventory: wrap(() => client.account().inventory().get()),
     materials: wrap(() => client.account().materials().get()),
     minis: wrap(() => client.account().minis().get()),
     outfits: wrap(() => client.account().outfits().get()),
@@ -21,6 +20,7 @@ export default function (client) {
     'pvp.standings': wrap(() => client.account().pvp().standings().get()),
     'pvp.stats': wrap(() => client.account().pvp().stats().get()),
     recipes: wrap(() => client.account().recipes().get()),
+    shared: wrap(() => client.account().inventory().get()),
     skins: wrap(() => client.account().skins().get()),
     titles: wrap(() => client.account().titles().get()),
     wallet: wrap(() => client.account().wallet().get())

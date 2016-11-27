@@ -181,7 +181,7 @@ class ItemsEndpoint extends AbstractEndpoint {
 
 // Attach it to the client, either as a new endpoint
 // or overwriting an already existing one
-api.items = () => new ItemsEndpoint(client)
+api.items = () => new ItemsEndpoint(api)
 
 // Use the new, overwritten endpoint
 api.items().many([123, 456])

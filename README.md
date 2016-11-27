@@ -83,7 +83,7 @@ import cacheLocalStorage from 'gw2api-client/build/cache/localStorage'
 // Try to answer from memory first, then from local storage and then hit the API
 api.cacheStorage([
   cacheMemory(),
-  cacheLocalStorage()
+  cacheLocalStorage({localStorage: window.localStorage})
 ])
 ```
 

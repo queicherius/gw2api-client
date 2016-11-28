@@ -204,6 +204,10 @@ file.__get__('api').fetch = fetchMock
 // Use the fetch mock methods as described in the link above
 ```
 
+### Debugging
+
+This module uses [debug](https://www.npmjs.com/package/debug) for logging. For **node.js** you can enable the logs by setting the `DEBUG` environment variable to `gw2api-client*`, for the **browser** you can enable them by setting `localstorage.debug` to `gw2api-client*`.
+
 ## Tests
 
 ```bash

@@ -15,6 +15,7 @@
     "url": "https://github.com/gw2efficiency/gw2api-client"
   },
   "dependencies": {
+    "debug": "^2.3.3",
     "flat": "^2.0.1",
     "lets-fetch": "^2.0.0",
     "lodash.clonedeep": "^4.5.0",

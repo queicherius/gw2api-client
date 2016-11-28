@@ -1,5 +1,6 @@
 import fetch from 'lets-fetch'
 import flow from 'promise-control-flow'
+import debugging from 'debug'
 import nullCache from './cache/null'
 import AccountEndpoint from './endpoints/account'
 import AchievementsEndpoint from './endpoints/achievements'
@@ -37,6 +38,7 @@ import TokeninfoEndpoint from './endpoints/tokeninfo'
 import TraitsEndpoint from './endpoints/traits'
 import WorldsEndpoint from './endpoints/worlds'
 import WvwEndpoint from './endpoints/wvw'
+const debug = debugging('gw2api-client')
 
 export default class Client {
   constructor () {
@@ -49,18 +51,21 @@ export default class Client {
   // Set the language for locale-aware endpoints
   language (lang) {
     this.lang = lang
+    debug(`set the language to ${lang}`)
     return this
   }
 
   // Set the api key for authenticated endpoints
   authenticate (apiKey) {
     this.apiKey = apiKey
+    debug(`set the api key to ${apiKey}`)
     return this
   }
 
   // Set the caching storage method(s)
   cacheStorage (caches) {
     this.caches = [].concat(caches)
+    debug(`updated the cache storage`)
     return this
   }
 
@@ -78,6 +83,7 @@ export default class Client {
       // Flush the caches if the cached build id is set (as a safety measure)
       // and the cached build id is older than the current one
       if (resp.cacheBuildId && resp.cacheBuildId < resp.buildId) {
+        debug(`flushing the cache because of a new build`)
         flushPromises = this.caches.map(cache => () => cache.flush())
       }
 

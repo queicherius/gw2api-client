@@ -1,8 +1,11 @@
 import parseUrl from 'url-parse'
 import unique from 'uniq'
 import Rusha from 'rusha'
+import debugging from 'debug'
 import {chunk, flatten, sortByIdList} from './helpers'
 const sha = (s) => (new Rusha()).digestFromString(s)
+const debug = debugging('gw2api-client')
+const debugRequest = debugging('gw2api-client:request')
 
 export default class AbstractEndpoint {
   constructor (client) {
@@ -33,11 +36,14 @@ export default class AbstractEndpoint {
   // Skip caching and get the live data
   live () {
     this._skipCache = true
+    debug(`skipping cache`)
     return this
   }
 
   // Get all ids
   ids () {
+    debug(`ids(${this.url}) called`)
+
     if (!this.isBulk) {
       return Promise.reject(new Error('"ids" is only available for bulk expanding endpoints'))
     }
@@ -51,6 +57,7 @@ export default class AbstractEndpoint {
     const hash = this._cacheHash('ids')
     const handleCacheContent = (cached) => {
       if (cached) {
+        debug(`ids(${this.url}) resolving from cache`)
         return cached
       }
 
@@ -67,11 +74,14 @@ export default class AbstractEndpoint {
 
   // Get all ids from the live API
   _ids () {
+    debug(`ids(${this.url}) requesting from api`)
     return this._request(this.url)
   }
 
   // Get a single entry by id
   get (id, url = false) {
+    debug(`get(${this.url}) called`)
+
     if (!id && this.isBulk && !url) {
       return Promise.reject(new Error('"get" requires an id'))
     }
@@ -85,6 +95,7 @@ export default class AbstractEndpoint {
     const hash = this._cacheHash(id)
     const handleCacheContent = (cached) => {
       if (cached) {
+        debug(`get(${this.url}) resolving from cache`)
         return cached
       }
 
@@ -101,6 +112,8 @@ export default class AbstractEndpoint {
 
   // Get a single entry by id from the live API
   _get (id, url) {
+    debug(`get(${this.url}) requesting from api`)
+
     // Request the single id if the endpoint a bulk endpoint
     if (this.isBulk && !url) {
       return this._request(`${this.url}?id=${id}`)
@@ -117,6 +130,8 @@ export default class AbstractEndpoint {
 
   // Get multiple entries by ids
   many (ids) {
+    debug(`many(${this.url}) called (${ids.length} ids)`)
+
     if (!this.isBulk) {
       return Promise.reject(new Error('"many" is only available for bulk expanding endpoints'))
     }
@@ -140,9 +155,11 @@ export default class AbstractEndpoint {
       cached = cached.filter(x => x)
 
       if (cached.length === ids.length) {
+        debug(`many(${this.url}) resolving fully from cache`)
         return cached
       }
 
+      debug(`many(${this.url}) resolving partially from cache (${cached.length} ids)`)
       const missingIds = getMissingIds(ids, cached)
       return this._many(missingIds).then(content => {
         const cacheContent = content.map(value => [this._cacheHash(value.id), value])
@@ -171,6 +188,8 @@ export default class AbstractEndpoint {
 
   // Get multiple entries by ids from the live API
   _many (ids) {
+    debug(`many(${this.url}) requesting from api (${ids.length} ids)`)
+
     // Chunk the requests to the max page size
     let pages = chunk(ids, this.maxPageSize)
     let requests = pages.map(page => `${this.url}?ids=${page.join(',')}`)
@@ -181,6 +200,8 @@ export default class AbstractEndpoint {
 
   // Get a single page
   page (page, size = this.maxPageSize) {
+    debug(`page(${this.url}) called`)
+
     if (!this.isBulk && !this.isPaginated) {
       return Promise.reject(new Error('"page" is only available for bulk expanding or paginated endpoints'))
     }
@@ -202,6 +223,7 @@ export default class AbstractEndpoint {
     const hash = this._cacheHash('page-' + page + '/' + size)
     const handleCacheContent = (cached) => {
       if (cached) {
+        debug(`page(${this.url}) resolving from cache`)
         return cached
       }
 
@@ -224,11 +246,14 @@ export default class AbstractEndpoint {
 
   // Get a single page from the live API
   _page (page, size) {
+    debug(`page(${this.url}) requesting from api`)
     return this._request(`${this.url}?page=${page}&page_size=${size}`)
   }
 
   // Get all entries
   all () {
+    debug(`all(${this.url}) called`)
+
     if (!this.isBulk && !this.isPaginated) {
       return Promise.reject(new Error('"all" is only available for bulk expanding or paginated endpoints'))
     }
@@ -242,6 +267,7 @@ export default class AbstractEndpoint {
     const hash = this._cacheHash('all')
     const handleCacheContent = (cached) => {
       if (cached) {
+        debug(`all(${this.url}) resolving from cache`)
         return cached
       }
 
@@ -264,6 +290,8 @@ export default class AbstractEndpoint {
 
   // Get all entries from the live API
   _all () {
+    debug(`all(${this.url}) requesting from api`)
+
     // Use bulk expansion if the endpoint supports the "all" keyword
     if (this.isBulk && this.supportsBulkAll) {
       return this._request(`${this.url}?ids=all`)
@@ -359,12 +387,15 @@ export default class AbstractEndpoint {
 
   // Execute a single request
   _request (url, type = 'json') {
-    return this.client.fetch.single(this._buildUrl(url), {type})
+    url = this._buildUrl(url)
+    debugRequest(`single url ${url}`)
+    return this.client.fetch.single(url, {type})
   }
 
   // Execute multiple requests in parallel
   _requestMany (urls, type = 'json') {
     urls = urls.map(url => this._buildUrl(url))
+    debugRequest(`multiple urls ${urls.join(', ')}`)
     return this.client.fetch.many(urls, {type})
   }
 

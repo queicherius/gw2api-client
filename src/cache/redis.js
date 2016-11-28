@@ -11,6 +11,7 @@ export default function (configuration) {
   function get (key) {
     return new Promise((resolve, reject) => {
       redisClient.get(prefix + key, (err, value) => {
+        /* istanbul ignore next */
         if (err) return reject(err)
         return resolve(JSON.parse(value))
       })
@@ -20,6 +21,7 @@ export default function (configuration) {
   function set (key, value, expiry) {
     return new Promise((resolve, reject) => {
       redisClient.set(prefix + key, JSON.stringify(value), (err) => {
+        /* istanbul ignore next */
         if (err) return reject(err)
         redisClient.expire(prefix + key, expiry)
         return resolve()
@@ -32,6 +34,7 @@ export default function (configuration) {
 
     return new Promise((resolve, reject) => {
       redisClient.mget(keys, (err, results) => {
+        /* istanbul ignore next */
         if (err) return reject(err)
         return resolve(results.map(x => JSON.parse(x)))
       })
@@ -45,6 +48,7 @@ export default function (configuration) {
 
     return new Promise((resolve, reject) => {
       redisClient.mset(redisCommands, (err) => {
+        /* istanbul ignore next */
         if (err) return reject(err)
 
         // Set the expire time of all keys in batch
@@ -54,6 +58,7 @@ export default function (configuration) {
         })
 
         batch.exec(err => {
+          /* istanbul ignore next */
           if (err) return reject(err)
           return resolve()
         })
@@ -64,6 +69,7 @@ export default function (configuration) {
   function flush () {
     return new Promise((resolve, reject) => {
       redisClient.keys(prefix + '*', (err, keys) => {
+        /* istanbul ignore next */
         if (err) return reject(err)
 
         // Delete the matched keys in batch
@@ -73,6 +79,7 @@ export default function (configuration) {
         })
 
         batch.exec(err => {
+          /* istanbul ignore next */
           if (err) return reject(err)
           return resolve()
         })

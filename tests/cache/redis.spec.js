@@ -28,14 +28,21 @@ describe('cache > redis', function () {
   })
 
   it('can set and get a single value', async () => {
-    await cache.set('foo', 'bar', 2)
+    await cache.set('foo', {herp: 'derp'}, 2)
+
+    // Make sure the data is cached
     let cachedFresh = await cache.get('foo')
-    expect(cachedFresh, 'cachedFresh').to.equal('bar')
+    expect(cachedFresh, 'cachedFresh').to.deep.equal({herp: 'derp'})
 
+    // Make sure we can't mutate cache data
+    cachedFresh.herp = 'not derp'
+    let cachedNotMutated = await cache.get('foo')
+    expect(cachedNotMutated, 'cachedNotMutated').to.deep.equal({herp: 'derp'})
+
+    // Make sure the data expires
     await wait(3000)
-
     let cachedExpired = await cache.get('foo')
-    expect(cachedExpired, 'cachedExpired').to.equal(null)
+    expect(cachedExpired, 'cachedExpired').to.deep.equal(null)
   })
 
   it('can set and get multiple values', async () => {

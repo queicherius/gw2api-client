@@ -34,11 +34,6 @@ describe('cache > redis', function () {
     let cachedFresh = await cache.get('foo')
     expect(cachedFresh, 'cachedFresh').to.deep.equal({herp: 'derp'})
 
-    // Make sure we can't mutate cache data
-    cachedFresh.herp = 'not derp'
-    let cachedNotMutated = await cache.get('foo')
-    expect(cachedNotMutated, 'cachedNotMutated').to.deep.equal({herp: 'derp'})
-
     // Make sure the data expires
     await wait(3000)
     let cachedExpired = await cache.get('foo')

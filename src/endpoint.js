@@ -1,6 +1,7 @@
 import parseUrl from 'url-parse'
 import unique from 'uniq'
 import Rusha from 'rusha'
+import clone from 'lodash.clonedeep'
 import debugging from 'debug'
 import {chunk, flatten, sortByIdList} from './helpers'
 const sha = (s) => (new Rusha()).digestFromString(s)
@@ -67,9 +68,12 @@ export default class AbstractEndpoint {
       })
     }
 
-    return this._skipCache
+    // Get the content either from the cache or API, write it into the cache and return a clone
+    const contentPromise = this._skipCache
       ? Promise.resolve(false).then(handleCacheContent)
       : this._cacheGetSingle(hash).then(handleCacheContent)
+
+    return contentPromise.then(clone)
   }
 
   // Get all ids from the live API
@@ -105,9 +109,12 @@ export default class AbstractEndpoint {
       })
     }
 
-    return this._skipCache
+    // Get the content either from the cache or API, write it into the cache and return a clone
+    const contentPromise = this._skipCache
       ? Promise.resolve(false).then(handleCacheContent)
       : this._cacheGetSingle(hash).then(handleCacheContent)
+
+    return contentPromise.then(clone)
   }
 
   // Get a single entry by id from the live API
@@ -181,9 +188,12 @@ export default class AbstractEndpoint {
       return ids.filter(x => cachedIds[x] !== 1)
     }
 
-    return this._skipCache
+    // Get the content either from the cache or API, write it into the cache and return a clone
+    const contentPromise = this._skipCache
       ? Promise.resolve([]).then(handleCacheContent)
       : this._cacheGetMany(hashes).then(handleCacheContent)
+
+    return contentPromise.then(clone)
   }
 
   // Get multiple entries by ids from the live API
@@ -239,9 +249,12 @@ export default class AbstractEndpoint {
       })
     }
 
-    return this._skipCache
+    // Get the content either from the cache or API, write it into the cache and return a clone
+    const contentPromise = this._skipCache
       ? Promise.resolve(false).then(handleCacheContent)
       : this._cacheGetSingle(hash).then(handleCacheContent)
+
+    return contentPromise.then(clone)
   }
 
   // Get a single page from the live API
@@ -283,9 +296,12 @@ export default class AbstractEndpoint {
       })
     }
 
-    return this._skipCache
+    // Get the content either from the cache or API, write it into the cache and return a clone
+    const contentPromise = this._skipCache
       ? Promise.resolve(false).then(handleCacheContent)
       : this._cacheGetSingle(hash).then(handleCacheContent)
+
+    return contentPromise.then(clone)
   }
 
   // Get all entries from the live API

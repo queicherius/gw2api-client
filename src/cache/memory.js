@@ -1,5 +1,4 @@
 import flow from 'promise-control-flow'
-import clone from 'lodash.clonedeep'
 
 export default function (configuration) {
   configuration = {gcTick: 5 * 60 * 1000, ...configuration}
@@ -12,7 +11,7 @@ export default function (configuration) {
     let now = (new Date()).getTime()
 
     value = value && value.expiry > now ? value.value : null
-    return Promise.resolve(clone(value))
+    return Promise.resolve(value)
   }
 
   function set (key, value, expiry) {

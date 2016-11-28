@@ -1,6 +1,8 @@
 import parseUrl from 'url-parse'
 import unique from 'uniq'
+import Rusha from 'rusha'
 import {chunk, flatten, sortByIdList} from './helpers'
+const sha = (s) => (new Rusha()).digestFromString(s)
 
 export default class AbstractEndpoint {
   constructor (client) {
@@ -346,6 +348,10 @@ export default class AbstractEndpoint {
 
     if (this.isLocalized) {
       hash += ':' + this.client.lang
+    }
+
+    if (this.isAuthenticated) {
+      hash += ':' + sha(this.client.apiKey)
     }
 
     return this.baseUrl + this.url + hash

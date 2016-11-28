@@ -646,6 +646,35 @@ describe('abstract endpoint', () => {
       expect(entryInCacheDe, 'in cache de').to.deep.equal(contentDe)
     })
 
+    it('includes the autentication token into the caching key', async () => {
+      let contentUserOne = {name: 'foo.1234'}
+      let contentUserTwo = {name: 'bar.1234'}
+      endpoint.isAuthenticated = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(contentUserOne)
+      fetchMock.addResponse(contentUserTwo)
+
+      let entryUserOne = await endpoint.authenticate('key-user-one').get()
+      await wait(50)
+      let entryShouldCacheUserOne = await endpoint.authenticate('key-user-one').get()
+      let entryInCacheUserOne = await endpoint._cacheGetSingle('https://api.guildwars2.com/v2/test:69375f55664051a0f867d4c71f0ef53beeeda51d')
+
+      let entryUserTwo = await endpoint.authenticate('key-user-two').get()
+      await wait(50)
+      let entryShouldCacheUserTwo = await endpoint.authenticate('key-user-two').get()
+      let entryInCacheUserTwo = await endpoint._cacheGetSingle('https://api.guildwars2.com/v2/test:da9125851cff5faf9e610a95294f615aeee34816')
+
+      expect(fetchMock.urls().length).to.equal(2)
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?access_token=key-user-two')
+      expect(entryUserOne, 'entry user one').to.deep.equal(contentUserOne)
+      expect(entryShouldCacheUserOne, 'from cache user one').to.deep.equal(contentUserOne)
+      expect(entryInCacheUserOne, 'in cache user one').to.deep.equal(contentUserOne)
+      expect(entryUserTwo, 'entry user two').to.deep.equal(contentUserTwo)
+      expect(entryShouldCacheUserTwo, 'from cache user two').to.deep.equal(contentUserTwo)
+      expect(entryInCacheUserTwo, 'in cache user two').to.deep.equal(contentUserTwo)
+    })
+
     it('single sets in all connected cache storages', async () => {
       endpoint._cacheSetSingle('foo', {bar: 1337})
       await wait(50)

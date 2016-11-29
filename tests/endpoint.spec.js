@@ -372,6 +372,34 @@ describe('abstract endpoint', () => {
       ])
     })
 
+    it('match the api behaviour for cached data if all not-cached data is invalid', async () => {
+      let content = [
+        {id: 1, name: 'foo'},
+        {id: 2, name: 'bar'},
+        {id: 3, name: 'fooo'}
+      ]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(content)
+      fetchMock.addResponseError({status: 404}, {text: 'all provided ids are invalid'})
+
+      let entry = await endpoint.many([1, 2, 3])
+      await wait(50)
+      let entryShouldCache = await endpoint.many([2, 3, 2, 4])
+      let bulkEntriesInCache = await endpoint._cacheGetMany([
+        'https://api.guildwars2.com/v2/test:1',
+        'https://api.guildwars2.com/v2/test:2',
+        'https://api.guildwars2.com/v2/test:3'
+      ])
+
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?ids=4')
+      expect(fetchMock.urls().length).to.equal(2)
+      expect(entry).to.deep.equal(content)
+      expect(entryShouldCache).to.deep.equal(content.slice(1))
+      expect(bulkEntriesInCache).to.deep.equal(content)
+    })
+
     it('live', async () => {
       let content = [
         {id: 1, name: 'foo'},

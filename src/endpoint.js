@@ -168,7 +168,7 @@ export default class AbstractEndpoint {
 
       debug(`many(${this.url}) resolving partially from cache (${cached.length} ids)`)
       const missingIds = getMissingIds(ids, cached)
-      return this._many(missingIds).then(content => {
+      return this._many(missingIds, cached.length > 0).then(content => {
         const cacheContent = content.map(value => [this._cacheHash(value.id), value])
         this._cacheSetMany(cacheContent)
 
@@ -197,15 +197,27 @@ export default class AbstractEndpoint {
   }
 
   // Get multiple entries by ids from the live API
-  _many (ids) {
+  _many (ids, partialRequest = false) {
     debug(`many(${this.url}) requesting from api (${ids.length} ids)`)
 
     // Chunk the requests to the max page size
-    let pages = chunk(ids, this.maxPageSize)
-    let requests = pages.map(page => `${this.url}?ids=${page.join(',')}`)
+    const pages = chunk(ids, this.maxPageSize)
+    const requests = pages.map(page => `${this.url}?ids=${page.join(',')}`)
+
+    // If we are partially caching and all not-cached ids are all invalid,
+    // simulate the API behaviour by silently swallowing errors.
+    let handleMissingIds = (err) => {
+      if (partialRequest && err.response && err.response.status === 404) {
+        return Promise.resolve([])
+      }
+
+      return Promise.reject(err)
+    }
 
     // Work on all requests in parallel and then flatten the responses into one
-    return this._requestMany(requests).then(responses => flatten(responses))
+    return this._requestMany(requests)
+      .then(responses => flatten(responses))
+      .catch(handleMissingIds)
   }
 
   // Get a single page

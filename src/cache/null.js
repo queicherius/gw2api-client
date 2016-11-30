@@ -2,11 +2,11 @@ export default function () {
   return {get, set, mget, mset, flush}
 }
 
-function get (key) {
+function get () {
   return Promise.resolve(null)
 }
 
-function set (key, value, expiry) {
+function set () {
   return Promise.resolve(true)
 }
 
@@ -15,7 +15,7 @@ function mget (keys) {
   return Promise.resolve(values)
 }
 
-function mset (values) {
+function mset () {
   return Promise.resolve(true)
 }
 

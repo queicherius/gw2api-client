@@ -1,7 +1,7 @@
 import parseUrl from 'url-parse'
 import unique from 'uniq'
 import Rusha from 'rusha'
-import clone from 'lodash.clonedeep'
+import clone from 'fast-clone'
 import debugging from 'debug'
 import {chunk, flatten, sortByIdList} from './helpers'
 const sha = (s) => (new Rusha()).digestFromString(s)

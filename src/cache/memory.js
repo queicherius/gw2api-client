@@ -1,5 +1,3 @@
-import flow from 'promise-control-flow'
-
 export default function (configuration) {
   configuration = {gcTick: 5 * 60 * 1000, ...configuration}
 
@@ -7,26 +5,35 @@ export default function (configuration) {
   let _storage = {}
 
   function get (key) {
+    return Promise.resolve(_get(key))
+  }
+
+  function _get (key) {
     let value = _storage[key]
     let now = (new Date()).getTime()
-
-    value = value && value.expiry > now ? value.value : null
-    return Promise.resolve(value)
+    return value && value.expiry > now ? value.value : null
   }
 
   function set (key, value, expiry) {
-    _storage[key] = {value, expiry: (new Date()).getTime() + expiry * 1000}
+    _set(key, value, expiry)
     return Promise.resolve(true)
   }
 
+  function _set (key, value, expiry) {
+    _storage[key] = {value, expiry: (new Date()).getTime() + expiry * 1000}
+  }
+
   function mget (keys) {
-    let promises = keys.map(key => () => get(key))
-    return flow.parallel(promises)
+    let values = keys.map(key => _get(key))
+    return Promise.resolve(values)
   }
 
   function mset (values) {
-    let promises = values.map(value => () => set(value[0], value[1], value[2]))
-    return flow.parallel(promises)
+    values.map(value => {
+      _set(value[0], value[1], value[2])
+    })
+
+    return Promise.resolve(true)
   }
 
   function flush () {

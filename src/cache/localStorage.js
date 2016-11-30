@@ -1,5 +1,3 @@
-import flow from 'promise-control-flow'
-
 export default function (configuration) {
   configuration = {prefix: 'gw2api-', gcTick: 5 * 60 * 1000, ...configuration}
 
@@ -11,20 +9,28 @@ export default function (configuration) {
   let prefix = configuration.prefix
 
   function get (key) {
+    return Promise.resolve(_get(key))
+  }
+
+  function _get (key) {
     let now = (new Date()).getTime()
     let value
 
     try {
       value = JSON.parse(storage.getItem(prefix + key))
     } catch (err) {
-      value = null
+      // We're ignoring errors
     }
 
-    value = value && value.expiry > now ? value.value : null
-    return Promise.resolve(value)
+    return value && value.expiry > now ? value.value : null
   }
 
   function set (key, value, expiry) {
+    _set(key, value, expiry)
+    return Promise.resolve(true)
+  }
+
+  function _set (key, value, expiry) {
     value = {value, expiry: (new Date()).getTime() + expiry * 1000}
 
     try {
@@ -32,18 +38,19 @@ export default function (configuration) {
     } catch (err) {
       // Since it is super easy to smash the quota, ignore that
     }
-
-    return Promise.resolve(true)
   }
 
   function mget (keys) {
-    let promises = keys.map(key => () => get(key))
-    return flow.parallel(promises)
+    let values = keys.map(key => _get(key))
+    return Promise.resolve(values)
   }
 
   function mset (values) {
-    let promises = values.map(value => () => set(value[0], value[1], value[2]))
-    return flow.parallel(promises)
+    values.map(value => {
+      _set(value[0], value[1], value[2])
+    })
+
+    return Promise.resolve(true)
   }
 
   function flush () {

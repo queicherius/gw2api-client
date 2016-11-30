@@ -24,7 +24,7 @@ export default function (configuration) {
         /* istanbul ignore next */
         if (err) return reject(err)
         redisClient.expire(prefix + key, expiry)
-        return resolve()
+        return resolve(true)
       })
     })
   }
@@ -60,7 +60,7 @@ export default function (configuration) {
         batch.exec(err => {
           /* istanbul ignore next */
           if (err) return reject(err)
-          return resolve()
+          return resolve(true)
         })
       })
     })
@@ -81,7 +81,7 @@ export default function (configuration) {
         batch.exec(err => {
           /* istanbul ignore next */
           if (err) return reject(err)
-          return resolve()
+          return resolve(true)
         })
       })
     })

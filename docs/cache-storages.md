@@ -57,6 +57,8 @@ api.cacheStorage(cacheLocalStorage(options))
 
 Caches the data using [localForage](https://github.com/localForage/localForage).
 
+> :warning: **Note:** You should probably not use this, because it's incredibly slow (up to multiple seconds) when reading from the cache while writing a lot of entries in the background (e.g. items). See see [this](https://github.com/localForage/localForage/issues/315) and [this](https://github.com/localForage/localForage/issues/301) issue.
+
 **Options:**
 
 - `localForage` - An instance of [localForage](https://github.com/localForage/localForage).

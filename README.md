@@ -57,15 +57,15 @@ import cacheMemory from 'gw2api-client/build/cache/memory'
 api.cacheStorage(cacheMemory())
 
 // This will only call the official API once
-api().items().ids()
+api.items().ids()
 // ...
-api().items().ids()
+api.items().ids()
 
 // When the cache expires, this will call the official API again
-api().items().ids()
+api.items().ids()
 
 // You can skip the cache for guaranteed live data
-api().items().live().ids()
+api.items().live().ids()
 ```
 
 > **Note:** The cache storage save is asynchronous in the background. During this time, the API function already resolves a result for best performance. Therefore it *can* happen that some data gets requested twice, if you request it in rapid succession.
@@ -122,11 +122,6 @@ The API can throw server errors (status >= 500) that don't have a `text` propert
 By accessing the `fetch` instance, you can enable retrying in case the API or the user has problems getting a valid response. You can find the full documentation for retrying [here](https://github.com/queicherius/lets-fetch#retrying).
 
 ```js
-import client from 'gw2api-client'
-
-// Get an instance of an API client
-let api = client()
-
 // Retry up to 3 times if the status indicates an request error
 api.fetch.retry((tries, err) => {
   if (tries > 3) { 
@@ -145,7 +140,7 @@ api.fetch.retry((tries, err) => {
 api.fetch.retryWait((tries) => tries * 100)
 
 // This request will now retry if it fails (e.g. API issues)
-api().items().ids()
+api.items().ids()
 ```
 
 ### Extending

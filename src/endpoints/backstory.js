@@ -2,11 +2,11 @@ import AbstractEndpoint from '../endpoint'
 
 export default class BackstoryEndpoint extends AbstractEndpoint {
   answers () {
-    return new AnswersEndpoint(this.client)
+    return new AnswersEndpoint(this)
   }
 
   questions () {
-    return new QuestionsEndpoint(this.client)
+    return new QuestionsEndpoint(this)
   }
 }
 

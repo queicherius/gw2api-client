@@ -12,19 +12,19 @@ export default class AchievementsEndpoint extends AbstractEndpoint {
   }
 
   categories () {
-    return new CategoriesEndpoint(this.client)
+    return new CategoriesEndpoint(this)
   }
 
   groups () {
-    return new GroupsEndpoint(this.client)
+    return new GroupsEndpoint(this)
   }
 
   daily () {
-    return new DailyEndpoint(this.client)
+    return new DailyEndpoint(this)
   }
 
   dailyTomorrow () {
-    return new DailyTomorrowEndpoint(this.client)
+    return new DailyTomorrowEndpoint(this)
   }
 }
 

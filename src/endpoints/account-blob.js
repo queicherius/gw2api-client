@@ -1,8 +1,16 @@
 import flow from 'promise-control-flow'
 import flat from 'flat'
 import _get from 'lodash.get'
+import api from '../index.js'
 
-export default function (client) {
+export default function (parent) {
+  const client = api()
+    .authenticate(parent.apiKey)
+    .language(parent.lang)
+    .cacheStorage(parent.caches)
+
+  client.fetch = parent.fetch
+
   const data = {
     account: wrap(() => client.account().get()),
     achievements: wrap(() => client.account().achievements().get()),

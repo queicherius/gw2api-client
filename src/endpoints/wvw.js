@@ -2,15 +2,15 @@ import AbstractEndpoint from '../endpoint'
 
 export default class WvwEndpoint extends AbstractEndpoint {
   abilities () {
-    return new AbilitiesEndpoint(this.client)
+    return new AbilitiesEndpoint(this)
   }
 
   matches () {
-    return new MatchesEndpoint(this.client)
+    return new MatchesEndpoint(this)
   }
 
   objectives () {
-    return new ObjectivesEndpoint(this.client)
+    return new ObjectivesEndpoint(this)
   }
 }
 

@@ -2,23 +2,23 @@ import AbstractEndpoint from '../endpoint'
 
 export default class PvpEndpoint extends AbstractEndpoint {
   amulets () {
-    return new AmuletsEndpoint(this.client)
+    return new AmuletsEndpoint(this)
   }
 
   games () {
-    return new GamesEndpoint(this.client)
+    return new GamesEndpoint(this)
   }
 
   seasons () {
-    return new SeasonsEndpoint(this.client)
+    return new SeasonsEndpoint(this)
   }
 
   standings () {
-    return new StandingsEndpoint(this.client)
+    return new StandingsEndpoint(this)
   }
 
   stats () {
-    return new StatsEndpoint(this.client)
+    return new StatsEndpoint(this)
   }
 }
 

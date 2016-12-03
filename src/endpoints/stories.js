@@ -11,7 +11,7 @@ export default class StoriesEndpoint extends AbstractEndpoint {
   }
 
   seasons () {
-    return new SeasonsEndpoint(this.client)
+    return new SeasonsEndpoint(this)
   }
 }
 

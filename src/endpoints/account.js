@@ -13,72 +13,72 @@ export default class AccountEndpoint extends AbstractEndpoint {
   }
 
   achievements () {
-    return new AchievementsEndpoint(this.client)
+    return new AchievementsEndpoint(this)
   }
 
   bank () {
-    return new BankEndpoint(this.client)
+    return new BankEndpoint(this)
   }
 
   characters (name) {
-    return new CharactersEndpoint(this.client, name)
+    return new CharactersEndpoint(this, name)
   }
 
   dyes () {
-    return new DyesEndpoint(this.client)
+    return new DyesEndpoint(this)
   }
 
   finishers () {
-    return new FinishersEndpoint(this.client)
+    return new FinishersEndpoint(this)
   }
 
   inventory () {
-    return new InventoryEndpoint(this.client)
+    return new InventoryEndpoint(this)
   }
 
   masteries () {
-    return new MasteriesEndpoint(this.client)
+    return new MasteriesEndpoint(this)
   }
 
   materials () {
-    return new MaterialsEndpoint(this.client)
+    return new MaterialsEndpoint(this)
   }
 
   minis () {
-    return new MinisEndpoint(this.client)
+    return new MinisEndpoint(this)
   }
 
   outfits () {
-    return new OutfitsEndpoint(this.client)
+    return new OutfitsEndpoint(this)
   }
 
   pvp () {
-    return new PvpEndpoint(this.client)
+    return new PvpEndpoint(this)
   }
 
   recipes () {
-    return new RecipesEndpoint(this.client)
+    return new RecipesEndpoint(this)
   }
 
   skins () {
-    return new SkinsEndpoint(this.client)
+    return new SkinsEndpoint(this)
   }
 
   titles () {
-    return new TitlesEndpoint(this.client)
+    return new TitlesEndpoint(this)
   }
 
   transactions () {
-    return new CommerceEndpoint(this.client).transactions()
+    return new CommerceEndpoint(this).transactions()
   }
 
   wallet () {
-    return new WalletEndpoint(this.client)
+    return new WalletEndpoint(this)
   }
 
   // All data available for the account in a single object
   blob () {
-    return accountBlob(this.client)
+    return accountBlob(this)
   }
 }
 

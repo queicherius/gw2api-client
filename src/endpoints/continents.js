@@ -11,7 +11,7 @@ export default class ContinentsEndpoint extends AbstractEndpoint {
   }
 
   floors (id) {
-    return new FloorsEndpoint(this.client, id)
+    return new FloorsEndpoint(this, id)
   }
 }
 

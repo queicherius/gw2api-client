@@ -11,7 +11,7 @@ export default class RecipesEndpoint extends AbstractEndpoint {
   }
 
   search () {
-    return new SearchEndpoint(this.client)
+    return new SearchEndpoint(this)
   }
 }
 

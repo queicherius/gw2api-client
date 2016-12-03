@@ -15,12 +15,22 @@ describe('client', () => {
     let api = client.language('de')
     expect(client.lang).to.equal('de')
     expect(api).to.be.an.instanceof(Module)
+
+    let endpoint = client.account().language('fr')
+    expect(endpoint.lang).to.equal('fr')
+    expect(client.language('es').lang).to.equal('es')
+    expect(endpoint.lang).to.equal('fr')
   })
 
   it('can set an api key', () => {
     let api = client.authenticate('key')
     expect(client.apiKey).to.equal('key')
     expect(api).to.be.an.instanceof(Module)
+
+    let endpoint = client.account().authenticate('key-two')
+    expect(endpoint.apiKey).to.equal('key-two')
+    expect(client.authenticate('key-three').apiKey).to.equal('key-three')
+    expect(endpoint.apiKey).to.equal('key-two')
   })
 
   it('can set a cache handler', () => {

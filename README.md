@@ -19,7 +19,6 @@ This module can be used for Node.js as well as browsers using [Browserify](https
 
 ```js
 import client from 'gw2api-client'
-import flow from 'promise-control-flow'
 
 // Get an instance of an API client
 let api = client()
@@ -31,18 +30,16 @@ api.language('en')
 api.authenticate('my-secret-key')
 
 // Get the ids of all items
-api.items().ids()
-  .then(items => console.log(items))
+api.items().ids().then(items => console.log(items))
 
-// Note: If you want to request e.g. multiple items with different languages
-// or API keys in *parallel*, you have to use *different* client instances
-// for that, since language and key are connected to the client instance
-flow.parallel([
-  () => client().language('en').items().all(),
-  () => client().language('de').items().all(),
-  () => client().language('fr').items().all(),
-  () => client().language('es').items().all()
-])
+// Get a single item
+api.items().get(123).then(item => console.log(item))
+
+// Get multiple items
+api.items().many([123, 456]).then(items => console.log(items))
+
+// Get all items
+api.items().all().then(items => console.log(items))
 ```
 
 ### Endpoints
@@ -92,8 +89,8 @@ The cache uses expiration times and not the build number, because the content of
 ```js
 // configure api.cacheStorage(...) beforehand
 
-// Check the build every minute and flush the cache if it updated
-setInterval(() => api.flushCacheIfGameUpdated(), 60 * 1000)
+// Check the build every 10 minutes and flush the cache if it updated
+setInterval(() => api.flushCacheIfGameUpdated(), 10 * 60 * 1000)
 ```
 
 ### Error handling
@@ -101,13 +98,12 @@ setInterval(() => api.flushCacheIfGameUpdated(), 60 * 1000)
 You can use the Promise `catch` to handle all possible errors.
 
 ```js
-api.account().bank()
-  .catch(err => {
-    // err.response is the last response object (e.g. err.response.status)
-    // err.content is the parsed body of the response, if available
-    // err.content.text is the error text thrown of the API, if available
-    console.error('Something went wrong', err)
-  })
+api.account().bank().catch(err => {
+  // err.response is the last response object (e.g. err.response.status)
+  // err.content is the parsed body of the response, if available
+  // err.content.text is the error text thrown of the API, if available
+  console.error('Something went wrong', err)
+})
 ```
 
 The API can throw server errors (status >= 500) that don't have a `text` property set. However, most of the time it responds with one of the following errors:
@@ -156,7 +152,7 @@ api().items().ids()
 
 You can extend or overwrite the API client with your own endpoints if you wish so. The only thing that is required is an extension of `AbstractEndpoint` to provide all the logic for pagination, bulk, localisation, caching and so on.
 
-If you need more specific ways to handle data then the already defined ones, take a look at how the existing endpoints handle these edge cases (e.g. in `/src/endpoints/recipes.js`).
+If you need more specific ways to handle data then the already defined ones, take a look at how the existing endpoints handle these edge cases (e.g. in [`/src/endpoints/recipes.js`](/blob/master/src/endpoints/recipes.js)).
 
 ```js
 import client from 'gw2api-client'
@@ -179,8 +175,7 @@ class ItemsEndpoint extends AbstractEndpoint {
   }
 }
 
-// Attach it to the client, either as a new endpoint
-// or overwriting an already existing one
+// Attach it to the client, either as a new endpoint or overwriting an already existing one
 api.items = () => new ItemsEndpoint(api)
 
 // Use the new, overwritten endpoint
@@ -206,7 +201,7 @@ file.__get__('api').fetch = fetchMock
 
 ### Debugging
 
-This module uses [debug](https://www.npmjs.com/package/debug) for logging. For **node.js** you can enable the logs by setting the `DEBUG` environment variable to `gw2api-client*`, for the **browser** you can enable them by setting `localstorage.debug` to `gw2api-client*`.
+This module uses [debug](https://www.npmjs.com/package/debug) for debug logs. For **node.js** you can enable the logs by setting the `DEBUG` environment variable to `gw2api-client*`, for the **browser** you can enable them by setting `localstorage.debug` to `gw2api-client*`.
 
 ## Tests
 

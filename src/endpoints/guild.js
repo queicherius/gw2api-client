@@ -15,43 +15,43 @@ export default class GuildEndpoint extends AbstractEndpoint {
   }
 
   permissions () {
-    return new PermissionsEndpoint(this.client)
+    return new PermissionsEndpoint(this)
   }
 
   search (name) {
-    return new SearchEndpoint(this.client, name)
+    return new SearchEndpoint(this, name)
   }
 
   upgrades () {
     if (this.id === undefined) {
-      return new AllUpgradesEndpoint(this.client)
+      return new AllUpgradesEndpoint(this)
     }
 
-    return new UpgradesEndpoint(this.client, this.id)
+    return new UpgradesEndpoint(this, this.id)
   }
 
   log () {
-    return new LogEndpoint(this.client, this.id)
+    return new LogEndpoint(this, this.id)
   }
 
   members () {
-    return new MembersEndpoint(this.client, this.id)
+    return new MembersEndpoint(this, this.id)
   }
 
   ranks () {
-    return new RanksEndpoint(this.client, this.id)
+    return new RanksEndpoint(this, this.id)
   }
 
   stash () {
-    return new StashEndpoint(this.client, this.id)
+    return new StashEndpoint(this, this.id)
   }
 
   teams () {
-    return new TeamsEndpoint(this.client, this.id)
+    return new TeamsEndpoint(this, this.id)
   }
 
   treasury () {
-    return new TreasuryEndpoint(this.client, this.id)
+    return new TreasuryEndpoint(this, this.id)
   }
 }
 

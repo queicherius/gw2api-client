@@ -20,7 +20,7 @@ describe('abstract endpoint', () => {
   beforeEach(() => {
     endpoint = new Module(mockClient)
     fetchMock.reset()
-    endpoint.client.caches.map(cache => cache.flush())
+    endpoint.caches.map(cache => cache.flush())
   })
 
   describe('ids', () => {
@@ -838,22 +838,22 @@ describe('abstract endpoint', () => {
       endpoint._cacheSetSingle('foo', {bar: 1337})
       await wait(50)
 
-      expect(await endpoint.client.caches[1].get('foo')).to.deep.equal({bar: 1337})
-      expect(await endpoint.client.caches[2].get('foo')).to.deep.equal({bar: 1337})
+      expect(await endpoint.caches[1].get('foo')).to.deep.equal({bar: 1337})
+      expect(await endpoint.caches[2].get('foo')).to.deep.equal({bar: 1337})
     })
 
     it('many sets in all connected cache storages', async () => {
       endpoint._cacheSetMany([['foo', {bar: 1337}], ['herp', {derp: 42}]])
       await wait(50)
 
-      expect(await endpoint.client.caches[1].mget(['foo', 'herp'])).to.deep.equal([{bar: 1337}, {derp: 42}])
-      expect(await endpoint.client.caches[2].mget(['foo', 'herp'])).to.deep.equal([{bar: 1337}, {derp: 42}])
+      expect(await endpoint.caches[1].mget(['foo', 'herp'])).to.deep.equal([{bar: 1337}, {derp: 42}])
+      expect(await endpoint.caches[2].mget(['foo', 'herp'])).to.deep.equal([{bar: 1337}, {derp: 42}])
     })
 
     it('single gets of the first possible connected cache storage', async () => {
-      await endpoint.client.caches[1].set('herp', 'derp', 60)
-      await endpoint.client.caches[2].set('herp', 'NOPE')
-      await endpoint.client.caches[2].set('asd', {fgh: 42}, 60)
+      await endpoint.caches[1].set('herp', 'derp', 60)
+      await endpoint.caches[2].set('herp', 'NOPE')
+      await endpoint.caches[2].set('asd', {fgh: 42}, 60)
       await wait(50)
 
       expect(await endpoint._cacheGetSingle('foo')).to.deep.equal(null)
@@ -862,10 +862,10 @@ describe('abstract endpoint', () => {
     })
 
     it('many gets of the first possible connected cache storage', async () => {
-      await endpoint.client.caches[1].set('foo', 'bar', 60)
-      await endpoint.client.caches[1].set('herp', 'derp', 60)
-      await endpoint.client.caches[2].set('herp', 'NOPE')
-      await endpoint.client.caches[2].set('asd', {fgh: 42}, 60)
+      await endpoint.caches[1].set('foo', 'bar', 60)
+      await endpoint.caches[1].set('herp', 'derp', 60)
+      await endpoint.caches[2].set('herp', 'NOPE')
+      await endpoint.caches[2].set('asd', {fgh: 42}, 60)
       await wait(50)
 
       expect(await endpoint._cacheGetMany(['x', 'foo', 'herp', 'y', 'asd', 'z']))
@@ -924,12 +924,6 @@ describe('abstract endpoint', () => {
   })
 
   describe('_buildUrl', () => {
-    it('sets the language on the client', () => {
-      let x = endpoint.language('de')
-      expect(mockClient.lang).to.equal('de')
-      expect(x).to.be.an.instanceof(Module)
-    })
-
     it('sets the language header for localized endpoints', () => {
       endpoint.isLocalized = true
       endpoint.language('de')
@@ -941,12 +935,6 @@ describe('abstract endpoint', () => {
       endpoint.language('de')
       let url = endpoint._buildUrl('/test')
       expect(url).to.equal('https://api.guildwars2.com/test')
-    })
-
-    it('sets the api key on the client', () => {
-      let x = endpoint.authenticate('key')
-      expect(mockClient.apiKey).to.equal('key')
-      expect(x).to.be.an.instanceof(Module)
     })
 
     it('sets the authorization header for authenticated endpoints', () => {
@@ -986,5 +974,17 @@ describe('abstract endpoint', () => {
       let url = endpoint._buildUrl('/test?page=0')
       expect(url).to.equal('https://api.guildwars2.com/test?page=0&access_token=key&lang=de')
     })
+  })
+
+  it('sets the language', () => {
+    let x = endpoint.language('de')
+    expect(x.lang).to.equal('de')
+    expect(x).to.be.an.instanceof(Module)
+  })
+
+  it('sets the api key', () => {
+    let x = endpoint.authenticate('key')
+    expect(x.apiKey).to.equal('key')
+    expect(x).to.be.an.instanceof(Module)
   })
 })

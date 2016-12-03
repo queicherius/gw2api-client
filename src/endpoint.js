@@ -9,8 +9,12 @@ const debug = debugging('gw2api-client')
 const debugRequest = debugging('gw2api-client:request')
 
 export default class AbstractEndpoint {
-  constructor (client) {
-    this.client = client
+  constructor (parent) {
+    this.lang = parent.lang
+    this.apiKey = parent.apiKey
+    this.fetch = parent.fetch
+    this.caches = parent.caches
+
     this.baseUrl = 'https://api.guildwars2.com'
     this.isPaginated = false
     this.maxPageSize = 200
@@ -19,18 +23,21 @@ export default class AbstractEndpoint {
     this.isLocalized = false
     this.isAuthenticated = false
     this.isOptionallyAuthenticated = false
+
     this._skipCache = false
   }
 
   // Set the language for locale-aware endpoints
   language (lang) {
-    this.client.language(lang)
+    this.lang = lang
+    debug(`set the language to ${lang}`)
     return this
   }
 
   // Set the api key for authenticated endpoints
   authenticate (apiKey) {
-    this.client.authenticate(apiKey)
+    this.apiKey = apiKey
+    debug(`set the api key to ${apiKey}`)
     return this
   }
 
@@ -351,19 +358,19 @@ export default class AbstractEndpoint {
 
   // Set a single cache key in all connected cache storages
   _cacheSetSingle (key, value) {
-    this.client.caches.map(cache => cache.set(key, value, this.cacheTime))
+    this.caches.map(cache => cache.set(key, value, this.cacheTime))
   }
 
   // Set multiples cache key in all connected cache storages
   _cacheSetMany (values) {
     values = values.map(value => [value[0], value[1], this.cacheTime])
-    this.client.caches.map(cache => cache.mset(values))
+    this.caches.map(cache => cache.mset(values))
   }
 
   // Get a cached value out of the first possible connected cache storages
   _cacheGetSingle (key, index = 0) {
-    return this.client.caches[index].get(key).then(value => {
-      if (value || index === this.client.caches.length - 1) {
+    return this.caches[index].get(key).then(value => {
+      if (value || index === this.caches.length - 1) {
         return value
       }
 
@@ -373,11 +380,11 @@ export default class AbstractEndpoint {
 
   // Get multiple cached values out of the first possible connected cache storages
   _cacheGetMany (keys, index = 0) {
-    return this.client.caches[index].mget(keys).then(values => {
+    return this.caches[index].mget(keys).then(values => {
       const cleanValues = values.filter(x => x)
 
       // We got all the requested keys or are through all storages
-      if (cleanValues.length === keys.length || index === this.client.caches.length - 1) {
+      if (cleanValues.length === keys.length || index === this.caches.length - 1) {
         return values
       }
 
@@ -403,11 +410,11 @@ export default class AbstractEndpoint {
     }
 
     if (this.isLocalized) {
-      hash += ':' + this.client.lang
+      hash += ':' + this.lang
     }
 
     if (this.isAuthenticated) {
-      hash += ':' + sha(this.client.apiKey)
+      hash += ':' + sha(this.apiKey + '')
     }
 
     return this.baseUrl + this.url + hash
@@ -417,14 +424,14 @@ export default class AbstractEndpoint {
   _request (url, type = 'json') {
     url = this._buildUrl(url)
     debugRequest(`single url ${url}`)
-    return this.client.fetch.single(url, {type})
+    return this.fetch.single(url, {type})
   }
 
   // Execute multiple requests in parallel
   _requestMany (urls, type = 'json') {
     urls = urls.map(url => this._buildUrl(url))
     debugRequest(`multiple urls ${urls.join(', ')}`)
-    return this.client.fetch.many(urls, {type})
+    return this.fetch.many(urls, {type})
   }
 
   // Build the headers for localization and authentication
@@ -439,15 +446,15 @@ export default class AbstractEndpoint {
     // Only set the API key for authenticated endpoints,
     // when it is required or optional and set on the client
     const usesApiKey = this.isAuthenticated &&
-      (!this.isOptionallyAuthenticated || this.client.apiKey !== undefined)
+      (!this.isOptionallyAuthenticated || this.apiKey !== undefined)
 
     if (usesApiKey) {
-      query['access_token'] = this.client.apiKey
+      query['access_token'] = this.apiKey
     }
 
     // Set the language for localized endpoints
     if (this.isLocalized) {
-      query['lang'] = this.client.lang
+      query['lang'] = this.lang
     }
 
     // Build the new url

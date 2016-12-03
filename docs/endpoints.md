@@ -29,6 +29,7 @@ All of the endpoints which fetch account data require the use of an API key. Thi
 
 ```js
 client.authenticate('XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXXXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')
+client.authenticate('...').account().get()
 ```
 
 ### Localized
@@ -37,6 +38,7 @@ Localized endpoints can return resources in multiple languages. You can set the 
 
 ```js
 client.language('de')
+client.language('de').items().all()
 ```
 
 ## Available Endpoints

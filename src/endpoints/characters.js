@@ -13,43 +13,43 @@ export default class CharactersEndpoint extends AbstractEndpoint {
   }
 
   backstory () {
-    return new BackstoryEndpoint(this.client, this.name)
+    return new BackstoryEndpoint(this, this.name)
   }
 
   core () {
-    return new CoreEndpoint(this.client, this.name)
+    return new CoreEndpoint(this, this.name)
   }
 
   crafting () {
-    return new CraftingEndpoint(this.client, this.name)
+    return new CraftingEndpoint(this, this.name)
   }
 
   equipment () {
-    return new EquipmentEndpoint(this.client, this.name)
+    return new EquipmentEndpoint(this, this.name)
   }
 
   heropoints () {
-    return new HeropointsEndpoint(this.client, this.name)
+    return new HeropointsEndpoint(this, this.name)
   }
 
   inventory () {
-    return new InventoryEndpoint(this.client, this.name)
+    return new InventoryEndpoint(this, this.name)
   }
 
   recipes () {
-    return new RecipesEndpoint(this.client, this.name)
+    return new RecipesEndpoint(this, this.name)
   }
 
   skills () {
-    return new SkillsEndpoint(this.client, this.name)
+    return new SkillsEndpoint(this, this.name)
   }
 
   specializations () {
-    return new SpecializationsEndpoint(this.client, this.name)
+    return new SpecializationsEndpoint(this, this.name)
   }
 
   training () {
-    return new TrainingEndpoint(this.client, this.name)
+    return new TrainingEndpoint(this, this.name)
   }
 }
 

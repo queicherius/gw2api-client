@@ -3,29 +3,29 @@ import AbstractEndpoint from '../endpoint'
 export default class CommerceEndpoint extends AbstractEndpoint {
   // Current gem/coin exchange rates
   exchange () {
-    return new ExchangeEndpoint(this.client)
+    return new ExchangeEndpoint(this)
   }
 
   // Current tradingpost listings
   listings () {
-    return new ListingsEndpoint(this.client)
+    return new ListingsEndpoint(this)
   }
 
   // Current tradingpost prices
   prices () {
-    return new PricesEndpoint(this.client)
+    return new PricesEndpoint(this)
   }
 
   // Current and completed transactions
   transactions () {
     return {
       current: () => ({
-        buys: () => new TransactionsEndpoint(this.client, 'current', 'buys'),
-        sells: () => new TransactionsEndpoint(this.client, 'current', 'sells')
+        buys: () => new TransactionsEndpoint(this, 'current', 'buys'),
+        sells: () => new TransactionsEndpoint(this, 'current', 'sells')
       }),
       history: () => ({
-        buys: () => new TransactionsEndpoint(this.client, 'history', 'buys'),
-        sells: () => new TransactionsEndpoint(this.client, 'history', 'sells')
+        buys: () => new TransactionsEndpoint(this, 'history', 'buys'),
+        sells: () => new TransactionsEndpoint(this, 'history', 'sells')
       })
     }
   }

@@ -975,4 +975,16 @@ describe('abstract endpoint', () => {
       expect(url).to.equal('https://api.guildwars2.com/test?page=0&access_token=key&lang=de')
     })
   })
+
+  it('sets the language', () => {
+    let x = endpoint.language('de')
+    expect(x.lang).to.equal('de')
+    expect(x).to.be.an.instanceof(Module)
+  })
+
+  it('sets the api key', () => {
+    let x = endpoint.authenticate('key')
+    expect(x.apiKey).to.equal('key')
+    expect(x).to.be.an.instanceof(Module)
+  })
 })

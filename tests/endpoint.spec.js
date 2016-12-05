@@ -238,15 +238,17 @@ describe('abstract endpoint', () => {
 
   describe('many', () => {
     it('support', async () => {
-      let content = [{id: 1, name: 'foo'}, {id: 2, name: 'bar'}]
+      let content = [{id: 2, name: 'bar'}, {id: 1, name: 'foo'}]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
       fetchMock.addResponse(content)
 
-      let entry = await endpoint.many([1, 2, 1])
-      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?ids=1,2')
+      let ids = [2, 1, 1, 2, 2, 1, 1]
+      let entry = await endpoint.many(ids)
+      expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?ids=2,1')
       expect(fetchMock.urls().length).to.equal(1)
       expect(entry).to.deep.equal(content)
+      expect(ids, 'ids are not getting mutated').to.deep.equal([2, 1, 1, 2, 2, 1, 1])
     })
 
     it('uses the minimal amount of requests', async () => {

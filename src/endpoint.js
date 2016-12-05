@@ -1,5 +1,5 @@
 import parseUrl from 'url-parse'
-import unique from 'uniq'
+import unique from 'array-unique'
 import Rusha from 'rusha'
 import clone from 'fast-clone'
 import debugging from 'debug'
@@ -156,7 +156,7 @@ export default class AbstractEndpoint {
     }
 
     // Always only work on unique ids, since that's how the API works
-    unique(ids)
+    ids = unique.immutable(ids)
 
     // There is no cache time set, so always use the live data
     if (!this.cacheTime) {

@@ -40,7 +40,11 @@ export default function (parent) {
 // Get the guild data accessible for the account
 function accountGuilds (client) {
   return client.account().get().then(account => {
-    let requests = account.guilds.map(id => wrap(() => guildData(id)))
+    if (!account.guild_leader) {
+      return []
+    }
+
+    let requests = account.guild_leader.map(id => wrap(() => guildData(id)))
     return flow.parallel(requests)
   })
 

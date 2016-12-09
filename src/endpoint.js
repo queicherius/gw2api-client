@@ -413,7 +413,7 @@ export default class AbstractEndpoint {
       hash += ':' + this.lang
     }
 
-    if (this.isAuthenticated) {
+    if (this._usesApiKey()) {
       hash += ':' + sha(this.apiKey + '')
     }
 
@@ -445,10 +445,7 @@ export default class AbstractEndpoint {
 
     // Only set the API key for authenticated endpoints,
     // when it is required or optional and set on the client
-    const usesApiKey = this.isAuthenticated &&
-      (!this.isOptionallyAuthenticated || this.apiKey !== undefined)
-
-    if (usesApiKey) {
+    if (this._usesApiKey()) {
       query['access_token'] = this.apiKey
     }
 
@@ -464,5 +461,9 @@ export default class AbstractEndpoint {
     // Clean up the mess by the query parser, and unencode ','
     string = string.replace(/%2C/g, ',')
     return string
+  }
+
+  _usesApiKey () {
+    return this.isAuthenticated && (!this.isOptionallyAuthenticated || this.apiKey)
   }
 }

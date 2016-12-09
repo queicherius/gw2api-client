@@ -963,7 +963,6 @@ describe('abstract endpoint', () => {
     it('doesn\'t set the authorization header for optional authenticated endpoints if the key is not set', () => {
       endpoint.isAuthenticated = true
       endpoint.isOptionallyAuthenticated = true
-      endpoint.authenticate()
       let url = endpoint._buildUrl('/test')
       expect(url).to.equal('https://api.guildwars2.com/test')
     })

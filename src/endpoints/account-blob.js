@@ -1,6 +1,6 @@
 import flow from 'promise-control-flow'
 import flat from 'flat'
-import _get from 'lodash.get'
+import _get from 'fast-get'
 import api from '../index.js'
 
 export default function (parent) {

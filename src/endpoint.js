@@ -4,7 +4,6 @@ import Rusha from 'rusha'
 import clone from 'fast-clone'
 import chunk from 'chunk'
 import debugging from 'debug'
-import {sortByIdList} from './helpers'
 const sha = (s) => (new Rusha()).digestFromString(s)
 const debug = debugging('gw2api-client')
 const debugRequest = debugging('gw2api-client:request')
@@ -182,7 +181,7 @@ export default class AbstractEndpoint {
 
         // Merge the new content with the cached content and guarantee element order
         content = content.concat(cached)
-        return sortByIdList(content, ids)
+        return this._sortByIdList(content, ids)
       })
     }
 
@@ -465,6 +464,19 @@ export default class AbstractEndpoint {
     // Clean up the mess by the query parser, and unencode ','
     string = string.replace(/%2C/g, ',')
     return string
+  }
+
+  // Guarantee the element order of bulk results
+  _sortByIdList (entries, ids) {
+    // Hash map of the indexes for better time complexity on big arrays
+    let indexMap = {}
+    ids.map((x, i) => {
+      indexMap[x] = i
+    })
+
+    // Sort by the indexes
+    entries.sort((a, b) => indexMap[a.id] - indexMap[b.id])
+    return entries
   }
 
   _usesApiKey () {

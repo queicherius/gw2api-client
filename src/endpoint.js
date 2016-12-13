@@ -2,8 +2,9 @@ import parseUrl from 'url-parse'
 import unique from 'array-unique'
 import Rusha from 'rusha'
 import clone from 'fast-clone'
+import chunk from 'chunk'
 import debugging from 'debug'
-import {chunk, flatten, sortByIdList} from './helpers'
+import {flatten, sortByIdList} from './helpers'
 const sha = (s) => (new Rusha()).digestFromString(s)
 const debug = debugging('gw2api-client')
 const debugRequest = debugging('gw2api-client:request')

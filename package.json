@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "array-unique": "^0.3.2",
+    "chunk": "0.0.2",
     "debug": "^2.3.3",
     "fast-clone": "^1.4.2",
     "flat": "^2.0.1",

@@ -1,12 +1,3 @@
-// Chunk an array into specific sizes
-export function chunk (array, size) {
-  let result = []
-  for (let i = 0; i < array.length; i += size) {
-    result.push(array.slice(i, size + i))
-  }
-  return result
-}
-
 // Flatten an array of arrays into a one dimensional array
 export function flatten (array) {
   return array.reduce((x, y) => x.concat(y), [])

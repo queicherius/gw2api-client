@@ -1,8 +1,3 @@
-// Flatten an array of arrays into a one dimensional array
-export function flatten (array) {
-  return array.reduce((x, y) => x.concat(y), [])
-}
-
 // Guarantee the element order of bulk results
 export function sortByIdList (entries, ids) {
   // Hash map of the indexes for better time complexity on big arrays

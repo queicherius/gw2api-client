@@ -4,7 +4,7 @@ import Rusha from 'rusha'
 import clone from 'fast-clone'
 import chunk from 'chunk'
 import debugging from 'debug'
-import {flatten, sortByIdList} from './helpers'
+import {sortByIdList} from './helpers'
 const sha = (s) => (new Rusha()).digestFromString(s)
 const debug = debugging('gw2api-client')
 const debugRequest = debugging('gw2api-client:request')
@@ -224,7 +224,7 @@ export default class AbstractEndpoint {
 
     // Work on all requests in parallel and then flatten the responses into one
     return this._requestMany(requests)
-      .then(responses => flatten(responses))
+      .then(responses => responses.reduce((x, y) => x.concat(y), []))
       .catch(handleMissingIds)
   }
 
@@ -353,7 +353,10 @@ export default class AbstractEndpoint {
           requests.push(`${this.url}?page=${page}&page_size=${this.maxPageSize}`)
         }
 
-        return this._requestMany(requests).then(responses => result.concat(flatten(responses)))
+        return this._requestMany(requests).then(responses => {
+          responses = responses.reduce((x, y) => x.concat(y), [])
+          return result.concat(responses)
+        })
       })
   }
 

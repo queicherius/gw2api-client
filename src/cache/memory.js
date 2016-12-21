@@ -46,11 +46,12 @@ export default function (configuration) {
   }
 
   function garbageCollection () {
-    let now = (new Date()).getTime()
+    const now = (new Date()).getTime()
+    const keys = Object.keys(_storage)
 
-    for (let i in _storage) {
-      if (_storage[i].expiry < now) {
-        delete _storage[i]
+    for (let i = 0; i !== keys.length; i++) {
+      if (_storage[keys[i]].expiry < now) {
+        delete _storage[keys[i]]
       }
     }
   }

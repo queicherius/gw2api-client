@@ -19,12 +19,10 @@ export default class EventsEndpoint extends AbstractEndpoint {
 function transformV1Format (json) {
   let events = json.events
   let transformed = []
+  const keys = Object.keys(events)
 
-  for (let id in events) {
-    transformed.push({
-      id: id,
-      ...events[id]
-    })
+  for (let i = 0; i !== keys.length; i++) {
+    transformed.push({id: keys[i], ...events[keys[i]]})
   }
 
   return transformed

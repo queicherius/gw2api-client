@@ -147,7 +147,7 @@ api.items().ids()
 
 You can extend or overwrite the API client with your own endpoints if you wish so. The only thing that is required is an extension of `AbstractEndpoint` to provide all the logic for pagination, bulk, localisation, caching and so on.
 
-If you need more specific ways to handle data then the already defined ones, take a look at how the existing endpoints handle these edge cases (e.g. in [`/src/endpoints/recipes.js`](/blob/master/src/endpoints/recipes.js)).
+If you need more specific ways to handle data then the already defined ones, take a look at how the existing endpoints handle these edge cases (e.g. in [`/src/endpoints/recipes.js`](/src/endpoints/recipes.js)).
 
 ```js
 import client from 'gw2api-client'

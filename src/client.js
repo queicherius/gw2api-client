@@ -2,42 +2,7 @@ import fetch from 'lets-fetch'
 import flow from 'promise-control-flow'
 import debugging from 'debug'
 import nullCache from './cache/null'
-import AccountEndpoint from './endpoints/account'
-import AchievementsEndpoint from './endpoints/achievements'
-import BackstoryEndpoint from './endpoints/backstory'
-import BuildEndpoint from './endpoints/build'
-import CharactersEndpoint from './endpoints/characters'
-import ColorsEndpoint from './endpoints/colors'
-import CommerceEndpoint from './endpoints/commerce'
-import ContinentsEndpoint from './endpoints/continents'
-import CurrenciesEndpoint from './endpoints/currencies'
-import EmblemEndpoint from './endpoints/emblem'
-import EventsEndpoint from './endpoints/events'
-import FilesEndpoint from './endpoints/files'
-import FinishersEndpoint from './endpoints/finishers'
-import GuildEndpoint from './endpoints/guild'
-import ItemsEndpoint from './endpoints/items'
-import ItemstatsEndpoint from './endpoints/itemstats'
-import LegendsEndpoint from './endpoints/legends'
-import MapsEndpoint from './endpoints/maps'
-import MasteriesEndpoint from './endpoints/masteries'
-import MaterialsEndpoint from './endpoints/materials'
-import MinisEndpoint from './endpoints/minis'
-import OutfitsEndpoint from './endpoints/outfits'
-import PetsEndpoint from './endpoints/pets'
-import ProfessionsEndpoint from './endpoints/professions'
-import PvpEndpoint from './endpoints/pvp'
-import QuaggansEndpoint from './endpoints/quaggans'
-import RecipesEndpoint from './endpoints/recipes'
-import SkillsEndpoint from './endpoints/skills'
-import SkinsEndpoint from './endpoints/skins'
-import SpecializationsEndpoint from './endpoints/specializations'
-import StoriesEndpoint from './endpoints/stories'
-import TitlesEndpoint from './endpoints/titles'
-import TokeninfoEndpoint from './endpoints/tokeninfo'
-import TraitsEndpoint from './endpoints/traits'
-import WorldsEndpoint from './endpoints/worlds'
-import WvwEndpoint from './endpoints/wvw'
+import * as endpoints from './endpoints'
 const debug = debugging('gw2api-client')
 
 export default class Client {
@@ -95,146 +60,146 @@ export default class Client {
 
   // All the different API endpoints
   account () {
-    return new AccountEndpoint(this)
+    return new endpoints.AccountEndpoint(this)
   }
 
   achievements () {
-    return new AchievementsEndpoint(this)
+    return new endpoints.AchievementsEndpoint(this)
   }
 
   backstory () {
-    return new BackstoryEndpoint(this)
+    return new endpoints.BackstoryEndpoint(this)
   }
 
   build () {
-    return new BuildEndpoint(this)
+    return new endpoints.BuildEndpoint(this)
   }
 
   characters (name) {
-    return new CharactersEndpoint(this, name)
+    return new endpoints.CharactersEndpoint(this, name)
   }
 
   colors () {
-    return new ColorsEndpoint(this)
+    return new endpoints.ColorsEndpoint(this)
   }
 
   commerce () {
-    return new CommerceEndpoint(this)
+    return new endpoints.CommerceEndpoint(this)
   }
 
   continents () {
-    return new ContinentsEndpoint(this)
+    return new endpoints.ContinentsEndpoint(this)
   }
 
   currencies () {
-    return new CurrenciesEndpoint(this)
+    return new endpoints.CurrenciesEndpoint(this)
   }
 
   emblem () {
-    return new EmblemEndpoint(this)
+    return new endpoints.EmblemEndpoint(this)
   }
 
   events () {
-    return new EventsEndpoint(this)
+    return new endpoints.EventsEndpoint(this)
   }
 
   files () {
-    return new FilesEndpoint(this)
+    return new endpoints.FilesEndpoint(this)
   }
 
   finishers () {
-    return new FinishersEndpoint(this)
+    return new endpoints.FinishersEndpoint(this)
   }
 
   guild (id) {
-    return new GuildEndpoint(this, id)
+    return new endpoints.GuildEndpoint(this, id)
   }
 
   items () {
-    return new ItemsEndpoint(this)
+    return new endpoints.ItemsEndpoint(this)
   }
 
   itemstats () {
-    return new ItemstatsEndpoint(this)
+    return new endpoints.ItemstatsEndpoint(this)
   }
 
   legends () {
-    return new LegendsEndpoint(this)
+    return new endpoints.LegendsEndpoint(this)
   }
 
   maps () {
-    return new MapsEndpoint(this)
+    return new endpoints.MapsEndpoint(this)
   }
 
   masteries () {
-    return new MasteriesEndpoint(this)
+    return new endpoints.MasteriesEndpoint(this)
   }
 
   materials () {
-    return new MaterialsEndpoint(this)
+    return new endpoints.MaterialsEndpoint(this)
   }
 
   minis () {
-    return new MinisEndpoint(this)
+    return new endpoints.MinisEndpoint(this)
   }
 
   outfits () {
-    return new OutfitsEndpoint(this)
+    return new endpoints.OutfitsEndpoint(this)
   }
 
   pets () {
-    return new PetsEndpoint(this)
+    return new endpoints.PetsEndpoint(this)
   }
 
   professions () {
-    return new ProfessionsEndpoint(this)
+    return new endpoints.ProfessionsEndpoint(this)
   }
 
   pvp () {
-    return new PvpEndpoint(this)
+    return new endpoints.PvpEndpoint(this)
   }
 
   quaggans () {
-    return new QuaggansEndpoint(this)
+    return new endpoints.QuaggansEndpoint(this)
   }
 
   recipes () {
-    return new RecipesEndpoint(this)
+    return new endpoints.RecipesEndpoint(this)
   }
 
   skills () {
-    return new SkillsEndpoint(this)
+    return new endpoints.SkillsEndpoint(this)
   }
 
   skins () {
-    return new SkinsEndpoint(this)
+    return new endpoints.SkinsEndpoint(this)
   }
 
   specializations () {
-    return new SpecializationsEndpoint(this)
+    return new endpoints.SpecializationsEndpoint(this)
   }
 
   stories () {
-    return new StoriesEndpoint(this)
+    return new endpoints.StoriesEndpoint(this)
   }
 
   titles () {
-    return new TitlesEndpoint(this)
+    return new endpoints.TitlesEndpoint(this)
   }
 
   tokeninfo () {
-    return new TokeninfoEndpoint(this)
+    return new endpoints.TokeninfoEndpoint(this)
   }
 
   traits () {
-    return new TraitsEndpoint(this)
+    return new endpoints.TraitsEndpoint(this)
   }
 
   worlds () {
-    return new WorldsEndpoint(this)
+    return new endpoints.WorldsEndpoint(this)
   }
 
   wvw () {
-    return new WvwEndpoint(this)
+    return new endpoints.WvwEndpoint(this)
   }
 }

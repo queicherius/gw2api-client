@@ -42,6 +42,54 @@ describe('endpoints > wvw', () => {
     expect(content.scores.red).to.equal(123)
   })
 
+  it('test /v2/wvw/matches/overview', async () => {
+    endpoint = endpoint.matches().overview()
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/wvw/matches/overview')
+
+    fetchMock.addResponse({id: '2-6', worlds: {red: 2002, blue: 2007, green: 2202}})
+    let content = await endpoint.get('2-6')
+    expect(content.worlds.red).to.equal(2002)
+  })
+
+  it('test /v2/wvw/matches/scores', async () => {
+    endpoint = endpoint.matches().scores()
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/wvw/matches/scores')
+
+    fetchMock.addResponse({id: '2-6', scores: {red: 123, blue: 456, green: 789}})
+    let content = await endpoint.get('2-6')
+    expect(content.scores.red).to.equal(123)
+  })
+
+  it('test /v2/wvw/matches/stats', async () => {
+    endpoint = endpoint.matches().stats()
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/wvw/matches/stats')
+
+    fetchMock.addResponse({id: '2-6', deaths: {red: 333, blue: 456, green: 789}})
+    let content = await endpoint.get('2-6')
+    expect(content.deaths.red).to.equal(333)
+  })
+
   it('test /v2/wvw/objectives', async () => {
     endpoint = endpoint.objectives()
 

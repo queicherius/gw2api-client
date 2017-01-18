@@ -135,6 +135,9 @@ client.language('de').items().all()
 - [`api().worlds()`](#apiworlds) - Information about the available worlds / servers.
 - [`api().wvw().abilities()`](#apiwvwabilities) - Information about the abilities available in WvW.
 - [`api().wvw().matches()`](#apiwvwmatches) - Details about WvW matches, including the total score, kills and deaths and further details for each map.
+- [`api().wvw().matches().overview()`](#apiwvwmatchesoverview) - Overview about WvW matches, shows the participating worlds.
+- [`api().wvw().matches().scores()`](#apiwvwmatchesscores) - Scores of the WvW matches.
+- [`api().wvw().matches().stats()`](#apiwvwmatchesstats) - Stats of the WvW matches, includes kills, deaths, etc.
 - [`api().wvw().objectives()`](#apiwvwobjectives) - Details about WvW objectives such as camps, towers, and keeps.
 - [`api().wvw().ranks()`](#apiwvwranks) - Information about WvW ranks.
 
@@ -1497,6 +1500,51 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Details about WvW matches, including the total score, kills and deaths and further details for each map.
 
 - **API-URL:** [/v2/wvw/matches](https://api.guildwars2.com/v2/wvw/matches)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 30 seconds
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().wvw().matches().overview()`
+
+> Overview about WvW matches, shows the participating worlds.
+
+- **API-URL:** [/v2/wvw/matches/overview](https://api.guildwars2.com/v2/wvw/matches/overview)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 30 seconds
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().wvw().matches().scores()`
+
+> Scores of the WvW matches.
+
+- **API-URL:** [/v2/wvw/matches/scores](https://api.guildwars2.com/v2/wvw/matches/scores)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 30 seconds
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().wvw().matches().stats()`
+
+> Stats of the WvW matches, includes kills, deaths, etc.
+
+- **API-URL:** [/v2/wvw/matches/stats](https://api.guildwars2.com/v2/wvw/matches/stats)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

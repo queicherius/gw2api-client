@@ -37,6 +37,48 @@ class MatchesEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.cacheTime = 30
   }
+
+  overview () {
+    return new MatchesOverviewEndpoint(this)
+  }
+
+  scores () {
+    return new MatchesScoresEndpoint(this)
+  }
+
+  stats () {
+    return new MatchesStatsEndpoint(this)
+  }
+}
+
+class MatchesOverviewEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/wvw/matches/overview'
+    this.isPaginated = true
+    this.isBulk = true
+    this.cacheTime = 30
+  }
+}
+
+class MatchesScoresEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/wvw/matches/scores'
+    this.isPaginated = true
+    this.isBulk = true
+    this.cacheTime = 30
+  }
+}
+
+class MatchesStatsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/wvw/matches/stats'
+    this.isPaginated = true
+    this.isBulk = true
+    this.cacheTime = 30
+  }
 }
 
 class ObjectivesEndpoint extends AbstractEndpoint {

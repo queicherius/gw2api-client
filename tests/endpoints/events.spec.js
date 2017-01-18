@@ -1,6 +1,6 @@
 /* eslint-env node, mocha */
-import {expect} from 'chai'
-import {mockClient, fetchMock} from '../mocks/client.mock'
+import { expect } from 'chai'
+import { mockClient, fetchMock } from '../mocks/client.mock'
 import Module from '../../src/endpoints/events'
 
 describe('endpoints > events', () => {
@@ -12,10 +12,12 @@ describe('endpoints > events', () => {
 
   it('transforms the v1 format into v2', () => {
     let transformer = Module.__get__('transformV1Format')
-    let content = transformer({events: {
-      'uuid-one': {name: 'Defeat elite'},
-      'uuid-two': {name: 'Defeat champion'}
-    }})
+    let content = transformer({
+      events: {
+        'uuid-one': {name: 'Defeat elite'},
+        'uuid-two': {name: 'Defeat champion'}
+      }
+    })
     expect(content).to.deep.equal([
       {id: 'uuid-one', name: 'Defeat elite'},
       {id: 'uuid-two', name: 'Defeat champion'}
@@ -30,10 +32,12 @@ describe('endpoints > events', () => {
     expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v1/event_details.json')
 
-    fetchMock.addResponse({events: {
-      'uuid-one': {name: 'Defeat elite'},
-      'uuid-two': {name: 'Defeat champion'}
-    }})
+    fetchMock.addResponse({
+      events: {
+        'uuid-one': {name: 'Defeat elite'},
+        'uuid-two': {name: 'Defeat champion'}
+      }
+    })
     let content = await endpoint.all()
     expect(content.length).to.equal(2)
     expect(content[0].name).to.equal('Defeat elite')
@@ -47,9 +51,11 @@ describe('endpoints > events', () => {
     expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v1/event_details.json')
 
-    fetchMock.addResponse({events: {
-      'uuid-one': {name: 'Defeat elite'}
-    }})
+    fetchMock.addResponse({
+      events: {
+        'uuid-one': {name: 'Defeat elite'}
+      }
+    })
     let content = await endpoint.get('uuid-one')
     expect(content.name).to.equal('Defeat elite')
     expect(fetchMock.lastUrl()).contains('/v1/event_details.json?event_id=uuid-one')

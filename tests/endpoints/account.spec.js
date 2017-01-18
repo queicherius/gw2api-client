@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
-import {expect} from 'chai'
+import { expect } from 'chai'
 import sinon from 'sinon'
-import {mockClient, fetchMock} from '../mocks/client.mock'
+import { mockClient, fetchMock } from '../mocks/client.mock'
 import Module from '../../src/endpoints/account'
 
 describe('endpoints > account', () => {

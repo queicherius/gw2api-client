@@ -1,5 +1,5 @@
 /* eslint-env node, mocha */
-import {expect} from 'chai'
+import { expect } from 'chai'
 import storage from '../../src/cache/redis'
 import redis from 'redis'
 const cache = storage({redis: redis.createClient()})

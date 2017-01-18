@@ -1,5 +1,5 @@
 /* eslint-env node, mocha */
-import {expect} from 'chai'
+import { expect } from 'chai'
 import nullCache from '../src/cache/null'
 import memoryCache from '../src/cache/memory'
 import Module from '../src/client'

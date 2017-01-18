@@ -57,4 +57,20 @@ describe('endpoints > wvw', () => {
     let content = await endpoint.many(['968-98'])
     expect(content[0].name).to.equal('Wurm Tunnel')
   })
+
+  it('test /v2/wvw/ranks', async () => {
+    endpoint = endpoint.ranks()
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/wvw/ranks')
+
+    fetchMock.addResponse([{id: 42, title: 'Silver General', min_rank: 1170}])
+    let content = await endpoint.many([42])
+    expect(content[0].title).to.equal('Silver General')
+  })
 })

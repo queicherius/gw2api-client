@@ -118,6 +118,7 @@ client.language('de').items().all()
 - [`api().professions()`](#apiprofessions) - Information about professions.
 - [`api().pvp().amulets()`](#apipvpamulets) - Information about PvP amulets.
 - [`api().pvp().games()`](#apipvpgames) - Information about past PvP matches the player has participated in.
+- [`api().pvp().ranks()`](#apipvpranks) - Information about PvP ranks.
 - [`api().pvp().seasons()`](#apipvpseasons) - Information about league seasons.
 - [`api().pvp().standings()`](#apipvpstandings) - Information about the player standings in the league seasons.
 - [`api().pvp().stats()`](#apipvpstats) - Information about wins and losses of the account's PvP matches.
@@ -1247,6 +1248,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** Yes
 - **Localized:** No
 - **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().pvp().ranks()`
+
+> Information about PvP ranks.
+
+- **API-URL:** [/v2/pvp/ranks](https://api.guildwars2.com/v2/pvp/ranks)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

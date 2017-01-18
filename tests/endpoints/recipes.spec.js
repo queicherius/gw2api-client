@@ -37,6 +37,7 @@ describe('endpoints > recipes', () => {
     fetchMock.addResponse([1, 2, 3])
     let content = await endpoint.input(123)
     expect(content).to.deep.equal([1, 2, 3])
+    expect(fetchMock.lastUrl()).contains('/v2/recipes/search?input=123')
   })
 
   it('test /v2/recipes/search (output)', async () => {
@@ -52,5 +53,6 @@ describe('endpoints > recipes', () => {
     fetchMock.addResponse([1, 2, 3])
     let content = await endpoint.output(123)
     expect(content).to.deep.equal([1, 2, 3])
+    expect(fetchMock.lastUrl()).contains('/v2/recipes/search?output=123')
   })
 })

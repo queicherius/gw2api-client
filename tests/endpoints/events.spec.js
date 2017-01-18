@@ -52,5 +52,6 @@ describe('endpoints > events', () => {
     }})
     let content = await endpoint.get('uuid-one')
     expect(content.name).to.equal('Defeat elite')
+    expect(fetchMock.lastUrl()).contains('/v1/event_details.json?event_id=uuid-one')
   })
 })

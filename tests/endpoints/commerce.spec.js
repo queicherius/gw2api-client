@@ -23,6 +23,7 @@ describe('endpoints > commerce', () => {
     fetchMock.addResponse({coins_per_gem: 2000, quantity: 5})
     let content = await endpoint.coins(10000)
     expect(content.quantity).to.equal(5)
+    expect(fetchMock.lastUrl()).contains('/v2/commerce/exchange/coins?quantity=10000')
   })
 
   it('test /v2/commerce/exchange (gems)', async () => {
@@ -38,6 +39,7 @@ describe('endpoints > commerce', () => {
     fetchMock.addResponse({coins_per_gem: 1269, quantity: 12345})
     let content = await endpoint.gems(10000)
     expect(content.quantity).to.equal(12345)
+    expect(fetchMock.lastUrl()).contains('/v2/commerce/exchange/gems?quantity=10000')
   })
 
   it('test /v2/commerce/listings', async () => {

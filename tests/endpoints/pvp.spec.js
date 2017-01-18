@@ -87,6 +87,7 @@ describe('endpoints > pvp', () => {
     fetchMock.addResponse([{rank: 1, name: 'Herp.1234'}, {rank: 2, name: 'Derp.1234'}])
     let content = await endpoint.get('na')
     expect(content[0].name).to.equal('Herp.1234')
+    expect(fetchMock.lastUrl()).contains('/v2/pvp/seasons/S0ME-UU1D/leaderboards/ladder/na')
   })
 
   it('test /v2/pvp/standings', async () => {

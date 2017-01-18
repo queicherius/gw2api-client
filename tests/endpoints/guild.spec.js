@@ -53,6 +53,7 @@ describe('endpoints > guild', () => {
     fetchMock.addResponse(['F8CDF1E0-2D64-4D71-81E2-049B0796B7AE'])
     let content = await endpoint.name('Baws Like')
     expect(content).to.equal('F8CDF1E0-2D64-4D71-81E2-049B0796B7AE')
+    expect(fetchMock.lastUrl()).contains('/v2/guild/search?name=Baws%20Like')
   })
 
   it('test /v2/guild/upgrades', async () => {

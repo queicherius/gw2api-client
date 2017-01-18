@@ -136,6 +136,7 @@ client.language('de').items().all()
 - [`api().wvw().abilities()`](#apiwvwabilities) - Information about the abilities available in WvW.
 - [`api().wvw().matches()`](#apiwvwmatches) - Details about WvW matches, including the total score, kills and deaths and further details for each map.
 - [`api().wvw().objectives()`](#apiwvwobjectives) - Details about WvW objectives such as camps, towers, and keeps.
+- [`api().wvw().ranks()`](#apiwvwranks) - Details about WvW ranks.
 
 ## Detailed Endpoints
 
@@ -1511,6 +1512,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Details about WvW objectives such as camps, towers, and keeps.
 
 - **API-URL:** [/v2/wvw/objectives](https://api.guildwars2.com/v2/wvw/objectives)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().wvw().ranks()`
+
+> Details about WvW ranks.
+
+- **API-URL:** [/v2/wvw/ranks](https://api.guildwars2.com/v2/wvw/ranks)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

@@ -69,7 +69,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.cacheTime).to.not.be.undefined
     expect(endpoint.url).to.equal('/v2/wvw/ranks')
 
-    fetchMock.addResponse([{id: 42, title: "Silver General", min_rank: 1170}])
+    fetchMock.addResponse([{id: 42, title: 'Silver General', min_rank: 1170}])
     let content = await endpoint.many([42])
     expect(content[0].title).to.equal('Silver General')
   })

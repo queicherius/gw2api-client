@@ -74,6 +74,21 @@ describe('endpoints > pvp', () => {
     expect(content.name).to.equal('PvP League Season Four')
   })
 
+  it('test /v2/pvp/seasons/:id/leaderboards/ladder/:region', async () => {
+    endpoint = endpoint.seasons('S0ME-UU1D').leaderboards().ladder()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/pvp/seasons/S0ME-UU1D/leaderboards/ladder')
+
+    fetchMock.addResponse([{rank: 1, name: 'Herp.1234'}, {rank: 2, name: 'Derp.1234'}])
+    let content = await endpoint.get('na')
+    expect(content[0].name).to.equal('Herp.1234')
+  })
+
   it('test /v2/pvp/standings', async () => {
     endpoint = endpoint.standings()
 

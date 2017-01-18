@@ -120,6 +120,7 @@ client.language('de').items().all()
 - [`api().pvp().games()`](#apipvpgames) - Information about past PvP matches the player has participated in.
 - [`api().pvp().ranks()`](#apipvpranks) - Information about PvP ranks.
 - [`api().pvp().seasons()`](#apipvpseasons) - Information about league seasons.
+- [`api().pvp().seasons(:id).leaderboards().ladder()`](#apipvpseasonsidleaderboardsladder) - Leaderboards for PvP seasons.
 - [`api().pvp().standings()`](#apipvpstandings) - Information about the player standings in the league seasons.
 - [`api().pvp().stats()`](#apipvpstats) - Information about wins and losses of the account's PvP matches.
 - [`api().quaggans()`](#apiquaggans) - Quaggan images.
@@ -1278,6 +1279,23 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** No
 - **Localized:** Yes
 - **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().pvp().seasons(:id).leaderboards().ladder()`
+
+> Leaderboards for PvP seasons.
+
+- **API-URL:** [/v2/pvp/seasons/:id/leaderboards/ladder/:region](https://api.guildwars2.com/v2/pvp/seasons/:id/leaderboards/ladder/:region)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 5 minutes
+- **This endpoint exposes the following methods:**
+  - `get(:region)` - Get the leaderboard for the specified region
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

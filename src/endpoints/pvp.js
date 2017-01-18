@@ -13,8 +13,8 @@ export default class PvpEndpoint extends AbstractEndpoint {
     return new RanksEndpoint(this)
   }
 
-  seasons () {
-    return new SeasonsEndpoint(this)
+  seasons (id) {
+    return new SeasonsEndpoint(this, id)
   }
 
   standings () {
@@ -60,13 +60,41 @@ class RanksEndpoint extends AbstractEndpoint {
 }
 
 class SeasonsEndpoint extends AbstractEndpoint {
-  constructor (client) {
+  constructor (client, id) {
     super(client)
+    this.id = id
     this.url = '/v2/pvp/seasons'
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true
     this.cacheTime = 24 * 60 * 60
+  }
+
+  leaderboards () {
+    return new SeasonLeaderboardEndpoint(this, this.id)
+  }
+}
+
+class SeasonLeaderboardEndpoint extends AbstractEndpoint {
+  constructor (client, id) {
+    super(client)
+    this.id = id
+  }
+
+  ladder () {
+    return new SeasonLeaderboardLadderEndpoint(this, this.id)
+  }
+}
+
+class SeasonLeaderboardLadderEndpoint extends AbstractEndpoint {
+  constructor (client, id) {
+    super(client)
+    this.url = `/v2/pvp/seasons/${id}/leaderboards/ladder`
+    this.cacheTime = 5 * 60
+  }
+
+  get (region) {
+    return super.get(`/${region}`, true)
   }
 }
 

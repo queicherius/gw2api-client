@@ -120,7 +120,8 @@ client.language('de').items().all()
 - [`api().pvp().games()`](#apipvpgames) - Information about past PvP matches the player has participated in.
 - [`api().pvp().ranks()`](#apipvpranks) - Information about PvP ranks.
 - [`api().pvp().seasons()`](#apipvpseasons) - Information about league seasons.
-- [`api().pvp().seasons(:id).leaderboards().ladder()`](#apipvpseasonsidleaderboardsladder) - Leaderboards for PvP seasons.
+- [`api().pvp().seasons(:id).leaderboards()`](#apipvpseasonsidleaderboards) - Information about available leaderboards for a league season.
+- [`api().pvp().seasons(:id).leaderboards().board(:board, :region)`](#apipvpseasonsidleaderboardsboardboardregion) - Leaderboards for a PvP league season in a specific region.
 - [`api().pvp().standings()`](#apipvpstandings) - Information about the player standings in the league seasons.
 - [`api().pvp().stats()`](#apipvpstats) - Information about wins and losses of the account's PvP matches.
 - [`api().quaggans()`](#apiquaggans) - Quaggan images.
@@ -1284,18 +1285,33 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ---
 
-### `api().pvp().seasons(:id).leaderboards().ladder()`
+### `api().pvp().seasons(:id).leaderboards()`
 
-> Leaderboards for PvP seasons.
+> Information about available leaderboards for a league season.
 
-- **API-URL:** [/v2/pvp/seasons/:id/leaderboards/ladder/:region](https://api.guildwars2.com/v2/pvp/seasons/:id/leaderboards/ladder/:region)
+- **API-URL:** [/v2/pvp/seasons/:id/leaderboards](https://api.guildwars2.com/v2/pvp/seasons/:id/leaderboards)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** No
 - **Localized:** No
-- **Cache time:** 5 minutes
+- **Cache time:** 24 hours
 - **This endpoint exposes the following methods:**
-  - `get(:region)` - Get the leaderboard for the specified region
+  - `ids()` - Available leaderboards for a league season.
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().pvp().seasons(:id).leaderboards().board(:board, :region)`
+
+> Leaderboards for a PvP league season in a specific region.
+
+- **API-URL:** [/v2/pvp/seasons/:id/leaderboards/:board/:region](https://api.guildwars2.com/v2/pvp/seasons/:id/leaderboards/:board/:region)
+- **Paginated:** Yes
+- **Bulk expanding:** No
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 5 minutes
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

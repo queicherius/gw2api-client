@@ -79,22 +79,25 @@ class SeasonLeaderboardEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
     this.id = id
+    this.url = `/v2/pvp/seasons/${id}/leaderboards`
+    this.cacheTime = 24 * 60 * 60
   }
 
-  ladder () {
-    return new SeasonLeaderboardLadderEndpoint(this, this.id)
+  ids () {
+    return super.get('', true)
+  }
+
+  board (board, region) {
+    return new SeasonLeaderboardBoardEndpoint(this, this.id, board, region)
   }
 }
 
-class SeasonLeaderboardLadderEndpoint extends AbstractEndpoint {
-  constructor (client, id) {
+class SeasonLeaderboardBoardEndpoint extends AbstractEndpoint {
+  constructor (client, id, board, region) {
     super(client)
-    this.url = `/v2/pvp/seasons/${id}/leaderboards/ladder`
+    this.url = `/v2/pvp/seasons/${id}/leaderboards/${board}/${region}`
+    this.isPaginated = true
     this.cacheTime = 5 * 60
-  }
-
-  get (region) {
-    return super.get(`/${region}`, true)
   }
 }
 

@@ -74,20 +74,36 @@ describe('endpoints > pvp', () => {
     expect(content.name).to.equal('PvP League Season Four')
   })
 
-  it('test /v2/pvp/seasons/:id/leaderboards/ladder/:region', async () => {
-    endpoint = endpoint.seasons('S0ME-UU1D').leaderboards().ladder()
+  it('test /v2/pvp/seasons/:id/leaderboards', async () => {
+    endpoint = endpoint.seasons('S0ME-UU1D').leaderboards()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.cacheTime).to.not.be.undefined
-    expect(endpoint.url).to.equal('/v2/pvp/seasons/S0ME-UU1D/leaderboards/ladder')
+    expect(endpoint.url).to.equal('/v2/pvp/seasons/S0ME-UU1D/leaderboards')
+
+    fetchMock.addResponse(['ladder'])
+    let content = await endpoint.ids()
+    expect(content).to.deep.equal(['ladder'])
+    expect(fetchMock.lastUrl()).contains('/v2/pvp/seasons/S0ME-UU1D/leaderboards')
+  })
+
+  it('test /v2/pvp/seasons/:id/leaderboards/:board/:region', async () => {
+    endpoint = endpoint.seasons('S0ME-UU1D').leaderboards().board('ladder', 'na')
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/pvp/seasons/S0ME-UU1D/leaderboards/ladder/na')
 
     fetchMock.addResponse([{rank: 1, name: 'Herp.1234'}, {rank: 2, name: 'Derp.1234'}])
-    let content = await endpoint.get('na')
+    let content = await endpoint.page(1, 2)
     expect(content[0].name).to.equal('Herp.1234')
-    expect(fetchMock.lastUrl()).contains('/v2/pvp/seasons/S0ME-UU1D/leaderboards/ladder/na')
+    expect(fetchMock.lastUrl()).contains('/v2/pvp/seasons/S0ME-UU1D/leaderboards/ladder/na?page=1&page_size=2')
   })
 
   it('test /v2/pvp/standings', async () => {

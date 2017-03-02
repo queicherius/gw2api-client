@@ -21,6 +21,8 @@ export default function (parent) {
     dungeons: wrap(() => client.account().dungeons().get()),
     dyes: wrap(() => client.account().dyes().get()),
     finishers: wrap(() => client.account().finishers().get()),
+    'home.cats': wrap(() => client.account().home().cats().get()),
+    'home.nodes': wrap(() => client.account().home().nodes().get()),
     guilds: wrap(() => accountGuilds(client)),
     masteries: wrap(() => client.account().masteries().get()),
     materials: wrap(() => client.account().materials().get()),

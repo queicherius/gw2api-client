@@ -22,6 +22,10 @@ describe('endpoints > account.blob()', () => {
         dungeons: () => ({get: () => Promise.resolve(['detha'])}),
         dyes: () => ({get: () => Promise.resolve([1, 2, 3])}),
         finishers: () => ({get: () => Promise.resolve([1, 2, 3])}),
+        home: () => ({
+          cats: () => ({get: () => Promise.resolve([{id: 1, hint: 'chicken'}])}),
+          nodes: () => ({get: () => Promise.resolve(['quartz_node', 'airship_cargo'])})
+        }),
         inventory: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
         masteries: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
         materials: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
@@ -74,6 +78,10 @@ describe('endpoints > account.blob()', () => {
       dungeons: ['detha'],
       dyes: [1, 2, 3],
       finishers: [1, 2, 3],
+      home: {
+        cats: [{id: 1, hint: 'chicken'}],
+        nodes: ['quartz_node', 'airship_cargo']
+      },
       masteries: [{id: 123, foo: 'bar'}],
       materials: [{id: 123, foo: 'bar'}],
       minis: [1, 2, 3],
@@ -112,6 +120,10 @@ describe('endpoints > account.blob()', () => {
         dungeons: () => ({get: () => Promise.resolve(['detha'])}),
         dyes: () => ({get: () => Promise.resolve([1, 2, 3])}),
         finishers: () => ({get: () => Promise.resolve([1, 2, 3])}),
+        home: () => ({
+          cats: () => ({get: () => Promise.resolve([{id: 1, hint: 'chicken'}])}),
+          nodes: () => ({get: () => Promise.resolve(['quartz_node', 'airship_cargo'])})
+        }),
         inventory: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
         masteries: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
         materials: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
@@ -155,6 +167,10 @@ describe('endpoints > account.blob()', () => {
       dungeons: ['detha'],
       dyes: [1, 2, 3],
       finishers: [1, 2, 3],
+      home: {
+        cats: [{id: 1, hint: 'chicken'}],
+        nodes: ['quartz_node', 'airship_cargo']
+      },
       masteries: [{id: 123, foo: 'bar'}],
       materials: [{id: 123, foo: 'bar'}],
       minis: [1, 2, 3],

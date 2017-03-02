@@ -90,6 +90,7 @@ client.language('de').items().all()
 - [`api().continents()`](#apicontinents) - Information about continents.
 - [`api().continents().floors(:id)`](#apicontinentsfloorsid) - Information about a continents' floors.
 - [`api().currencies()`](#apicurrencies) - Information about currencies.
+- [`api().dungeons()`](#apidungeons) - Information about dungeons, including their paths.
 - [`api().emblem().backgrounds()`](#apiemblembackgrounds) - The guild emblem's background images.
 - [`api().emblem().foregrounds()`](#apiemblemforegrounds) - The guild emblem's foreground images.
 - [`api().events()`](#apievents) - Information about events.
@@ -829,6 +830,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** Yes
 - **Authenticated:** No
 - **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().dungeons()`
+
+> Information about dungeons, including their paths.
+
+- **API-URL:** [/v2/dungeons](https://api.guildwars2.com/v2/dungeons)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

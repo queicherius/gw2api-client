@@ -95,6 +95,10 @@ export default class Client {
     return new endpoints.CurrenciesEndpoint(this)
   }
 
+  dungeons () {
+    return new endpoints.DungeonsEndpoint(this)
+  }
+
   emblem () {
     return new endpoints.EmblemEndpoint(this)
   }

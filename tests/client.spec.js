@@ -238,6 +238,11 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/quaggans')
   })
 
+  it('can get the races endpoint', () => {
+    let endpoint = client.races()
+    expect(endpoint.url).to.equal('/v2/races')
+  })
+
   it('can get the raids endpoint', () => {
     let endpoint = client.raids()
     expect(endpoint.url).to.equal('/v2/raids')

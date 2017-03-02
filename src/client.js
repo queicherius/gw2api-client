@@ -167,6 +167,10 @@ export default class Client {
     return new endpoints.QuaggansEndpoint(this)
   }
 
+  races () {
+    return new endpoints.RacesEndpoint(this)
+  }
+
   raids () {
     return new endpoints.RaidsEndpoint(this)
   }

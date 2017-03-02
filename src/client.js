@@ -167,6 +167,10 @@ export default class Client {
     return new endpoints.QuaggansEndpoint(this)
   }
 
+  raids () {
+    return new endpoints.RaidsEndpoint(this)
+  }
+
   recipes () {
     return new endpoints.RecipesEndpoint(this)
   }

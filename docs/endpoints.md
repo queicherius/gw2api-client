@@ -126,6 +126,7 @@ client.language('de').items().all()
 - [`api().pvp().standings()`](#apipvpstandings) - Information about the player standings in the league seasons.
 - [`api().pvp().stats()`](#apipvpstats) - Information about wins and losses of the account's PvP matches.
 - [`api().quaggans()`](#apiquaggans) - Quaggan images.
+- [`api().raids()`](#apiraids) - Information about raids, including their bosses.
 - [`api().recipes()`](#apirecipes) - Information about discovered recipes.
 - [`api().recipes().search()`](#apirecipessearch) - Search for a recipe based on input or output items.
 - [`api().skills()`](#apiskills) - Information about skills usable by players.
@@ -1368,6 +1369,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Quaggan images.
 
 - **API-URL:** [/v2/quaggans](https://api.guildwars2.com/v2/quaggans)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().raids()`
+
+> Information about raids, including their bosses.
+
+- **API-URL:** [/v2/raids](https://api.guildwars2.com/v2/raids)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

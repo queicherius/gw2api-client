@@ -37,7 +37,7 @@ export default function (configuration) {
   }
 
   function flush () {
-    _storage = []
+    _storage = {}
     return Promise.resolve(true)
   }
 

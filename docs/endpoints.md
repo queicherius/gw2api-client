@@ -47,6 +47,7 @@ client.language('de').items().all()
 - [`api().account().achievements()`](#apiaccountachievements) - The account's progress towards their achievements.
 - [`api().account().bank()`](#apiaccountbank) - The items stored in the player's bank.
 - [`api().account().characters()`](#apiaccountcharacters) - Alternative method of calling [`api().characters()`](#apicharacters).
+- [`api().account().dungeons()`](#apiaccountdungeons) - The completed dungeons of the current daily.
 - [`api().account().dyes()`](#apiaccountdyes) - The unlocked dyes of the account.
 - [`api().account().finishers()`](#apiaccountfinishers) - The unlocked finishers of the account.
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
@@ -55,6 +56,7 @@ client.language('de').items().all()
 - [`api().account().minis()`](#apiaccountminis) - The unlocked miniatures of the account.
 - [`api().account().outfits()`](#apiaccountoutfits) - The unlocked outfits of the account.
 - [`api().account().pvp()`](#apiaccountpvp) - Alternative method of calling [`api().pvp()`](#apipvpamulets).
+- [`api().account().raids()`](#apiaccountraids) - The completed raids of the current weekly.
 - [`api().account().recipes()`](#apiaccountrecipes) - The unlocked recipes of the account. 
 - [`api().account().skins()`](#apiaccountskins) - The unlocked skins of the account. 
 - [`api().account().titles()`](#apiaccounttitles) - The unlocked titles of the account. 
@@ -204,6 +206,21 @@ Alternative method of calling [`api().characters()`](#apicharacters).
 
 ---
 
+### `api().account().dungeons()`
+
+> The completed dungeons of the current daily.
+
+- **API-URL:** [/v2/account/dungeons](https://api.guildwars2.com/v2/account/dungeons)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
 ### `api().account().dyes()`
 
 > The unlocked dyes of the account.
@@ -312,6 +329,21 @@ Alternative method of calling [`api().characters()`](#apicharacters).
 ### `api().account().pvp()`
 
 Alternative method of calling [`api().pvp()`](#apipvpamulets).
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().raids()`
+
+> The completed raids of the current weekly.
+
+- **API-URL:** [/v2/account/raids](https://api.guildwars2.com/v2/account/raids)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

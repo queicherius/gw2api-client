@@ -24,6 +24,10 @@ export default class AccountEndpoint extends AbstractEndpoint {
     return new CharactersEndpoint(this, name)
   }
 
+  dungeons () {
+    return new DungeonsEndpoint(this)
+  }
+
   dyes () {
     return new DyesEndpoint(this)
   }
@@ -54,6 +58,10 @@ export default class AccountEndpoint extends AbstractEndpoint {
 
   pvp () {
     return new PvpEndpoint(this)
+  }
+
+  raids () {
+    return new RaidsEndpoint(this)
   }
 
   recipes () {
@@ -95,6 +103,15 @@ class BankEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/bank'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class DungeonsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/dungeons'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }
@@ -158,6 +175,15 @@ class OutfitsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/outfits'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class RaidsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/raids'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

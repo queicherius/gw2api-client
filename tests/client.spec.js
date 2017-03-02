@@ -142,6 +142,11 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/currencies')
   })
 
+  it('can get the dungeons endpoint', () => {
+    let endpoint = client.dungeons()
+    expect(endpoint.url).to.equal('/v2/dungeons')
+  })
+
   it('can get the emblem endpoint', () => {
     let endpoint = client.emblem()
     expect(endpoint.backgrounds).to.exist
@@ -231,6 +236,16 @@ describe('client', () => {
   it('can get the quaggans endpoint', () => {
     let endpoint = client.quaggans()
     expect(endpoint.url).to.equal('/v2/quaggans')
+  })
+
+  it('can get the races endpoint', () => {
+    let endpoint = client.races()
+    expect(endpoint.url).to.equal('/v2/races')
+  })
+
+  it('can get the raids endpoint', () => {
+    let endpoint = client.raids()
+    expect(endpoint.url).to.equal('/v2/raids')
   })
 
   it('can get the recipes endpoint', () => {

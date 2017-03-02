@@ -59,6 +59,21 @@ describe('endpoints > account', () => {
     expect(endpoint.url).to.equal('/v2/characters')
   })
 
+  it('test /v2/account/dungeons', async () => {
+    endpoint = endpoint.dungeons()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/account/dungeons')
+
+    fetchMock.addResponse(['hodgins', 'seraph'])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal(['hodgins', 'seraph'])
+  })
+
   it('test /v2/account/dyes', async () => {
     endpoint = endpoint.dyes()
 
@@ -87,6 +102,36 @@ describe('endpoints > account', () => {
     fetchMock.addResponse([2, 3, 4])
     let content = await endpoint.get()
     expect(content).to.deep.equal([2, 3, 4])
+  })
+
+  it('test /v2/account/home/cats', async () => {
+    endpoint = endpoint.home().cats()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/account/home/cats')
+
+    fetchMock.addResponse([{id: 1, hint: 'chicken'}])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([{id: 1, hint: 'chicken'}])
+  })
+
+  it('test /v2/account/home/nodes', async () => {
+    endpoint = endpoint.home().nodes()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/account/home/nodes')
+
+    fetchMock.addResponse(['quartz_node', 'airship_cargo'])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal(['quartz_node', 'airship_cargo'])
   })
 
   it('test /v2/account/inventory', async () => {
@@ -173,6 +218,21 @@ describe('endpoints > account', () => {
   it('test /v2/account/pvp', async () => {
     endpoint = endpoint.pvp()
     expect(endpoint.games).to.exist
+  })
+
+  it('test /v2/account/raids', async () => {
+    endpoint = endpoint.raids()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/account/raids')
+
+    fetchMock.addResponse(['spirit_woods', 'keep_construct'])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal(['spirit_woods', 'keep_construct'])
   })
 
   it('test /v2/account/recipes', async () => {

@@ -95,6 +95,10 @@ export default class Client {
     return new endpoints.CurrenciesEndpoint(this)
   }
 
+  dungeons () {
+    return new endpoints.DungeonsEndpoint(this)
+  }
+
   emblem () {
     return new endpoints.EmblemEndpoint(this)
   }
@@ -161,6 +165,14 @@ export default class Client {
 
   quaggans () {
     return new endpoints.QuaggansEndpoint(this)
+  }
+
+  races () {
+    return new endpoints.RacesEndpoint(this)
+  }
+
+  raids () {
+    return new endpoints.RaidsEndpoint(this)
   }
 
   recipes () {

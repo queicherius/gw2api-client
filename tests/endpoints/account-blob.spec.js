@@ -19,13 +19,19 @@ describe('endpoints > account.blob()', () => {
         get: () => Promise.resolve({name: 'lol.1234', guilds: ['key-1234', 'key-5678'], guild_leader: ['key-1234']}),
         achievements: () => ({get: () => Promise.resolve([{id: 1, foo: 'bar'}])}),
         bank: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
+        dungeons: () => ({get: () => Promise.resolve(['detha'])}),
         dyes: () => ({get: () => Promise.resolve([1, 2, 3])}),
         finishers: () => ({get: () => Promise.resolve([1, 2, 3])}),
+        home: () => ({
+          cats: () => ({get: () => Promise.resolve([{id: 1, hint: 'chicken'}])}),
+          nodes: () => ({get: () => Promise.resolve(['quartz_node', 'airship_cargo'])})
+        }),
         inventory: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
         masteries: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
         materials: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
         minis: () => ({get: () => Promise.resolve([1, 2, 3])}),
         outfits: () => ({get: () => Promise.resolve([1, 2, 3])}),
+        raids: () => ({get: () => Promise.resolve(['keep_construct'])}),
         recipes: () => ({get: () => Promise.resolve([1, 2, 3])}),
         skins: () => ({get: () => Promise.resolve([1, 2, 3])}),
         titles: () => ({get: () => Promise.reject({response: {status: 403}})}),
@@ -69,8 +75,13 @@ describe('endpoints > account.blob()', () => {
         buys: [{id: 123, foo: 'bar'}],
         sells: [{id: 123, foo: 'bar'}]
       },
+      dungeons: ['detha'],
       dyes: [1, 2, 3],
       finishers: [1, 2, 3],
+      home: {
+        cats: [{id: 1, hint: 'chicken'}],
+        nodes: ['quartz_node', 'airship_cargo']
+      },
       masteries: [{id: 123, foo: 'bar'}],
       materials: [{id: 123, foo: 'bar'}],
       minis: [1, 2, 3],
@@ -80,6 +91,7 @@ describe('endpoints > account.blob()', () => {
         standings: [{id: 123, foo: 'bar'}],
         stats: [{id: 123, foo: 'bar'}]
       },
+      raids: ['keep_construct'],
       recipes: [1, 2, 3],
       shared: [{id: 123, foo: 'bar'}],
       skins: [1, 2, 3],
@@ -105,13 +117,19 @@ describe('endpoints > account.blob()', () => {
         get: () => Promise.resolve({name: 'lol.1234', guilds: ['key-1234', 'key-5678']}),
         achievements: () => ({get: () => Promise.resolve([{id: 1, foo: 'bar'}])}),
         bank: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
+        dungeons: () => ({get: () => Promise.resolve(['detha'])}),
         dyes: () => ({get: () => Promise.resolve([1, 2, 3])}),
         finishers: () => ({get: () => Promise.resolve([1, 2, 3])}),
+        home: () => ({
+          cats: () => ({get: () => Promise.resolve([{id: 1, hint: 'chicken'}])}),
+          nodes: () => ({get: () => Promise.resolve(['quartz_node', 'airship_cargo'])})
+        }),
         inventory: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
         masteries: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
         materials: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
         minis: () => ({get: () => Promise.resolve([1, 2, 3])}),
         outfits: () => ({get: () => Promise.resolve([1, 2, 3])}),
+        raids: () => ({get: () => Promise.resolve(['keep_construct'])}),
         recipes: () => ({get: () => Promise.resolve([1, 2, 3])}),
         skins: () => ({get: () => Promise.resolve([1, 2, 3])}),
         titles: () => ({get: () => Promise.reject({response: {status: 403}})}),
@@ -146,8 +164,13 @@ describe('endpoints > account.blob()', () => {
         buys: [{id: 123, foo: 'bar'}],
         sells: [{id: 123, foo: 'bar'}]
       },
+      dungeons: ['detha'],
       dyes: [1, 2, 3],
       finishers: [1, 2, 3],
+      home: {
+        cats: [{id: 1, hint: 'chicken'}],
+        nodes: ['quartz_node', 'airship_cargo']
+      },
       masteries: [{id: 123, foo: 'bar'}],
       materials: [{id: 123, foo: 'bar'}],
       minis: [1, 2, 3],
@@ -157,6 +180,7 @@ describe('endpoints > account.blob()', () => {
         standings: [{id: 123, foo: 'bar'}],
         stats: [{id: 123, foo: 'bar'}]
       },
+      raids: ['keep_construct'],
       recipes: [1, 2, 3],
       shared: [{id: 123, foo: 'bar'}],
       skins: [1, 2, 3],

@@ -47,14 +47,18 @@ client.language('de').items().all()
 - [`api().account().achievements()`](#apiaccountachievements) - The account's progress towards their achievements.
 - [`api().account().bank()`](#apiaccountbank) - The items stored in the player's bank.
 - [`api().account().characters()`](#apiaccountcharacters) - Alternative method of calling [`api().characters()`](#apicharacters).
+- [`api().account().dungeons()`](#apiaccountdungeons) - The completed dungeons of the current daily.
 - [`api().account().dyes()`](#apiaccountdyes) - The unlocked dyes of the account.
 - [`api().account().finishers()`](#apiaccountfinishers) - The unlocked finishers of the account.
+- [`api().account().home().cats()`](#apiaccounthomecats) - The unlocked cats in the home instance of the account.
+- [`api().account().home().nodes()`](#apiaccounthomenodes) - The unlocked nodes in the home instance of the account.
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
 - [`api().account().masteries()`](#apiaccountmasteries) - The unlocked masteries of the account.
 - [`api().account().materials()`](#apiaccountmaterials) - The materials stored in the account's material storage.
 - [`api().account().minis()`](#apiaccountminis) - The unlocked miniatures of the account.
 - [`api().account().outfits()`](#apiaccountoutfits) - The unlocked outfits of the account.
 - [`api().account().pvp()`](#apiaccountpvp) - Alternative method of calling [`api().pvp()`](#apipvpamulets).
+- [`api().account().raids()`](#apiaccountraids) - The completed raids of the current weekly.
 - [`api().account().recipes()`](#apiaccountrecipes) - The unlocked recipes of the account. 
 - [`api().account().skins()`](#apiaccountskins) - The unlocked skins of the account. 
 - [`api().account().titles()`](#apiaccounttitles) - The unlocked titles of the account. 
@@ -90,6 +94,7 @@ client.language('de').items().all()
 - [`api().continents()`](#apicontinents) - Information about continents.
 - [`api().continents().floors(:id)`](#apicontinentsfloorsid) - Information about a continents' floors.
 - [`api().currencies()`](#apicurrencies) - Information about currencies.
+- [`api().dungeons()`](#apidungeons) - Information about dungeons, including their paths.
 - [`api().emblem().backgrounds()`](#apiemblembackgrounds) - The guild emblem's background images.
 - [`api().emblem().foregrounds()`](#apiemblemforegrounds) - The guild emblem's foreground images.
 - [`api().events()`](#apievents) - Information about events.
@@ -125,6 +130,8 @@ client.language('de').items().all()
 - [`api().pvp().standings()`](#apipvpstandings) - Information about the player standings in the league seasons.
 - [`api().pvp().stats()`](#apipvpstats) - Information about wins and losses of the account's PvP matches.
 - [`api().quaggans()`](#apiquaggans) - Quaggan images.
+- [`api().races()`](#apiraces) - Information about races and their available skills.
+- [`api().raids()`](#apiraids) - Information about raids, including their bosses.
 - [`api().recipes()`](#apirecipes) - Information about discovered recipes.
 - [`api().recipes().search()`](#apirecipessearch) - Search for a recipe based on input or output items.
 - [`api().skills()`](#apiskills) - Information about skills usable by players.
@@ -142,6 +149,7 @@ client.language('de').items().all()
 - [`api().wvw().matches().scores()`](#apiwvwmatchesscores) - Scores of the WvW matches.
 - [`api().wvw().matches().stats()`](#apiwvwmatchesstats) - Stats of the WvW matches, includes kills, deaths, etc.
 - [`api().wvw().objectives()`](#apiwvwobjectives) - Details about WvW objectives such as camps, towers, and keeps.
+- [`api().wvw().upgrades()`](#apiwvwupgrades) - Information about WvW upgrades.
 - [`api().wvw().ranks()`](#apiwvwranks) - Information about WvW ranks.
 
 ## Detailed Endpoints
@@ -201,6 +209,21 @@ Alternative method of calling [`api().characters()`](#apicharacters).
 
 ---
 
+### `api().account().dungeons()`
+
+> The completed dungeons of the current daily.
+
+- **API-URL:** [/v2/account/dungeons](https://api.guildwars2.com/v2/account/dungeons)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
 ### `api().account().dyes()`
 
 > The unlocked dyes of the account.
@@ -221,6 +244,36 @@ Alternative method of calling [`api().characters()`](#apicharacters).
 > The unlocked finishers of the account.
 
 - **API-URL:** [/v2/account/finishers](https://api.guildwars2.com/v2/account/finishers)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().home().cats()`
+
+> The unlocked cats in the home instance of the account.
+
+- **API-URL:** [/v2/account/home/cats](https://api.guildwars2.com/v2/account/home/cats)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().home().nodes()`
+
+> The unlocked nodes in the home instance of the account.
+
+- **API-URL:** [/v2/account/home/nodes](https://api.guildwars2.com/v2/account/home/nodes)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes
@@ -309,6 +362,21 @@ Alternative method of calling [`api().characters()`](#apicharacters).
 ### `api().account().pvp()`
 
 Alternative method of calling [`api().pvp()`](#apipvpamulets).
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().raids()`
+
+> The completed raids of the current weekly.
+
+- **API-URL:** [/v2/account/raids](https://api.guildwars2.com/v2/account/raids)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 
@@ -829,6 +897,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** Yes
 - **Authenticated:** No
 - **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().dungeons()`
+
+> Information about dungeons, including their paths.
+
+- **API-URL:** [/v2/dungeons](https://api.guildwars2.com/v2/dungeons)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
@@ -1362,6 +1445,36 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ---
 
+### `api().races()`
+
+> Information about races and their available skills.
+
+- **API-URL:** [/v2/races](https://api.guildwars2.com/v2/races)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().raids()`
+
+> Information about raids, including their bosses.
+
+- **API-URL:** [/v2/raids](https://api.guildwars2.com/v2/raids)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
 ### `api().recipes()`
 
 > Information about discovered recipes.
@@ -1610,6 +1723,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Details about WvW objectives such as camps, towers, and keeps.
 
 - **API-URL:** [/v2/wvw/objectives](https://api.guildwars2.com/v2/wvw/objectives)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().wvw().upgrades()`
+
+> Information about WvW upgrades.
+
+- **API-URL:** [/v2/wvw/upgrades](https://api.guildwars2.com/v2/wvw/upgrades)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

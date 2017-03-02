@@ -104,6 +104,36 @@ describe('endpoints > account', () => {
     expect(content).to.deep.equal([2, 3, 4])
   })
 
+  it('test /v2/account/home/cats', async () => {
+    endpoint = endpoint.home().cats()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/account/home/cats')
+
+    fetchMock.addResponse([{id: 1, hint: 'chicken'}])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([{id: 1, hint: 'chicken'}])
+  })
+
+  it('test /v2/account/home/nodes', async () => {
+    endpoint = endpoint.home().nodes()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/account/home/nodes')
+
+    fetchMock.addResponse(['quartz_node', 'airship_cargo'])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal(['quartz_node', 'airship_cargo'])
+  })
+
   it('test /v2/account/inventory', async () => {
     endpoint = endpoint.inventory()
 

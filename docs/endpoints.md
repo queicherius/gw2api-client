@@ -50,6 +50,8 @@ client.language('de').items().all()
 - [`api().account().dungeons()`](#apiaccountdungeons) - The completed dungeons of the current daily.
 - [`api().account().dyes()`](#apiaccountdyes) - The unlocked dyes of the account.
 - [`api().account().finishers()`](#apiaccountfinishers) - The unlocked finishers of the account.
+- [`api().account().home().cats()`](#apiaccounthomecats) - The unlocked cats in the home instance of the account.
+- [`api().account().home().nodes()`](#apiaccounthomenodes) - The unlocked nodes in the home instance of the account.
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
 - [`api().account().masteries()`](#apiaccountmasteries) - The unlocked masteries of the account.
 - [`api().account().materials()`](#apiaccountmaterials) - The materials stored in the account's material storage.
@@ -242,6 +244,36 @@ Alternative method of calling [`api().characters()`](#apicharacters).
 > The unlocked finishers of the account.
 
 - **API-URL:** [/v2/account/finishers](https://api.guildwars2.com/v2/account/finishers)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().home().cats()`
+
+> The unlocked cats in the home instance of the account.
+
+- **API-URL:** [/v2/account/home/cats](https://api.guildwars2.com/v2/account/home/cats)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().home().nodes()`
+
+> The unlocked nodes in the home instance of the account.
+
+- **API-URL:** [/v2/account/home/nodes](https://api.guildwars2.com/v2/account/home/nodes)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes

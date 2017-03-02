@@ -36,6 +36,13 @@ export default class AccountEndpoint extends AbstractEndpoint {
     return new FinishersEndpoint(this)
   }
 
+  home () {
+    return {
+      cats: () => new HomeCatsEndpoint(this),
+      nodes: () => new HomeNodesEndpoint(this)
+    }
+  }
+
   inventory () {
     return new InventoryEndpoint(this)
   }
@@ -130,6 +137,24 @@ class FinishersEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/finishers'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class HomeCatsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/home/cats'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class HomeNodesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/home/nodes'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

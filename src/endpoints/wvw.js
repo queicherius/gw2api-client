@@ -13,6 +13,10 @@ export default class WvwEndpoint extends AbstractEndpoint {
     return new ObjectivesEndpoint(this)
   }
 
+  upgrades () {
+    return new UpgradesEndpoint(this)
+  }
+
   ranks () {
     return new RanksEndpoint(this)
   }
@@ -85,6 +89,17 @@ class ObjectivesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/wvw/objectives'
+    this.isPaginated = true
+    this.isBulk = true
+    this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
+  }
+}
+
+class UpgradesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/wvw/upgrades'
     this.isPaginated = true
     this.isBulk = true
     this.isLocalized = true

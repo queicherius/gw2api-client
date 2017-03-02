@@ -106,6 +106,22 @@ describe('endpoints > wvw', () => {
     expect(content[0].name).to.equal('Wurm Tunnel')
   })
 
+  it('test /v2/wvw/upgrades', async () => {
+    endpoint = endpoint.upgrades()
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.url).to.equal('/v2/wvw/upgrades')
+
+    fetchMock.addResponse([1, 2, 3])
+    let content = await endpoint.ids()
+    expect(content).to.deep.equal([1, 2, 3])
+  })
+
   it('test /v2/wvw/ranks', async () => {
     endpoint = endpoint.ranks()
 

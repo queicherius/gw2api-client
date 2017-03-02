@@ -91,7 +91,7 @@ describe('endpoints > account.blob()', () => {
           members: [{id: 123, foo: 'bar'}],
           ranks: [{id: 123, foo: 'bar'}],
           stash: [{id: 123, foo: 'bar'}],
-          teams: null,
+          teams: [],
           treasury: [{id: 123, foo: 'bar'}],
           upgrades: [1, 2, 3]
         }

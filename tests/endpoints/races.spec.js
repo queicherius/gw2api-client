@@ -16,7 +16,7 @@ describe('endpoints > races', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/races')
 
     fetchMock.addResponse(['Human', 'Asura'])

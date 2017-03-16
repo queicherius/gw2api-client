@@ -16,7 +16,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.supportsBulkAll).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters')
 
     fetchMock.addResponse(['Character Name'])
@@ -31,7 +31,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/backstory')
 
     fetchMock.addResponse({backstory: [1, 2, 3]})
@@ -46,7 +46,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/core')
 
     fetchMock.addResponse({name: 'Random Nâme', race: 'Asura'})
@@ -61,7 +61,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/crafting')
 
     fetchMock.addResponse({crafting: [{discipline: 'Artificer', rating: 50}]})
@@ -76,7 +76,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/equipment')
 
     fetchMock.addResponse({equipment: [{id: 123, slot: 'Coat'}]})
@@ -91,7 +91,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/heropoints')
 
     fetchMock.addResponse(['0-0', '0-2'])
@@ -106,7 +106,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/inventory')
 
     fetchMock.addResponse({bags: [{id: 123, size: 4, inventory: [null, {id: 123, count: 10}]}]})
@@ -121,7 +121,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/recipes')
 
     fetchMock.addResponse({recipes: [1, 2, 3]})
@@ -136,7 +136,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/skills')
 
     fetchMock.addResponse({skills: {pve: {heal: 29535}}})
@@ -151,7 +151,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/specializations')
 
     fetchMock.addResponse({specializations: {pve: [{id: 41, traits: [1, 2, 3]}]}})
@@ -166,7 +166,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/training')
 
     fetchMock.addResponse({training: [{id: 60, spent: 20, done: true}]})

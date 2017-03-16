@@ -103,7 +103,7 @@ describe('client', () => {
 
   it('can get the backstory endpoint', () => {
     let endpoint = client.backstory()
-    expect(endpoint.answers).to.exist
+    expect(endpoint.answers).to.not.equal(undefined)
   })
 
   it('can get the build endpoint', () => {
@@ -129,7 +129,7 @@ describe('client', () => {
 
   it('can get the commerce endpoint', () => {
     let endpoint = client.commerce()
-    expect(endpoint.exchange).to.exist
+    expect(endpoint.exchange).to.not.equal(undefined)
   })
 
   it('can get the continents endpoint', () => {
@@ -149,7 +149,7 @@ describe('client', () => {
 
   it('can get the emblem endpoint', () => {
     let endpoint = client.emblem()
-    expect(endpoint.backgrounds).to.exist
+    expect(endpoint.backgrounds).to.not.equal(undefined)
   })
 
   it('can get the events endpoint', () => {
@@ -230,7 +230,7 @@ describe('client', () => {
 
   it('can get the pvp endpoint', () => {
     let endpoint = client.pvp()
-    expect(endpoint.games).to.exist
+    expect(endpoint.games).to.not.equal(undefined)
   })
 
   it('can get the quaggans endpoint', () => {
@@ -295,6 +295,6 @@ describe('client', () => {
 
   it('can get the wvw endpoint', () => {
     let endpoint = client.wvw()
-    expect(endpoint.matches).to.exist
+    expect(endpoint.matches).to.not.equal(undefined)
   })
 })

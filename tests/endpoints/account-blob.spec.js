@@ -12,55 +12,63 @@ function makeApi (object) {
   })
 }
 
+function _s (response) {
+  return Promise.resolve(response)
+}
+
+function _e (response) {
+  return Promise.reject(response)
+}
+
 describe('endpoints > account.blob()', () => {
   it('test /v2/account .blob()', async () => {
     endpoint.__set__('api', makeApi({
       account: () => ({
-        get: () => Promise.resolve({name: 'lol.1234', guilds: ['key-1234', 'key-5678'], guild_leader: ['key-1234']}),
-        achievements: () => ({get: () => Promise.resolve([{id: 1, foo: 'bar'}])}),
-        bank: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        dungeons: () => ({get: () => Promise.resolve(['detha'])}),
-        dyes: () => ({get: () => Promise.resolve([1, 2, 3])}),
-        finishers: () => ({get: () => Promise.resolve([1, 2, 3])}),
+        get: () => _s({name: 'lol.1234', guilds: ['key-1234', 'key-5678'], guild_leader: ['key-1234']}),
+        achievements: () => ({get: () => _s([{id: 1, foo: 'bar'}])}),
+        bank: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        dungeons: () => ({get: () => _s(['detha'])}),
+        dyes: () => ({get: () => _s([1, 2, 3])}),
+        finishers: () => ({get: () => _s([1, 2, 3])}),
         home: () => ({
-          cats: () => ({get: () => Promise.resolve([{id: 1, hint: 'chicken'}])}),
-          nodes: () => ({get: () => Promise.resolve(['quartz_node', 'airship_cargo'])})
+          cats: () => ({get: () => _s([{id: 1, hint: 'chicken'}])}),
+          nodes: () => ({get: () => _s(['quartz_node', 'airship_cargo'])})
         }),
-        inventory: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        masteries: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        materials: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        minis: () => ({get: () => Promise.resolve([1, 2, 3])}),
-        outfits: () => ({get: () => Promise.resolve([1, 2, 3])}),
-        raids: () => ({get: () => Promise.resolve(['keep_construct'])}),
-        recipes: () => ({get: () => Promise.resolve([1, 2, 3])}),
-        skins: () => ({get: () => Promise.resolve([1, 2, 3])}),
-        titles: () => ({get: () => Promise.reject({response: {status: 403}})}),
-        wallet: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
+        inventory: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        masteries: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        materials: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        minis: () => ({get: () => _s([1, 2, 3])}),
+        outfits: () => ({get: () => _s([1, 2, 3])}),
+        raids: () => ({get: () => _s(['keep_construct'])}),
+        recipes: () => ({get: () => _s([1, 2, 3])}),
+        skins: () => ({get: () => _s([1, 2, 3])}),
+        titles: () => ({get: () => _e({response: {status: 403}})}),
+        wallet: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
         pvp: () => ({
-          games: () => ({all: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-          standings: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-          stats: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])})
+          games: () => ({all: () => _s([{id: 123, foo: 'bar'}])}),
+          standings: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+          stats: () => ({get: () => _s([{id: 123, foo: 'bar'}])})
         })
       }),
       characters: () => ({
-        all: () => Promise.resolve([{id: 123, foo: 'bar'}])
+        all: () => _s([{id: 123, foo: 'bar'}])
       }),
       commerce: () => ({
         transactions: () => ({
           current: () => ({
-            buys: () => ({all: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-            sells: () => ({all: () => Promise.resolve([{id: 123, foo: 'bar'}])})
+            buys: () => ({all: () => _s([{id: 123, foo: 'bar'}])}),
+            sells: () => ({all: () => _s([{id: 123, foo: 'bar'}])})
           })
         })
       }),
       guild: () => ({
-        get: () => Promise.resolve({id: 123, foo: 'bar'}),
-        members: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        ranks: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        stash: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        teams: () => ({get: () => Promise.reject({content: {text: 'access restricted to guild leaders'}})}),
-        treasury: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        upgrades: () => ({get: () => Promise.resolve([1, 2, 3])})
+        get: () => _s({id: 123, foo: 'bar'}),
+        members: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        ranks: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        stash: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        teams: () => ({get: () => _e({content: {text: 'access restricted to guild leaders'}})}),
+        treasury: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        upgrades: () => ({get: () => _s([1, 2, 3])})
       })
     }))
 
@@ -114,40 +122,40 @@ describe('endpoints > account.blob()', () => {
   it('test /v2/account .blob() without guilds permission', async () => {
     endpoint.__set__('api', makeApi({
       account: () => ({
-        get: () => Promise.resolve({name: 'lol.1234', guilds: ['key-1234', 'key-5678']}),
-        achievements: () => ({get: () => Promise.resolve([{id: 1, foo: 'bar'}])}),
-        bank: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        dungeons: () => ({get: () => Promise.resolve(['detha'])}),
-        dyes: () => ({get: () => Promise.resolve([1, 2, 3])}),
-        finishers: () => ({get: () => Promise.resolve([1, 2, 3])}),
+        get: () => _s({name: 'lol.1234', guilds: ['key-1234', 'key-5678']}),
+        achievements: () => ({get: () => _s([{id: 1, foo: 'bar'}])}),
+        bank: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        dungeons: () => ({get: () => _s(['detha'])}),
+        dyes: () => ({get: () => _s([1, 2, 3])}),
+        finishers: () => ({get: () => _s([1, 2, 3])}),
         home: () => ({
-          cats: () => ({get: () => Promise.resolve([{id: 1, hint: 'chicken'}])}),
-          nodes: () => ({get: () => Promise.resolve(['quartz_node', 'airship_cargo'])})
+          cats: () => ({get: () => _s([{id: 1, hint: 'chicken'}])}),
+          nodes: () => ({get: () => _s(['quartz_node', 'airship_cargo'])})
         }),
-        inventory: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        masteries: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        materials: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-        minis: () => ({get: () => Promise.resolve([1, 2, 3])}),
-        outfits: () => ({get: () => Promise.resolve([1, 2, 3])}),
-        raids: () => ({get: () => Promise.resolve(['keep_construct'])}),
-        recipes: () => ({get: () => Promise.resolve([1, 2, 3])}),
-        skins: () => ({get: () => Promise.resolve([1, 2, 3])}),
-        titles: () => ({get: () => Promise.reject({response: {status: 403}})}),
-        wallet: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
+        inventory: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        masteries: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        materials: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        minis: () => ({get: () => _s([1, 2, 3])}),
+        outfits: () => ({get: () => _s([1, 2, 3])}),
+        raids: () => ({get: () => _s(['keep_construct'])}),
+        recipes: () => ({get: () => _s([1, 2, 3])}),
+        skins: () => ({get: () => _s([1, 2, 3])}),
+        titles: () => ({get: () => _e({response: {status: 403}})}),
+        wallet: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
         pvp: () => ({
-          games: () => ({all: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-          standings: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-          stats: () => ({get: () => Promise.resolve([{id: 123, foo: 'bar'}])})
+          games: () => ({all: () => _s([{id: 123, foo: 'bar'}])}),
+          standings: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+          stats: () => ({get: () => _s([{id: 123, foo: 'bar'}])})
         })
       }),
       characters: () => ({
-        all: () => Promise.resolve([{id: 123, foo: 'bar'}])
+        all: () => _s([{id: 123, foo: 'bar'}])
       }),
       commerce: () => ({
         transactions: () => ({
           current: () => ({
-            buys: () => ({all: () => Promise.resolve([{id: 123, foo: 'bar'}])}),
-            sells: () => ({all: () => Promise.resolve([{id: 123, foo: 'bar'}])})
+            buys: () => ({all: () => _s([{id: 123, foo: 'bar'}])}),
+            sells: () => ({all: () => _s([{id: 123, foo: 'bar'}])})
           })
         })
       })
@@ -193,7 +201,7 @@ describe('endpoints > account.blob()', () => {
   it('test /v2/account .blob() handling errors', async () => {
     endpoint.__set__('api', makeApi({
       account: () => ({
-        get: () => Promise.reject('Oh no.')
+        get: () => _e(new Error('Oh no.'))
       })
     }))
 
@@ -205,6 +213,6 @@ describe('endpoints > account.blob()', () => {
       error = err
     }
 
-    expect(error).to.deep.equal('Oh no.')
+    expect(error.message).to.equal('Oh no.')
   })
 })

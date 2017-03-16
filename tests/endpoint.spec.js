@@ -11,7 +11,7 @@ async function expectError (callback) {
   } catch (e) {
     err = e
   }
-  expect(err).to.exist
+
   expect(err).to.be.an.instanceof(Error)
 }
 

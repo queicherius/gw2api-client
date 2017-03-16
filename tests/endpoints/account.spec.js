@@ -16,7 +16,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account')
 
     fetchMock.addResponse({id: 'unique-identifier', name: 'Account.1234', world: 1007})
@@ -31,7 +31,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/achievements')
 
     fetchMock.addResponse([{id: 1, current: 487, max: 1000, done: false}])
@@ -46,7 +46,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/bank')
 
     fetchMock.addResponse([null, null, {id: 123, count: 1}])
@@ -66,7 +66,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/dungeons')
 
     fetchMock.addResponse(['hodgins', 'seraph'])
@@ -81,7 +81,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/dyes')
 
     fetchMock.addResponse([2, 3, 4])
@@ -96,7 +96,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/finishers')
 
     fetchMock.addResponse([2, 3, 4])
@@ -111,7 +111,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/home/cats')
 
     fetchMock.addResponse([{id: 1, hint: 'chicken'}])
@@ -126,7 +126,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/home/nodes')
 
     fetchMock.addResponse(['quartz_node', 'airship_cargo'])
@@ -141,7 +141,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/inventory')
 
     fetchMock.addResponse([
@@ -162,7 +162,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/masteries')
 
     fetchMock.addResponse([{id: 1, level: 4}, {id: 2, level: 5}])
@@ -177,7 +177,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/materials')
 
     fetchMock.addResponse([{id: 12134, category: 5, count: 2}])
@@ -192,7 +192,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/minis')
 
     fetchMock.addResponse([2, 3, 4, 5])
@@ -207,7 +207,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/outfits')
 
     fetchMock.addResponse([2, 3, 4, 5])
@@ -217,7 +217,7 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/pvp', async () => {
     endpoint = endpoint.pvp()
-    expect(endpoint.games).to.exist
+    expect(endpoint.games).to.not.equal(undefined)
   })
 
   it('test /v2/account/raids', async () => {
@@ -227,7 +227,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/raids')
 
     fetchMock.addResponse(['spirit_woods', 'keep_construct'])
@@ -242,7 +242,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/recipes')
 
     fetchMock.addResponse([2, 3, 4, 5])
@@ -257,7 +257,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/skins')
 
     fetchMock.addResponse([1, 2, 3])
@@ -272,7 +272,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/titles')
 
     fetchMock.addResponse([2, 3, 4, 5])
@@ -282,7 +282,7 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/transactions', async () => {
     endpoint = endpoint.transactions()
-    expect(endpoint.current).to.exist
+    expect(endpoint.current).to.not.equal(undefined)
   })
 
   it('test /v2/account/wallet', async () => {
@@ -292,7 +292,7 @@ describe('endpoints > account', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/wallet')
 
     fetchMock.addResponse([{id: 1, value: 48043252}, {id: 2, value: 1956351}])

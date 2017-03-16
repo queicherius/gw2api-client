@@ -17,7 +17,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/commerce/exchange')
 
     fetchMock.addResponse({coins_per_gem: 2000, quantity: 5})
@@ -33,7 +33,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/commerce/exchange')
 
     fetchMock.addResponse({coins_per_gem: 1269, quantity: 12345})
@@ -50,7 +50,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.supportsBulkAll).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/commerce/listings')
 
     fetchMock.addResponse({id: 12, buys: [{listings: 1, unit_price: 123, quantity: 123}]})
@@ -66,7 +66,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.supportsBulkAll).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/commerce/prices')
 
     fetchMock.addResponse({id: 12, buys: {quantity: 12345, unit_price: 123}})
@@ -81,7 +81,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/commerce/transactions/current/buys')
 
     fetchMock.addResponse([{id: 1337, item_id: 123, price: 987, quantity: 20}])
@@ -96,7 +96,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/commerce/transactions/current/sells')
 
     fetchMock.addResponse([{id: 1337, item_id: 123, price: 987, quantity: 20}])
@@ -111,7 +111,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/commerce/transactions/history/buys')
 
     fetchMock.addResponse([{id: 1337, item_id: 123, price: 987, quantity: 20}])
@@ -126,7 +126,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/commerce/transactions/history/sells')
 
     fetchMock.addResponse([{id: 1337, item_id: 123, price: 987, quantity: 20}])

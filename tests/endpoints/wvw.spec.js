@@ -18,7 +18,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/wvw/abilities')
 
     fetchMock.addResponse({id: 1, name: 'Guard Killer'})
@@ -34,7 +34,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/wvw/matches')
 
     fetchMock.addResponse({id: '2-6', scores: {red: 123, blue: 456, green: 789}})
@@ -50,7 +50,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/wvw/matches/overview')
 
     fetchMock.addResponse({id: '2-6', worlds: {red: 2002, blue: 2007, green: 2202}})
@@ -66,7 +66,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/wvw/matches/scores')
 
     fetchMock.addResponse({id: '2-6', scores: {red: 123, blue: 456, green: 789}})
@@ -82,7 +82,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/wvw/matches/stats')
 
     fetchMock.addResponse({id: '2-6', deaths: {red: 333, blue: 456, green: 789}})
@@ -98,7 +98,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/wvw/objectives')
 
     fetchMock.addResponse([{id: '968-98', name: 'Wurm Tunnel'}])
@@ -114,7 +114,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/wvw/upgrades')
 
     fetchMock.addResponse([1, 2, 3])
@@ -130,7 +130,7 @@ describe('endpoints > wvw', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/wvw/ranks')
 
     fetchMock.addResponse([{id: 42, title: 'Silver General', min_rank: 1170}])

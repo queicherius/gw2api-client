@@ -29,7 +29,7 @@ describe('endpoints > events', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v1/event_details.json')
 
     fetchMock.addResponse({
@@ -48,7 +48,7 @@ describe('endpoints > events', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v1/event_details.json')
 
     fetchMock.addResponse({

@@ -16,7 +16,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.supportsBulkAll).to.equal(false)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/achievements')
 
     fetchMock.addResponse({id: 1, name: 'Centaur Slayer'})
@@ -32,7 +32,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/achievements/categories')
 
     fetchMock.addResponse({id: 1, name: 'Slayer', order: 30, achievements: [1, 4, 5]})
@@ -48,7 +48,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/achievements/groups')
 
     fetchMock.addResponse({id: '65B4B678-607E-4D97-B458-076C3E96A810', name: 'Heart of Thorns'})
@@ -63,7 +63,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/achievements/daily')
 
     fetchMock.addResponse({pve: [{id: 1984, level: {min: 1, max: 80}}]})
@@ -78,7 +78,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.isBulk).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.be.undefined
+    expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/achievements/daily/tomorrow')
 
     fetchMock.addResponse({pve: [{id: 1984, level: {min: 1, max: 80}}]})

@@ -24,19 +24,53 @@ describe('endpoints > account', () => {
     expect(content.name).to.equal('Account.1234')
   })
 
-  it('test /v2/account/achievements', async () => {
+  it('test /v2/account/achievements (ids)', async () => {
     endpoint = endpoint.achievements()
 
-    expect(endpoint.isPaginated).to.equal(false)
-    expect(endpoint.isBulk).to.equal(false)
+    expect()
+    let error
+    try {
+      await endpoint.ids()
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).to.be.an.instanceof(Error)
+  })
+
+  it('test /v2/account/achievements (get with id)', async () => {
+    endpoint = endpoint.authenticate('XXX').achievements()
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/account/achievements')
+
+    fetchMock.addResponse({id: 1, current: 487, max: 1000, done: false})
+    let content = await endpoint.get(1)
+    expect(content.current).to.equal(487)
+    expect(fetchMock.lastUrl().endsWith('/v2/account/achievements?id=1&access_token=XXX')).to.equal(true)
+  })
+
+  it('test /v2/account/achievements (get without id / all)', async () => {
+    endpoint = endpoint.authenticate('XXX').achievements()
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(true)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(true)
     expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/account/achievements')
 
     fetchMock.addResponse([{id: 1, current: 487, max: 1000, done: false}])
-    let content = await endpoint.get()
-    expect(content[0].current).to.equal(487)
+    let contentGet = await endpoint.get()
+    expect(contentGet[0].current).to.equal(487)
+    expect(fetchMock.lastUrl().endsWith('/v2/account/achievements?access_token=XXX')).to.equal(true)
+
+    let contentAll = await endpoint.all()
+    expect(contentAll).to.deep.equal(contentGet)
   })
 
   it('test /v2/account/bank', async () => {

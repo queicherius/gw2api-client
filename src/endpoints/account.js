@@ -106,7 +106,27 @@ class AchievementsEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/account/achievements'
     this.isAuthenticated = true
+    this.isPaginated = true
+    this.isBulk = true
     this.cacheTime = 5 * 60
+  }
+
+  ids () {
+    return Promise.reject(new Error('method not supported for this endpoint'))
+  }
+
+  get (id) {
+    if (id) {
+      return super.get(id)
+    }
+
+    // This endpoint returns all entries if the url gets requested
+    // without any parameters, analogue to the other account endpoints
+    return this.all()
+  }
+
+  all () {
+    return super.get('', true)
   }
 }
 

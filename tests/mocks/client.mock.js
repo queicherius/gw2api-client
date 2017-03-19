@@ -7,6 +7,7 @@ export const mockClient = {
   apiKey: false,
   fetch: fetch,
   caches: [nullCache(), memoryCache(), memoryCache()],
+  headersObject: {},
   language: function (lang) {
     this.lang = lang
   },

@@ -11,6 +11,7 @@ export default class Client {
     this.apiKey = false
     this.fetch = fetch
     this.caches = [nullCache()]
+    this.headersObject = {}
   }
 
   // Set the language for locale-aware endpoints
@@ -31,6 +32,13 @@ export default class Client {
   cacheStorage (caches) {
     this.caches = [].concat(caches)
     debug(`updated the cache storage`)
+    return this
+  }
+
+  // Set the headers for all requests
+  headers (headers) {
+    this.headersObject = headers
+    debug(`updated the headers`)
     return this
   }
 

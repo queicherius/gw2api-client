@@ -14,6 +14,7 @@ export default class AbstractEndpoint {
     this.apiKey = parent.apiKey
     this.fetch = parent.fetch
     this.caches = parent.caches
+    this.headersObject = parent.headersObject
 
     this.baseUrl = 'https://api.guildwars2.com'
     this.isPaginated = false
@@ -427,14 +428,14 @@ export default class AbstractEndpoint {
   _request (url, type = 'json') {
     url = this._buildUrl(url)
     debugRequest(`single url ${url}`)
-    return this.fetch.single(url, {type})
+    return this.fetch.single(url, {type, headers: this.headersObject})
   }
 
   // Execute multiple requests in parallel
   _requestMany (urls, type = 'json') {
     urls = urls.map(url => this._buildUrl(url))
     debugRequest(`multiple urls ${urls.join(', ')}`)
-    return this.fetch.many(urls, {type})
+    return this.fetch.many(urls, {type, headers: this.headersObject})
   }
 
   // Build the headers for localization and authentication

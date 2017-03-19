@@ -23,6 +23,14 @@ describe('abstract endpoint', () => {
     endpoint.caches.map(cache => cache.flush())
   })
 
+  it('recieves the client options', () => {
+    expect(endpoint.lang).to.equal('en')
+    expect(endpoint.apiKey).to.equal(false)
+    expect(typeof endpoint.fetch.single).to.equal('function')
+    expect(endpoint.caches.length).to.equal(3)
+    expect(endpoint.headersObject).to.deep.equal({})
+  })
+
   describe('ids', () => {
     it('support', async () => {
       let content = [1, 2]
@@ -900,6 +908,15 @@ describe('abstract endpoint', () => {
       expect(entry).to.deep.equal({foo: 'bar'})
     })
 
+    it('gives the headers to the underlying api for single requests', async () => {
+      fetchMock.addResponse({foo: 'bar'})
+      endpoint.headersObject = {'X-Herp': 'Derp'}
+
+      await endpoint._request('/v2/test')
+
+      expect(fetchMock.lastOption().headers).to.deep.equal({'X-Herp': 'Derp'})
+    })
+
     it('gives the type to the underlying api for multiple requests', async () => {
       endpoint.isLocalized = true
       fetchMock.addResponse({
@@ -922,6 +939,15 @@ describe('abstract endpoint', () => {
       let entry = await endpoint._requestMany(['/v2/test'])
       expect(fetchMock.lastUrl()).to.equal('https://api.guildwars2.com/v2/test?lang=en')
       expect(entry).to.deep.equal([{foo: 'bar'}])
+    })
+
+    it('gives the headers to the underlying api for multiple requests', async () => {
+      fetchMock.addResponse({foo: 'bar'})
+      endpoint.headersObject = {'X-Herp': 'Derp'}
+
+      await endpoint._requestMany(['/v2/test'])
+
+      expect(fetchMock.lastOption().headers).to.deep.equal({'X-Herp': 'Derp'})
     })
   })
 

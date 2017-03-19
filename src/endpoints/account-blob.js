@@ -20,6 +20,7 @@ export default function (parent) {
     'commerce.sells': wrap(() => client.commerce().transactions().current().sells().all()),
     dungeons: wrap(() => client.account().dungeons().get()),
     dyes: wrap(() => client.account().dyes().get()),
+    gliders: wrap(() => client.account().gliders().get()),
     finishers: wrap(() => client.account().finishers().get()),
     'home.cats': wrap(() => client.account().home().cats().get()),
     'home.nodes': wrap(() => client.account().home().nodes().get()),

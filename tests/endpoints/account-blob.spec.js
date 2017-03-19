@@ -30,6 +30,7 @@ describe('endpoints > account.blob()', () => {
         dungeons: () => ({get: () => _s(['detha'])}),
         dyes: () => ({get: () => _s([1, 2, 3])}),
         finishers: () => ({get: () => _s([1, 2, 3])}),
+        gliders: () => ({get: () => _s([1, 2, 3])}),
         home: () => ({
           cats: () => ({get: () => _s([{id: 1, hint: 'chicken'}])}),
           nodes: () => ({get: () => _s(['quartz_node', 'airship_cargo'])})
@@ -86,6 +87,7 @@ describe('endpoints > account.blob()', () => {
       dungeons: ['detha'],
       dyes: [1, 2, 3],
       finishers: [1, 2, 3],
+      gliders: [1, 2, 3],
       home: {
         cats: [{id: 1, hint: 'chicken'}],
         nodes: ['quartz_node', 'airship_cargo']
@@ -128,6 +130,7 @@ describe('endpoints > account.blob()', () => {
         dungeons: () => ({get: () => _s(['detha'])}),
         dyes: () => ({get: () => _s([1, 2, 3])}),
         finishers: () => ({get: () => _s([1, 2, 3])}),
+        gliders: () => ({get: () => _s([1, 2, 3])}),
         home: () => ({
           cats: () => ({get: () => _s([{id: 1, hint: 'chicken'}])}),
           nodes: () => ({get: () => _s(['quartz_node', 'airship_cargo'])})
@@ -175,6 +178,7 @@ describe('endpoints > account.blob()', () => {
       dungeons: ['detha'],
       dyes: [1, 2, 3],
       finishers: [1, 2, 3],
+      gliders: [1, 2, 3],
       home: {
         cats: [{id: 1, hint: 'chicken'}],
         nodes: ['quartz_node', 'airship_cargo']

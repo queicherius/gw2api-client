@@ -179,11 +179,15 @@ client.language('de').items().all()
 > The account's progress towards their achievements.
 
 - **API-URL:** [/v2/account/achievements](https://api.guildwars2.com/v2/account/achievements)
-- **Paginated:** No
-- **Bulk expanding:** No
+- **Paginated:** Yes
+- **Bulk expanding:** Partially
 - **Authenticated:** Yes
 - **Localized:** No
 - **Cache time:** 5 minutes
+- **This endpoint behaves differently than usual bulk expanded endpoints:**
+  - `ids()` - Not supported
+  - `get()` - All achievements of the account (same as `all()` and analogue to the other ["basic"](#basic) account endpoints)
+  - All other paginated and bulk expanding methods (`get(:id)`, `page(:page)`, etc.) are behaving as described [here](#endpoint-behaviour)
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

@@ -115,6 +115,10 @@ export default class Client {
     return new endpoints.FinishersEndpoint(this)
   }
 
+  gliders () {
+    return new endpoints.GlidersEndpoint(this)
+  }
+
   guild (id) {
     return new endpoints.GuildEndpoint(this, id)
   }

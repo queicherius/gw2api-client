@@ -167,6 +167,11 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/finishers')
   })
 
+  it('can get the gliders endpoint', () => {
+    let endpoint = client.gliders()
+    expect(endpoint.url).to.equal('/v2/gliders')
+  })
+
   it('can get the guild endpoint', () => {
     let endpoint = client.guild()
     expect(endpoint.url).to.equal('/v2/guild')

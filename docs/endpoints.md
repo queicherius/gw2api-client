@@ -100,6 +100,7 @@ client.language('de').items().all()
 - [`api().events()`](#apievents) - Information about events.
 - [`api().files()`](#apifiles) - Commonly requested assets that may be used to enhance API-derived applications.
 - [`api().finishers()`](#apifinishers) - Information about finishers.
+- [`api().gliders()`](#apigliders) - Information about gliders.
 - [`api().guild()`](#apiguild) - Core details about a given guild.
 - [`api().guild().permissions()`](#apiguildpermissions) - Information about all guild permissions.
 - [`api().guild().search().name(:name)`](#apiguildsearchnamename) - Search for guild ids using a guild name.
@@ -983,6 +984,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Information about finishers.
 
 - **API-URL:** [/v2/finishers](https://api.guildwars2.com/v2/finishers)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().gliders()`
+
+> Information about gliders.
+
+- **API-URL:** [/v2/gliders](https://api.guildwars2.com/v2/gliders)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

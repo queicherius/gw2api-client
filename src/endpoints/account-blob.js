@@ -60,7 +60,7 @@ function accountGuilds (client) {
       members: wrap(() => client.guild(id).members().get()),
       ranks: wrap(() => client.guild(id).ranks().get()),
       stash: wrap(() => client.guild(id).stash().get()),
-      teams: () => Promise.resolve([]),
+      teams: wrap(() => client.guild(id).teams().get()),
       treasury: wrap(() => client.guild(id).treasury().get()),
       upgrades: wrap(() => client.guild(id).upgrades().get())
     }

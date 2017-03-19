@@ -131,6 +131,21 @@ describe('endpoints > guild', () => {
     expect(content[0].coins).to.equal(1337)
   })
 
+  it('test /v2/guild/:id/storage', async () => {
+    endpoint = (new Module(mockClient, 'S0ME-UU1D')).storage()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/guild/S0ME-UU1D/storage')
+
+    fetchMock.addResponse([{id: 42, count: 100}, {id: 9, count: 3}])
+    let content = await endpoint.get()
+    expect(content[0].id).to.equal(42)
+  })
+
   it('test /v2/guild/:id/teams', async () => {
     endpoint = (new Module(mockClient, 'S0ME-UU1D')).teams()
 

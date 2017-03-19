@@ -111,6 +111,7 @@ client.language('de').items().all()
 - [`api().guild(:id).members()`](#apiguildidmembers) - Information about the members of the guild.
 - [`api().guild(:id).ranks()`](#apiguildidranks) - Information about the ranks of the guild.
 - [`api().guild(:id).stash()`](#apiguildidstash) - Information about the items in the guild's vault.
+- [`api().guild(:id).storage()`](#apiguildidstorage) - Information about the stored guild upgrades.
 - [`api().guild(:id).teams()`](#apiguildidteams) - Information about the teams in the guild.
 - [`api().guild().treasury()`](#apiguildtreasury) - Information about the items in the guild's treasury.
 - [`api().items()`](#apiitems) - Information about items that were discovered by players.
@@ -1150,6 +1151,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Information about the items in the guild's vault.
 
 - **API-URL:** [/v2/guild/:id/stash](https://api.guildwars2.com/v2/guild/:id/stash)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().guild(:id).storage()`
+
+> Information about the stored guild upgrades.
+
+- **API-URL:** [/v2/guild/:id/storage](https://api.guildwars2.com/v2/guild/:id/storage)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes

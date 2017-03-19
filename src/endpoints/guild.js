@@ -46,6 +46,10 @@ export default class GuildEndpoint extends AbstractEndpoint {
     return new StashEndpoint(this, this.id)
   }
 
+  storage () {
+    return new StorageEndpoint(this, this.id)
+  }
+
   teams () {
     return new TeamsEndpoint(this, this.id)
   }
@@ -121,6 +125,15 @@ class StashEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
     this.url = `/v2/guild/${encodeURIComponent(id)}/stash`
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class StorageEndpoint extends AbstractEndpoint {
+  constructor (client, id) {
+    super(client)
+    this.url = `/v2/guild/${encodeURIComponent(id)}/storage`
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

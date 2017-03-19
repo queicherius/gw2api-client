@@ -24,6 +24,10 @@ export default class CharactersEndpoint extends AbstractEndpoint {
     return new CraftingEndpoint(this, this.name)
   }
 
+  dungeons () {
+    return new DungeonsEndpoint(this, this.name)
+  }
+
   equipment () {
     return new EquipmentEndpoint(this, this.name)
   }
@@ -85,6 +89,19 @@ class CraftingEndpoint extends AbstractEndpoint {
 
   get () {
     return super.get().then(result => result.crafting)
+  }
+}
+
+class DungeonsEndpoint extends AbstractEndpoint {
+  constructor (client, character) {
+    super(client)
+    this.url = `/v2/characters/${encodeURIComponent(character)}/dungeons`
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+
+  get () {
+    return super.get().then(result => result.dungeons)
   }
 }
 

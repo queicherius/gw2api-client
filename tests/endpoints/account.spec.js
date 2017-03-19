@@ -104,6 +104,21 @@ describe('endpoints > account', () => {
     expect(content).to.deep.equal([2, 3, 4])
   })
 
+  it('test /v2/account/gliders', async () => {
+    endpoint = endpoint.gliders()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/account/gliders')
+
+    fetchMock.addResponse([1, 2, 3])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([1, 2, 3])
+  })
+
   it('test /v2/account/home/cats', async () => {
     endpoint = endpoint.home().cats()
 

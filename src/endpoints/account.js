@@ -36,6 +36,10 @@ export default class AccountEndpoint extends AbstractEndpoint {
     return new FinishersEndpoint(this)
   }
 
+  gliders () {
+    return new GlidersEndpoint(this)
+  }
+
   home () {
     return {
       cats: () => new HomeCatsEndpoint(this),
@@ -137,6 +141,15 @@ class FinishersEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/finishers'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class GlidersEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/gliders'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

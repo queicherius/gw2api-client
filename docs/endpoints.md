@@ -50,6 +50,7 @@ client.language('de').items().all()
 - [`api().account().dungeons()`](#apiaccountdungeons) - The completed dungeons of the current daily.
 - [`api().account().dyes()`](#apiaccountdyes) - The unlocked dyes of the account.
 - [`api().account().finishers()`](#apiaccountfinishers) - The unlocked finishers of the account.
+- [`api().account().gliders()`](#apiaccountgliders) - The unlocked gliders of the account.
 - [`api().account().home().cats()`](#apiaccounthomecats) - The unlocked cats in the home instance of the account.
 - [`api().account().home().nodes()`](#apiaccounthomenodes) - The unlocked nodes in the home instance of the account.
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
@@ -100,6 +101,7 @@ client.language('de').items().all()
 - [`api().events()`](#apievents) - Information about events.
 - [`api().files()`](#apifiles) - Commonly requested assets that may be used to enhance API-derived applications.
 - [`api().finishers()`](#apifinishers) - Information about finishers.
+- [`api().gliders()`](#apigliders) - Information about gliders.
 - [`api().guild()`](#apiguild) - Core details about a given guild.
 - [`api().guild().permissions()`](#apiguildpermissions) - Information about all guild permissions.
 - [`api().guild().search().name(:name)`](#apiguildsearchnamename) - Search for guild ids using a guild name.
@@ -244,6 +246,21 @@ Alternative method of calling [`api().characters()`](#apicharacters).
 > The unlocked finishers of the account.
 
 - **API-URL:** [/v2/account/finishers](https://api.guildwars2.com/v2/account/finishers)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().gliders()`
+
+> The unlocked gliders of the account.
+
+- **API-URL:** [/v2/account/gliders](https://api.guildwars2.com/v2/account/gliders)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes
@@ -983,6 +1000,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Information about finishers.
 
 - **API-URL:** [/v2/finishers](https://api.guildwars2.com/v2/finishers)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().gliders()`
+
+> Information about gliders.
+
+- **API-URL:** [/v2/gliders](https://api.guildwars2.com/v2/gliders)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

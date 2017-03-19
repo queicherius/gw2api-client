@@ -21,6 +21,6 @@ describe('endpoints > gliders', () => {
 
     fetchMock.addResponse([1, 2, 3])
     let content = await endpoint.ids()
-    expect(content).to.deep.equal([1, 2, 3 ])
+    expect(content).to.deep.equal([1, 2, 3])
   })
 })

@@ -143,6 +143,18 @@ api.fetch.retryWait((tries) => tries * 100)
 api.items().ids()
 ```
 
+### Specifying custom headers
+
+You can set custom headers to be sent with every API request, for example for attribution of requests made by your application.
+
+```js
+const headers = {
+  'X-Requested-By': 'my-cool-gw2-tool.com <my@email.com>'
+}
+
+api.headers(headers)
+```
+
 ### Extending
 
 You can extend or overwrite the API client with your own endpoints if you wish so. The only thing that is required is an extension of `AbstractEndpoint` to provide all the logic for pagination, bulk, localisation, caching and so on.

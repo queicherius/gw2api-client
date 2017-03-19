@@ -43,6 +43,12 @@ describe('client', () => {
     expect(client.caches).to.deep.equal([cacheHandler, cacheHandler])
   })
 
+  it('can set a header object', () => {
+    let api = client.headers({'X-Herp': 'Derp'})
+    expect(client.headersObject).to.deep.equal({'X-Herp': 'Derp'})
+    expect(api).to.be.an.instanceof(Module)
+  })
+
   it('can flush the caches if there is a game update', async () => {
     const tmp = client.build
     client.caches = [nullCache(), memoryCache(), memoryCache()]

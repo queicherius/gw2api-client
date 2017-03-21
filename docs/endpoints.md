@@ -1110,6 +1110,8 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** Yes
 - **Localized:** No
 - **Cache time:** 5 minutes
+- **This endpoint exposes the following methods:**
+  - `since(:logId)` - Guild log with only entries that are newer than the given log id
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

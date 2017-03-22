@@ -99,7 +99,7 @@ class LogEndpoint extends AbstractEndpoint {
   }
 
   since (logId) {
-    return super.get(`?since=${logId}`, true);
+    return super.get(`?since=${logId}`, true)
   }
 }
 

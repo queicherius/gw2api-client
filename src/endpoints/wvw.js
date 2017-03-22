@@ -43,7 +43,7 @@ class MatchesEndpoint extends AbstractEndpoint {
   }
 
   world (worldId) {
-    return super.get(`?world=${worldId}`, true);
+    return super.get(`?world=${worldId}`, true)
   }
 
   overview () {
@@ -69,7 +69,7 @@ class MatchesOverviewEndpoint extends AbstractEndpoint {
   }
 
   world (worldId) {
-    return super.get(`?world=${worldId}`, true);
+    return super.get(`?world=${worldId}`, true)
   }
 }
 
@@ -83,7 +83,7 @@ class MatchesScoresEndpoint extends AbstractEndpoint {
   }
 
   world (worldId) {
-    return super.get(`?world=${worldId}`, true);
+    return super.get(`?world=${worldId}`, true)
   }
 }
 
@@ -97,7 +97,7 @@ class MatchesStatsEndpoint extends AbstractEndpoint {
   }
 
   world (worldId) {
-    return super.get(`?world=${worldId}`, true);
+    return super.get(`?world=${worldId}`, true)
   }
 }
 

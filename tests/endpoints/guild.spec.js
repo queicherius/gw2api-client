@@ -86,6 +86,22 @@ describe('endpoints > guild', () => {
     expect(content[0].user).to.equal('Account.1234')
   })
 
+  it('test /v2/guild/:id/log (since)', async () => {
+    endpoint = (new Module(mockClient, 'S0ME-UU1D')).log()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/guild/S0ME-UU1D/log')
+
+    fetchMock.addResponse([{id: 123, user: 'Account.1234', type: 'upgrade'}])
+    let content = await endpoint.since(42)
+    expect(content[0].user).to.equal('Account.1234')
+    expect(fetchMock.lastUrl()).contains('/v2/guild/S0ME-UU1D/log?since=42')
+  })
+
   it('test /v2/guild/:id/members', async () => {
     endpoint = (new Module(mockClient, 'S0ME-UU1D')).members()
 

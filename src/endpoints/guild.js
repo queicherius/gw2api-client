@@ -97,6 +97,10 @@ class LogEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }
+
+  since (logId) {
+    return super.get(`?since=${logId}`, true)
+  }
 }
 
 class MembersEndpoint extends AbstractEndpoint {

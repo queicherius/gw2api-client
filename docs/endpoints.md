@@ -1114,6 +1114,8 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** Yes
 - **Localized:** No
 - **Cache time:** 5 minutes
+- **This endpoint exposes the following methods:**
+  - `since(:logId)` - Guild log with only entries that are newer than the given log id
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 
@@ -1704,6 +1706,8 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** No
 - **Localized:** No
 - **Cache time:** 30 seconds
+- **This endpoint exposes the following methods:**
+  - `world(:worldId)` - Details of the WvW match where only the given world is participating in
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 
@@ -1719,6 +1723,8 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** No
 - **Localized:** No
 - **Cache time:** 30 seconds
+- **This endpoint exposes the following methods:**
+  - `world(:worldId)` - Details of the WvW match where only the given world is participating in
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 
@@ -1734,6 +1740,8 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** No
 - **Localized:** No
 - **Cache time:** 30 seconds
+- **This endpoint exposes the following methods:**
+  - `world(:worldId)` - Details of the WvW match where only the given world is participating in
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 
@@ -1749,6 +1757,8 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** No
 - **Localized:** No
 - **Cache time:** 30 seconds
+- **This endpoint exposes the following methods:**
+  - `world(:worldId)` - Details of the WvW match where only the given world is participating in
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

@@ -42,6 +42,10 @@ class MatchesEndpoint extends AbstractEndpoint {
     this.cacheTime = 30
   }
 
+  world (worldId) {
+    return super.get(`?world=${worldId}`, true);
+  }
+
   overview () {
     return new MatchesOverviewEndpoint(this)
   }
@@ -63,6 +67,10 @@ class MatchesOverviewEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.cacheTime = 30
   }
+
+  world (worldId) {
+    return super.get(`?world=${worldId}`, true);
+  }
 }
 
 class MatchesScoresEndpoint extends AbstractEndpoint {
@@ -73,6 +81,10 @@ class MatchesScoresEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.cacheTime = 30
   }
+
+  world (worldId) {
+    return super.get(`?world=${worldId}`, true);
+  }
 }
 
 class MatchesStatsEndpoint extends AbstractEndpoint {
@@ -82,6 +94,10 @@ class MatchesStatsEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isBulk = true
     this.cacheTime = 30
+  }
+
+  world (worldId) {
+    return super.get(`?world=${worldId}`, true);
   }
 }
 

@@ -13,7 +13,7 @@ describe('endpoints > maps', () => {
   it('test /v2/maps', async () => {
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
-    expect(endpoint.supportsBulkAll).to.equal(false)
+    expect(endpoint.supportsBulkAll).to.equal(true)
     expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.cacheTime).to.not.equal(undefined)

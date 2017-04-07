@@ -129,6 +129,21 @@ describe('endpoints > characters', () => {
     expect(content).to.deep.equal([1, 2, 3])
   })
 
+  it('test /v2/characters/:id/sab', async () => {
+    endpoint = (new Module(mockClient, 'Random Nâme')).sab()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/sab')
+
+    fetchMock.addResponse({zones: [{id: 1, mode: 'tribulation'}]})
+    let content = await endpoint.get()
+    expect(content).to.deep.equal({zones: [{id: 1, mode: 'tribulation'}]})
+  })
+
   it('test /v2/characters/:id/skills', async () => {
     endpoint = (new Module(mockClient, 'Random Nâme')).skills()
 

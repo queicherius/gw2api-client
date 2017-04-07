@@ -81,6 +81,7 @@ client.language('de').items().all()
 - [`api().characters(:name).heropoints()`](#apicharactersnameheropoints) - Heropoint information of a single character.
 - [`api().characters(:name).inventory()`](#apicharactersnameinventory) - Inventory of a single character.
 - [`api().characters(:name).recipes()`](#apicharactersnamerecipes) - Unlocked recipes of a single character.
+- [`api().characters(:name).sab()`](#apicharactersnamesab) - Zone progress and unlocks in the SAB for this character.
 - [`api().characters(:name).skills()`](#apicharactersnameskills) - Skills in use by a single character.
 - [`api().characters(:name).specializations()`](#apicharactersnamespecializations) - Specialization information of a single character.
 - [`api().characters(:name).training()`](#apicharactersnametraining) - Mastery training information of a single character.
@@ -701,6 +702,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Unlocked recipes of a single character.
 
 - **API-URL:** [/v2/characters/:name/recipes](https://api.guildwars2.com/v2/characters/:name/recipes)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().characters(:name).sab()`
+
+> Zone progress and unlocks in the SAB for this character.
+
+- **API-URL:** [/v2/characters/:name/sab](https://api.guildwars2.com/v2/characters/:name/sab)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes

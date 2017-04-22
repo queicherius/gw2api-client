@@ -156,7 +156,12 @@ import AbstractEndpoint from 'gw2api-client/build/endpoint'
 // Get an instance of an API client
 const api = client()
 
-// Define our custom "items" endpoint
+// Example: Add a new function inside the abstract endpoint
+AbstractEndpoint.prototype.post = function () {
+  console.log(this)
+}
+
+// Example: Define our custom "items" endpoint
 class ItemsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
@@ -167,6 +172,9 @@ class ItemsEndpoint extends AbstractEndpoint {
     this.supportsBulkAll = false
     this.isLocalized = true
     this.cacheTime = 5 * 60
+
+    // Send credentials (e.g. session cookies)
+    this.credentials = true
   }
 }
 

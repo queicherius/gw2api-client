@@ -23,6 +23,7 @@ export default class AbstractEndpoint {
     this.isLocalized = false
     this.isAuthenticated = false
     this.isOptionallyAuthenticated = false
+    this.credentials = false
 
     this._skipCache = false
   }
@@ -427,14 +428,20 @@ export default class AbstractEndpoint {
   _request (url, type = 'json') {
     url = this._buildUrl(url)
     debugRequest(`single url ${url}`)
-    return this.fetch.single(url, {type})
+    return this.fetch.single(url, {
+      type,
+      credentials: this.credentials ? 'include' : undefined
+    })
   }
 
   // Execute multiple requests in parallel
   _requestMany (urls, type = 'json') {
     urls = urls.map(url => this._buildUrl(url))
     debugRequest(`multiple urls ${urls.join(', ')}`)
-    return this.fetch.many(urls, {type})
+    return this.fetch.many(urls, {
+      type,
+      credentials: this.credentials ? 'include' : undefined
+    })
   }
 
   // Build the headers for localization and authentication

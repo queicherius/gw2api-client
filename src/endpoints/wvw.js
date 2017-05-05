@@ -65,7 +65,6 @@ class TeamsEndpoint extends AbstractEndpoint {
     this.team = team
     this.id = id
     this.url = `/v2/wvw/matches/stats/${id}/teams`
-    this.supportsBulkAll = false
   }
 
   top (which) {
@@ -78,7 +77,6 @@ class TopStatsEndpoint extends AbstractEndpoint {
     super(client)
     this.which = which
     this.url = `/v2/wvw/matches/stats/${id}/teams/${team}/top/${which}`
-    this.supportsBulkAll = false
   }
 }
 

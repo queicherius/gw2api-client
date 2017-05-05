@@ -151,6 +151,7 @@ client.language('de').items().all()
 - [`api().wvw().matches().overview()`](#apiwvwmatchesoverview) - Overview about WvW matches, shows the participating worlds.
 - [`api().wvw().matches().scores()`](#apiwvwmatchesscores) - Scores of the WvW matches.
 - [`api().wvw().matches().stats()`](#apiwvwmatchesstats) - Stats of the WvW matches, includes kills, deaths, etc.
+- [`api().wvw().matches().stats(:id).teams(:team).top(:which)`](#apiwvwtopguilds) - Top 10 Guilds per team by KDR/Kills
 - [`api().wvw().objectives()`](#apiwvwobjectives) - Details about WvW objectives such as camps, towers, and keeps.
 - [`api().wvw().upgrades()`](#apiwvwupgrades) - Information about WvW upgrades.
 - [`api().wvw().ranks()`](#apiwvwranks) - Information about WvW ranks.
@@ -1775,6 +1776,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Cache time:** 30 seconds
 - **This endpoint additionally exposes the following methods:**
   - `world(:worldId)` - Only get details to WvW matches where the given world is participating in
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().wvw().matches().stats(:id).teams(:team).top(:which)`
+
+> Top 10 Guilds for a given team in a given match ID by KDR/Kills
+
+- **API-URL:** [/v2/wvw/matches/stats/:id/teams/:team/top/:which](https://api.guildwars2.com/v2/wvw/matches/stats/:id/teams/:team/top/:which)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 30 seconds
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

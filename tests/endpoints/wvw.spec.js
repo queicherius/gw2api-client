@@ -163,7 +163,6 @@ describe('endpoints > wvw', () => {
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
-    expect(endpoint.supportsBulkAll).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/wvw/matches/stats/2-6/teams')
@@ -178,7 +177,6 @@ describe('endpoints > wvw', () => {
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)
-    expect(endpoint.supportsBulkAll).to.equal(false)
     expect(endpoint.isLocalized).to.equal(false)
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.url).to.equal('/v2/wvw/matches/stats/2-6/teams/blue/top/kdr')

@@ -158,6 +158,34 @@ describe('endpoints > wvw', () => {
     expect(fetchMock.lastUrl()).contains('/v2/wvw/matches/stats?world=2002')
   })
 
+  it('test /v2/wvw/matches/stats/:id/teams', async () => {
+    endpoint = endpoint.matches().stats('2-6').teams()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.url).to.equal('/v2/wvw/matches/stats/2-6/teams')
+
+    fetchMock.addResponse(['red', 'blue', 'green'])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal(['red', 'blue', 'green'])
+  })
+
+  it('test /v2/wvw/matches/stats/:id/teams/:team/top/kdr', async () => {
+    endpoint = endpoint.matches().stats('2-6').teams('blue').top('kdr')
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.url).to.equal('/v2/wvw/matches/stats/2-6/teams/blue/top/kdr')
+
+    fetchMock.addResponse([{guild_id: 'F8CDF1E0-2D64-4D71-81E2-049B0796B7AE', deaths: {red: 13, blue: 45, green: 27}}])
+    let content = await endpoint.get()
+    expect(content[0].deaths.red).to.equal(13)
+  })
+
   it('test /v2/wvw/objectives', async () => {
     endpoint = endpoint.objectives()
 

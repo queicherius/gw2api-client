@@ -54,8 +54,29 @@ class MatchesEndpoint extends AbstractEndpoint {
     return new MatchesScoresEndpoint(this)
   }
 
-  stats () {
-    return new MatchesStatsEndpoint(this)
+  stats (id) {
+    return new MatchesStatsEndpoint(this, id)
+  }
+}
+
+class TeamsEndpoint extends AbstractEndpoint {
+  constructor (client, id, team) {
+    super(client)
+    this.team = team
+    this.id = id
+    this.url = `/v2/wvw/matches/stats/${id}/teams`
+  }
+
+  top (which) {
+    return new TopStatsEndpoint(this, this.id, this.team, which)
+  }
+}
+
+class TopStatsEndpoint extends AbstractEndpoint {
+  constructor (client, id, team, which) {
+    super(client)
+    this.which = which
+    this.url = `/v2/wvw/matches/stats/${id}/teams/${team}/top/${which}`
   }
 }
 
@@ -88,8 +109,9 @@ class MatchesScoresEndpoint extends AbstractEndpoint {
 }
 
 class MatchesStatsEndpoint extends AbstractEndpoint {
-  constructor (client) {
+  constructor (client, id) {
     super(client)
+    this.id = id
     this.url = '/v2/wvw/matches/stats'
     this.isPaginated = true
     this.isBulk = true
@@ -98,6 +120,10 @@ class MatchesStatsEndpoint extends AbstractEndpoint {
 
   world (worldId) {
     return super.get(`?world=${worldId}`, true)
+  }
+
+  teams (team) {
+    return new TeamsEndpoint(this, this.id, team)
   }
 }
 

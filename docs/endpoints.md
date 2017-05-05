@@ -151,7 +151,7 @@ client.language('de').items().all()
 - [`api().wvw().matches().overview()`](#apiwvwmatchesoverview) - Overview about WvW matches, shows the participating worlds.
 - [`api().wvw().matches().scores()`](#apiwvwmatchesscores) - Scores of the WvW matches.
 - [`api().wvw().matches().stats()`](#apiwvwmatchesstats) - Stats of the WvW matches, includes kills, deaths, etc.
-- [`api().wvw().matches().stats(:id).teams(:team).top(:which)`](#apiwvwtopguilds) - Top 10 Guilds per team by KDR/Kills
+- [`api().wvw().matches().stats(:id).teams(:team).top(:which)`](#apiwvwmatchesstatsidteamsteamtopwhich) - Top 10 Guilds per team by KDR/Kills
 - [`api().wvw().objectives()`](#apiwvwobjectives) - Details about WvW objectives such as camps, towers, and keeps.
 - [`api().wvw().upgrades()`](#apiwvwupgrades) - Information about WvW upgrades.
 - [`api().wvw().ranks()`](#apiwvwranks) - Information about WvW ranks.

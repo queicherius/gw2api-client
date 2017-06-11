@@ -82,7 +82,7 @@ export default class AccountEndpoint extends AbstractEndpoint {
   }
 
   pvp () {
-    return new PvpEndpoint(this)
+    return new PvpEndpoint(this, true)
   }
 
   raids () {

@@ -61,6 +61,7 @@ client.language('de').items().all()
 - [`api().account().minis()`](#apiaccountminis) - The unlocked miniatures of the account.
 - [`api().account().outfits()`](#apiaccountoutfits) - The unlocked outfits of the account.
 - [`api().account().pvp()`](#apiaccountpvp) - Alternative method of calling [`api().pvp()`](#apipvpamulets).
+- [`api().account().pvp().heroes()`](#apiaccountpvpheroes) - The unlocked pvp heroes of the account.
 - [`api().account().raids()`](#apiaccountraids) - The completed raids of the current weekly.
 - [`api().account().recipes()`](#apiaccountrecipes) - The unlocked recipes of the account. 
 - [`api().account().skins()`](#apiaccountskins) - The unlocked skins of the account. 
@@ -432,6 +433,21 @@ Alternative method of calling [`api().commerce().delivery()`](#apicommercedelive
 ### `api().account().pvp()`
 
 Alternative method of calling [`api().pvp()`](#apipvpamulets).
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().pvp().heroes()`
+
+> The unlocked pvp heroes of this account.
+
+- **API-URL:** [/v2/account/pvp/heroes](https://api.guildwars2.com/v2/account/pvp/heroes)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

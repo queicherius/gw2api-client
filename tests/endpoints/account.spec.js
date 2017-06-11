@@ -304,6 +304,21 @@ describe('endpoints > account', () => {
     expect(endpoint.games).to.not.equal(undefined)
   })
 
+  it('test /v2/account/pvp/heroes', async () => {
+    endpoint = endpoint.pvp().heroes()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/account/pvp/heroes')
+
+    fetchMock.addResponse([1, 2, 3])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([1, 2, 3])
+  })
+
   it('test /v2/account/raids', async () => {
     endpoint = endpoint.raids()
 

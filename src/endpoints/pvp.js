@@ -1,6 +1,11 @@
 import AbstractEndpoint from '../endpoint'
 
 export default class PvpEndpoint extends AbstractEndpoint {
+  constructor (client, fromAccount) {
+    super(client)
+    this.fromAccount = fromAccount
+  }
+
   amulets () {
     return new AmuletsEndpoint(this)
   }
@@ -10,6 +15,10 @@ export default class PvpEndpoint extends AbstractEndpoint {
   }
 
   heroes () {
+    if (this.fromAccount) {
+      return new AccountHeroesEndpoint(this)
+    }
+
     return new HeroesEndpoint(this)
   }
 
@@ -27,6 +36,15 @@ export default class PvpEndpoint extends AbstractEndpoint {
 
   stats () {
     return new StatsEndpoint(this)
+  }
+}
+
+class AccountHeroesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/pvp/heroes'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 

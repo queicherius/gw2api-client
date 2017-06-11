@@ -77,6 +77,7 @@ client.language('de').items().all()
 - [`api().backstory().answers()`](#apibackstoryanswers) - Information about biography answers.
 - [`api().backstory().questions()`](#apibackstoryquestions) - Information about biography questions.
 - [`api().build()`](#apibuild) - The current game build id.
+- [`api().cats()`](#apicats) - Information about home instance cats.
 - [`api().characters()`](#apicharacters) - Information about characters of the account.
 - [`api().characters(:name).backstory()`](#apicharactersnamebackstory) - Backstory information of a single character.
 - [`api().characters(:name).core()`](#apicharactersnamecore) - Core information (name, race, ...) of a single character.
@@ -106,7 +107,6 @@ client.language('de').items().all()
 - [`api().emblem().foregrounds()`](#apiemblemforegrounds) - The guild emblem's foreground images.
 - [`api().events()`](#apievents) - Information about events.
 - [`api().files()`](#apifiles) - Commonly requested assets that may be used to enhance API-derived applications.
-- [`api().cats()`](#apicats) - Information about home instance cats.
 - [`api().finishers()`](#apifinishers) - Information about finishers.
 - [`api().gliders()`](#apigliders) - Information about gliders.
 - [`api().guild()`](#apiguild) - Core details about a given guild.
@@ -656,6 +656,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ---
 
+### `api().cats()`
+
+> Information about cats.
+
+- **API-URL:** [/v2/cats](https://api.guildwars2.com/v2/cats)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
 ### `api().characters()`
 
 > Information about characters of the account.
@@ -1084,21 +1099,6 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Commonly requested assets that may be used to enhance API-derived applications.
 
 - **API-URL:** [/v2/files](https://api.guildwars2.com/v2/files)
-- **Paginated:** Yes
-- **Bulk expanding:** Yes
-- **Authenticated:** No
-- **Localized:** No
-- **Cache time:** 24 hours
-
-<sup>[↑ Back to the overview](#available-endpoints)</sup>
-
----
-
-### `api().cats()`
-
-> Information about cats.
-
-- **API-URL:** [/v2/cats](https://api.guildwars2.com/v2/cats)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

@@ -102,7 +102,7 @@ client.language('de').items().all()
 - [`api().emblem().foregrounds()`](#apiemblemforegrounds) - The guild emblem's foreground images.
 - [`api().events()`](#apievents) - Information about events.
 - [`api().files()`](#apifiles) - Commonly requested assets that may be used to enhance API-derived applications.
-- [`api().cats()`](#apicats) - Information about cats.
+- [`api().cats()`](#apicats) - Information about home instance cats.
 - [`api().finishers()`](#apifinishers) - Information about finishers.
 - [`api().gliders()`](#apigliders) - Information about gliders.
 - [`api().guild()`](#apiguild) - Core details about a given guild.
@@ -125,6 +125,7 @@ client.language('de').items().all()
 - [`api().masteries()`](#apimasteries) - Information about the masteries.
 - [`api().materials()`](#apimaterials) - Information about the categories and items in the material storage.
 - [`api().minis()`](#apiminis) - Information about miniatures.
+- [`api().nodes()`](#apinodes) - Information about home instance nodes.
 - [`api().outfits()`](#apioutfits) - Information about outfits.
 - [`api().pets()`](#apipets) - Information about the ranger's pets.
 - [`api().professions()`](#apiprofessions) - Information about professions.
@@ -1376,6 +1377,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** Yes
 - **Authenticated:** No
 - **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().nodes()`
+
+> Information about home instance nodes.
+
+- **API-URL:** [/v2/nodes](https://api.guildwars2.com/v2/nodes)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

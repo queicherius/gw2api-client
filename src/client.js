@@ -159,6 +159,10 @@ export default class Client {
     return new endpoints.MinisEndpoint(this)
   }
 
+  nodes () {
+    return new endpoints.NodesEndpoint(this)
+  }
+
   outfits () {
     return new endpoints.OutfitsEndpoint(this)
   }

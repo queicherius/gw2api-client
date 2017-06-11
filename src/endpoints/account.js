@@ -63,6 +63,12 @@ export default class AccountEndpoint extends AbstractEndpoint {
     return new MasteriesEndpoint(this)
   }
 
+  mastery () {
+    return {
+      points: () => new MasteryPointsEndpoint(this)
+    }
+  }
+
   materials () {
     return new MaterialsEndpoint(this)
   }
@@ -223,6 +229,15 @@ class MasteriesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/masteries'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class MasteryPointsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/mastery/points'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

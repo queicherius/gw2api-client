@@ -239,6 +239,21 @@ describe('endpoints > account', () => {
     expect(content).to.deep.equal([{id: 1, level: 4}, {id: 2, level: 5}])
   })
 
+  it('test /v2/account/mastery/points', async () => {
+    endpoint = endpoint.mastery.points()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/account/mastery/points')
+
+    fetchMock.addResponse({totals: [{region: 'Tyria', spent: 49, earned: 58}]})
+    let content = await endpoint.get()
+    expect(content).to.deep.equal({totals: [{region: 'Tyria', spent: 49, earned: 58}]})
+  })
+
   it('test /v2/account/materials', async () => {
     endpoint = endpoint.materials()
 

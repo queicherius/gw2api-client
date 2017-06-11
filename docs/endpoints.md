@@ -56,6 +56,7 @@ client.language('de').items().all()
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
 - [`api().account().mailcarriers()`](#apiaccountmailcarriers) - The unlocked mailcarriers of the account.
 - [`api().account().masteries()`](#apiaccountmasteries) - The unlocked masteries of the account.
+- [`api().account().mastery.points()`](#apiaccountmasterypoints) - The unlocked mastery points of the account.
 - [`api().account().materials()`](#apiaccountmaterials) - The materials stored in the account's material storage.
 - [`api().account().minis()`](#apiaccountminis) - The unlocked miniatures of the account.
 - [`api().account().outfits()`](#apiaccountoutfits) - The unlocked outfits of the account.
@@ -357,6 +358,21 @@ Alternative method of calling [`api().commerce().delivery()`](#apicommercedelive
 > The unlocked masteries of the account.
 
 - **API-URL:** [/v2/account/masteries](https://api.guildwars2.com/v2/account/masteries)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().mastery.points()`
+
+> The unlocked mastery points of the account.
+
+- **API-URL:** [/v2/account/mastery/points](https://api.guildwars2.com/v2/account/mastery/points)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes

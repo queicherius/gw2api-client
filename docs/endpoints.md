@@ -134,6 +134,7 @@ client.language('de').items().all()
 - [`api().professions()`](#apiprofessions) - Information about professions.
 - [`api().pvp().amulets()`](#apipvpamulets) - Information about PvP amulets.
 - [`api().pvp().games()`](#apipvpgames) - Information about past PvP matches the player has participated in.
+- [`api().pvp().heroes()`](#apipvpheroes) - Information about PvP heroes.
 - [`api().pvp().ranks()`](#apipvpranks) - Information about PvP ranks.
 - [`api().pvp().seasons()`](#apipvpseasons) - Information about league seasons.
 - [`api().pvp().seasons(:id).leaderboards()`](#apipvpseasonsidleaderboards) - Information about available leaderboards for a league season.
@@ -1509,6 +1510,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** Yes
 - **Localized:** No
 - **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().pvp().heroes()`
+
+> Information about PvP heroes.
+
+- **API-URL:** [/v2/pvp/heroes](https://api.guildwars2.com/v2/pvp/heroes)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

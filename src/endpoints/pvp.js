@@ -9,6 +9,10 @@ export default class PvpEndpoint extends AbstractEndpoint {
     return new GamesEndpoint(this)
   }
 
+  heroes () {
+    return new HeroesEndpoint(this)
+  }
+
   ranks () {
     return new RanksEndpoint(this)
   }
@@ -45,6 +49,17 @@ class GamesEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
+  }
+}
+
+class HeroesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/pvp/heroes'
+    this.isPaginated = true
+    this.isBulk = true
+    this.isLocalized = true
+    this.cacheTime = 24 * 60 * 60
   }
 }
 

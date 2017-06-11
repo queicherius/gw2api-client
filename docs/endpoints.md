@@ -56,7 +56,7 @@ client.language('de').items().all()
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
 - [`api().account().mailcarriers()`](#apiaccountmailcarriers) - The unlocked mailcarriers of the account.
 - [`api().account().masteries()`](#apiaccountmasteries) - The unlocked masteries of the account.
-- [`api().account().mastery.points()`](#apiaccountmasterypoints) - The unlocked mastery points of the account.
+- [`api().account().mastery().points()`](#apiaccountmasterypoints) - The unlocked mastery points of the account.
 - [`api().account().materials()`](#apiaccountmaterials) - The materials stored in the account's material storage.
 - [`api().account().minis()`](#apiaccountminis) - The unlocked miniatures of the account.
 - [`api().account().outfits()`](#apiaccountoutfits) - The unlocked outfits of the account.
@@ -369,7 +369,7 @@ Alternative method of calling [`api().commerce().delivery()`](#apicommercedelive
 
 ---
 
-### `api().account().mastery.points()`
+### `api().account().mastery().points()`
 
 > The unlocked mastery points of the account.
 

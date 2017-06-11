@@ -95,7 +95,7 @@ describe('endpoints > account', () => {
 
   it('test /v2/account/delivery', async () => {
     endpoint = endpoint.delivery()
-    expect(endpoint.current).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/commerce/delivery')
   })
 
   it('test /v2/account/dungeons', async () => {
@@ -240,7 +240,7 @@ describe('endpoints > account', () => {
   })
 
   it('test /v2/account/mastery/points', async () => {
-    endpoint = endpoint.mastery.points()
+    endpoint = endpoint.mastery().points()
 
     expect(endpoint.isPaginated).to.equal(false)
     expect(endpoint.isBulk).to.equal(false)

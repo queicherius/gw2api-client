@@ -24,6 +24,10 @@ export default class AccountEndpoint extends AbstractEndpoint {
     return new CharactersEndpoint(this, name)
   }
 
+  delivery () {
+    return new CommerceEndpoint(this).delivery()
+  }
+
   dungeons () {
     return new DungeonsEndpoint(this)
   }

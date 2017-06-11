@@ -93,6 +93,11 @@ describe('endpoints > account', () => {
     expect(endpoint.url).to.equal('/v2/characters')
   })
 
+  it('test /v2/account/delivery', async () => {
+    endpoint = endpoint.delivery()
+    expect(endpoint.current).to.not.equal(undefined)
+  })
+
   it('test /v2/account/dungeons', async () => {
     endpoint = endpoint.dungeons()
 

@@ -65,6 +65,7 @@ client.language('de').items().all()
 - [`api().account().skins()`](#apiaccountskins) - The unlocked skins of the account. 
 - [`api().account().titles()`](#apiaccounttitles) - The unlocked titles of the account. 
 - [`api().account().transactions()`](#apiaccounttransactions) - Alternative method of calling [`api().commerce().transactions()`](#apicommercetransactionscurrentbuys).
+- [`api().account().delivery()`](#apiaccountdelivery) - Alternative method of calling [`api().commerce().delivery()`](#apicommercedelivery).
 - [`api().account().wallet()`](#apiaccountwallet) - The currencies owned by the account. 
 - [`api().achievements()`](#apiachievements) - Information about achievements.
 - [`api().achievements().categories()`](#apiachievementscategories) - The categories for achievements.
@@ -87,6 +88,7 @@ client.language('de').items().all()
 - [`api().characters(:name).specializations()`](#apicharactersnamespecializations) - Specialization information of a single character.
 - [`api().characters(:name).training()`](#apicharactersnametraining) - Mastery training information of a single character.
 - [`api().colors()`](#apicolors) - Information about dye colors, including their color component information.
+- [`api().commerce().delivery()`](#apicommercedelivery) - Current coins and items in the delivery box of the trading post.
 - [`api().commerce().exchange()`](#apicommerceexchange) - Current exchange rates for coins to gems and gems to coins.
 - [`api().commerce().listings()`](#apicommercelistings) - Current buy and sell listings from the trading post.
 - [`api().commerce().prices()`](#apicommerceprices) - Current aggregated buy and sell listing information from the trading post.
@@ -217,6 +219,14 @@ client.language('de').items().all()
 ### `api().account().characters()`
 
 Alternative method of calling [`api().characters()`](#apicharacters).
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().delivery()`
+
+Alternative method of calling [`api().commerce().delivery()`](#apicommercedelivery).
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 
@@ -803,6 +813,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** No
 - **Localized:** Yes
 - **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().commerce().delivery()`
+
+> Current coins and items in the delivery box of the trading post.
+
+- **API-URL:** [/v2/commerce/delivery](https://api.guildwars2.com/v2/commerce/delivery)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

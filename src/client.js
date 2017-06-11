@@ -139,6 +139,10 @@ export default class Client {
     return new endpoints.LegendsEndpoint(this)
   }
 
+  mailcarriers () {
+    return new endpoints.MailcarriersEndpoint(this)
+  }
+
   maps () {
     return new endpoints.MapsEndpoint(this)
   }

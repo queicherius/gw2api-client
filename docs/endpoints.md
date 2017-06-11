@@ -119,6 +119,7 @@ client.language('de').items().all()
 - [`api().guild().treasury()`](#apiguildtreasury) - Information about the items in the guild's treasury.
 - [`api().items()`](#apiitems) - Information about items that were discovered by players.
 - [`api().itemstats()`](#apiitemstats) - Information about stats for items.
+- [`api().mailcarriers()`](#apimailcarriers) - Information about mailcarriers.
 - [`api().legends()`](#apilegends) - Information about the revenant's legends.
 - [`api().maps()`](#apimaps) - Details about maps, including details about floor and translation data on how to translate between world coordinates and map 
 - [`api().masteries()`](#apimasteries) - Information about the masteries.
@@ -1300,6 +1301,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** Yes
 - **Authenticated:** No
 - **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().mailcarriers()`
+
+> Information about mailcarriers.
+
+- **API-URL:** [/v2/mailcarriers](https://api.guildwars2.com/v2/mailcarriers)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

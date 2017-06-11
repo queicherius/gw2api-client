@@ -203,6 +203,11 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/legends')
   })
 
+  it('can get the mailcarriers endpoint', () => {
+    let endpoint = client.mailcarriers()
+    expect(endpoint.url).to.equal('/v2/mailcarriers')
+  })
+
   it('can get the maps endpoint', () => {
     let endpoint = client.maps()
     expect(endpoint.url).to.equal('/v2/maps')

@@ -51,6 +51,10 @@ export default class AccountEndpoint extends AbstractEndpoint {
     return new InventoryEndpoint(this)
   }
 
+  mailcarriers () {
+    return new MailcarriersEndpoint(this)
+  }
+
   masteries () {
     return new MasteriesEndpoint(this)
   }
@@ -197,6 +201,15 @@ class InventoryEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/inventory'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class MailcarriersEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/mailcarriers'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

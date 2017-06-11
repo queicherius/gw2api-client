@@ -1,6 +1,11 @@
 import AbstractEndpoint from '../endpoint'
 
 export default class CommerceEndpoint extends AbstractEndpoint {
+  // Current things to grab in the delivery box
+  delivery () {
+    return new DeliveryEndpoint(this)
+  }
+
   // Current gem/coin exchange rates
   exchange () {
     return new ExchangeEndpoint(this)
@@ -28,6 +33,15 @@ export default class CommerceEndpoint extends AbstractEndpoint {
         sells: () => new TransactionsEndpoint(this, 'history', 'sells')
       })
     }
+  }
+}
+
+class DeliveryEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = `/v2/commerce/delivery`
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 

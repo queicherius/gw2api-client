@@ -93,6 +93,11 @@ describe('endpoints > account', () => {
     expect(endpoint.url).to.equal('/v2/characters')
   })
 
+  it('test /v2/account/delivery', async () => {
+    endpoint = endpoint.delivery()
+    expect(endpoint.url).to.equal('/v2/commerce/delivery')
+  })
+
   it('test /v2/account/dungeons', async () => {
     endpoint = endpoint.dungeons()
 
@@ -204,6 +209,21 @@ describe('endpoints > account', () => {
     ])
   })
 
+  it('test /v2/account/mailcarriers', async () => {
+    endpoint = endpoint.mailcarriers()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/account/mailcarriers')
+
+    fetchMock.addResponse([1, 2, 3])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([1, 2, 3])
+  })
+
   it('test /v2/account/masteries', async () => {
     endpoint = endpoint.masteries()
 
@@ -217,6 +237,21 @@ describe('endpoints > account', () => {
     fetchMock.addResponse([{id: 1, level: 4}, {id: 2, level: 5}])
     let content = await endpoint.get()
     expect(content).to.deep.equal([{id: 1, level: 4}, {id: 2, level: 5}])
+  })
+
+  it('test /v2/account/mastery/points', async () => {
+    endpoint = endpoint.mastery().points()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/account/mastery/points')
+
+    fetchMock.addResponse({totals: [{region: 'Tyria', spent: 49, earned: 58}]})
+    let content = await endpoint.get()
+    expect(content).to.deep.equal({totals: [{region: 'Tyria', spent: 49, earned: 58}]})
   })
 
   it('test /v2/account/materials', async () => {
@@ -267,6 +302,21 @@ describe('endpoints > account', () => {
   it('test /v2/account/pvp', async () => {
     endpoint = endpoint.pvp()
     expect(endpoint.games).to.not.equal(undefined)
+  })
+
+  it('test /v2/account/pvp/heroes', async () => {
+    endpoint = endpoint.pvp().heroes()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/account/pvp/heroes')
+
+    fetchMock.addResponse([1, 2, 3])
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([1, 2, 3])
   })
 
   it('test /v2/account/raids', async () => {

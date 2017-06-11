@@ -24,6 +24,10 @@ export default class AccountEndpoint extends AbstractEndpoint {
     return new CharactersEndpoint(this, name)
   }
 
+  delivery () {
+    return new CommerceEndpoint(this).delivery()
+  }
+
   dungeons () {
     return new DungeonsEndpoint(this)
   }
@@ -51,8 +55,18 @@ export default class AccountEndpoint extends AbstractEndpoint {
     return new InventoryEndpoint(this)
   }
 
+  mailcarriers () {
+    return new MailcarriersEndpoint(this)
+  }
+
   masteries () {
     return new MasteriesEndpoint(this)
+  }
+
+  mastery () {
+    return {
+      points: () => new MasteryPointsEndpoint(this)
+    }
   }
 
   materials () {
@@ -68,7 +82,7 @@ export default class AccountEndpoint extends AbstractEndpoint {
   }
 
   pvp () {
-    return new PvpEndpoint(this)
+    return new PvpEndpoint(this, true)
   }
 
   raids () {
@@ -202,10 +216,28 @@ class InventoryEndpoint extends AbstractEndpoint {
   }
 }
 
+class MailcarriersEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/mailcarriers'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
 class MasteriesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/masteries'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class MasteryPointsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/mastery/points'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

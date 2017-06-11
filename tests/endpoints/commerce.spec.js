@@ -10,6 +10,29 @@ describe('endpoints > commerce', () => {
     fetchMock.reset()
   })
 
+  it('test /v2/commerce/delivery', async () => {
+    endpoint = endpoint.delivery()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/commerce/delivery')
+
+    fetchMock.addResponse({
+      coins: 2280,
+      items: [
+        {id: 49424, count: 14},
+        {id: 24358, count: 1}
+      ]
+    })
+
+    let content = await endpoint.get()
+    expect(content.coins).to.equal(2280)
+    expect(content.items.length).to.equal(2)
+  })
+
   it('test /v2/commerce/exchange (coins)', async () => {
     endpoint = endpoint.exchange()
 

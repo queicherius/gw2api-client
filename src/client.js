@@ -75,6 +75,10 @@ export default class Client {
     return new endpoints.BuildEndpoint(this)
   }
 
+  cats () {
+    return new endpoints.CatsEndpoint(this)
+  }
+
   characters (name) {
     return new endpoints.CharactersEndpoint(this, name)
   }
@@ -135,6 +139,10 @@ export default class Client {
     return new endpoints.LegendsEndpoint(this)
   }
 
+  mailcarriers () {
+    return new endpoints.MailcarriersEndpoint(this)
+  }
+
   maps () {
     return new endpoints.MapsEndpoint(this)
   }
@@ -149,6 +157,10 @@ export default class Client {
 
   minis () {
     return new endpoints.MinisEndpoint(this)
+  }
+
+  nodes () {
+    return new endpoints.NodesEndpoint(this)
   }
 
   outfits () {

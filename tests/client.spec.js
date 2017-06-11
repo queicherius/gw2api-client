@@ -111,6 +111,11 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/build')
   })
 
+  it('can get the cats endpoint', () => {
+    let endpoint = client.cats()
+    expect(endpoint.url).to.equal('/v2/cats')
+  })
+
   it('can get the characters endpoint', () => {
     let endpoint = client.characters()
     expect(endpoint.url).to.equal('/v2/characters')
@@ -198,6 +203,11 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/legends')
   })
 
+  it('can get the mailcarriers endpoint', () => {
+    let endpoint = client.mailcarriers()
+    expect(endpoint.url).to.equal('/v2/mailcarriers')
+  })
+
   it('can get the maps endpoint', () => {
     let endpoint = client.maps()
     expect(endpoint.url).to.equal('/v2/maps')
@@ -216,6 +226,11 @@ describe('client', () => {
   it('can get the minis endpoint', () => {
     let endpoint = client.minis()
     expect(endpoint.url).to.equal('/v2/minis')
+  })
+
+  it('can get the nodes endpoint', () => {
+    let endpoint = client.nodes()
+    expect(endpoint.url).to.equal('/v2/nodes')
   })
 
   it('can get the outfits endpoint', () => {

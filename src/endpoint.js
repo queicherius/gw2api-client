@@ -219,6 +219,7 @@ export default class AbstractEndpoint {
         return Promise.resolve([])
       }
 
+      /* istanbul ignore next */
       return Promise.reject(err)
     }
 
@@ -428,20 +429,22 @@ export default class AbstractEndpoint {
   _request (url, type = 'json') {
     url = this._buildUrl(url)
     debugRequest(`single url ${url}`)
-    return this.fetch.single(url, {
-      type,
-      credentials: this.credentials ? 'include' : undefined
-    })
+
+    /* istanbul ignore next */
+    const credentials = this.credentials ? 'include' : undefined
+
+    return this.fetch.single(url, {type, credentials})
   }
 
   // Execute multiple requests in parallel
   _requestMany (urls, type = 'json') {
     urls = urls.map(url => this._buildUrl(url))
     debugRequest(`multiple urls ${urls.join(', ')}`)
-    return this.fetch.many(urls, {
-      type,
-      credentials: this.credentials ? 'include' : undefined
-    })
+
+    /* istanbul ignore next */
+    const credentials = this.credentials ? 'include' : undefined
+
+    return this.fetch.many(urls, {type, credentials})
   }
 
   // Build the headers for localization and authentication

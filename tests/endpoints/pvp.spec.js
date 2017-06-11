@@ -42,6 +42,22 @@ describe('endpoints > pvp', () => {
     expect(content).to.deep.equal(['uuid1', 'uuid2'])
   })
 
+  it('test /v2/pvp/heroes', async () => {
+    endpoint = endpoint.heroes()
+
+    expect(endpoint.isPaginated).to.equal(true)
+    expect(endpoint.isBulk).to.equal(true)
+    expect(endpoint.supportsBulkAll).to.equal(true)
+    expect(endpoint.isLocalized).to.equal(true)
+    expect(endpoint.isAuthenticated).to.equal(false)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/pvp/heroes')
+
+    fetchMock.addResponse({id: 1, name: 'Nika'})
+    let content = await endpoint.get(1)
+    expect(content.name).to.equal('Nika')
+  })
+
   it('test /v2/pvp/ranks', async () => {
     endpoint = endpoint.ranks()
 

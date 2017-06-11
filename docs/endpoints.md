@@ -54,16 +54,20 @@ client.language('de').items().all()
 - [`api().account().home().cats()`](#apiaccounthomecats) - The unlocked cats in the home instance of the account.
 - [`api().account().home().nodes()`](#apiaccounthomenodes) - The unlocked nodes in the home instance of the account.
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
+- [`api().account().mailcarriers()`](#apiaccountmailcarriers) - The unlocked mailcarriers of the account.
 - [`api().account().masteries()`](#apiaccountmasteries) - The unlocked masteries of the account.
+- [`api().account().mastery().points()`](#apiaccountmasterypoints) - The unlocked mastery points of the account.
 - [`api().account().materials()`](#apiaccountmaterials) - The materials stored in the account's material storage.
 - [`api().account().minis()`](#apiaccountminis) - The unlocked miniatures of the account.
 - [`api().account().outfits()`](#apiaccountoutfits) - The unlocked outfits of the account.
 - [`api().account().pvp()`](#apiaccountpvp) - Alternative method of calling [`api().pvp()`](#apipvpamulets).
+- [`api().account().pvp().heroes()`](#apiaccountpvpheroes) - The unlocked pvp heroes of the account.
 - [`api().account().raids()`](#apiaccountraids) - The completed raids of the current weekly.
 - [`api().account().recipes()`](#apiaccountrecipes) - The unlocked recipes of the account. 
 - [`api().account().skins()`](#apiaccountskins) - The unlocked skins of the account. 
 - [`api().account().titles()`](#apiaccounttitles) - The unlocked titles of the account. 
 - [`api().account().transactions()`](#apiaccounttransactions) - Alternative method of calling [`api().commerce().transactions()`](#apicommercetransactionscurrentbuys).
+- [`api().account().delivery()`](#apiaccountdelivery) - Alternative method of calling [`api().commerce().delivery()`](#apicommercedelivery).
 - [`api().account().wallet()`](#apiaccountwallet) - The currencies owned by the account. 
 - [`api().achievements()`](#apiachievements) - Information about achievements.
 - [`api().achievements().categories()`](#apiachievementscategories) - The categories for achievements.
@@ -73,6 +77,7 @@ client.language('de').items().all()
 - [`api().backstory().answers()`](#apibackstoryanswers) - Information about biography answers.
 - [`api().backstory().questions()`](#apibackstoryquestions) - Information about biography questions.
 - [`api().build()`](#apibuild) - The current game build id.
+- [`api().cats()`](#apicats) - Information about home instance cats.
 - [`api().characters()`](#apicharacters) - Information about characters of the account.
 - [`api().characters(:name).backstory()`](#apicharactersnamebackstory) - Backstory information of a single character.
 - [`api().characters(:name).core()`](#apicharactersnamecore) - Core information (name, race, ...) of a single character.
@@ -86,6 +91,7 @@ client.language('de').items().all()
 - [`api().characters(:name).specializations()`](#apicharactersnamespecializations) - Specialization information of a single character.
 - [`api().characters(:name).training()`](#apicharactersnametraining) - Mastery training information of a single character.
 - [`api().colors()`](#apicolors) - Information about dye colors, including their color component information.
+- [`api().commerce().delivery()`](#apicommercedelivery) - Current coins and items in the delivery box of the trading post.
 - [`api().commerce().exchange()`](#apicommerceexchange) - Current exchange rates for coins to gems and gems to coins.
 - [`api().commerce().listings()`](#apicommercelistings) - Current buy and sell listings from the trading post.
 - [`api().commerce().prices()`](#apicommerceprices) - Current aggregated buy and sell listing information from the trading post.
@@ -112,20 +118,24 @@ client.language('de').items().all()
 - [`api().guild(:id).members()`](#apiguildidmembers) - Information about the members of the guild.
 - [`api().guild(:id).ranks()`](#apiguildidranks) - Information about the ranks of the guild.
 - [`api().guild(:id).stash()`](#apiguildidstash) - Information about the items in the guild's vault.
+- [`api().guild(:id).storage()`](#apiguildidstorage) - Information about the stored guild upgrades.
 - [`api().guild(:id).teams()`](#apiguildidteams) - Information about the teams in the guild.
 - [`api().guild().treasury()`](#apiguildtreasury) - Information about the items in the guild's treasury.
 - [`api().items()`](#apiitems) - Information about items that were discovered by players.
 - [`api().itemstats()`](#apiitemstats) - Information about stats for items.
+- [`api().mailcarriers()`](#apimailcarriers) - Information about mailcarriers.
 - [`api().legends()`](#apilegends) - Information about the revenant's legends.
 - [`api().maps()`](#apimaps) - Details about maps, including details about floor and translation data on how to translate between world coordinates and map 
 - [`api().masteries()`](#apimasteries) - Information about the masteries.
 - [`api().materials()`](#apimaterials) - Information about the categories and items in the material storage.
 - [`api().minis()`](#apiminis) - Information about miniatures.
+- [`api().nodes()`](#apinodes) - Information about home instance nodes.
 - [`api().outfits()`](#apioutfits) - Information about outfits.
 - [`api().pets()`](#apipets) - Information about the ranger's pets.
 - [`api().professions()`](#apiprofessions) - Information about professions.
 - [`api().pvp().amulets()`](#apipvpamulets) - Information about PvP amulets.
 - [`api().pvp().games()`](#apipvpgames) - Information about past PvP matches the player has participated in.
+- [`api().pvp().heroes()`](#apipvpheroes) - Information about PvP heroes.
 - [`api().pvp().ranks()`](#apipvpranks) - Information about PvP ranks.
 - [`api().pvp().seasons()`](#apipvpseasons) - Information about league seasons.
 - [`api().pvp().seasons(:id).leaderboards()`](#apipvpseasonsidleaderboards) - Information about available leaderboards for a league season.
@@ -212,6 +222,14 @@ client.language('de').items().all()
 ### `api().account().characters()`
 
 Alternative method of calling [`api().characters()`](#apicharacters).
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().delivery()`
+
+Alternative method of calling [`api().commerce().delivery()`](#apicommercedelivery).
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 
@@ -322,11 +340,41 @@ Alternative method of calling [`api().characters()`](#apicharacters).
 
 ---
 
+### `api().account().mailcarriers()`
+
+> The unlocked mailcarriers of the account.
+
+- **API-URL:** [/v2/account/mailcarriers](https://api.guildwars2.com/v2/account/mailcarriers)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
 ### `api().account().masteries()`
 
 > The unlocked masteries of the account.
 
 - **API-URL:** [/v2/account/masteries](https://api.guildwars2.com/v2/account/masteries)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().mastery().points()`
+
+> The unlocked mastery points of the account.
+
+- **API-URL:** [/v2/account/mastery/points](https://api.guildwars2.com/v2/account/mastery/points)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes
@@ -385,6 +433,21 @@ Alternative method of calling [`api().characters()`](#apicharacters).
 ### `api().account().pvp()`
 
 Alternative method of calling [`api().pvp()`](#apipvpamulets).
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().pvp().heroes()`
+
+> The unlocked pvp heroes of this account.
+
+- **API-URL:** [/v2/account/pvp/heroes](https://api.guildwars2.com/v2/account/pvp/heroes)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 
@@ -593,6 +656,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ---
 
+### `api().cats()`
+
+> Information about cats.
+
+- **API-URL:** [/v2/cats](https://api.guildwars2.com/v2/cats)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
 ### `api().characters()`
 
 > Information about characters of the account.
@@ -783,6 +861,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** No
 - **Localized:** Yes
 - **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().commerce().delivery()`
+
+> Current coins and items in the delivery box of the trading post.
+
+- **API-URL:** [/v2/commerce/delivery](https://api.guildwars2.com/v2/commerce/delivery)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 
@@ -1183,6 +1276,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ---
 
+### `api().guild(:id).storage()`
+
+> Information about the stored guild upgrades.
+
+- **API-URL:** [/v2/guild/:id/storage](https://api.guildwars2.com/v2/guild/:id/storage)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
 ### `api().guild(:id).teams()`
 
 > Information about the teams in the guild.
@@ -1258,6 +1366,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ---
 
+### `api().mailcarriers()`
+
+> Information about mailcarriers.
+
+- **API-URL:** [/v2/mailcarriers](https://api.guildwars2.com/v2/mailcarriers)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
 ### `api().maps()`
 
 > Details about maps, including details about floor and translation data on how to translate between world coordinates and map coordinates.
@@ -1312,6 +1435,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** Yes
 - **Authenticated:** No
 - **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().nodes()`
+
+> Information about home instance nodes.
+
+- **API-URL:** [/v2/nodes](https://api.guildwars2.com/v2/nodes)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
@@ -1388,6 +1526,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** Yes
 - **Localized:** No
 - **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().pvp().heroes()`
+
+> Information about PvP heroes.
+
+- **API-URL:** [/v2/pvp/heroes](https://api.guildwars2.com/v2/pvp/heroes)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

@@ -75,6 +75,10 @@ export default class Client {
     return new endpoints.BuildEndpoint(this)
   }
 
+  cats () {
+    return new endpoints.CatsEndpoint(this)
+  }
+
   characters (name) {
     return new endpoints.CharactersEndpoint(this, name)
   }

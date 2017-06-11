@@ -111,6 +111,11 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/build')
   })
 
+  it('can get the cats endpoint', () => {
+    let endpoint = client.cats()
+    expect(endpoint.url).to.equal('/v2/cats')
+  })
+
   it('can get the characters endpoint', () => {
     let endpoint = client.characters()
     expect(endpoint.url).to.equal('/v2/characters')

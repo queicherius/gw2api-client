@@ -73,9 +73,10 @@ function accountGuilds (client) {
   }
 }
 
-// Wrap a promise function so all errors that have to do with API permissions
+// Wrap a promise function so all errors that have to do with the API
 // just result in an empty response instead of throwing an error
-function wrap (func) {
+// This prevents API errors / changes breaking the entire infrastructure
+export function wrap (func) {
   return () => new Promise((resolve, reject) => {
     func()
       .then(x => resolve(x))
@@ -83,7 +84,8 @@ function wrap (func) {
         let status = _get(err, 'response.status')
         let text = _get(err, 'content.text')
 
-        if (status === 403 || text === 'access restricted to guild leaders') {
+        if (status || text) {
+          console.warn(`API error: ${text} (${status})`)
           return resolve(null)
         }
 

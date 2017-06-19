@@ -1,6 +1,6 @@
 /* eslint-env node, mocha */
 import { expect } from 'chai'
-import endpoint from '../../src/endpoints/account-blob'
+import endpoint, { wrap } from '../../src/endpoints/account-blob'
 
 function makeApi (hasGuildPermission) {
   return () => ({
@@ -155,23 +155,28 @@ describe('endpoints > account.blob()', () => {
     })
   })
 
-  it('test /v2/account .blob() handling errors', async () => {
-    endpoint.__set__('api', () => ({
-      authenticate: () => ({
-        language: () => ({
-          cacheStorage: () => ({
-            account: () => ({
-              get: () => _e(new Error('Oh no.'))
-            })
-          })
-        })
-      })
-    }))
+  it('test wrap() handling api errors', async () => {
+    function endpoint () {
+      let error = new Error()
+      error.response = {status: 503}
+      error.content = {text: 'API is disabled'}
+
+      return _e(error)
+    }
+
+    let response = await wrap(endpoint)()
+    expect(response).to.equal(null)
+  })
+
+  it('test /v2/account .blob() handling library errors', async () => {
+    function endpoint () {
+      return _e(new Error('Oh no.'))
+    }
 
     let error
 
     try {
-      await endpoint({})
+      await wrap(endpoint)()
     } catch (err) {
       error = err
     }

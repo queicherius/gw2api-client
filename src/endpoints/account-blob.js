@@ -11,7 +11,7 @@ export default function (parent) {
 
   client.fetch = parent.fetch
 
-  const data = {
+  const requests = {
     account: wrap(() => client.account().get()),
     achievements: wrap(() => client.account().achievements().get()),
     bank: wrap(() => client.account().bank().get()),
@@ -44,7 +44,11 @@ export default function (parent) {
     wallet: wrap(() => client.account().wallet().get())
   }
 
-  return flow.parallel(data).then(x => flat.unflatten(x))
+  return flow.parallel(requests).then(data => {
+    data = flat.unflatten(data)
+    data.characters = filterBetaCharacters(data.characters)
+    return data
+  })
 }
 
 // Get the guild data accessible for the account
@@ -71,6 +75,16 @@ function accountGuilds (client) {
 
     return flow.parallel(requests)
   }
+}
+
+// Filter out beta characters from the total account blob, since they are
+// technically not part of the actual live account and live on a different server
+function filterBetaCharacters (characters) {
+  if (!characters) {
+    return null
+  }
+
+  return characters.filter(x => !x.flags || !x.flags.includes('Beta'))
 }
 
 // Wrap a promise function so all errors that have to do with the API

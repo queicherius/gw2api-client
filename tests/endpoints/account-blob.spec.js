@@ -45,7 +45,7 @@ function makeApi (hasGuildPermission) {
             })
           }),
           characters: () => ({
-            all: () => _s([{id: 123, foo: 'bar'}])
+            all: () => _s([{id: 123, foo: 'bar'}, {id: 123, flags: ['Beta'], herp: 'derp'}])
           }),
           commerce: () => ({
             transactions: () => ({

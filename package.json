@@ -17,6 +17,7 @@
   "dependencies": {
     "array-unique": "^0.3.2",
     "chunk": "0.0.2",
+    "debounce": "^1.1.0",
     "debug": "^3.0.0",
     "fast-clone": "^1.4.2",
     "fast-get": "^1.0.1",

@@ -1,43 +1,31 @@
+import debounce from 'debounce'
+
 export default function (configuration) {
-  configuration = {prefix: 'gw2api-', gcTick: 5 * 60 * 1000, ...configuration}
+  configuration = {
+    prefix: 'gw2api-',
+    gcTick: 5 * 60 * 1000,
+    persistDebounce: 3 * 1000,
+    ...configuration
+  }
+
+  // Scope the storage to the function, so multiple instances don't interfere
+  let _storage = {}
 
   if (!configuration.localStorage) {
     throw new Error('The `localStorage` cache storage requires a `localStorage` instance')
   }
 
-  let storage = configuration.localStorage
-  let prefix = configuration.prefix
+  const localStorage = configuration.localStorage
+  const storageKey = configuration.prefix + 'cache'
+  const persist = debounce(_persist, configuration.persistDebounce)
 
   function get (key) {
     return Promise.resolve(_get(key))
   }
 
-  function _get (key) {
-    let now = (new Date()).getTime()
-    let value
-
-    try {
-      value = JSON.parse(storage.getItem(prefix + key))
-    } catch (err) {
-      // We're ignoring errors
-    }
-
-    return value && value.expiry > now ? value.value : null
-  }
-
   function set (key, value, expiry) {
     _set(key, value, expiry)
     return Promise.resolve(true)
-  }
-
-  function _set (key, value, expiry) {
-    value = {value, expiry: (new Date()).getTime() + expiry * 1000}
-
-    try {
-      storage.setItem(prefix + key, JSON.stringify(value))
-    } catch (err) {
-      // Since it is super easy to smash the quota, ignore that
-    }
   }
 
   function mget (keys) {
@@ -53,33 +41,63 @@ export default function (configuration) {
     return Promise.resolve(true)
   }
 
-  function flush () {
-    storage.clear()
-    return Promise.resolve(true)
+  function _get (key) {
+    let value = _storage[key]
+    let now = (new Date()).getTime()
+    return value && value.expiry > now ? value.value : null
   }
 
-  function garbageCollection () {
-    let now = (new Date()).getTime()
-    let length = storage.length
+  function _set (key, value, expiry) {
+    _storage[key] = {value, expiry: (new Date()).getTime() + expiry * 1000}
+    persist()
+  }
 
-    for (let i = 0; i !== length; i++) {
-      let key = storage.key(i)
-
-      // Only check local storage keys that still exist and seem to be caching keys
-      if (!key || key.indexOf(prefix) !== 0) {
-        continue
-      }
-
-      // Remove the keys that are expired
-      let value = storage.getItem(key)
-      if (value && JSON.parse(value).expiry < now) {
-        storage.removeItem(key)
-      }
+  function _persist () {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(_storage))
+    } catch (err) {
+      // Since it is super easy to smash the quota, ignore that
+      /* istanbul ignore next */
+      console.warn('Failed persisting cache into localStorage')
     }
   }
 
+  function hydrate () {
+    try {
+      _storage = JSON.parse(localStorage.getItem(storageKey))
+    } catch (err) {
+      // Error could be JSON not formatted right, no cache item, no support, ...
+    }
+
+    _storage = _storage || {}
+  }
+
+  function flush () {
+    _storage = {}
+    localStorage.removeItem(storageKey)
+    return Promise.resolve(true)
+  }
+
+  function _getStorage () {
+    return _storage
+  }
+
+  function garbageCollection () {
+    const now = (new Date()).getTime()
+    const keys = Object.keys(_storage)
+
+    for (let i = 0; i !== keys.length; i++) {
+      if (_storage[keys[i]].expiry < now) {
+        delete _storage[keys[i]]
+      }
+    }
+
+    persist()
+  }
+
   setInterval(garbageCollection, configuration.gcTick)
+  hydrate()
   garbageCollection()
 
-  return {get, set, mget, mset, flush}
+  return {get, set, mget, mset, flush, _getStorage}
 }

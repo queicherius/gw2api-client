@@ -80,6 +80,7 @@ function accountGuilds (client) {
 // Filter out beta characters from the total account blob, since they are
 // technically not part of the actual live account and live on a different server
 function filterBetaCharacters (characters) {
+  /* istanbul ignore next */
   if (!characters) {
     return null
   }

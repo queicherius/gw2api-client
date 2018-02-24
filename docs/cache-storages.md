@@ -31,13 +31,14 @@ api.cacheStorage(cacheMemory(options))
 
 ### `gw2api-client/build/cache/localStorage`
 
-Caches the data using [localStorage](https://developer.mozilla.org/en/docs/Web/API/Window/localStorage).
+Caches the data in-memory but saves a persistent version into [localStorage](https://developer.mozilla.org/en/docs/Web/API/Window/localStorage) to hydrate the cache from on page load.
 
 **Options:**
 
 - `localStorage` - The browser's `window.localStorage` (or equivalent interface, like [node-localstorage](https://www.npmjs.com/package/node-localstorage))
 - `prefix` *(optional)* - The prefix for the cache keys. Defaults to `gw2api-`.
 - `gcTick` *(optional)* - How often the garbage collection should clean out expired data (in ms). Defaults to `5 * 60 * 1000`.
+- `persistDebounce` *(optional)* - How much time has to pass between the API request and the persisting into storage (in ms). Defaults to `3 * 1000`.
 
 ```js
 import cacheLocalStorage from 'gw2api-client/build/cache/localStorage'

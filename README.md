@@ -68,19 +68,19 @@ api.items().ids()
 api.items().live().ids()
 ```
 
-> **Note:** The cache storage save is asynchronous in the background. During this time, the API function already resolves a result for best performance. Therefore it *can* happen that some data gets requested twice, if you request it in rapid succession.
+> **Note:** The cache storage save is asynchronous in the background. During this time, the API function already resolves a result for best performance. Therefore it *can* happen that some data gets requested twice, if you request it in rapid succession and are not using a cache that saves in memory (memory or browser caches).
 
 You can also chain multiple cache storages together. In this case, the cache gets saved in all storages and read from the first storage in the list answering with a valid value. The more persistent and more reliable cache storages should therefore be on the end of the list and the fastest (e.g. memory) should be at the start of the list.
 
 ```js
 import cacheMemory from 'gw2api-client/build/cache/memory'
-import cacheLocalStorage from 'gw2api-client/build/cache/localStorage'
+import cacheRedisStorage from 'gw2api-client/build/cache/redis'
 
 // Save in memory and local storage
 // Try to answer from memory first, then from local storage and then hit the API
 api.cacheStorage([
   cacheMemory(),
-  cacheLocalStorage({localStorage: window.localStorage})
+  cacheRedisStorage({ ... })
 ])
 ```
 

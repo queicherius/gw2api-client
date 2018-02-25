@@ -1,6 +1,6 @@
 {
   "name": "gw2api-client",
-  "version": "5.6.5",
+  "version": "5.7.0-1",
   "description": "A javascript wrapper around the official Guild Wars 2 API",
   "main": "./build/index.js",
   "scripts": {
@@ -17,10 +17,12 @@
   "dependencies": {
     "array-unique": "^0.3.2",
     "chunk": "0.0.2",
+    "debounce": "^1.1.0",
     "debug": "^3.0.0",
     "fast-clone": "^1.4.2",
     "fast-get": "^1.0.1",
     "flat": "^4.0.0",
+    "idb-keyval": "^2.3.0",
     "lets-fetch": "^2.0.0",
     "promise-control-flow": "^1.2.3",
     "rusha": "^0.8.5",
@@ -28,7 +30,6 @@
   },
   "devDependencies": {
     "abc-environment": "^2.0.0",
-    "localstorage-memory": "^1.0.2",
     "redis": "^2.6.2"
   }
 }

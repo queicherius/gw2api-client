@@ -1,22 +1,18 @@
 import debounce from 'debounce'
+import idbKeyval from 'idb-keyval'
 
 export default function (configuration) {
   configuration = {
-    prefix: 'gw2api-',
+    storageKey: 'gw2api-cache',
     gcTick: 5 * 60 * 1000,
     persistDebounce: 3 * 1000,
+    storageEngine: idbKeyval,
     ...configuration
   }
 
-  // Scope the storage to the function, so multiple instances don't interfere
   let _storage = {}
-
-  if (!configuration.localStorage) {
-    throw new Error('The `localStorage` cache storage requires a `localStorage` instance')
-  }
-
-  const localStorage = configuration.localStorage
-  const storageKey = configuration.prefix + 'cache'
+  const storageEngine = configuration.storageEngine
+  const storageKey = configuration.storageKey
   const persist = debounce(_persist, configuration.persistDebounce)
 
   function get (key) {
@@ -53,28 +49,24 @@ export default function (configuration) {
   }
 
   function _persist () {
-    try {
-      localStorage.setItem(storageKey, JSON.stringify(_storage))
-    } catch (err) {
-      // Since it is super easy to smash the quota, ignore that
-      /* istanbul ignore next */
-      console.warn('Failed persisting cache into localStorage')
-    }
+    storageEngine.set(storageKey, _storage)
+      .catch(/* istanbul ignore next */ err => {
+        console.warn('Failed persisting cache', err)
+      })
   }
 
   function hydrate () {
-    try {
-      _storage = JSON.parse(localStorage.getItem(storageKey))
-    } catch (err) {
-      // Error could be JSON not formatted right, no cache item, no support, ...
-    }
-
-    _storage = _storage || {}
+    storageEngine.get(storageKey)
+      .then(value => {
+        if (value) {
+          _storage = value
+        }
+      })
   }
 
   function flush () {
     _storage = {}
-    localStorage.removeItem(storageKey)
+    storageEngine.delete(storageKey)
     return Promise.resolve(true)
   }
 

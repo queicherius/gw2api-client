@@ -1,37 +1,35 @@
 /* eslint-env node, mocha */
 import { expect } from 'chai'
-import storage from '../../src/cache/localStorage'
-import localStorage from 'localstorage-memory'
-const cache = storage({localStorage: localStorage, gcTick: 500, persistDebounce: 100})
+import storage from '../../src/cache/browser'
+import idbMock from '../mocks/idb.mock.js'
+
+const cache = storage({storageEngine: idbMock, gcTick: 500, persistDebounce: 100})
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-describe('cache > localStorage', function () {
+describe('cache > browser', function () {
   this.timeout(5000)
 
   beforeEach(() => {
     cache.flush()
   })
 
-  it('requires an configuration object', () => {
-    expect(() => storage()).to.throw()
-  })
-
   it('can hydrate the cache', async () => {
-    localStorage.setItem('gw2api-temp-cache', JSON.stringify({
+    await idbMock.set('gw2api-temp-cache', {
       foo: {
         value: {bar: 1337},
         expiry: new Date().getTime() + 5 * 60 * 1000
       }
-    }))
+    })
 
     const tmpCache = storage({
-      prefix: 'gw2api-temp-',
-      localStorage: localStorage,
+      storageKey: 'gw2api-temp-cache',
+      storageEngine: idbMock,
       gcTick: 50000,
       persistDebounce: 100
     })
 
     // Make sure the data is cached
+    await wait(100)
     let cachedFromPersistent = await tmpCache.get('foo')
     expect(cachedFromPersistent, 'cachedFromPersistent').to.deep.equal({bar: 1337})
   })
@@ -44,10 +42,10 @@ describe('cache > localStorage', function () {
     expect(cachedFresh, 'cachedFresh').to.deep.equal({herp: 'derp'})
 
     // Make sure that the debounce saving is respected
-    let storageBeforeSave = localStorage.getItem('gw2api-cache')
-    expect(storageBeforeSave, 'storageBeforeSave').to.equal(null)
+    let storageBeforeSave = await idbMock.get('gw2api-cache')
+    expect(storageBeforeSave, 'storageBeforeSave').to.equal(undefined)
     await wait(150)
-    let storageAfterSave = JSON.parse(localStorage.getItem('gw2api-cache'))
+    let storageAfterSave = await idbMock.get('gw2api-cache')
     expect(storageAfterSave.foo.value, 'storageAfterSave value').to.deep.equal({herp: 'derp'})
     expect(storageAfterSave.foo.expiry, 'storageAfterSave expiry').to.be.a('number')
 
@@ -84,7 +82,7 @@ describe('cache > localStorage', function () {
   })
 
   it('triggers garbage collection', async () => {
-    localStorage.setItem('lol', 'xd')
+    await idbMock.set('lol', 'xd')
     await cache.set('foo', 'bar', 1)
     await cache.set('herp', 'derp', 5)
     await wait(3000)
@@ -94,15 +92,11 @@ describe('cache > localStorage', function () {
     expect(memoryKeys).to.deep.equal(['herp'])
 
     // Make sure we don't delete other keys of importance
-    let keys = []
-    for (let i = 0; i !== localStorage.length; i++) {
-      keys.push(localStorage.key(i))
-    }
-
+    let keys = await idbMock.keys()
     expect(keys).to.deep.equal(['gw2api-temp-cache', 'lol', 'gw2api-cache'])
 
     // Make sure that the non-expired item is persisted
-    let persistentStorage = JSON.parse(localStorage.getItem('gw2api-cache'))
+    let persistentStorage = await idbMock.get('gw2api-cache')
     expect(Object.keys(persistentStorage), 'persistentStorage keys').to.deep.equal(['herp'])
     expect(persistentStorage.herp.value, 'persistentStorage value').to.equal('derp')
     expect(persistentStorage.herp.expiry, 'persistentStorage expiry').to.be.a('number')

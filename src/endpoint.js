@@ -425,6 +425,19 @@ export default class AbstractEndpoint {
     return this.baseUrl + this.url + hash
   }
 
+  _catch (err) {
+    try {
+        if (err.content.text) {
+			err.message += ` ( ${err.content.text} )`
+        } else if (err.content.error) {
+			err.message += ` ( ${err.content.error} )`
+		}
+    }
+    catch (e) {}
+
+    return Promise.reject(err)
+  }
+
   // Execute a single request
   _request (url, type = 'json') {
     url = this._buildUrl(url)
@@ -434,6 +447,7 @@ export default class AbstractEndpoint {
     const credentials = this.credentials ? 'include' : undefined
 
     return this.fetch.single(url, {type, credentials})
+      .catch(this._catch)
   }
 
   // Execute multiple requests in parallel
@@ -445,6 +459,7 @@ export default class AbstractEndpoint {
     const credentials = this.credentials ? 'include' : undefined
 
     return this.fetch.many(urls, {type, credentials})
+      .catch(this._catch)
   }
 
   // Build the headers for localization and authentication

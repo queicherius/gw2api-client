@@ -6,6 +6,7 @@ export default class RacesEndpoint extends AbstractEndpoint {
     this.url = '/v2/races'
     this.isPaginated = true
     this.isBulk = true
+    this.isLocalized = true
     this.cacheTime = 24 * 60 * 60
   }
 }

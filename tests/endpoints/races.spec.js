@@ -14,7 +14,7 @@ describe('endpoints > races', () => {
     expect(endpoint.isPaginated).to.equal(true)
     expect(endpoint.isBulk).to.equal(true)
     expect(endpoint.supportsBulkAll).to.equal(true)
-    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(true)
     expect(endpoint.isAuthenticated).to.equal(false)
     expect(endpoint.cacheTime).to.not.equal(undefined)
     expect(endpoint.url).to.equal('/v2/races')

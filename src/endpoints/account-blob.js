@@ -16,9 +16,12 @@ export default function (parent) {
     achievements: wrap(() => client.account().achievements().get()),
     bank: wrap(() => client.account().bank().get()),
     characters: wrap(() => client.characters().all()),
-    'commerce.buys': wrap(() => client.commerce().transactions().current().buys().all()),
-    'commerce.sells': wrap(() => client.commerce().transactions().current().sells().all()),
-    'commerce.delivery': wrap(() => client.commerce().delivery().get()),
+
+    // HACK: Temporary hotfix for the tradingpost API (returns old & broken data)
+    'commerce.buys': () => Promise.resolve([]),
+    'commerce.sells': () => Promise.resolve([]),
+    'commerce.delivery': () => Promise.resolve({coins: 0, items: []}),
+
     dungeons: wrap(() => client.account().dungeons().get()),
     dyes: wrap(() => client.account().dyes().get()),
     gliders: wrap(() => client.account().gliders().get()),

@@ -89,9 +89,9 @@ const expectedResponse = {
   bank: [{id: 123, foo: 'bar'}],
   characters: [{id: 123, foo: 'bar'}],
   commerce: {
-    buys: [{id: 123, foo: 'bar'}],
-    sells: [{id: 123, foo: 'bar'}],
-    delivery: {coins: 1337}
+    buys: [],
+    sells: [],
+    delivery: {coins: 0, items: []}
   },
   dungeons: ['detha'],
   dyes: [1, 2, 3],

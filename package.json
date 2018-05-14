@@ -22,7 +22,7 @@
     "fast-clone": "^1.4.2",
     "fast-get": "^1.0.1",
     "flat": "^4.0.0",
-    "idb-keyval": "~2.3.0",
+    "idb-keyval": "~3.0.4",
     "lets-fetch": "^2.0.0",
     "promise-control-flow": "^1.2.3",
     "rusha": "^0.8.5",

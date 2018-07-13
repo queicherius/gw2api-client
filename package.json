@@ -1,6 +1,6 @@
 {
   "name": "gw2api-client",
-  "version": "6.0.3",
+  "version": "6.0.4",
   "description": "A javascript wrapper around the official Guild Wars 2 API",
   "main": "./build/index.js",
   "scripts": {

@@ -42,6 +42,7 @@ class DeliveryEndpoint extends AbstractEndpoint {
     this.url = `/v2/commerce/delivery`
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
+    this.cacheBuster = true
   }
 }
 
@@ -50,6 +51,7 @@ class ExchangeEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/commerce/exchange'
     this.cacheTime = 10 * 60
+    this.cacheBuster = true
   }
 
   gems (quantity) {
@@ -69,6 +71,7 @@ class ListingsEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.supportsBulkAll = false
     this.cacheTime = 2 * 60
+    this.cacheBuster = true
   }
 }
 
@@ -80,6 +83,7 @@ class PricesEndpoint extends AbstractEndpoint {
     this.isBulk = true
     this.supportsBulkAll = false
     this.cacheTime = 60
+    this.cacheBuster = true
   }
 }
 
@@ -90,5 +94,6 @@ class TransactionsEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isAuthenticated = true
     this.cacheTime = 10 * 60
+    this.cacheBuster = true
   }
 }

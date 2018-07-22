@@ -1,6 +1,5 @@
 /* eslint-env node, mocha */
 import { expect } from 'chai'
-import mockdate from 'mockdate'
 import { mockClient, fetchMock } from './mocks/client.mock'
 import Module from '../src/endpoint'
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -21,7 +20,6 @@ describe('abstract endpoint', () => {
   beforeEach(() => {
     endpoint = new Module(mockClient)
     fetchMock.reset()
-    mockdate.set('2018-01-01T00:00:00.000Z')
     endpoint.caches.map(cache => cache.flush())
   })
 
@@ -928,21 +926,6 @@ describe('abstract endpoint', () => {
   })
 
   describe('_buildUrl', () => {
-    it('rand() generates a random string', () => {
-      const randomString = Module.__get__('rand')()
-
-      expect(typeof randomString).to.equal('string')
-      expect(randomString.length).to.equal(3)
-    })
-
-    it('sets the cache buster for the required endpoints', () => {
-      endpoint.cacheBuster = true
-      Module.__set__('rand', () => '123')
-
-      let url = endpoint._buildUrl('/test')
-      expect(url).to.equal('https://api.guildwars2.com/test?t=1514764800000123')
-    })
-
     it('sets the language header for localized endpoints', () => {
       endpoint.isLocalized = true
       endpoint.language('de')

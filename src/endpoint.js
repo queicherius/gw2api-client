@@ -7,7 +7,6 @@ import debugging from 'debug'
 const sha = (s) => (new Rusha()).digestFromString(s)
 const debug = debugging('gw2api-client')
 const debugRequest = debugging('gw2api-client:request')
-const rand = () => '' + Math.floor(Math.random() * 1000)
 
 export default class AbstractEndpoint {
   constructor (parent) {
@@ -25,7 +24,6 @@ export default class AbstractEndpoint {
     this.isAuthenticated = false
     this.isOptionallyAuthenticated = false
     this.credentials = false
-    this.cacheBuster = false
 
     this._skipCache = false
   }
@@ -217,7 +215,6 @@ export default class AbstractEndpoint {
     // If we are partially caching and all not-cached ids are all invalid,
     // simulate the API behaviour by silently swallowing errors.
     let handleMissingIds = (err) => {
-      /* istanbul ignore else */
       if (partialRequest && err.response && err.response.status === 404) {
         return Promise.resolve([])
       }
@@ -470,17 +467,11 @@ export default class AbstractEndpoint {
       query['lang'] = this.lang
     }
 
-    // Set a cache buster if the flag is set. This adds a random value to the request
-    // so it does not get picked up by the caching of the official API.
-    if (this.cacheBuster) {
-      query['t'] = new Date().getTime() + rand()
-    }
-
     // Build the new url
     parsedUrl.set('query', query)
     let string = parsedUrl.toString()
 
-    // Clean up the mess by the query parser, and decode ','
+    // Clean up the mess by the query parser, and unencode ','
     string = string.replace(/%2C/g, ',')
     return string
   }

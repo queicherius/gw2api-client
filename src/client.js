@@ -159,6 +159,10 @@ export default class Client {
     return new endpoints.MinisEndpoint(this)
   }
 
+  mounts () {
+    return new endpoints.MountsEndpoint(this)
+  }
+
   nodes () {
     return new endpoints.NodesEndpoint(this)
   }

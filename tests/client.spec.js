@@ -228,6 +228,12 @@ describe('client', () => {
     expect(endpoint.url).to.equal('/v2/minis')
   })
 
+  it('can get the mounts endpoint', () => {
+    let endpoint = client.mounts()
+    expect(endpoint.types().url).to.equal('/v2/mounts/types')
+    expect(endpoint.skins().url).to.equal('/v2/mounts/skins')
+  })
+
   it('can get the nodes endpoint', () => {
     let endpoint = client.nodes()
     expect(endpoint.url).to.equal('/v2/nodes')

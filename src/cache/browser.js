@@ -1,5 +1,5 @@
 import debounce from 'debounce'
-import idbKeyval from 'idb-keyval'
+import * as idbKeyval from 'idb-keyval'
 
 export default function (configuration) {
   configuration = {

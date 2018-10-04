@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "jest --runInBand --forceExit",
-    "lint": "abc lint"
+    "lint": "standard"
   },
   "author": "queicherius@gmail.com",
   "license": "MIT",
@@ -28,8 +28,9 @@
     "url-parse": "^1.1.3"
   },
   "devDependencies": {
-    "abc-environment": "^2.0.0",
+    "babel-plugin-rewire": "^1.2.0",
     "jest": "^23.6.0",
-    "redis": "^2.6.2"
+    "redis": "^2.6.2",
+    "standard": "^12.0.1"
   }
 }

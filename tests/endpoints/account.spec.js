@@ -1,5 +1,4 @@
 /* eslint-env jest */
-const sinon = require('sinon')
 const { mockClient, fetchMock } = require('../mocks/client.mock')
 const Module = require('../../src/endpoints/account')
 
@@ -399,9 +398,9 @@ describe('endpoints > account', () => {
   })
 
   it('test /v2/account .blob()', async () => {
-    const spy = sinon.spy()
-    Module.__set__('accountBlob', spy)
+    const blobMock = jest.fn()
+    Module.__set__('accountBlob', blobMock)
     endpoint.blob()
-    expect(spy.called).toEqual(true)
+    expect(blobMock.mock.calls.length).toEqual(1)
   })
 })

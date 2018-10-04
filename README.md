@@ -53,7 +53,7 @@ api.items().all().then(items => console.log(items))
 By default, calling any endpoint requests data from the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./docs/endpoints.md).
 
 ```js
-const cacheMemory = require('gw2api-client/build/cache/memory')
+const cacheMemory = require('gw2api-client/src/cache/memory')
 api.cacheStorage(cacheMemory())
 
 // This will only call the official API once
@@ -73,8 +73,8 @@ api.items().live().ids()
 You can also chain multiple cache storages together. In this case, the cache gets saved in all storages and read from the first storage in the list answering with a valid value. The more persistent and more reliable cache storages should therefore be on the end of the list and the fastest (e.g. memory) should be at the start of the list.
 
 ```js
-const cacheMemory = require('gw2api-client/build/cache/memory')
-const cacheRedisStorage = require('gw2api-client/build/cache/redis')
+const cacheMemory = require('gw2api-client/src/cache/memory')
+const cacheRedisStorage = require('gw2api-client/src/cache/redis')
 
 // Save in memory and local storage
 // Try to answer from memory first, then from local storage and then hit the API
@@ -151,7 +151,7 @@ If you need more specific ways to handle data then the already defined ones, tak
 
 ```js
 const client = require('gw2api-client')
-const AbstractEndpoint = require('gw2api-client/build/endpoint')
+const AbstractEndpoint = require('gw2api-client/src/endpoint')
 
 // Get an instance of an API client
 const api = client()

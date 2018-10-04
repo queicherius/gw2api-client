@@ -1,7 +1,7 @@
 const fetch = require('lets-fetch')
-const flow = require('promise-control-flow')
 const nullCache = require('./cache/null')
 const endpoints = require('./endpoints')
+const flow = require('./flow')
 
 module.exports = class Client {
   constructor () {

@@ -1,5 +1,5 @@
-const flow = require('promise-control-flow')
 const _get = require('fast-get')
+const flow = require('../flow.js')
 const api = require('../index.js')
 
 function blob (parent) {

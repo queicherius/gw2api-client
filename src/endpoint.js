@@ -7,6 +7,7 @@ const clone = (x) => JSON.parse(JSON.stringify(x))
 
 module.exports = class AbstractEndpoint {
   constructor (parent) {
+    this.client = parent.client
     this.lang = parent.lang
     this.apiKey = parent.apiKey
     this.fetch = parent.fetch

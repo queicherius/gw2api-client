@@ -1,77 +1,71 @@
 /* eslint-env jest */
 const endpoint = require('../../src/endpoints/account-blob')
 
-function makeApi (hasGuildPermission) {
-  return () => ({
-    authenticate: () => ({
-      language: () => ({
-        cacheStorage: () => ({
-          account: () => ({
-            get: () => _s({
-              name: 'lol.1234',
-              guilds: ['key-1234', 'key-5678'],
-              guild_leader: hasGuildPermission ? ['key-1234'] : undefined
-            }),
-            achievements: () => ({ get: () => _s([{ id: 1, foo: 'bar' }]) }),
-            bank: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-            dungeons: () => ({ get: () => _s(['detha']) }),
-            dyes: () => ({ get: () => _s([1, 2, 3]) }),
-            finishers: () => ({ get: () => _s([1, 2, 3]) }),
-            gliders: () => ({ get: () => _s([1, 2, 3]) }),
-            home: () => ({
-              cats: () => ({ get: () => _s([{ id: 1, hint: 'chicken' }]) }),
-              nodes: () => ({ get: () => _s(['quartz_node', 'airship_cargo']) })
-            }),
-            inventory: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-            mailcarriers: () => ({ get: () => _s([1, 2, 3]) }),
-            masteries: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-            mastery: () => ({
-              points: () => ({ get: () => _s([1, 2, 3]) })
-            }),
-            materials: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-            minis: () => ({ get: () => _s([1, 2, 3]) }),
-            outfits: () => ({ get: () => _s([1, 2, 3]) }),
-            raids: () => ({ get: () => _s(['keep_construct']) }),
-            recipes: () => ({ get: () => _s([1, 2, 3]) }),
-            skins: () => ({ get: () => _s([1, 2, 3]) }),
-            titles: () => ({ get: () => _e({ response: { status: 403 } }) }),
-            wallet: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-            pvp: () => ({
-              games: () => ({ all: () => _s([{ id: 123, foo: 'bar' }]) }),
-              heroes: () => ({ get: () => _s([1, 2, 3]) }),
-              standings: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-              stats: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) })
-            })
-          }),
-          characters: () => ({
-            all: () => _s([{ id: 123, foo: 'bar' }, { id: 123, flags: ['Beta'], herp: 'derp' }])
-          }),
-          commerce: () => ({
-            transactions: () => ({
-              current: () => ({
-                buys: () => ({ all: () => _s([{ id: 123, foo: 'bar' }]) }),
-                sells: () => ({ all: () => _s([{ id: 123, foo: 'bar' }]) })
-              })
-            }),
-            delivery: () => ({
-              get: () => _s({ coins: 1337 })
-            })
-          }),
-          guild: hasGuildPermission
-            ? () => ({
-              get: () => _s({ id: 123, foo: 'bar' }),
-              members: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-              ranks: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-              stash: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-              teams: () => ({ get: () => _e({ content: { text: 'access restricted to guild leaders' } }) }),
-              treasury: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-              upgrades: () => ({ get: () => _s([1, 2, 3]) })
-            })
-            : undefined
-        })
+function mockClient (hasGuildPermission) {
+  return {
+    account: () => ({
+      get: () => _s({
+        name: 'lol.1234',
+        guilds: ['key-1234', 'key-5678'],
+        guild_leader: hasGuildPermission ? ['key-1234'] : undefined
+      }),
+      achievements: () => ({get: () => _s([{id: 1, foo: 'bar'}])}),
+      bank: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+      dungeons: () => ({get: () => _s(['detha'])}),
+      dyes: () => ({get: () => _s([1, 2, 3])}),
+      finishers: () => ({get: () => _s([1, 2, 3])}),
+      gliders: () => ({get: () => _s([1, 2, 3])}),
+      home: () => ({
+        cats: () => ({get: () => _s([{id: 1, hint: 'chicken'}])}),
+        nodes: () => ({get: () => _s(['quartz_node', 'airship_cargo'])})
+      }),
+      inventory: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+      mailcarriers: () => ({get: () => _s([1, 2, 3])}),
+      masteries: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+      mastery: () => ({
+        points: () => ({get: () => _s([1, 2, 3])})
+      }),
+      materials: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+      minis: () => ({get: () => _s([1, 2, 3])}),
+      outfits: () => ({get: () => _s([1, 2, 3])}),
+      raids: () => ({get: () => _s(['keep_construct'])}),
+      recipes: () => ({get: () => _s([1, 2, 3])}),
+      skins: () => ({get: () => _s([1, 2, 3])}),
+      titles: () => ({get: () => _e({response: {status: 403}})}),
+      wallet: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+      pvp: () => ({
+        games: () => ({all: () => _s([{id: 123, foo: 'bar'}])}),
+        heroes: () => ({get: () => _s([1, 2, 3])}),
+        standings: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        stats: () => ({get: () => _s([{id: 123, foo: 'bar'}])})
       })
-    })
-  })
+    }),
+    characters: () => ({
+      all: () => _s([{id: 123, foo: 'bar'}, {id: 123, flags: ['Beta'], herp: 'derp'}])
+    }),
+    commerce: () => ({
+      transactions: () => ({
+        current: () => ({
+          buys: () => ({all: () => _s([{id: 123, foo: 'bar'}])}),
+          sells: () => ({all: () => _s([{id: 123, foo: 'bar'}])})
+        })
+      }),
+      delivery: () => ({
+        get: () => _s({coins: 1337})
+      })
+    }),
+    guild: hasGuildPermission
+      ? () => ({
+        get: () => _s({id: 123, foo: 'bar'}),
+        members: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        ranks: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        stash: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        teams: () => ({get: () => _e({content: {text: 'access restricted to guild leaders'}})}),
+        treasury: () => ({get: () => _s([{id: 123, foo: 'bar'}])}),
+        upgrades: () => ({get: () => _s([1, 2, 3])})
+      })
+      : undefined
+  }
 }
 
 function _s (response) {
@@ -135,17 +129,13 @@ const expectedResponse = {
 
 describe('endpoints > account.blob()', () => {
   it('test /v2/account .blob()', async () => {
-    endpoint.__set__('api', makeApi(true))
-
-    let content = await endpoint({})
+    let content = await endpoint({client: mockClient(true)})
 
     expect(content).toEqual(expectedResponse)
   })
 
   it('test /v2/account .blob() without guilds permission', async () => {
-    endpoint.__set__('api', makeApi(false))
-
-    let content = await endpoint({})
+    let content = await endpoint({client: mockClient(false)})
 
     expect(content).toEqual({
       ...expectedResponse,

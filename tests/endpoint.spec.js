@@ -24,6 +24,11 @@ describe('abstract endpoint', () => {
     endpoint.caches.map(cache => cache.flush())
   })
 
+  it('sets up the initial values from the passed in client', () => {
+    expect(endpoint.lang).toEqual('en')
+    expect(endpoint.client).toBeDefined()
+  })
+
   describe('ids', () => {
     it('support', async () => {
       let content = [1, 2]

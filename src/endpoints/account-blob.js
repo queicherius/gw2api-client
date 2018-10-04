@@ -1,14 +1,8 @@
 const _get = require('fast-get')
 const flow = require('../flow.js')
-const api = require('../index.js')
 
 function blob (parent) {
-  const client = api()
-    .authenticate(parent.apiKey)
-    .language(parent.lang)
-    .cacheStorage(parent.caches)
-
-  client.fetch = parent.fetch
+  const client = parent.client
 
   const requests = {
     account: wrap(() => client.account().get()),

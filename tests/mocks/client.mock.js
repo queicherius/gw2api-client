@@ -15,6 +15,8 @@ const mockClient = {
   }
 }
 
+mockClient.client = mockClient
+
 module.exports = {
   mockClient: mockClient,
   fetchMock: fetch

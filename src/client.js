@@ -10,6 +10,7 @@ module.exports = class Client {
     this.fetch = fetch
     this.caches = [nullCache()]
     this.debug = false
+    this.client = this
   }
 
   // Set the language for locale-aware endpoints

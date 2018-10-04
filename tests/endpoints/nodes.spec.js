@@ -18,7 +18,7 @@ describe('endpoints > nodes', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/nodes')
 
-    fetchMock.addResponse({id: 'basic_ore_nodes'})
+    fetchMock.addResponse({ id: 'basic_ore_nodes' })
     let content = await endpoint.get('basic_ore_nodes')
     expect(content.id).toEqual('basic_ore_nodes')
   })

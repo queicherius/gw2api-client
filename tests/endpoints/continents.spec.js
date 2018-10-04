@@ -34,7 +34,7 @@ describe('endpoints > continents', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/continents/1/floors')
 
-    fetchMock.addResponse({texture_dims: [1, 2], clamed_view: [[1, 2]]})
+    fetchMock.addResponse({ texture_dims: [1, 2], clamed_view: [[1, 2]] })
     let content = await endpoint.get(42)
     expect(content.texture_dims).toEqual([1, 2])
   })

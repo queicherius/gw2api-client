@@ -101,7 +101,7 @@ describe('abstract endpoint', () => {
 
   describe('get', () => {
     it('support for bulk expanding', async () => {
-      let content = {id: 1, name: 'foo'}
+      let content = { id: 1, name: 'foo' }
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
       fetchMock.addResponse(content)
@@ -112,7 +112,7 @@ describe('abstract endpoint', () => {
     })
 
     it('support for non bulk expanding', async () => {
-      let content = {id: 1, name: 'foo'}
+      let content = { id: 1, name: 'foo' }
       endpoint.url = '/v2/test'
       fetchMock.addResponse(content)
 
@@ -122,7 +122,7 @@ describe('abstract endpoint', () => {
     })
 
     it('support for non bulk expanding with custom url', async () => {
-      let content = {id: 1, name: 'foo'}
+      let content = { id: 1, name: 'foo' }
       endpoint.url = '/v2/test'
       fetchMock.addResponse(content)
 
@@ -132,7 +132,7 @@ describe('abstract endpoint', () => {
     })
 
     it('caching for bulk expanding', async () => {
-      let content = {id: 1, name: 'foo'}
+      let content = { id: 1, name: 'foo' }
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
@@ -151,7 +151,7 @@ describe('abstract endpoint', () => {
     })
 
     it('caching for non bulk expanding', async () => {
-      let content = {id: 1, name: 'foo'}
+      let content = { id: 1, name: 'foo' }
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
       fetchMock.addResponse(content)
@@ -171,7 +171,7 @@ describe('abstract endpoint', () => {
     })
 
     it('caching for non bulk expanding with custom url', async () => {
-      let content = {id: 1, name: 'foo'}
+      let content = { id: 1, name: 'foo' }
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
       fetchMock.addResponse(content)
@@ -192,7 +192,7 @@ describe('abstract endpoint', () => {
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
-      fetchMock.addResponse({id: 1, name: 'foo'})
+      fetchMock.addResponse({ id: 1, name: 'foo' })
 
       let entry = await endpoint.get(1)
       entry.name = 'NOT FOO'
@@ -202,13 +202,13 @@ describe('abstract endpoint', () => {
 
       expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?id=1')
       expect(fetchMock.urls().length).toEqual(1)
-      expect(entry).toEqual({id: 1, name: 'NOT FOO'})
-      expect(entryShouldCache).toEqual({id: 1, name: 'foo'})
-      expect(entryInCache).toEqual({id: 1, name: 'foo'})
+      expect(entry).toEqual({ id: 1, name: 'NOT FOO' })
+      expect(entryShouldCache).toEqual({ id: 1, name: 'foo' })
+      expect(entryInCache).toEqual({ id: 1, name: 'foo' })
     })
 
     it('live', async () => {
-      let content = {id: 1, name: 'foo'}
+      let content = { id: 1, name: 'foo' }
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
@@ -237,7 +237,7 @@ describe('abstract endpoint', () => {
 
   describe('many', () => {
     it('support', async () => {
-      let content = [{id: 2, name: 'bar'}, {id: 1, name: 'foo'}]
+      let content = [{ id: 2, name: 'bar' }, { id: 1, name: 'foo' }]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
       fetchMock.addResponse(content)
@@ -277,9 +277,9 @@ describe('abstract endpoint', () => {
 
     it('caching', async () => {
       let content = [
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' }
       ]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
@@ -304,10 +304,10 @@ describe('abstract endpoint', () => {
 
     it('partial caching', async () => {
       let content = [
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'},
-        {id: 4, name: 'xd'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' },
+        { id: 4, name: 'xd' }
       ]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
@@ -340,9 +340,9 @@ describe('abstract endpoint', () => {
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
       fetchMock.addResponse([
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' }
       ])
 
       let entry = await endpoint.many([1, 2, 3])
@@ -358,32 +358,32 @@ describe('abstract endpoint', () => {
       expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?ids=1,2,3')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual([
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'NOT BAR'},
-        {id: 3, name: 'fooo'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'NOT BAR' },
+        { id: 3, name: 'fooo' }
       ])
       expect(entryShouldCache).toEqual([
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'}
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' }
       ])
       expect(bulkEntriesInCache).toEqual([
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' }
       ])
     })
 
     it('match the api behaviour for cached data if all not-cached data is invalid', async () => {
       let content = [
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' }
       ]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
       fetchMock.addResponse(content)
-      fetchMock.addResponseError({status: 404}, {text: 'all provided ids are invalid'})
+      fetchMock.addResponseError({ status: 404 }, { text: 'all provided ids are invalid' })
 
       let entry = await endpoint.many([1, 2, 3])
       await wait(50)
@@ -403,9 +403,9 @@ describe('abstract endpoint', () => {
 
     it('live', async () => {
       let content = [
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' }
       ]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
@@ -475,9 +475,9 @@ describe('abstract endpoint', () => {
 
     it('caching for bulk endpoints', async () => {
       let content = [
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' }
       ]
       endpoint.isPaginated = true
       endpoint.isBulk = true
@@ -530,9 +530,9 @@ describe('abstract endpoint', () => {
 
     it('live', async () => {
       let content = [
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' }
       ]
       endpoint.isPaginated = true
       endpoint.isBulk = true
@@ -677,9 +677,9 @@ describe('abstract endpoint', () => {
 
     it('caching for bulk endpoints', async () => {
       let content = [
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' }
       ]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
@@ -736,9 +736,9 @@ describe('abstract endpoint', () => {
 
     it('live', async () => {
       let content = [
-        {id: 1, name: 'foo'},
-        {id: 2, name: 'bar'},
-        {id: 3, name: 'fooo'}
+        { id: 1, name: 'foo' },
+        { id: 2, name: 'bar' },
+        { id: 3, name: 'fooo' }
       ]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
@@ -777,8 +777,8 @@ describe('abstract endpoint', () => {
     })
 
     it('includes the language into the caching key', async () => {
-      let contentEn = {id: 1, name: 'Good Day'}
-      let contentDe = {id: 1, name: 'Guten Tag'}
+      let contentEn = { id: 1, name: 'Good Day' }
+      let contentDe = { id: 1, name: 'Guten Tag' }
       endpoint.isLocalized = true
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
@@ -807,8 +807,8 @@ describe('abstract endpoint', () => {
     })
 
     it('includes the autentication token into the caching key', async () => {
-      let contentUserOne = {name: 'foo.1234'}
-      let contentUserTwo = {name: 'bar.1234'}
+      let contentUserOne = { name: 'foo.1234' }
+      let contentUserTwo = { name: 'bar.1234' }
       endpoint.isAuthenticated = true
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
@@ -836,41 +836,41 @@ describe('abstract endpoint', () => {
     })
 
     it('single sets in all connected cache storages', async () => {
-      endpoint._cacheSetSingle('foo', {bar: 1337})
+      endpoint._cacheSetSingle('foo', { bar: 1337 })
       await wait(50)
 
-      expect(await endpoint.caches[1].get('foo')).toEqual({bar: 1337})
-      expect(await endpoint.caches[2].get('foo')).toEqual({bar: 1337})
+      expect(await endpoint.caches[1].get('foo')).toEqual({ bar: 1337 })
+      expect(await endpoint.caches[2].get('foo')).toEqual({ bar: 1337 })
     })
 
     it('many sets in all connected cache storages', async () => {
-      endpoint._cacheSetMany([['foo', {bar: 1337}], ['herp', {derp: 42}]])
+      endpoint._cacheSetMany([['foo', { bar: 1337 }], ['herp', { derp: 42 }]])
       await wait(50)
 
-      expect(await endpoint.caches[1].mget(['foo', 'herp'])).toEqual([{bar: 1337}, {derp: 42}])
-      expect(await endpoint.caches[2].mget(['foo', 'herp'])).toEqual([{bar: 1337}, {derp: 42}])
+      expect(await endpoint.caches[1].mget(['foo', 'herp'])).toEqual([{ bar: 1337 }, { derp: 42 }])
+      expect(await endpoint.caches[2].mget(['foo', 'herp'])).toEqual([{ bar: 1337 }, { derp: 42 }])
     })
 
     it('single gets of the first possible connected cache storage', async () => {
       await endpoint.caches[1].set('herp', 'derp', 60)
       await endpoint.caches[2].set('herp', 'NOPE')
-      await endpoint.caches[2].set('asd', {fgh: 42}, 60)
+      await endpoint.caches[2].set('asd', { fgh: 42 }, 60)
       await wait(50)
 
       expect(await endpoint._cacheGetSingle('foo')).toEqual(null)
       expect(await endpoint._cacheGetSingle('herp')).toEqual('derp')
-      expect(await endpoint._cacheGetSingle('asd')).toEqual({fgh: 42})
+      expect(await endpoint._cacheGetSingle('asd')).toEqual({ fgh: 42 })
     })
 
     it('many gets of the first possible connected cache storage', async () => {
       await endpoint.caches[1].set('foo', 'bar', 60)
       await endpoint.caches[1].set('herp', 'derp', 60)
       await endpoint.caches[2].set('herp', 'NOPE')
-      await endpoint.caches[2].set('asd', {fgh: 42}, 60)
+      await endpoint.caches[2].set('asd', { fgh: 42 }, 60)
       await wait(50)
 
       expect(await endpoint._cacheGetMany(['x', 'foo', 'herp', 'y', 'asd', 'z']))
-        .toEqual([null, 'bar', 'derp', null, {fgh: 42}, null])
+        .toEqual([null, 'bar', 'derp', null, { fgh: 42 }, null])
     })
   })
 
@@ -892,11 +892,11 @@ describe('abstract endpoint', () => {
     it('gives the query parameters to the underlying api for single requests', async () => {
       endpoint.isLocalized = true
       endpoint.language('en')
-      fetchMock.addResponse({foo: 'bar'})
+      fetchMock.addResponse({ foo: 'bar' })
 
       let entry = await endpoint._request('/v2/test')
       expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?lang=en')
-      expect(entry).toEqual({foo: 'bar'})
+      expect(entry).toEqual({ foo: 'bar' })
     })
 
     it('gives the type to the underlying api for multiple requests', async () => {
@@ -916,11 +916,11 @@ describe('abstract endpoint', () => {
     it('gives the query parameters to the underlying api for multiple requests', async () => {
       endpoint.isLocalized = true
       endpoint.language('en')
-      fetchMock.addResponse({foo: 'bar'})
+      fetchMock.addResponse({ foo: 'bar' })
 
       let entry = await endpoint._requestMany(['/v2/test'])
       expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?lang=en')
-      expect(entry).toEqual([{foo: 'bar'}])
+      expect(entry).toEqual([{ foo: 'bar' }])
     })
   })
 

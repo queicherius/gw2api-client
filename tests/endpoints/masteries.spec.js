@@ -18,7 +18,7 @@ describe('endpoints > masteries', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/masteries')
 
-    fetchMock.addResponse({id: 1, name: 'Exalted Lore'})
+    fetchMock.addResponse({ id: 1, name: 'Exalted Lore' })
     let content = await endpoint.get(1)
     expect(content.name).toEqual('Exalted Lore')
   })

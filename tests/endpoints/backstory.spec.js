@@ -20,7 +20,7 @@ describe('endpoints > backstory', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/backstory/answers')
 
-    fetchMock.addResponse({id: 1, title: 'Fern Hound'})
+    fetchMock.addResponse({ id: 1, title: 'Fern Hound' })
     let content = await endpoint.get(1)
     expect(content.title).toEqual('Fern Hound')
   })
@@ -36,7 +36,7 @@ describe('endpoints > backstory', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/backstory/questions')
 
-    fetchMock.addResponse({id: 1, title: 'My Personality'})
+    fetchMock.addResponse({ id: 1, title: 'My Personality' })
     let content = await endpoint.get(1)
     expect(content.title).toEqual('My Personality')
   })

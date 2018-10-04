@@ -13,13 +13,13 @@ describe('endpoints > events', () => {
     let transformer = Module.__get__('transformV1Format')
     let content = transformer({
       events: {
-        'uuid-one': {name: 'Defeat elite'},
-        'uuid-two': {name: 'Defeat champion'}
+        'uuid-one': { name: 'Defeat elite' },
+        'uuid-two': { name: 'Defeat champion' }
       }
     })
     expect(content).toEqual([
-      {id: 'uuid-one', name: 'Defeat elite'},
-      {id: 'uuid-two', name: 'Defeat champion'}
+      { id: 'uuid-one', name: 'Defeat elite' },
+      { id: 'uuid-two', name: 'Defeat champion' }
     ])
   })
 
@@ -33,8 +33,8 @@ describe('endpoints > events', () => {
 
     fetchMock.addResponse({
       events: {
-        'uuid-one': {name: 'Defeat elite'},
-        'uuid-two': {name: 'Defeat champion'}
+        'uuid-one': { name: 'Defeat elite' },
+        'uuid-two': { name: 'Defeat champion' }
       }
     })
     let content = await endpoint.all()
@@ -52,7 +52,7 @@ describe('endpoints > events', () => {
 
     fetchMock.addResponse({
       events: {
-        'uuid-one': {name: 'Defeat elite'}
+        'uuid-one': { name: 'Defeat elite' }
       }
     })
     let content = await endpoint.get('uuid-one')

@@ -18,7 +18,7 @@ describe('endpoints > stories', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/stories')
 
-    fetchMock.addResponse({id: 1, name: 'My Story'})
+    fetchMock.addResponse({ id: 1, name: 'My Story' })
     let content = await endpoint.get(1)
     expect(content.name).toEqual('My Story')
   })
@@ -34,7 +34,7 @@ describe('endpoints > stories', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/stories/seasons')
 
-    fetchMock.addResponse({id: 'S0ME-UU1D', name: 'Scarlet\'s War'})
+    fetchMock.addResponse({ id: 'S0ME-UU1D', name: 'Scarlet\'s War' })
     let content = await endpoint.get('S0ME-UU1D')
     expect(content.name).toEqual('Scarlet\'s War')
   })

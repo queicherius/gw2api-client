@@ -33,7 +33,7 @@ describe('client', () => {
   })
 
   it('can set a cache handler', () => {
-    let cacheHandler = {set: () => false, get: () => false}
+    let cacheHandler = { set: () => false, get: () => false }
     let api = client.cacheStorage(cacheHandler)
     expect(client.caches).toEqual([cacheHandler])
     expect(api).toBeInstanceOf(Module)
@@ -49,7 +49,7 @@ describe('client', () => {
     // Mock the build endpoint
     let savedBuildId = null
     let buildMock = {
-      live: () => ({get: () => Promise.resolve(123)}),
+      live: () => ({ get: () => Promise.resolve(123) }),
       _cacheGetSingle: (key) => Promise.resolve(null),
       _cacheSetSingle: (key, value) => {
         savedBuildId = value
@@ -72,7 +72,7 @@ describe('client', () => {
 
     // Cached and live is the same, expect the caches to still be there
     buildMock._cacheGetSingle = (key) => Promise.resolve(456)
-    buildMock.live = () => ({get: () => Promise.resolve(456)})
+    buildMock.live = () => ({ get: () => Promise.resolve(456) })
     await client.flushCacheIfGameUpdated()
     expect(await client.caches[1].get('foo')).toEqual('bar')
     expect(await client.caches[2].get('herp')).toEqual('derp')
@@ -80,7 +80,7 @@ describe('client', () => {
     await wait(50)
 
     // Live is newer, expect the caches to be flushed
-    buildMock.live = () => ({get: () => Promise.resolve(789)})
+    buildMock.live = () => ({ get: () => Promise.resolve(789) })
     await client.flushCacheIfGameUpdated()
     expect(await client.caches[1].get('foo')).toEqual(null)
     expect(await client.caches[2].get('herp')).toEqual(null)

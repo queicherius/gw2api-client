@@ -18,7 +18,7 @@ describe('endpoints > worlds', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/worlds')
 
-    fetchMock.addResponse([{id: 1001, name: 'Anvil Rock'}])
+    fetchMock.addResponse([{ id: 1001, name: 'Anvil Rock' }])
     let content = await endpoint.many([1001])
     expect(content[0].name).toEqual('Anvil Rock')
   })

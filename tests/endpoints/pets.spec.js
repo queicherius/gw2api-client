@@ -18,7 +18,7 @@ describe('endpoints > pets', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/pets')
 
-    fetchMock.addResponse({id: 1, name: 'Juvenile Jungle Stalker'})
+    fetchMock.addResponse({ id: 1, name: 'Juvenile Jungle Stalker' })
     let content = await endpoint.get(1)
     expect(content.name).toEqual('Juvenile Jungle Stalker')
   })

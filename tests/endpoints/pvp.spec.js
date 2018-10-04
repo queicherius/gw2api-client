@@ -20,7 +20,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/pvp/amulets')
 
-    fetchMock.addResponse({id: 4, name: 'Assassin Amulet'})
+    fetchMock.addResponse({ id: 4, name: 'Assassin Amulet' })
     let content = await endpoint.get(4)
     expect(content.name).toEqual('Assassin Amulet')
   })
@@ -52,7 +52,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/pvp/heroes')
 
-    fetchMock.addResponse({id: 1, name: 'Nika'})
+    fetchMock.addResponse({ id: 1, name: 'Nika' })
     let content = await endpoint.get(1)
     expect(content.name).toEqual('Nika')
   })
@@ -68,7 +68,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/pvp/ranks')
 
-    fetchMock.addResponse({id: 1, name: 'Rabbit'})
+    fetchMock.addResponse({ id: 1, name: 'Rabbit' })
     let content = await endpoint.get(1)
     expect(content.name).toEqual('Rabbit')
   })
@@ -84,7 +84,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/pvp/seasons')
 
-    fetchMock.addResponse({id: 'S0ME-UU1D', name: 'PvP League Season Four'})
+    fetchMock.addResponse({ id: 'S0ME-UU1D', name: 'PvP League Season Four' })
     let content = await endpoint.get('S0ME-UU1D')
     expect(content.name).toEqual('PvP League Season Four')
   })
@@ -115,7 +115,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/pvp/seasons/S0ME-UU1D/leaderboards/ladder/na')
 
-    fetchMock.addResponse([{rank: 1, name: 'Herp.1234'}, {rank: 2, name: 'Derp.1234'}])
+    fetchMock.addResponse([{ rank: 1, name: 'Herp.1234' }, { rank: 2, name: 'Derp.1234' }])
     let content = await endpoint.page(1, 2)
     expect(content[0].name).toEqual('Herp.1234')
     expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/pvp/seasons/S0ME-UU1D/leaderboards/ladder/na?page=1&page_size=2'))
@@ -131,7 +131,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/pvp/standings')
 
-    fetchMock.addResponse([{season_id: 'UUID', current: {tier: 1}}])
+    fetchMock.addResponse([{ season_id: 'UUID', current: { tier: 1 } }])
     let content = await endpoint.get()
     expect(content[0].season_id).toEqual('UUID')
   })
@@ -146,7 +146,7 @@ describe('endpoints > pvp', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/pvp/stats')
 
-    fetchMock.addResponse({pvp_rank: 80})
+    fetchMock.addResponse({ pvp_rank: 80 })
     let content = await endpoint.get()
     expect(content.pvp_rank).toEqual(80)
   })

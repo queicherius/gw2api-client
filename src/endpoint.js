@@ -434,7 +434,7 @@ module.exports = class AbstractEndpoint {
     /* istanbul ignore next */
     const credentials = this.credentials ? 'include' : undefined
 
-    return this.fetch.single(url, {type, credentials})
+    return this.fetch.single(url, { type, credentials })
   }
 
   // Execute multiple requests in parallel
@@ -445,7 +445,7 @@ module.exports = class AbstractEndpoint {
     /* istanbul ignore next */
     const credentials = this.credentials ? 'include' : undefined
 
-    return this.fetch.many(urls, {type, credentials})
+    return this.fetch.many(urls, { type, credentials })
   }
 
   // Build the headers for localization and authentication

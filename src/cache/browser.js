@@ -43,7 +43,7 @@ module.exports = function (configuration) {
   }
 
   function _set (key, value, expiry) {
-    _storage[key] = {value, expiry: (new Date()).getTime() + expiry * 1000}
+    _storage[key] = { value, expiry: (new Date()).getTime() + expiry * 1000 }
     persist()
   }
 
@@ -90,5 +90,5 @@ module.exports = function (configuration) {
   hydrate()
   garbageCollection()
 
-  return {get, set, mget, mset, flush, _getStorage}
+  return { get, set, mget, mset, flush, _getStorage }
 }

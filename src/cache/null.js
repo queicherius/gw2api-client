@@ -1,5 +1,5 @@
 module.exports = function () {
-  return {get, set, mget, mset, flush}
+  return { get, set, mget, mset, flush }
 }
 
 function get () {

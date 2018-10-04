@@ -33,7 +33,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/backstory')
 
-    fetchMock.addResponse({backstory: [1, 2, 3]})
+    fetchMock.addResponse({ backstory: [1, 2, 3] })
     let content = await endpoint.get()
     expect(content).toEqual([1, 2, 3])
   })
@@ -48,9 +48,9 @@ describe('endpoints > characters', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/core')
 
-    fetchMock.addResponse({name: 'Random Nâme', race: 'Asura'})
+    fetchMock.addResponse({ name: 'Random Nâme', race: 'Asura' })
     let content = await endpoint.get()
-    expect(content).toEqual({name: 'Random Nâme', race: 'Asura'})
+    expect(content).toEqual({ name: 'Random Nâme', race: 'Asura' })
   })
 
   it('test /v2/characters/:id/crafting', async () => {
@@ -63,9 +63,9 @@ describe('endpoints > characters', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/crafting')
 
-    fetchMock.addResponse({crafting: [{discipline: 'Artificer', rating: 50}]})
+    fetchMock.addResponse({ crafting: [{ discipline: 'Artificer', rating: 50 }] })
     let content = await endpoint.get()
-    expect(content).toEqual([{discipline: 'Artificer', rating: 50}])
+    expect(content).toEqual([{ discipline: 'Artificer', rating: 50 }])
   })
 
   it('test /v2/characters/:id/equipment', async () => {
@@ -78,7 +78,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/equipment')
 
-    fetchMock.addResponse({equipment: [{id: 123, slot: 'Coat'}]})
+    fetchMock.addResponse({ equipment: [{ id: 123, slot: 'Coat' }] })
     let content = await endpoint.get()
     expect(content[0].id).toEqual(123)
   })
@@ -108,7 +108,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/inventory')
 
-    fetchMock.addResponse({bags: [{id: 123, size: 4, inventory: [null, {id: 123, count: 10}]}]})
+    fetchMock.addResponse({ bags: [{ id: 123, size: 4, inventory: [null, { id: 123, count: 10 }] }] })
     let content = await endpoint.get()
     expect(content[0].id).toEqual(123)
   })
@@ -123,7 +123,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/recipes')
 
-    fetchMock.addResponse({recipes: [1, 2, 3]})
+    fetchMock.addResponse({ recipes: [1, 2, 3] })
     let content = await endpoint.get()
     expect(content).toEqual([1, 2, 3])
   })
@@ -138,9 +138,9 @@ describe('endpoints > characters', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/sab')
 
-    fetchMock.addResponse({zones: [{id: 1, mode: 'tribulation'}]})
+    fetchMock.addResponse({ zones: [{ id: 1, mode: 'tribulation' }] })
     let content = await endpoint.get()
-    expect(content).toEqual({zones: [{id: 1, mode: 'tribulation'}]})
+    expect(content).toEqual({ zones: [{ id: 1, mode: 'tribulation' }] })
   })
 
   it('test /v2/characters/:id/skills', async () => {
@@ -153,7 +153,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/skills')
 
-    fetchMock.addResponse({skills: {pve: {heal: 29535}}})
+    fetchMock.addResponse({ skills: { pve: { heal: 29535 } } })
     let content = await endpoint.get()
     expect(content.pve.heal).toEqual(29535)
   })
@@ -168,7 +168,7 @@ describe('endpoints > characters', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/specializations')
 
-    fetchMock.addResponse({specializations: {pve: [{id: 41, traits: [1, 2, 3]}]}})
+    fetchMock.addResponse({ specializations: { pve: [{ id: 41, traits: [1, 2, 3] }] } })
     let content = await endpoint.get()
     expect(content.pve[0].id).toEqual(41)
   })
@@ -183,8 +183,8 @@ describe('endpoints > characters', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/training')
 
-    fetchMock.addResponse({training: [{id: 60, spent: 20, done: true}]})
+    fetchMock.addResponse({ training: [{ id: 60, spent: 20, done: true }] })
     let content = await endpoint.get()
-    expect(content).toEqual([{id: 60, spent: 20, done: true}])
+    expect(content).toEqual([{ id: 60, spent: 20, done: true }])
   })
 })

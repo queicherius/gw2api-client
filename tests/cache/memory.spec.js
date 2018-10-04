@@ -1,6 +1,6 @@
 /* eslint-env jest */
 const storage = require('../../src/cache/memory')
-const cache = storage({gcTick: 500})
+const cache = storage({ gcTick: 500 })
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 describe('cache > memory', function () {
@@ -22,11 +22,11 @@ describe('cache > memory', function () {
   })
 
   it('can set and get a single value', async () => {
-    await cache.set('foo', {herp: 'derp'}, 2)
+    await cache.set('foo', { herp: 'derp' }, 2)
 
     // Make sure the data is cached
     let cachedFresh = await cache.get('foo')
-    expect(cachedFresh).toEqual({herp: 'derp'})
+    expect(cachedFresh).toEqual({ herp: 'derp' })
 
     // Make sure the data expires
     await wait(3000)
@@ -35,13 +35,13 @@ describe('cache > memory', function () {
   })
 
   it('can set and get multiple values', async () => {
-    await cache.set('abc', {foo: 'bar'}, 2)
-    await cache.mset([['foo', 'bar', 2], ['herp', {derp: 1}, 2]])
+    await cache.set('abc', { foo: 'bar' }, 2)
+    await cache.mset([['foo', 'bar', 2], ['herp', { derp: 1 }, 2]])
 
     let cachedFresh = await cache.get('abc')
-    expect(cachedFresh).toEqual({foo: 'bar'})
+    expect(cachedFresh).toEqual({ foo: 'bar' })
     let cachedFreshMany = await cache.mget(['foo', 'herp', 'abc'])
-    expect(cachedFreshMany).toEqual(['bar', {derp: 1}, {foo: 'bar'}])
+    expect(cachedFreshMany).toEqual(['bar', { derp: 1 }, { foo: 'bar' }])
 
     await wait(3000)
 

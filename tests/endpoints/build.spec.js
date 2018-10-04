@@ -10,7 +10,7 @@ describe('endpoints > build', () => {
   })
 
   it('test /v2/build', async () => {
-    fetchMock.addResponse({id: 1337})
+    fetchMock.addResponse({ id: 1337 })
 
     expect(endpoint.isPaginated).toEqual(false)
     expect(endpoint.isBulk).toEqual(false)

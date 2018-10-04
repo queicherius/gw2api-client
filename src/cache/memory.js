@@ -22,7 +22,7 @@ module.exports = function (configuration) {
   }
 
   function _set (key, value, expiry) {
-    _storage[key] = {value, expiry: (new Date()).getTime() + expiry * 1000}
+    _storage[key] = { value, expiry: (new Date()).getTime() + expiry * 1000 }
   }
 
   function mget (keys) {
@@ -61,5 +61,5 @@ module.exports = function (configuration) {
   setInterval(garbageCollection, configuration.gcTick)
   garbageCollection()
 
-  return {get, set, mget, mset, flush, _getStorage}
+  return { get, set, mget, mset, flush, _getStorage }
 }

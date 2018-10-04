@@ -17,7 +17,7 @@ describe('endpoints > tokeninfo', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/tokeninfo')
 
-    fetchMock.addResponse({id: 'uuid', name: 'public key', permissions: ['account']})
+    fetchMock.addResponse({ id: 'uuid', name: 'public key', permissions: ['account'] })
     let content = await endpoint.get()
     expect(content.name).toEqual('public key')
   })

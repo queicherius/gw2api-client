@@ -20,7 +20,7 @@ describe('endpoints > emblem', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/emblem/backgrounds')
 
-    fetchMock.addResponse({id: 1, layers: ['1.png', '2.png']})
+    fetchMock.addResponse({ id: 1, layers: ['1.png', '2.png'] })
     let content = await endpoint.get(1)
     expect(content.id).toEqual(1)
   })
@@ -36,7 +36,7 @@ describe('endpoints > emblem', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/emblem/foregrounds')
 
-    fetchMock.addResponse({id: 1, layers: ['1.png', '2.png']})
+    fetchMock.addResponse({ id: 1, layers: ['1.png', '2.png'] })
     let content = await endpoint.get(1)
     expect(content.id).toEqual(1)
   })

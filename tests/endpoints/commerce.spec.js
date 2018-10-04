@@ -22,8 +22,8 @@ describe('endpoints > commerce', () => {
     fetchMock.addResponse({
       coins: 2280,
       items: [
-        {id: 49424, count: 14},
-        {id: 24358, count: 1}
+        { id: 49424, count: 14 },
+        { id: 24358, count: 1 }
       ]
     })
 
@@ -42,7 +42,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/commerce/exchange')
 
-    fetchMock.addResponse({coins_per_gem: 2000, quantity: 5})
+    fetchMock.addResponse({ coins_per_gem: 2000, quantity: 5 })
     let content = await endpoint.coins(10000)
     expect(content.quantity).toEqual(5)
     expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/commerce/exchange/coins?quantity=10000'))
@@ -58,7 +58,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/commerce/exchange')
 
-    fetchMock.addResponse({coins_per_gem: 1269, quantity: 12345})
+    fetchMock.addResponse({ coins_per_gem: 1269, quantity: 12345 })
     let content = await endpoint.gems(10000)
     expect(content.quantity).toEqual(12345)
     expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/commerce/exchange/gems?quantity=10000'))
@@ -75,7 +75,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/commerce/listings')
 
-    fetchMock.addResponse({id: 12, buys: [{listings: 1, unit_price: 123, quantity: 123}]})
+    fetchMock.addResponse({ id: 12, buys: [{ listings: 1, unit_price: 123, quantity: 123 }] })
     let content = await endpoint.get(12)
     expect(content.id).toEqual(12)
   })
@@ -91,7 +91,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/commerce/prices')
 
-    fetchMock.addResponse({id: 12, buys: {quantity: 12345, unit_price: 123}})
+    fetchMock.addResponse({ id: 12, buys: { quantity: 12345, unit_price: 123 } })
     let content = await endpoint.get(12)
     expect(content.id).toEqual(12)
   })
@@ -106,7 +106,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/commerce/transactions/current/buys')
 
-    fetchMock.addResponse([{id: 1337, item_id: 123, price: 987, quantity: 20}])
+    fetchMock.addResponse([{ id: 1337, item_id: 123, price: 987, quantity: 20 }])
     let content = await endpoint.page(0, 1)
     expect(content[0].item_id).toEqual(123)
   })
@@ -121,7 +121,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/commerce/transactions/current/sells')
 
-    fetchMock.addResponse([{id: 1337, item_id: 123, price: 987, quantity: 20}])
+    fetchMock.addResponse([{ id: 1337, item_id: 123, price: 987, quantity: 20 }])
     let content = await endpoint.page(0, 1)
     expect(content[0].item_id).toEqual(123)
   })
@@ -136,7 +136,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/commerce/transactions/history/buys')
 
-    fetchMock.addResponse([{id: 1337, item_id: 123, price: 987, quantity: 20}])
+    fetchMock.addResponse([{ id: 1337, item_id: 123, price: 987, quantity: 20 }])
     let content = await endpoint.page(0, 1)
     expect(content[0].item_id).toEqual(123)
   })
@@ -151,7 +151,7 @@ describe('endpoints > commerce', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/commerce/transactions/history/sells')
 
-    fetchMock.addResponse([{id: 1337, item_id: 123, price: 987, quantity: 20}])
+    fetchMock.addResponse([{ id: 1337, item_id: 123, price: 987, quantity: 20 }])
     let content = await endpoint.page(0, 1)
     expect(content[0].item_id).toEqual(123)
   })

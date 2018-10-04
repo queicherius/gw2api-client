@@ -17,7 +17,7 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account')
 
-    fetchMock.addResponse({id: 'unique-identifier', name: 'Account.1234', world: 1007})
+    fetchMock.addResponse({ id: 'unique-identifier', name: 'Account.1234', world: 1007 })
     let content = await endpoint.get()
     expect(content.name).toEqual('Account.1234')
   })
@@ -46,7 +46,7 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/achievements')
 
-    fetchMock.addResponse({id: 1, current: 487, max: 1000, done: false})
+    fetchMock.addResponse({ id: 1, current: 487, max: 1000, done: false })
     let content = await endpoint.get(1)
     expect(content.current).toEqual(487)
     expect(fetchMock.lastUrl().endsWith('/v2/account/achievements?id=1&access_token=XXX')).toEqual(true)
@@ -62,7 +62,7 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/achievements')
 
-    fetchMock.addResponse([{id: 1, current: 487, max: 1000, done: false}])
+    fetchMock.addResponse([{ id: 1, current: 487, max: 1000, done: false }])
     let contentGet = await endpoint.get()
     expect(contentGet[0].current).toEqual(487)
     expect(fetchMock.lastUrl().endsWith('/v2/account/achievements?access_token=XXX')).toEqual(true)
@@ -81,7 +81,7 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/bank')
 
-    fetchMock.addResponse([null, null, {id: 123, count: 1}])
+    fetchMock.addResponse([null, null, { id: 123, count: 1 }])
     let content = await endpoint.get()
     expect(content[2].id).toEqual(123)
   })
@@ -166,9 +166,9 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/home/cats')
 
-    fetchMock.addResponse([{id: 1, hint: 'chicken'}])
+    fetchMock.addResponse([{ id: 1, hint: 'chicken' }])
     let content = await endpoint.get()
-    expect(content).toEqual([{id: 1, hint: 'chicken'}])
+    expect(content).toEqual([{ id: 1, hint: 'chicken' }])
   })
 
   it('test /v2/account/home/nodes', async () => {
@@ -197,13 +197,13 @@ describe('endpoints > account', () => {
     expect(endpoint.url).toEqual('/v2/account/inventory')
 
     fetchMock.addResponse([
-      {id: 49308, count: 1, binding: 'Account'},
-      {id: 48931, count: 1, binding: 'Account'}
+      { id: 49308, count: 1, binding: 'Account' },
+      { id: 48931, count: 1, binding: 'Account' }
     ])
     let content = await endpoint.get()
     expect(content).toEqual([
-      {id: 49308, count: 1, binding: 'Account'},
-      {id: 48931, count: 1, binding: 'Account'}
+      { id: 49308, count: 1, binding: 'Account' },
+      { id: 48931, count: 1, binding: 'Account' }
     ])
   })
 
@@ -232,9 +232,9 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/masteries')
 
-    fetchMock.addResponse([{id: 1, level: 4}, {id: 2, level: 5}])
+    fetchMock.addResponse([{ id: 1, level: 4 }, { id: 2, level: 5 }])
     let content = await endpoint.get()
-    expect(content).toEqual([{id: 1, level: 4}, {id: 2, level: 5}])
+    expect(content).toEqual([{ id: 1, level: 4 }, { id: 2, level: 5 }])
   })
 
   it('test /v2/account/mastery/points', async () => {
@@ -247,9 +247,9 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/mastery/points')
 
-    fetchMock.addResponse({totals: [{region: 'Tyria', spent: 49, earned: 58}]})
+    fetchMock.addResponse({ totals: [{ region: 'Tyria', spent: 49, earned: 58 }] })
     let content = await endpoint.get()
-    expect(content).toEqual({totals: [{region: 'Tyria', spent: 49, earned: 58}]})
+    expect(content).toEqual({ totals: [{ region: 'Tyria', spent: 49, earned: 58 }] })
   })
 
   it('test /v2/account/materials', async () => {
@@ -262,7 +262,7 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/materials')
 
-    fetchMock.addResponse([{id: 12134, category: 5, count: 2}])
+    fetchMock.addResponse([{ id: 12134, category: 5, count: 2 }])
     let content = await endpoint.get()
     expect(content[0].id).toEqual(12134)
   })
@@ -392,7 +392,7 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/wallet')
 
-    fetchMock.addResponse([{id: 1, value: 48043252}, {id: 2, value: 1956351}])
+    fetchMock.addResponse([{ id: 1, value: 48043252 }, { id: 2, value: 1956351 }])
     let content = await endpoint.get()
     expect(content[0].value).toEqual(48043252)
   })

@@ -18,7 +18,7 @@ describe('endpoints > mailcarriers', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/mailcarriers')
 
-    fetchMock.addResponse({id: 1, name: 'Confetti Mail Delivery'})
+    fetchMock.addResponse({ id: 1, name: 'Confetti Mail Delivery' })
     let content = await endpoint.get(1)
     expect(content.name).toEqual('Confetti Mail Delivery')
   })

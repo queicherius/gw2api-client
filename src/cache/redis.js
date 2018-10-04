@@ -1,6 +1,6 @@
 module.exports = function (configuration) {
   configuration = Object.assign({
-    prefix: 'gw2api-',
+    prefix: 'gw2api-'
   }, configuration)
 
   if (!configuration.redis) {
@@ -89,5 +89,5 @@ module.exports = function (configuration) {
     })
   }
 
-  return {get, set, mget, mset, flush}
+  return { get, set, mget, mset, flush }
 }

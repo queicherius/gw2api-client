@@ -18,7 +18,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/achievements')
 
-    fetchMock.addResponse({id: 1, name: 'Centaur Slayer'})
+    fetchMock.addResponse({ id: 1, name: 'Centaur Slayer' })
     let content = await endpoint.get(1)
     expect(content.name).toEqual('Centaur Slayer')
   })
@@ -34,7 +34,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/achievements/categories')
 
-    fetchMock.addResponse({id: 1, name: 'Slayer', order: 30, achievements: [1, 4, 5]})
+    fetchMock.addResponse({ id: 1, name: 'Slayer', order: 30, achievements: [1, 4, 5] })
     let content = await endpoint.get(1)
     expect(content.name).toEqual('Slayer')
   })
@@ -50,7 +50,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/achievements/groups')
 
-    fetchMock.addResponse({id: '65B4B678-607E-4D97-B458-076C3E96A810', name: 'Heart of Thorns'})
+    fetchMock.addResponse({ id: '65B4B678-607E-4D97-B458-076C3E96A810', name: 'Heart of Thorns' })
     let content = await endpoint.get('65B4B678-607E-4D97-B458-076C3E96A810')
     expect(content.name).toEqual('Heart of Thorns')
   })
@@ -65,7 +65,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/achievements/daily')
 
-    fetchMock.addResponse({pve: [{id: 1984, level: {min: 1, max: 80}}]})
+    fetchMock.addResponse({ pve: [{ id: 1984, level: { min: 1, max: 80 } }] })
     let content = await endpoint.get()
     expect(content.pve[0].id).toEqual(1984)
   })
@@ -80,7 +80,7 @@ describe('endpoints > achievements', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/achievements/daily/tomorrow')
 
-    fetchMock.addResponse({pve: [{id: 1984, level: {min: 1, max: 80}}]})
+    fetchMock.addResponse({ pve: [{ id: 1984, level: { min: 1, max: 80 } }] })
     let content = await endpoint.get()
     expect(content.pve[0].id).toEqual(1984)
   })

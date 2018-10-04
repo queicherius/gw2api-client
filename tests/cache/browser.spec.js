@@ -1,6 +1,6 @@
 /* eslint-env jest */
-import storage from '../../src/cache/browser'
-import idbMock from '../mocks/idb.mock.js'
+const storage = require('../../src/cache/browser')
+const idbMock = require('../mocks/idb.mock.js')
 
 const cache = storage({storageEngine: idbMock, gcTick: 500, persistDebounce: 100})
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))

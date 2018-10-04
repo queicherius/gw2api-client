@@ -1,14 +1,13 @@
-import debounce from 'debounce'
-import * as idbKeyval from 'idb-keyval'
+const debounce = require('debounce')
+const idbKeyval = require('idb-keyval')
 
-export default function (configuration) {
-  configuration = {
+module.exports = function (configuration) {
+  configuration = Object.assign({
     storageKey: 'gw2api-cache',
     gcTick: 5 * 60 * 1000,
     persistDebounce: 3 * 1000,
-    storageEngine: idbKeyval,
-    ...configuration
-  }
+    storageEngine: idbKeyval
+  }, configuration)
 
   let _storage = {}
   const storageEngine = configuration.storageEngine

@@ -1,7 +1,7 @@
 /* eslint-env jest */
-import nullCache from '../src/cache/null'
-import memoryCache from '../src/cache/memory'
-import Module from '../src/client'
+const nullCache = require('../src/cache/null')
+const memoryCache = require('../src/cache/memory')
+const Module = require('../src/client')
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 describe('client', () => {

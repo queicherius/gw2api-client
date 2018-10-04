@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import endpoint, { wrap } from '../../src/endpoints/account-blob'
+const endpoint = require('../../src/endpoints/account-blob')
 
 function makeApi (hasGuildPermission) {
   return () => ({
@@ -155,7 +155,7 @@ describe('endpoints > account.blob()', () => {
   })
 
   it('test wrap() handling api errors', async () => {
-    function endpoint () {
+    function mockEndpoint () {
       let error = new Error()
       error.response = {status: 503}
       error.content = {text: 'API is disabled'}
@@ -163,19 +163,19 @@ describe('endpoints > account.blob()', () => {
       return _e(error)
     }
 
-    let response = await wrap(endpoint)()
+    let response = await endpoint.wrap(mockEndpoint)()
     expect(response).toEqual(null)
   })
 
   it('test /v2/account .blob() handling library errors', async () => {
-    function endpoint () {
+    function mockEndpoint () {
       return _e(new Error('Oh no.'))
     }
 
     let error
 
     try {
-      await wrap(endpoint)()
+      await endpoint.wrap(mockEndpoint)()
     } catch (err) {
       error = err
     }

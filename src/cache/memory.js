@@ -1,5 +1,7 @@
-export default function (configuration) {
-  configuration = {gcTick: 5 * 60 * 1000, ...configuration}
+module.exports = function (configuration) {
+  configuration = Object.assign({
+    gcTick: 5 * 60 * 1000
+  }, configuration)
 
   // Scope the storage to the function, so multiple instances don't interfere
   let _storage = {}

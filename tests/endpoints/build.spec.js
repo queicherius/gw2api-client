@@ -1,6 +1,6 @@
 /* eslint-env jest */
-import { mockClient, fetchMock } from '../mocks/client.mock'
-import Module from '../../src/endpoints/build'
+const { mockClient, fetchMock } = require('../mocks/client.mock')
+const Module = require('../../src/endpoints/build')
 
 describe('endpoints > build', () => {
   let endpoint

@@ -1,7 +1,7 @@
 /* eslint-env jest */
-import sinon from 'sinon'
-import { mockClient, fetchMock } from '../mocks/client.mock'
-import Module from '../../src/endpoints/account'
+const sinon = require('sinon')
+const { mockClient, fetchMock } = require('../mocks/client.mock')
+const Module = require('../../src/endpoints/account')
 
 describe('endpoints > account', () => {
   let endpoint

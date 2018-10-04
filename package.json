@@ -2,11 +2,10 @@
   "name": "gw2api-client",
   "version": "6.1.1",
   "description": "A javascript wrapper around the official Guild Wars 2 API",
-  "main": "./build/index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "build": "abc build",
-    "test": "jest --runInBand --forceExit && abc lint",
-    "version": "abc build"
+    "test": "jest --runInBand --forceExit",
+    "lint": "abc lint"
   },
   "author": "queicherius@gmail.com",
   "license": "MIT",

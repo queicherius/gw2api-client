@@ -1,6 +1,6 @@
 /* eslint-env jest */
-import { mockClient, fetchMock } from './mocks/client.mock'
-import Module from '../src/endpoint'
+const { mockClient, fetchMock } = require('./mocks/client.mock')
+const Module = require('../src/endpoint')
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 async function expectError (callback) {

@@ -1,6 +1,6 @@
 /* eslint-env jest */
-import storage from '../../src/cache/redis'
-import redis from 'redis'
+const storage = require('../../src/cache/redis')
+const redis = require('redis')
 const cache = storage({redis: redis.createClient()})
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 

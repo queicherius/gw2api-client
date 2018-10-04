@@ -1,11 +1,11 @@
-import fetch from 'lets-fetch'
-import flow from 'promise-control-flow'
-import debugging from 'debug'
-import nullCache from './cache/null'
-import * as endpoints from './endpoints'
+const fetch = require('lets-fetch')
+const flow = require('promise-control-flow')
+const debugging = require('debug')
+const nullCache = require('./cache/null')
+const endpoints = require('./endpoints')
 const debug = debugging('gw2api-client')
 
-export default class Client {
+module.exports = class Client {
   constructor () {
     this.lang = 'en'
     this.apiKey = false

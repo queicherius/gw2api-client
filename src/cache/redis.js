@@ -1,5 +1,7 @@
-export default function (configuration) {
-  configuration = {prefix: 'gw2api-', ...configuration}
+module.exports = function (configuration) {
+  configuration = Object.assign({
+    prefix: 'gw2api-',
+  }, configuration)
 
   if (!configuration.redis) {
     throw new Error('The `redis` cache storage requires a `redis` instance')

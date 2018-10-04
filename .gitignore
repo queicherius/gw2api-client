@@ -3,10 +3,6 @@ npm-debug.log*
 
 # Coverage directories
 coverage/
-.nyc_output/
-
-# Compiled code
-build/
 
 # Dependencies
 node_modules/

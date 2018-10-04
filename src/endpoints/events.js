@@ -1,6 +1,6 @@
-import AbstractEndpoint from '../endpoint'
+const AbstractEndpoint = require('../endpoint')
 
-export default class EventsEndpoint extends AbstractEndpoint {
+module.exports = class EventsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v1/event_details.json'
@@ -22,7 +22,7 @@ function transformV1Format (json) {
   const keys = Object.keys(events)
 
   for (let i = 0; i !== keys.length; i++) {
-    transformed.push({id: keys[i], ...events[keys[i]]})
+    transformed.push(Object.assign({id: keys[i]}, events[keys[i]]))
   }
 
   return transformed

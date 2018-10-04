@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import storage from '../../src/cache/null'
+const storage = require('../../src/cache/null')
 const cache = storage()
 
 describe('cache > null', function () {

@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import storage from '../../src/cache/memory'
+const storage = require('../../src/cache/memory')
 const cache = storage({gcTick: 500})
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 

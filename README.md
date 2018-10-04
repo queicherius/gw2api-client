@@ -206,7 +206,7 @@ file.__get__('api').fetch = fetchMock
 
 You can enable debug messages by setting a flag on the client:
 
-```
+```js
 const client = require('gw2api-client')
 let api = client()
 

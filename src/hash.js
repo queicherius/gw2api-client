@@ -1,4 +1,4 @@
-const emotionHash = require('@emotion/hash')
+const emotionHash = require('@emotion/hash/dist/hash.cjs.js')
 
 let cache = {}
 

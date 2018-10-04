@@ -1,8 +1,9 @@
 const parseUrl = require('url-parse')
 const unique = require('array-unique')
-const clone = require('fast-clone')
 const chunk = require('chunk')
 const hashString = require('./hash')
+
+const clone = (x) => JSON.parse(JSON.stringify(x))
 
 module.exports = class AbstractEndpoint {
   constructor (parent) {

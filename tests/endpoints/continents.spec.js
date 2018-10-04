@@ -1,5 +1,4 @@
-/* eslint-env node, mocha */
-import { expect } from 'chai'
+/* eslint-env jest */
 import { mockClient, fetchMock } from '../mocks/client.mock'
 import Module from '../../src/endpoints/continents'
 
@@ -11,32 +10,32 @@ describe('endpoints > continents', () => {
   })
 
   it('test /v2/continents', async () => {
-    expect(endpoint.isPaginated).to.equal(true)
-    expect(endpoint.isBulk).to.equal(true)
-    expect(endpoint.supportsBulkAll).to.equal(true)
-    expect(endpoint.isLocalized).to.equal(true)
-    expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.equal(undefined)
-    expect(endpoint.url).to.equal('/v2/continents')
+    expect(endpoint.isPaginated).toEqual(true)
+    expect(endpoint.isBulk).toEqual(true)
+    expect(endpoint.supportsBulkAll).toEqual(true)
+    expect(endpoint.isLocalized).toEqual(true)
+    expect(endpoint.isAuthenticated).toEqual(false)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/continents')
 
     fetchMock.addResponse([1, 2])
     let content = await endpoint.ids()
-    expect(content).to.deep.equal([1, 2])
+    expect(content).toEqual([1, 2])
   })
 
   it('test /v2/continents/1/floors', async () => {
     endpoint = endpoint.floors(1)
 
-    expect(endpoint.isPaginated).to.equal(true)
-    expect(endpoint.isBulk).to.equal(true)
-    expect(endpoint.supportsBulkAll).to.equal(true)
-    expect(endpoint.isLocalized).to.equal(false)
-    expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.equal(undefined)
-    expect(endpoint.url).to.equal('/v2/continents/1/floors')
+    expect(endpoint.isPaginated).toEqual(true)
+    expect(endpoint.isBulk).toEqual(true)
+    expect(endpoint.supportsBulkAll).toEqual(true)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(false)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/continents/1/floors')
 
     fetchMock.addResponse({texture_dims: [1, 2], clamed_view: [[1, 2]]})
     let content = await endpoint.get(42)
-    expect(content.texture_dims).to.deep.equal([1, 2])
+    expect(content.texture_dims).toEqual([1, 2])
   })
 })

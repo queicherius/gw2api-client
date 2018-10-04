@@ -1,5 +1,4 @@
-/* eslint-env node, mocha */
-import { expect } from 'chai'
+/* eslint-env jest */
 import endpoint, { wrap } from '../../src/endpoints/account-blob'
 
 function makeApi (hasGuildPermission) {
@@ -140,7 +139,7 @@ describe('endpoints > account.blob()', () => {
 
     let content = await endpoint({})
 
-    expect(content).to.deep.equal(expectedResponse)
+    expect(content).toEqual(expectedResponse)
   })
 
   it('test /v2/account .blob() without guilds permission', async () => {
@@ -148,7 +147,7 @@ describe('endpoints > account.blob()', () => {
 
     let content = await endpoint({})
 
-    expect(content).to.deep.equal({
+    expect(content).toEqual({
       ...expectedResponse,
       account: {name: 'lol.1234', guilds: ['key-1234', 'key-5678'], guild_leader: undefined},
       guilds: []
@@ -165,7 +164,7 @@ describe('endpoints > account.blob()', () => {
     }
 
     let response = await wrap(endpoint)()
-    expect(response).to.equal(null)
+    expect(response).toEqual(null)
   })
 
   it('test /v2/account .blob() handling library errors', async () => {
@@ -181,6 +180,6 @@ describe('endpoints > account.blob()', () => {
       error = err
     }
 
-    expect(error.message).to.equal('Oh no.')
+    expect(error.message).toEqual('Oh no.')
   })
 })

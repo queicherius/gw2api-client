@@ -1,5 +1,4 @@
-/* eslint-env node, mocha */
-import { expect } from 'chai'
+/* eslint-env jest */
 import { mockClient, fetchMock } from '../mocks/client.mock'
 import Module from '../../src/endpoints/events'
 
@@ -18,19 +17,19 @@ describe('endpoints > events', () => {
         'uuid-two': {name: 'Defeat champion'}
       }
     })
-    expect(content).to.deep.equal([
+    expect(content).toEqual([
       {id: 'uuid-one', name: 'Defeat elite'},
       {id: 'uuid-two', name: 'Defeat champion'}
     ])
   })
 
   it('test /v1/event_details.json (all)', async () => {
-    expect(endpoint.isPaginated).to.equal(false)
-    expect(endpoint.isBulk).to.equal(false)
-    expect(endpoint.isLocalized).to.equal(false)
-    expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.equal(undefined)
-    expect(endpoint.url).to.equal('/v1/event_details.json')
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(false)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v1/event_details.json')
 
     fetchMock.addResponse({
       events: {
@@ -39,17 +38,17 @@ describe('endpoints > events', () => {
       }
     })
     let content = await endpoint.all()
-    expect(content.length).to.equal(2)
-    expect(content[0].name).to.equal('Defeat elite')
+    expect(content.length).toEqual(2)
+    expect(content[0].name).toEqual('Defeat elite')
   })
 
   it('test /v1/event_details.json (get)', async () => {
-    expect(endpoint.isPaginated).to.equal(false)
-    expect(endpoint.isBulk).to.equal(false)
-    expect(endpoint.isLocalized).to.equal(false)
-    expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.equal(undefined)
-    expect(endpoint.url).to.equal('/v1/event_details.json')
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(false)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v1/event_details.json')
 
     fetchMock.addResponse({
       events: {
@@ -57,7 +56,7 @@ describe('endpoints > events', () => {
       }
     })
     let content = await endpoint.get('uuid-one')
-    expect(content.name).to.equal('Defeat elite')
-    expect(fetchMock.lastUrl()).contains('/v1/event_details.json?event_id=uuid-one')
+    expect(content.name).toEqual('Defeat elite')
+    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v1/event_details.json?event_id=uuid-one'))
   })
 })

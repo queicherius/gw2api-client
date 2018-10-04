@@ -215,6 +215,7 @@ export default class AbstractEndpoint {
     // If we are partially caching and all not-cached ids are all invalid,
     // simulate the API behaviour by silently swallowing errors.
     let handleMissingIds = (err) => {
+      /* istanbul ignore else */
       if (partialRequest && err.response && err.response.status === 404) {
         return Promise.resolve([])
       }

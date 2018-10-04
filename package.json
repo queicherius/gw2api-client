@@ -5,7 +5,7 @@
   "main": "./build/index.js",
   "scripts": {
     "build": "abc build",
-    "test": "abc test && abc lint",
+    "test": "jest --runInBand --forceExit && abc lint",
     "version": "abc build"
   },
   "author": "queicherius@gmail.com",
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "abc-environment": "^2.0.0",
+    "jest": "^23.6.0",
     "redis": "^2.6.2"
   }
 }

@@ -1,5 +1,4 @@
-/* eslint-env node, mocha */
-import { expect } from 'chai'
+/* eslint-env jest */
 import { mockClient, fetchMock } from '../mocks/client.mock'
 import Module from '../../src/endpoints/tokeninfo'
 
@@ -11,15 +10,15 @@ describe('endpoints > tokeninfo', () => {
   })
 
   it('test /v2/tokeninfo', async () => {
-    expect(endpoint.isPaginated).to.equal(false)
-    expect(endpoint.isBulk).to.equal(false)
-    expect(endpoint.isLocalized).to.equal(false)
-    expect(endpoint.isAuthenticated).to.equal(true)
-    expect(endpoint.cacheTime).to.not.equal(undefined)
-    expect(endpoint.url).to.equal('/v2/tokeninfo')
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/tokeninfo')
 
     fetchMock.addResponse({id: 'uuid', name: 'public key', permissions: ['account']})
     let content = await endpoint.get()
-    expect(content.name).to.equal('public key')
+    expect(content.name).toEqual('public key')
   })
 })

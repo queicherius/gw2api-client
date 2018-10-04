@@ -27,7 +27,7 @@
     "idb-keyval": "^3.1.0",
     "lets-fetch": "^2.1.2",
     "promise-control-flow": "^1.2.5",
-    "url-parse": "^1.4.3"
+    "querystringify": "^2.0.0"
   },
   "devDependencies": {
     "babel-plugin-rewire": "^1.2.0",

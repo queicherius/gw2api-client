@@ -1,4 +1,4 @@
-const parseUrl = require('url-parse')
+const qs = require('querystringify')
 const unique = require('array-unique')
 const chunk = require('chunk')
 const hashString = require('./hash')
@@ -463,8 +463,8 @@ module.exports = class AbstractEndpoint {
     url = this.baseUrl + url
 
     // Parse a possibly existing query
-    let parsedUrl = parseUrl(url, true)
-    let query = parsedUrl.query
+    const parsedUrl = url.split('?')
+    let query = qs.parse(parsedUrl[1] || '')
 
     // Only set the API key for authenticated endpoints,
     // when it is required or optional and set on the client
@@ -477,13 +477,9 @@ module.exports = class AbstractEndpoint {
       query['lang'] = this.lang
     }
 
-    // Build the new url
-    parsedUrl.set('query', query)
-    let string = parsedUrl.toString()
-
-    // Clean up the mess by the query parser, and unencode ','
-    string = string.replace(/%2C/g, ',')
-    return string
+    // Build the url with the finished query
+    query = qs.stringify(query, true).replace(/%2C/g, ',')
+    return parsedUrl[0] + query
   }
 
   // Guarantee the element order of bulk results

@@ -13,6 +13,9 @@
     "type": "git",
     "url": "https://github.com/gw2efficiency/gw2api-client"
   },
+  "jest": {
+    "collectCoverageFrom": ["src/**/*.js"]
+  },
   "dependencies": {
     "array-unique": "^0.3.2",
     "chunk": "^0.0.2",

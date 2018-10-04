@@ -82,6 +82,7 @@ client.language('de').items().all()
 - [`api().characters(:name).backstory()`](#apicharactersnamebackstory) - Backstory information of a single character.
 - [`api().characters(:name).core()`](#apicharactersnamecore) - Core information (name, race, ...) of a single character.
 - [`api().characters(:name).crafting()`](#apicharactersnamecrafting) - Crafting disciplines of a single character.
+- [`api().characters(:name).dungeons()`](#apicharactersnamedungeons) - Completed story dungeons of a single character.
 - [`api().characters(:name).equipment()`](#apicharactersnameequipment) - Equipment of a single character.
 - [`api().characters(:name).heropoints()`](#apicharactersnameheropoints) - Heropoint information of a single character.
 - [`api().characters(:name).inventory()`](#apicharactersnameinventory) - Inventory of a single character.
@@ -723,6 +724,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Crafting disciplines of a single character.
 
 - **API-URL:** [/v2/characters/:name/crafting](https://api.guildwars2.com/v2/characters/:name/crafting)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().characters(:name).dungeons()`
+
+> Completed story dungeons of a single character.
+
+- **API-URL:** [/v2/characters/:name/dungeons](https://api.guildwars2.com/v2/characters/:name/dungeons)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes

@@ -69,6 +69,21 @@ describe('endpoints > characters', () => {
     expect(content).to.deep.equal([{discipline: 'Artificer', rating: 50}])
   })
 
+  it('test /v2/characters/:id/dungeons', async () => {
+    endpoint = (new Module(mockClient, 'Random Nâme')).dungeons()
+
+    expect(endpoint.isPaginated).to.equal(false)
+    expect(endpoint.isBulk).to.equal(false)
+    expect(endpoint.isLocalized).to.equal(false)
+    expect(endpoint.isAuthenticated).to.equal(true)
+    expect(endpoint.cacheTime).to.not.equal(undefined)
+    expect(endpoint.url).to.equal('/v2/characters/Random%20N%C3%A2me/dungeons')
+
+    fetchMock.addResponse({dungeons: [1, 2, 3]})
+    let content = await endpoint.get()
+    expect(content).to.deep.equal([1, 2, 3])
+  })
+
   it('test /v2/characters/:id/equipment', async () => {
     endpoint = (new Module(mockClient, 'Random Nâme')).equipment()
 

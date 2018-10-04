@@ -1,14 +1,14 @@
-import parseUrl from 'url-parse'
-import unique from 'array-unique'
-import Rusha from 'rusha'
-import clone from 'fast-clone'
-import chunk from 'chunk'
-import debugging from 'debug'
+const parseUrl = require('url-parse')
+const unique = require('array-unique')
+const Rusha = require('rusha')
+const clone = require('fast-clone')
+const chunk = require('chunk')
+const debugging = require('debug')
 const sha = (s) => (new Rusha()).digestFromString(s)
 const debug = debugging('gw2api-client')
 const debugRequest = debugging('gw2api-client:request')
 
-export default class AbstractEndpoint {
+module.exports = class AbstractEndpoint {
   constructor (parent) {
     this.lang = parent.lang
     this.apiKey = parent.apiKey
@@ -215,6 +215,7 @@ export default class AbstractEndpoint {
     // If we are partially caching and all not-cached ids are all invalid,
     // simulate the API behaviour by silently swallowing errors.
     let handleMissingIds = (err) => {
+      /* istanbul ignore else */
       if (partialRequest && err.response && err.response.status === 404) {
         return Promise.resolve([])
       }
@@ -433,7 +434,7 @@ export default class AbstractEndpoint {
     /* istanbul ignore next */
     const credentials = this.credentials ? 'include' : undefined
 
-    return this.fetch.single(url, {type, credentials})
+    return this.fetch.single(url, { type, credentials })
   }
 
   // Execute multiple requests in parallel
@@ -444,7 +445,7 @@ export default class AbstractEndpoint {
     /* istanbul ignore next */
     const credentials = this.credentials ? 'include' : undefined
 
-    return this.fetch.many(urls, {type, credentials})
+    return this.fetch.many(urls, { type, credentials })
   }
 
   // Build the headers for localization and authentication

@@ -1,9 +1,9 @@
-import flow from 'promise-control-flow'
-import flat from 'flat'
-import _get from 'fast-get'
-import api from '../index.js'
+const flow = require('promise-control-flow')
+const flat = require('flat')
+const _get = require('fast-get')
+const api = require('../index.js')
 
-export default function (parent) {
+function blob (parent) {
   const client = api()
     .authenticate(parent.apiKey)
     .language(parent.lang)
@@ -91,7 +91,7 @@ function filterBetaCharacters (characters) {
 // Wrap a promise function so all errors that have to do with the API
 // just result in an empty response instead of throwing an error
 // This prevents API errors / changes breaking the entire infrastructure
-export function wrap (func) {
+function wrap (func) {
   return () => new Promise((resolve, reject) => {
     func()
       .then(x => resolve(x))
@@ -108,3 +108,6 @@ export function wrap (func) {
       })
   })
 }
+
+module.exports = blob
+module.exports.wrap = wrap

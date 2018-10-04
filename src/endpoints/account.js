@@ -1,10 +1,10 @@
-import AbstractEndpoint from '../endpoint'
-import CharactersEndpoint from './characters'
-import PvpEndpoint from './pvp'
-import CommerceEndpoint from './commerce'
-import accountBlob from './account-blob.js'
+const AbstractEndpoint = require('../endpoint')
+const CharactersEndpoint = require('./characters')
+const PvpEndpoint = require('./pvp')
+const CommerceEndpoint = require('./commerce')
+const accountBlob = require('./account-blob.js')
 
-export default class AccountEndpoint extends AbstractEndpoint {
+module.exports = class AccountEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account'

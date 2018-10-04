@@ -18,7 +18,7 @@ This module can be used for Node.js as well as browsers using [Browserify](https
 ### Basic usage
 
 ```js
-import client from 'gw2api-client'
+const client = require('gw2api-client')
 
 // Get an instance of an API client
 let api = client()
@@ -53,7 +53,7 @@ api.items().all().then(items => console.log(items))
 By default, calling any endpoint requests data from the live API. However, you can easily enable caching for all appropriate endpoints by giving the client a cache storage to work with. You can find the default cache times of all endpoints [here](./docs/endpoints.md).
 
 ```js
-import cacheMemory from 'gw2api-client/build/cache/memory'
+const cacheMemory = require('gw2api-client/build/cache/memory')
 api.cacheStorage(cacheMemory())
 
 // This will only call the official API once
@@ -73,8 +73,8 @@ api.items().live().ids()
 You can also chain multiple cache storages together. In this case, the cache gets saved in all storages and read from the first storage in the list answering with a valid value. The more persistent and more reliable cache storages should therefore be on the end of the list and the fastest (e.g. memory) should be at the start of the list.
 
 ```js
-import cacheMemory from 'gw2api-client/build/cache/memory'
-import cacheRedisStorage from 'gw2api-client/build/cache/redis'
+const cacheMemory = require('gw2api-client/build/cache/memory')
+const cacheRedisStorage = require('gw2api-client/build/cache/redis')
 
 // Save in memory and local storage
 // Try to answer from memory first, then from local storage and then hit the API
@@ -150,8 +150,8 @@ You can extend or overwrite the API client with your own endpoints if you wish s
 If you need more specific ways to handle data then the already defined ones, take a look at how the existing endpoints handle these edge cases (e.g. in [`/src/endpoints/recipes.js`](/src/endpoints/recipes.js)).
 
 ```js
-import client from 'gw2api-client'
-import AbstractEndpoint from 'gw2api-client/build/endpoint'
+const client = require('gw2api-client')
+const AbstractEndpoint = require('gw2api-client/build/endpoint')
 
 // Get an instance of an API client
 const api = client()
@@ -192,8 +192,8 @@ api.items().many([123, 456])
 If you want to mock this module in your tests, you can replace the underlying `lets-fetch` library with the provided mock module, e.g. using [rewire](https://github.com/speedskater/babel-plugin-rewire). You can find all available mock methods [here](https://github.com/queicherius/lets-fetch#mocking).
 
 ```js
-import fetchMock from 'lets-fetch/mock'
-import file from './some/file/using/gw2api/client.js'
+const fetchMock = require('lets-fetch/mock')
+const file = require('./some/file/using/gw2api/client.js')
 
 // Get the variable "api" (which would be the initialized api client
 // in your own code) and replace the fetch method with the fetchMock

@@ -1,6 +1,6 @@
-import AbstractEndpoint from '../endpoint'
+const AbstractEndpoint = require('../endpoint')
 
-export default class GuildEndpoint extends AbstractEndpoint {
+module.exports = class GuildEndpoint extends AbstractEndpoint {
   constructor (client, id) {
     super(client)
     this.id = id

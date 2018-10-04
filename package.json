@@ -2,11 +2,10 @@
   "name": "gw2api-client",
   "version": "6.1.1",
   "description": "A javascript wrapper around the official Guild Wars 2 API",
-  "main": "./build/index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "build": "abc build",
-    "test": "abc test && abc lint",
-    "version": "abc build"
+    "test": "jest --runInBand --forceExit",
+    "lint": "standard"
   },
   "author": "queicherius@gmail.com",
   "license": "MIT",
@@ -14,22 +13,27 @@
     "type": "git",
     "url": "https://github.com/gw2efficiency/gw2api-client"
   },
+  "jest": {
+    "collectCoverageFrom": ["src/**/*.js"]
+  },
   "dependencies": {
     "array-unique": "^0.3.2",
-    "chunk": "0.0.2",
-    "debounce": "^1.1.0",
+    "chunk": "^0.0.2",
+    "debounce": "^1.2.0",
     "debug": "^4.0.1",
-    "fast-clone": "^1.4.2",
-    "fast-get": "^1.0.1",
-    "flat": "^4.0.0",
+    "fast-clone": "^1.5.3",
+    "fast-get": "^1.0.3",
+    "flat": "^4.1.0",
     "idb-keyval": "^3.1.0",
-    "lets-fetch": "^2.0.0",
-    "promise-control-flow": "^1.2.3",
-    "rusha": "^0.8.5",
-    "url-parse": "^1.1.3"
+    "lets-fetch": "^2.1.2",
+    "promise-control-flow": "^1.2.5",
+    "rusha": "^0.8.13",
+    "url-parse": "^1.4.3"
   },
   "devDependencies": {
-    "abc-environment": "^2.0.0",
-    "redis": "^2.6.2"
+    "babel-plugin-rewire": "^1.2.0",
+    "jest": "^23.6.0",
+    "redis": "^2.6.2",
+    "standard": "^12.0.1"
   }
 }

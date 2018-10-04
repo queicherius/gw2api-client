@@ -1,5 +1,7 @@
-export default function (configuration) {
-  configuration = {gcTick: 5 * 60 * 1000, ...configuration}
+module.exports = function (configuration) {
+  configuration = Object.assign({
+    gcTick: 5 * 60 * 1000
+  }, configuration)
 
   // Scope the storage to the function, so multiple instances don't interfere
   let _storage = {}
@@ -20,7 +22,7 @@ export default function (configuration) {
   }
 
   function _set (key, value, expiry) {
-    _storage[key] = {value, expiry: (new Date()).getTime() + expiry * 1000}
+    _storage[key] = { value, expiry: (new Date()).getTime() + expiry * 1000 }
   }
 
   function mget (keys) {
@@ -59,5 +61,5 @@ export default function (configuration) {
   setInterval(garbageCollection, configuration.gcTick)
   garbageCollection()
 
-  return {get, set, mget, mset, flush, _getStorage}
+  return { get, set, mget, mset, flush, _getStorage }
 }

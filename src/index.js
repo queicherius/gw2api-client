@@ -1,6 +1,6 @@
-import Client from './client'
+const Client = require('./client')
 
 // Each time the api wrapper is called, we give back a new instance
-export default function () {
+module.exports = function () {
   return new Client()
 }

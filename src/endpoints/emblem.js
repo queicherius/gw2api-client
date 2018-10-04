@@ -1,6 +1,6 @@
-import AbstractEndpoint from '../endpoint'
+const AbstractEndpoint = require('../endpoint')
 
-export default class EmblemEndpoint extends AbstractEndpoint {
+module.exports = class EmblemEndpoint extends AbstractEndpoint {
   backgrounds () {
     return new LayersEndpoint(this, 'backgrounds')
   }

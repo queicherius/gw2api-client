@@ -1,6 +1,6 @@
-import AbstractEndpoint from '../endpoint'
+const AbstractEndpoint = require('../endpoint')
 
-export default class CharactersEndpoint extends AbstractEndpoint {
+module.exports = class CharactersEndpoint extends AbstractEndpoint {
   constructor (client, name) {
     super(client)
     this.name = name

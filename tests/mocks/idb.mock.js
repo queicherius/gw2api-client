@@ -1,6 +1,6 @@
 let cache = {}
 
-export default {
+module.exports = {
   set: (key, value) => {
     cache[key] = value
     return Promise.resolve()

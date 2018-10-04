@@ -1,6 +1,6 @@
-import AbstractEndpoint from '../endpoint'
+const AbstractEndpoint = require('../endpoint')
 
-export default class RacesEndpoint extends AbstractEndpoint {
+module.exports = class RacesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/races'

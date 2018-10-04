@@ -1,6 +1,6 @@
-import AbstractEndpoint from '../endpoint'
+const AbstractEndpoint = require('../endpoint')
 
-export default class CommerceEndpoint extends AbstractEndpoint {
+module.exports = class CommerceEndpoint extends AbstractEndpoint {
   // Current things to grab in the delivery box
   delivery () {
     return new DeliveryEndpoint(this)

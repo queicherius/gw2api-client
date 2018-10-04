@@ -1,6 +1,6 @@
-import AbstractEndpoint from '../endpoint'
+const AbstractEndpoint = require('../endpoint')
 
-export default class DungeonsEndpoint extends AbstractEndpoint {
+module.exports = class DungeonsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/dungeons'

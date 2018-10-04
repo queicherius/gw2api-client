@@ -1,6 +1,6 @@
-import AbstractEndpoint from '../endpoint'
+const AbstractEndpoint = require('../endpoint')
 
-export default class WvwEndpoint extends AbstractEndpoint {
+module.exports = class WvwEndpoint extends AbstractEndpoint {
   abilities () {
     return new AbilitiesEndpoint(this)
   }

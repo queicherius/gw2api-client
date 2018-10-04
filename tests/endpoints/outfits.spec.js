@@ -1,7 +1,6 @@
-/* eslint-env node, mocha */
-import { expect } from 'chai'
-import { mockClient, fetchMock } from '../mocks/client.mock'
-import Module from '../../src/endpoints/outfits'
+/* eslint-env jest */
+const { mockClient, fetchMock } = require('../mocks/client.mock')
+const Module = require('../../src/endpoints/outfits')
 
 describe('endpoints > outfits', () => {
   let endpoint
@@ -11,16 +10,16 @@ describe('endpoints > outfits', () => {
   })
 
   it('test /v2/outfits', async () => {
-    expect(endpoint.isPaginated).to.equal(true)
-    expect(endpoint.isBulk).to.equal(true)
-    expect(endpoint.supportsBulkAll).to.equal(true)
-    expect(endpoint.isLocalized).to.equal(true)
-    expect(endpoint.isAuthenticated).to.equal(false)
-    expect(endpoint.cacheTime).to.not.equal(undefined)
-    expect(endpoint.url).to.equal('/v2/outfits')
+    expect(endpoint.isPaginated).toEqual(true)
+    expect(endpoint.isBulk).toEqual(true)
+    expect(endpoint.supportsBulkAll).toEqual(true)
+    expect(endpoint.isLocalized).toEqual(true)
+    expect(endpoint.isAuthenticated).toEqual(false)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/outfits')
 
-    fetchMock.addResponse({id: 1, name: 'Cook\'s Outfit'})
+    fetchMock.addResponse({ id: 1, name: 'Cook\'s Outfit' })
     let content = await endpoint.get(1)
-    expect(content.name).to.equal('Cook\'s Outfit')
+    expect(content.name).toEqual('Cook\'s Outfit')
   })
 })

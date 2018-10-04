@@ -1,12 +1,7 @@
 {
-  "presets": [
-    ["env", {"targets": {"browsers": ["last 2 versions", "> 5%"], "node": 6}, "loose": true}],
-    "stage-0"
-  ],
   "env": {
     "test": {
       "plugins": [
-        ["istanbul", {"include": ["src/**"]}],
         "rewire"
       ]
     }

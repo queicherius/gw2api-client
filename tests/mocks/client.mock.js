@@ -1,8 +1,8 @@
-import fetch from 'lets-fetch/mock'
-import nullCache from '../../src/cache/null'
-import memoryCache from '../../src/cache/memory'
+const fetch = require('lets-fetch/mock')
+const nullCache = require('../../src/cache/null')
+const memoryCache = require('../../src/cache/memory')
 
-export const mockClient = {
+const mockClient = {
   lang: 'en',
   apiKey: false,
   fetch: fetch,
@@ -15,4 +15,7 @@ export const mockClient = {
   }
 }
 
-export const fetchMock = fetch
+module.exports = {
+  mockClient: mockClient,
+  fetchMock: fetch
+}

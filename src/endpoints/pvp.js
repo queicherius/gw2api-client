@@ -1,6 +1,6 @@
-import AbstractEndpoint from '../endpoint'
+const AbstractEndpoint = require('../endpoint')
 
-export default class PvpEndpoint extends AbstractEndpoint {
+module.exports = class PvpEndpoint extends AbstractEndpoint {
   constructor (client, fromAccount) {
     super(client)
     this.fromAccount = fromAccount

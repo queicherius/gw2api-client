@@ -1,6 +1,6 @@
-import AbstractEndpoint from '../endpoint'
+const AbstractEndpoint = require('../endpoint')
 
-export default class MountsEndpoint extends AbstractEndpoint {
+module.exports = class MountsEndpoint extends AbstractEndpoint {
   types () {
     return new TypesEndpoint(this)
   }

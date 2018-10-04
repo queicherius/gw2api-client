@@ -1,9 +1,7 @@
 const fetch = require('lets-fetch')
 const flow = require('promise-control-flow')
-const debugging = require('debug')
 const nullCache = require('./cache/null')
 const endpoints = require('./endpoints')
-const debug = debugging('gw2api-client')
 
 module.exports = class Client {
   constructor () {
@@ -11,27 +9,41 @@ module.exports = class Client {
     this.apiKey = false
     this.fetch = fetch
     this.caches = [nullCache()]
+    this.debug = false
   }
 
   // Set the language for locale-aware endpoints
   language (lang) {
     this.lang = lang
-    debug(`set the language to ${lang}`)
+    this.debugMessage(`set the language to ${lang}`)
     return this
   }
 
   // Set the api key for authenticated endpoints
   authenticate (apiKey) {
     this.apiKey = apiKey
-    debug(`set the api key to ${apiKey}`)
+    this.debugMessage(`set the api key to ${apiKey}`)
     return this
   }
 
   // Set the caching storage method(s)
   cacheStorage (caches) {
     this.caches = [].concat(caches)
-    debug(`updated the cache storage`)
+    this.debugMessage(`updated the cache storage`)
     return this
+  }
+
+  // Set the debugging flag
+  debugging (flag) {
+    this.debug = flag
+    return this
+  }
+
+  // Print out a debug message if debugging is enabled
+  debugMessage (string) {
+    if (this.debug) {
+      console.log(`[gw2api-client] ${string}`)
+    }
   }
 
   // Make sure we get the new content if the game updates
@@ -48,7 +60,7 @@ module.exports = class Client {
       // Flush the caches if the cached build id is set (as a safety measure)
       // and the cached build id is older than the current one
       if (resp.cacheBuildId && resp.cacheBuildId < resp.buildId) {
-        debug(`flushing the cache because of a new build`)
+        this.debugMessage(`flushing the cache because of a new build`)
         flushPromises = this.caches.map(cache => () => cache.flush())
       }
 

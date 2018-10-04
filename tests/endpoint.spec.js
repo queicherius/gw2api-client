@@ -978,6 +978,28 @@ describe('abstract endpoint', () => {
     })
   })
 
+  describe('debugging', () => {
+    it('doesnt print anything if debugging is disabled', () => {
+      const logMock = jest.fn()
+      global.console = {log: logMock}
+
+      endpoint.debugging(false)
+      endpoint.debugMessage('Test message')
+
+      expect(logMock.mock.calls).toEqual([])
+    })
+
+    it('prints a debug message if debugging is enabled', () => {
+      const logMock = jest.fn()
+      global.console = {log: logMock}
+
+      endpoint.debugging(true)
+      endpoint.debugMessage('Test message')
+
+      expect(logMock.mock.calls).toEqual([[`[gw2api-client] Test message`]])
+    })
+  })
+
   it('sets the language', () => {
     let x = endpoint.language('de')
     expect(x.lang).toEqual('de')

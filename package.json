@@ -23,7 +23,6 @@
     "array-unique": "^0.3.2",
     "chunk": "^0.0.2",
     "debounce": "^1.2.0",
-    "debug": "^4.0.1",
     "fast-clone": "^1.5.3",
     "fast-get": "^1.0.3",
     "flat": "^4.1.0",

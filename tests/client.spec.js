@@ -42,6 +42,28 @@ describe('client', () => {
     expect(client.caches).toEqual([cacheHandler, cacheHandler])
   })
 
+  describe('debugging', () => {
+    it('doesnt print anything if debugging is disabled', () => {
+      const logMock = jest.fn()
+      global.console = {log: logMock}
+
+      client.debugging(false)
+      client.debugMessage('Test message')
+
+      expect(logMock.mock.calls).toEqual([])
+    })
+
+    it('prints a debug message if debugging is enabled', () => {
+      const logMock = jest.fn()
+      global.console = {log: logMock}
+
+      client.debugging(true)
+      client.debugMessage('Test message')
+
+      expect(logMock.mock.calls).toEqual([[`[gw2api-client] Test message`]])
+    })
+  })
+
   it('can flush the caches if there is a game update', async () => {
     const tmp = client.build
     client.caches = [nullCache(), memoryCache(), memoryCache()]

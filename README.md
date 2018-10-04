@@ -204,7 +204,18 @@ file.__get__('api').fetch = fetchMock
 
 ### Debugging
 
-This module uses [debug](https://www.npmjs.com/package/debug) for debug logs. For **node.js** you can enable the logs by setting the `DEBUG` environment variable to `gw2api-client*`, for the **browser** you can enable them by setting `localstorage.debug` to `gw2api-client*`.
+You can enable debug messages by setting a flag on the client:
+
+```
+const client = require('gw2api-client')
+let api = client()
+
+// Set for specific endpoints
+let items = api.items().debugging(true).ids().then(items => console.log(items))
+
+// Set for all endpoints
+api.debugging(true).items().ids().then(items => console.log(items))
+```
 
 ## Tests
 

@@ -1,5 +1,4 @@
 const flow = require('promise-control-flow')
-const flat = require('flat')
 const _get = require('fast-get')
 const api = require('../index.js')
 
@@ -45,7 +44,7 @@ function blob (parent) {
   }
 
   return flow.parallel(requests).then(data => {
-    data = flat.unflatten(data)
+    data = unflatten(data)
     data.characters = filterBetaCharacters(data.characters)
     return data
   })
@@ -106,6 +105,39 @@ function wrap (func) {
 
         reject(err)
       })
+  })
+}
+
+// Unflatten an object with keys describing a nested structure
+function unflatten (object) {
+  let result = {}
+
+  for (let key in object) {
+    _set(result, key, object[key])
+  }
+
+  return result
+}
+
+// Set the value of an object based on a flat key ("a.b.c")
+function _set (object, key, value) {
+  const keyParts = key.split('.')
+
+  let walking = object
+  keyParts.forEach((key, index) => {
+    // Create the nested object if it does not exist
+    if (!walking[key]) {
+      walking[key] = {}
+    }
+
+    // If we reached the last part, set the value and exit out
+    if (index === keyParts.length - 1) {
+      walking[key] = value
+      return
+    }
+
+    // Set the next part of the key
+    walking = walking[key]
   })
 }
 

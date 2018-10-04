@@ -24,7 +24,6 @@
     "chunk": "^0.0.2",
     "debounce": "^1.2.0",
     "fast-get": "^1.0.3",
-    "flat": "^4.1.0",
     "idb-keyval": "^3.1.0",
     "lets-fetch": "^2.1.2",
     "promise-control-flow": "^1.2.5",

@@ -1,10 +1,9 @@
 const parseUrl = require('url-parse')
 const unique = require('array-unique')
-const Rusha = require('rusha')
 const clone = require('fast-clone')
 const chunk = require('chunk')
 const debugging = require('debug')
-const sha = (s) => (new Rusha()).digestFromString(s)
+const hashString = require('./hash')
 const debug = debugging('gw2api-client')
 const debugRequest = debugging('gw2api-client:request')
 
@@ -409,7 +408,7 @@ module.exports = class AbstractEndpoint {
 
   // Get a cache hash for an identifier
   _cacheHash (id) {
-    let hash = ''
+    let hash = hashString(this.baseUrl + this.url)
 
     if (id) {
       hash += ':' + id
@@ -420,10 +419,10 @@ module.exports = class AbstractEndpoint {
     }
 
     if (this._usesApiKey()) {
-      hash += ':' + sha(this.apiKey + '')
+      hash += ':' + hashString(this.apiKey + '')
     }
 
-    return this.baseUrl + this.url + hash
+    return hash
   }
 
   // Execute a single request

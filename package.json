@@ -19,6 +19,7 @@
     ]
   },
   "dependencies": {
+    "@emotion/hash": "^0.6.6",
     "array-unique": "^0.3.2",
     "chunk": "^0.0.2",
     "debounce": "^1.2.0",
@@ -29,7 +30,6 @@
     "idb-keyval": "^3.1.0",
     "lets-fetch": "^2.1.2",
     "promise-control-flow": "^1.2.5",
-    "rusha": "^0.8.13",
     "url-parse": "^1.4.3"
   },
   "devDependencies": {

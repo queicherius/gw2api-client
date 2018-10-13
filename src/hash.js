@@ -1,4 +1,4 @@
-const emotionHash = require('@emotion/hash/dist/hash.cjs.js')
+const emotionHash = require('@emotion/hash/dist/hash.browser.cjs.js').default
 
 let cache = {}
 

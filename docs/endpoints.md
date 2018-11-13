@@ -129,8 +129,8 @@ client.language('de').items().all()
 - [`api().masteries()`](#apimasteries) - Information about the masteries.
 - [`api().materials()`](#apimaterials) - Information about the categories and items in the material storage.
 - [`api().minis()`](#apiminis) - Information about miniatures.
-- [`api().mounts().types()`](#apimountstypes) - Information about mount types.
 - [`api().mounts().skins()`](#apimountsskins) - Information about mount skins.
+- [`api().mounts().types()`](#apimountstypes) - Information about mount types.
 - [`api().nodes()`](#apinodes) - Information about home instance nodes.
 - [`api().outfits()`](#apioutfits) - Information about outfits.
 - [`api().pets()`](#apipets) - Information about the ranger's pets.
@@ -1443,11 +1443,11 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ---
 
-### `api().mounts().types()`
+### `api().mounts().skins()`
 
-> Information about mount types.
+> Information about mount skins.
 
-- **API-URL:** [/v2/mounts/types](https://api.guildwars2.com/v2/mounts/types)
+- **API-URL:** [/v2/mounts/skins](https://api.guildwars2.com/v2/mounts/skins)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No
@@ -1458,11 +1458,11 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ---
 
-### `api().mounts().skins()`
+### `api().mounts().types()`
 
-> Information about mount skins.
+> Information about mount types.
 
-- **API-URL:** [/v2/mounts/skins](https://api.guildwars2.com/v2/mounts/skins)
+- **API-URL:** [/v2/mounts/types](https://api.guildwars2.com/v2/mounts/types)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

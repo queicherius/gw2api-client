@@ -24,6 +24,8 @@ function blob (parent) {
     'mastery.points': wrap(() => client.account().mastery().points().get()),
     materials: wrap(() => client.account().materials().get()),
     minis: wrap(() => client.account().minis().get()),
+    'mounts.skins': wrap(() => client.account().mounts().skins().get()),
+    'mounts.types': wrap(() => client.account().mounts().types().get()),
     outfits: wrap(() => client.account().outfits().get()),
     'pvp.games': wrap(() => client.account().pvp().games().all()),
     'pvp.heroes': wrap(() => client.account().pvp().heroes().get()),

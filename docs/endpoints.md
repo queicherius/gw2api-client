@@ -59,6 +59,8 @@ client.language('de').items().all()
 - [`api().account().mastery().points()`](#apiaccountmasterypoints) - The unlocked mastery points of the account.
 - [`api().account().materials()`](#apiaccountmaterials) - The materials stored in the account's material storage.
 - [`api().account().minis()`](#apiaccountminis) - The unlocked miniatures of the account.
+- [`api().account().mounts().skins()`](#apiaccountmountsskins) - The unlocked mount skins of the account.
+- [`api().account().mounts().types()`](#apiaccountmountstypes) - The unlocked mount types of the account.
 - [`api().account().outfits()`](#apiaccountoutfits) - The unlocked outfits of the account.
 - [`api().account().pvp()`](#apiaccountpvp) - Alternative method of calling [`api().pvp()`](#apipvpamulets).
 - [`api().account().pvp().heroes()`](#apiaccountpvpheroes) - The unlocked pvp heroes of the account.
@@ -407,6 +409,36 @@ Alternative method of calling [`api().commerce().delivery()`](#apicommercedelive
 > The unlocked miniatures of the account.
 
 - **API-URL:** [/v2/account/minis](https://api.guildwars2.com/v2/account/minis)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().mounts().skins()`
+
+> The unlocked mount skins of the account.
+
+- **API-URL:** [/v2/account/mounts/skins](https://api.guildwars2.com/v2/account/mounts/skins)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().mounts().types()`
+
+> The unlocked mount types of the account.
+
+- **API-URL:** [/v2/account/mounts/types](https://api.guildwars2.com/v2/account/mounts/types)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes

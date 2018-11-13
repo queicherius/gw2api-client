@@ -282,6 +282,36 @@ describe('endpoints > account', () => {
     expect(content).toEqual([2, 3, 4, 5])
   })
 
+  it('test /v2/account/mounts/skins', async () => {
+    endpoint = endpoint.mounts().skins()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/mounts/skins')
+
+    fetchMock.addResponse([2, 3, 4, 5])
+    let content = await endpoint.get()
+    expect(content).toEqual([2, 3, 4, 5])
+  })
+
+  it('test /v2/account/mounts/types', async () => {
+    endpoint = endpoint.mounts().types()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/mounts/types')
+
+    fetchMock.addResponse([2, 3, 4, 5])
+    let content = await endpoint.get()
+    expect(content).toEqual([2, 3, 4, 5])
+  })
+
   it('test /v2/account/outfits', async () => {
     endpoint = endpoint.outfits()
 

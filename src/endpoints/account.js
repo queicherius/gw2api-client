@@ -77,6 +77,13 @@ module.exports = class AccountEndpoint extends AbstractEndpoint {
     return new MinisEndpoint(this)
   }
 
+  mounts () {
+    return {
+      skins: () => new MountSkinsEndpoint(this),
+      types: () => new MountTypesEndpoint(this)
+    }
+  }
+
   outfits () {
     return new OutfitsEndpoint(this)
   }
@@ -256,6 +263,24 @@ class MinisEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/minis'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class MountSkinsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/mounts/skins'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class MountTypesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/mounts/types'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

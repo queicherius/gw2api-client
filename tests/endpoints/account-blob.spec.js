@@ -27,6 +27,10 @@ function mockClient (hasGuildPermission) {
       }),
       materials: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
       minis: () => ({ get: () => _s([1, 2, 3]) }),
+      mounts: () => ({
+        skins: () => ({ get: () => _s([1, 2, 3]) }),
+        types: () => ({ get: () => _s([1, 2, 3]) }),
+      }),
       outfits: () => ({ get: () => _s([1, 2, 3]) }),
       raids: () => ({ get: () => _s(['keep_construct']) }),
       recipes: () => ({ get: () => _s([1, 2, 3]) }),
@@ -101,6 +105,10 @@ const expectedResponse = {
   },
   materials: [{ id: 123, foo: 'bar' }],
   minis: [1, 2, 3],
+  mounts: {
+    skins: [1, 2, 3],
+    types: [1, 2, 3]
+  },
   outfits: [1, 2, 3],
   pvp: {
     games: [{ id: 123, foo: 'bar' }],

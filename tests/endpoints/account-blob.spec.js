@@ -29,7 +29,7 @@ function mockClient (hasGuildPermission) {
       minis: () => ({ get: () => _s([1, 2, 3]) }),
       mounts: () => ({
         skins: () => ({ get: () => _s([1, 2, 3]) }),
-        types: () => ({ get: () => _s([1, 2, 3]) }),
+        types: () => ({ get: () => _s([1, 2, 3]) })
       }),
       outfits: () => ({ get: () => _s([1, 2, 3]) }),
       raids: () => ({ get: () => _s(['keep_construct']) }),

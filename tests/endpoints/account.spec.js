@@ -114,14 +114,14 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/dungeons')
 
-    fetchMock.addResponse({name: 'AAA.1234', last_modified: '2019-04-02T07:03:00Z'})
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-02T07:03:00Z' })
     fetchMock.addResponse(['hodgins', 'seraph'])
     let content = await endpoint.get()
     expect(content).toEqual(['hodgins', 'seraph'])
 
     expect(fetchMock.urls()).toEqual([
       'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false',
-      'https://api.guildwars2.com/v2/account/dungeons?v=schema&access_token=false',
+      'https://api.guildwars2.com/v2/account/dungeons?v=schema&access_token=false'
     ])
   })
 
@@ -135,7 +135,7 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/dungeons')
 
-    fetchMock.addResponse({name: 'AAA.1234', last_modified: '2019-04-01T23:53:00Z'})
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-01T23:53:00Z' })
     fetchMock.addResponse(['hodgins', 'seraph'])
     let content = await endpoint.get()
     expect(content).toEqual([])
@@ -391,14 +391,14 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/raids')
 
-    fetchMock.addResponse({name: 'AAA.1234', last_modified: '2019-04-02T01:03:00Z'})
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-02T01:03:00Z' })
     fetchMock.addResponse(['spirit_woods', 'keep_construct'])
     let content = await endpoint.get()
     expect(content).toEqual(['spirit_woods', 'keep_construct'])
 
     expect(fetchMock.urls()).toEqual([
       'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false',
-      'https://api.guildwars2.com/v2/account/raids?v=schema&access_token=false',
+      'https://api.guildwars2.com/v2/account/raids?v=schema&access_token=false'
     ])
   })
 
@@ -412,7 +412,7 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/raids')
 
-    fetchMock.addResponse({name: 'AAA.1234', last_modified: '2019-04-01T23:53:00Z'})
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-01T23:53:00Z' })
     fetchMock.addResponse(['spirit_woods', 'keep_construct'])
     let content = await endpoint.get()
     expect(content).toEqual([])

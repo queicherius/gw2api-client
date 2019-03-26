@@ -35,6 +35,15 @@ module.exports = class AbstractEndpoint {
     return this
   }
 
+  // Check if the schema version is at least a specific date
+  _schemaIsAtLeast (date) {
+    if (this.schemaVersion === 'latest') {
+      return true
+    }
+
+    return new Date(this.schemaVersion) >= new Date(date)
+  }
+
   // Set the language for locale-aware endpoints
   language (lang) {
     this.lang = lang

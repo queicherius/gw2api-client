@@ -7,6 +7,7 @@ describe('endpoints > wvw', () => {
   beforeEach(() => {
     endpoint = new Module(mockClient)
     fetchMock.reset()
+    endpoint.schema('schema')
   })
 
   it('test /v2/wvw/abilities', async () => {
@@ -55,7 +56,7 @@ describe('endpoints > wvw', () => {
     fetchMock.addResponse({ id: '2-6', worlds: { red: 2002, blue: 2007, green: 2202 }, scores: { red: 123, blue: 456, green: 789 } })
     let content = await endpoint.world(2002)
     expect(content.scores.red).toEqual(123)
-    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/wvw/matches?world=2002'))
+    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/wvw/matches?v=schema&world=2002'))
   })
 
   it('test /v2/wvw/matches/overview', async () => {
@@ -88,7 +89,7 @@ describe('endpoints > wvw', () => {
     fetchMock.addResponse({ id: '2-6', worlds: { red: 2002, blue: 2007, green: 2202 } })
     let content = await endpoint.world(2002)
     expect(content.worlds.red).toEqual(2002)
-    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/wvw/matches/overview?world=2002'))
+    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/wvw/matches/overview?v=schema&world=2002'))
   })
 
   it('test /v2/wvw/matches/scores', async () => {
@@ -121,7 +122,7 @@ describe('endpoints > wvw', () => {
     fetchMock.addResponse({ id: '2-6', worlds: { red: 2002, blue: 2007, green: 2202 }, scores: { red: 123, blue: 456, green: 789 } })
     let content = await endpoint.world(2002)
     expect(content.scores.red).toEqual(123)
-    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/wvw/matches/scores?world=2002'))
+    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/wvw/matches/scores?v=schema&world=2002'))
   })
 
   it('test /v2/wvw/matches/stats', async () => {
@@ -154,7 +155,7 @@ describe('endpoints > wvw', () => {
     fetchMock.addResponse({ id: '2-6', worlds: { red: 2002, blue: 2007, green: 2202 }, deaths: { red: 333, blue: 456, green: 789 } })
     let content = await endpoint.world(2002)
     expect(content.deaths.red).toEqual(333)
-    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/wvw/matches/stats?world=2002'))
+    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/wvw/matches/stats?v=schema&world=2002'))
   })
 
   it('test /v2/wvw/matches/stats/:id/teams', async () => {

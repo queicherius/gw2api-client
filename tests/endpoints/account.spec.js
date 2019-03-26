@@ -7,6 +7,7 @@ describe('endpoints > account', () => {
   beforeEach(() => {
     endpoint = new Module(mockClient)
     fetchMock.reset()
+    endpoint.schema('schema')
   })
 
   it('test /v2/account', async () => {
@@ -49,7 +50,7 @@ describe('endpoints > account', () => {
     fetchMock.addResponse({ id: 1, current: 487, max: 1000, done: false })
     let content = await endpoint.get(1)
     expect(content.current).toEqual(487)
-    expect(fetchMock.lastUrl().endsWith('/v2/account/achievements?id=1&access_token=XXX')).toEqual(true)
+    expect(fetchMock.lastUrl().endsWith('/v2/account/achievements?v=schema&access_token=XXX&id=1')).toEqual(true)
   })
 
   it('test /v2/account/achievements (get without id / all)', async () => {
@@ -65,7 +66,7 @@ describe('endpoints > account', () => {
     fetchMock.addResponse([{ id: 1, current: 487, max: 1000, done: false }])
     let contentGet = await endpoint.get()
     expect(contentGet[0].current).toEqual(487)
-    expect(fetchMock.lastUrl().endsWith('/v2/account/achievements?access_token=XXX')).toEqual(true)
+    expect(fetchMock.lastUrl().endsWith('/v2/account/achievements?v=schema&access_token=XXX')).toEqual(true)
 
     let contentAll = await endpoint.all()
     expect(contentAll).toEqual(contentGet)

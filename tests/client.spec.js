@@ -10,6 +10,17 @@ describe('client', () => {
     client = new Module()
   })
 
+  it('can set a schema', () => {
+    let api = client.schema('latest')
+    expect(client.schemaVersion).toEqual('latest')
+    expect(api).toBeInstanceOf(Module)
+
+    let endpoint = client.account().schema('latest')
+    expect(endpoint.schemaVersion).toEqual('latest')
+    expect(client.schema('2019-01-01').schemaVersion).toEqual('2019-01-01')
+    expect(endpoint.schemaVersion).toEqual('latest')
+  })
+
   it('can set a language', () => {
     let api = client.language('de')
     expect(client.lang).toEqual('de')

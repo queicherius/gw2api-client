@@ -7,6 +7,7 @@ describe('endpoints > pvp', () => {
   beforeEach(() => {
     endpoint = new Module(mockClient)
     fetchMock.reset()
+    endpoint.schema('schema')
   })
 
   it('test /v2/pvp/amulets', async () => {
@@ -118,7 +119,7 @@ describe('endpoints > pvp', () => {
     fetchMock.addResponse([{ rank: 1, name: 'Herp.1234' }, { rank: 2, name: 'Derp.1234' }])
     let content = await endpoint.page(1, 2)
     expect(content[0].name).toEqual('Herp.1234')
-    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/pvp/seasons/S0ME-UU1D/leaderboards/ladder/na?page=1&page_size=2'))
+    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/pvp/seasons/S0ME-UU1D/leaderboards/ladder/na?v=schema&page=1&page_size=2'))
   })
 
   it('test /v2/pvp/standings', async () => {

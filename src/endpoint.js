@@ -8,6 +8,7 @@ const clone = (x) => JSON.parse(JSON.stringify(x))
 module.exports = class AbstractEndpoint {
   constructor (parent) {
     this.client = parent.client
+    this.schemaVersion = parent.schemaVersion || '2019-03-20T00:00:00.000Z'
     this.lang = parent.lang
     this.apiKey = parent.apiKey
     this.fetch = parent.fetch
@@ -25,6 +26,13 @@ module.exports = class AbstractEndpoint {
     this.credentials = false
 
     this._skipCache = false
+  }
+
+  // Set the schema version
+  schema (schema) {
+    this.schemaVersion = schema
+    this.debugMessage(`set the schema to ${schema}`)
+    return this
   }
 
   // Set the language for locale-aware endpoints
@@ -421,7 +429,7 @@ module.exports = class AbstractEndpoint {
 
   // Get a cache hash for an identifier
   _cacheHash (id) {
-    let hash = hashString(this.baseUrl + this.url)
+    let hash = hashString(this.baseUrl + this.url + ':' + this.schemaVersion)
 
     if (id) {
       hash += ':' + id
@@ -465,7 +473,12 @@ module.exports = class AbstractEndpoint {
 
     // Parse a possibly existing query
     const parsedUrl = url.split('?')
-    let query = qs.parse(parsedUrl[1] || '')
+    let parsedQuery = qs.parse(parsedUrl[1] || '')
+
+    let query = {}
+
+    // Set the schema version
+    query['v'] = this.schemaVersion
 
     // Only set the API key for authenticated endpoints,
     // when it is required or optional and set on the client
@@ -477,6 +490,9 @@ module.exports = class AbstractEndpoint {
     if (this.isLocalized) {
       query['lang'] = this.lang
     }
+
+    // Merge the parsed query parts out of the url
+    query = {...query, ...parsedQuery}
 
     // Build the url with the finished query
     query = qs.stringify(query, true).replace(/%2C/g, ',')

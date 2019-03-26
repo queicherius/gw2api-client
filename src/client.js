@@ -5,12 +5,20 @@ const flow = require('./flow')
 
 module.exports = class Client {
   constructor () {
+    this.schemaVersion = '2019-03-20T00:00:00.000Z'
     this.lang = 'en'
     this.apiKey = false
     this.fetch = fetch
     this.caches = [nullCache()]
     this.debug = false
     this.client = this
+  }
+
+  // Set the schema version
+  schema (schema) {
+    this.schemaVersion = schema
+    this.debugMessage(`set the schema to ${schema}`)
+    return this
   }
 
   // Set the language for locale-aware endpoints

@@ -7,6 +7,7 @@ describe('endpoints > events', () => {
   beforeEach(() => {
     endpoint = new Module(mockClient)
     fetchMock.reset()
+    endpoint.schema('schema')
   })
 
   it('transforms the v1 format into v2', () => {
@@ -57,6 +58,6 @@ describe('endpoints > events', () => {
     })
     let content = await endpoint.get('uuid-one')
     expect(content.name).toEqual('Defeat elite')
-    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v1/event_details.json?event_id=uuid-one'))
+    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v1/event_details.json?v=schema&event_id=uuid-one'))
   })
 })

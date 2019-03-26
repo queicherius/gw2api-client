@@ -22,11 +22,13 @@ describe('abstract endpoint', () => {
     endpoint = new Module(mockClient)
     fetchMock.reset()
     endpoint.caches.map(cache => cache.flush())
+    endpoint.schema('schema')
   })
 
   it('sets up the initial values from the passed in client', () => {
     expect(endpoint.lang).toEqual('en')
     expect(endpoint.client).toBeDefined()
+    expect(endpoint.schemaVersion).toEqual('schema')
   })
 
   describe('ids', () => {
@@ -37,7 +39,7 @@ describe('abstract endpoint', () => {
       fetchMock.addResponse(content)
 
       let entry = await endpoint.ids()
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema')
       expect(entry).toEqual(content)
     })
 
@@ -51,9 +53,9 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.ids()
       await wait(50)
       let entryShouldCache = await endpoint.ids()
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:ids')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:ids')
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual(content)
       expect(entryShouldCache).toEqual(content)
@@ -70,9 +72,9 @@ describe('abstract endpoint', () => {
       entry[0] = 42
       await wait(50)
       let entryShouldCache = await endpoint.ids()
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:ids')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:ids')
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual([42, 2])
       expect(entryShouldCache).toEqual([1, 2])
@@ -90,11 +92,11 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.live().ids()
       let entryShouldBeLive = await endpoint.live().ids()
       await wait(50)
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:ids')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:ids')
 
       expect(fetchMock.urls()).toEqual([
-        'https://api.guildwars2.com/v2/test',
-        'https://api.guildwars2.com/v2/test'
+        'https://api.guildwars2.com/v2/test?v=schema',
+        'https://api.guildwars2.com/v2/test?v=schema'
       ])
       expect(entry).toEqual(content)
       expect(entryShouldBeLive).toEqual(content)
@@ -114,7 +116,7 @@ describe('abstract endpoint', () => {
       fetchMock.addResponse(content)
 
       let entry = await endpoint.get(1)
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?id=1')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&id=1')
       expect(entry).toEqual(content)
     })
 
@@ -124,7 +126,7 @@ describe('abstract endpoint', () => {
       fetchMock.addResponse(content)
 
       let entry = await endpoint.get()
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema')
       expect(entry).toEqual(content)
     })
 
@@ -134,7 +136,7 @@ describe('abstract endpoint', () => {
       fetchMock.addResponse(content)
 
       let entry = await endpoint.get('/bar?output_id=123&input_id=456', true)
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test/bar?output_id=123&input_id=456')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test/bar?v=schema&output_id=123&input_id=456')
       expect(entry).toEqual(content)
     })
 
@@ -148,9 +150,9 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.get(1)
       await wait(50)
       let entryShouldCache = await endpoint.get(1)
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:1')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:1')
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?id=1')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&id=1')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual(content)
       expect(entryShouldCache).toEqual(content)
@@ -166,10 +168,10 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.get()
       await wait(50)
       let entryShouldCache = await endpoint.get()
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]')
-      let bulkEntryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:1')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]')
+      let bulkEntryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:1')
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual(content)
       expect(entryShouldCache).toEqual(content)
@@ -186,9 +188,9 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.get('/bar?output_id=123&input_id=456', true)
       await wait(50)
       let entryShouldCache = await endpoint.get('/bar?output_id=123&input_id=456', true)
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:/bar?output_id=123&input_id=456')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:/bar?output_id=123&input_id=456')
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test/bar?output_id=123&input_id=456')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test/bar?v=schema&output_id=123&input_id=456')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual(content)
       expect(entryShouldCache).toEqual(content)
@@ -205,9 +207,9 @@ describe('abstract endpoint', () => {
       entry.name = 'NOT FOO'
       await wait(50)
       let entryShouldCache = await endpoint.get(1)
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:1')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:1')
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?id=1')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&id=1')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual({ id: 1, name: 'NOT FOO' })
       expect(entryShouldCache).toEqual({ id: 1, name: 'foo' })
@@ -225,11 +227,11 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.live().get(1)
       let entryShouldBeLive = await endpoint.live().get(1)
       await wait(50)
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:1')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:1')
 
       expect(fetchMock.urls()).toEqual([
-        'https://api.guildwars2.com/v2/test?id=1',
-        'https://api.guildwars2.com/v2/test?id=1'
+        'https://api.guildwars2.com/v2/test?v=schema&id=1',
+        'https://api.guildwars2.com/v2/test?v=schema&id=1'
       ])
       expect(entry).toEqual(content)
       expect(entryShouldBeLive).toEqual(content)
@@ -251,7 +253,7 @@ describe('abstract endpoint', () => {
 
       let ids = [2, 1, 1, 2, 2, 1, 1]
       let entry = await endpoint.many(ids)
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?ids=2,1')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=2,1')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual(content)
       expect(ids).toEqual([2, 1, 1, 2, 2, 1, 1])
@@ -266,8 +268,8 @@ describe('abstract endpoint', () => {
 
       let entry = await endpoint.many([1, 2, 3, 4, 5])
       expect(fetchMock.urls()).toEqual([
-        'https://api.guildwars2.com/v2/test?ids=1,2,3',
-        'https://api.guildwars2.com/v2/test?ids=4,5'
+        'https://api.guildwars2.com/v2/test?v=schema&ids=1,2,3',
+        'https://api.guildwars2.com/v2/test?v=schema&ids=4,5'
       ])
       expect(entry).toEqual([1, 2, 3, 4, 5])
     })
@@ -297,12 +299,12 @@ describe('abstract endpoint', () => {
       await wait(50)
       let entryShouldCache = await endpoint.many([2, 3, 2])
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?ids=1,2,3')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=1,2,3')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual(content)
       expect(entryShouldCache).toEqual(content.slice(1))
@@ -327,15 +329,15 @@ describe('abstract endpoint', () => {
       let entryShouldCache = await endpoint.many([1, 2, 3, 4])
       await wait(50)
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3',
-        'hash[https://api.guildwars2.com/v2/test]:4'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3',
+        'hash[https://api.guildwars2.com/v2/test:schema]:4'
       ])
 
       expect(fetchMock.urls()).toEqual([
-        'https://api.guildwars2.com/v2/test?ids=2,3',
-        'https://api.guildwars2.com/v2/test?ids=1,4'
+        'https://api.guildwars2.com/v2/test?v=schema&ids=2,3',
+        'https://api.guildwars2.com/v2/test?v=schema&ids=1,4'
       ])
       expect(entry).toEqual(content.slice(1, 3))
       expect(entryShouldCache).toEqual(content)
@@ -357,12 +359,12 @@ describe('abstract endpoint', () => {
       await wait(50)
       let entryShouldCache = await endpoint.many([2, 3, 2])
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?ids=1,2,3')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=1,2,3')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual([
         { id: 1, name: 'foo' },
@@ -396,12 +398,12 @@ describe('abstract endpoint', () => {
       await wait(50)
       let entryShouldCache = await endpoint.many([2, 3, 2, 4])
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?ids=4')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=4')
       expect(fetchMock.urls().length).toEqual(2)
       expect(entry).toEqual(content)
       expect(entryShouldCache).toEqual(content.slice(1))
@@ -424,14 +426,14 @@ describe('abstract endpoint', () => {
       let entryShouldBeLive = await endpoint.live().many([1, 2, 3])
       await wait(50)
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
       expect(fetchMock.urls()).toEqual([
-        'https://api.guildwars2.com/v2/test?ids=1,2,3',
-        'https://api.guildwars2.com/v2/test?ids=1,2,3'
+        'https://api.guildwars2.com/v2/test?v=schema&ids=1,2,3',
+        'https://api.guildwars2.com/v2/test?v=schema&ids=1,2,3'
       ])
       expect(entry).toEqual(content)
       expect(entryShouldBeLive).toEqual(content)
@@ -451,7 +453,7 @@ describe('abstract endpoint', () => {
       fetchMock.addResponse(content)
 
       let entry = await endpoint.page(0, 3)
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?page=0&page_size=3')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&page=0&page_size=3')
       expect(entry).toEqual(content)
     })
 
@@ -465,14 +467,14 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.page(0, 3)
       await wait(50)
       let entryShouldCache = await endpoint.page(0, 3)
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:page-0/3')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:page-0/3')
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?page=0&page_size=3')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&page=0&page_size=3')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual(content)
       expect(entryShouldCache).toEqual(content)
@@ -495,14 +497,14 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.page(0, 3)
       await wait(50)
       let entryShouldCache = await endpoint.page(0, 3)
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:page-0/3')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:page-0/3')
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?page=0&page_size=3')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&page=0&page_size=3')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual(content)
       expect(entryShouldCache).toEqual(content)
@@ -520,14 +522,14 @@ describe('abstract endpoint', () => {
       entry[0] = 42
       await wait(50)
       let entryShouldCache = await endpoint.page(0, 3)
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:page-0/3')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:page-0/3')
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?page=0&page_size=3')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&page=0&page_size=3')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual([42, 2, 3])
       expect(entryShouldCache).toEqual([1, 2, 3])
@@ -551,16 +553,16 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.live().page(0, 3)
       let entryShouldBeLive = await endpoint.live().page(0, 3)
       await wait(50)
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:page-0/3')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:page-0/3')
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
       expect(fetchMock.urls()).toEqual([
-        'https://api.guildwars2.com/v2/test?page=0&page_size=3',
-        'https://api.guildwars2.com/v2/test?page=0&page_size=3'
+        'https://api.guildwars2.com/v2/test?v=schema&page=0&page_size=3',
+        'https://api.guildwars2.com/v2/test?v=schema&page=0&page_size=3'
       ])
       expect(entry).toEqual(content)
       expect(entryShouldBeLive).toEqual(content)
@@ -599,7 +601,7 @@ describe('abstract endpoint', () => {
 
       let entry = await endpoint.all()
       expect(fetchMock.urls().length).toEqual(3)
-      expect(fetchMock.urls()[1]).toEqual('https://api.guildwars2.com/v2/test?page=1&page_size=3')
+      expect(fetchMock.urls()[1]).toEqual('https://api.guildwars2.com/v2/test?v=schema&page=1&page_size=3')
       expect(entry).toEqual([1, 2, 3, 4, 5, 6, 7, 8])
     })
 
@@ -616,7 +618,7 @@ describe('abstract endpoint', () => {
 
       let entry = await endpoint.all()
       expect(fetchMock.urls().length).toEqual(1)
-      expect(fetchMock.urls()[0]).toEqual('https://api.guildwars2.com/v2/test?page=0&page_size=3')
+      expect(fetchMock.urls()[0]).toEqual('https://api.guildwars2.com/v2/test?v=schema&page=0&page_size=3')
       expect(entry).toEqual([1, 2, 3])
     })
 
@@ -636,7 +638,7 @@ describe('abstract endpoint', () => {
 
       let entry = await endpoint.all()
       expect(fetchMock.urls().length).toEqual(3)
-      expect(fetchMock.urls()[1]).toEqual('https://api.guildwars2.com/v2/test?page=1&page_size=3')
+      expect(fetchMock.urls()[1]).toEqual('https://api.guildwars2.com/v2/test?v=schema&page=1&page_size=3')
       expect(entry).toEqual([1, 2, 3, 4, 5, 6, 7, 8])
     })
 
@@ -648,7 +650,7 @@ describe('abstract endpoint', () => {
 
       let entry = await endpoint.all()
       expect(fetchMock.urls().length).toEqual(1)
-      expect(fetchMock.urls()[0]).toEqual('https://api.guildwars2.com/v2/test?ids=all')
+      expect(fetchMock.urls()[0]).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=all')
       expect(entry).toEqual(content)
     })
 
@@ -667,14 +669,14 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.all()
       await wait(50)
       let entryShouldCache = await endpoint.all()
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:all')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:all')
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?page=0&page_size=200')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&page=0&page_size=200')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual(content)
       expect(entryShouldCache).toEqual(content)
@@ -696,14 +698,14 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.all()
       await wait(50)
       let entryShouldCache = await endpoint.all()
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:all')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:all')
       let cacheEntries = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?ids=all')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=all')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual(content)
       expect(entryShouldCache).toEqual(content)
@@ -726,14 +728,14 @@ describe('abstract endpoint', () => {
       entry[0] = 42
       await wait(50)
       let entryShouldCache = await endpoint.all()
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:all')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:all')
       let bulkEntriesInCache = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?page=0&page_size=200')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&page=0&page_size=200')
       expect(fetchMock.urls().length).toEqual(1)
       expect(entry).toEqual([42, 2, 3])
       expect(entryShouldCache).toEqual([1, 2, 3])
@@ -756,16 +758,16 @@ describe('abstract endpoint', () => {
       let entry = await endpoint.live().all()
       let entryShouldBeLive = await endpoint.live().all()
       await wait(50)
-      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:all')
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:all')
       let cacheEntries = await endpoint._cacheGetMany([
-        'hash[https://api.guildwars2.com/v2/test]:1',
-        'hash[https://api.guildwars2.com/v2/test]:2',
-        'hash[https://api.guildwars2.com/v2/test]:3'
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
       ])
 
       expect(fetchMock.urls()).toEqual([
-        'https://api.guildwars2.com/v2/test?ids=all',
-        'https://api.guildwars2.com/v2/test?ids=all'
+        'https://api.guildwars2.com/v2/test?v=schema&ids=all',
+        'https://api.guildwars2.com/v2/test?v=schema&ids=all'
       ])
       expect(entry).toEqual(content)
       expect(entryShouldBeLive).toEqual(content)
@@ -796,15 +798,15 @@ describe('abstract endpoint', () => {
       let entryEn = await endpoint.get(1)
       await wait(50)
       let entryShouldCacheEn = await endpoint.get(1)
-      let entryInCacheEn = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:1:en')
+      let entryInCacheEn = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:1:en')
 
       let entryDe = await endpoint.language('de').get(1)
       await wait(50)
       let entryShouldCacheDe = await endpoint.language('de').get(1)
-      let entryInCacheDe = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:1:de')
+      let entryInCacheDe = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:1:de')
 
       expect(fetchMock.urls().length).toEqual(2)
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?id=1&lang=de')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&lang=de&id=1')
       expect(entryEn).toEqual(contentEn)
       expect(entryShouldCacheEn).toEqual(contentEn)
       expect(entryInCacheEn).toEqual(contentEn)
@@ -825,15 +827,15 @@ describe('abstract endpoint', () => {
       let entryUserOne = await endpoint.authenticate('key-user-one').get()
       await wait(50)
       let entryShouldCacheUserOne = await endpoint.authenticate('key-user-one').get()
-      let entryInCacheUserOne = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:hash[key-user-one]')
+      let entryInCacheUserOne = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:hash[key-user-one]')
 
       let entryUserTwo = await endpoint.authenticate('key-user-two').get()
       await wait(50)
       let entryShouldCacheUserTwo = await endpoint.authenticate('key-user-two').get()
-      let entryInCacheUserTwo = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test]:hash[key-user-two]')
+      let entryInCacheUserTwo = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:hash[key-user-two]')
 
       expect(fetchMock.urls().length).toEqual(2)
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?access_token=key-user-two')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&access_token=key-user-two')
       expect(entryUserOne).toEqual(contentUserOne)
       expect(entryShouldCacheUserOne).toEqual(contentUserOne)
       expect(entryInCacheUserOne).toEqual(contentUserOne)
@@ -902,7 +904,7 @@ describe('abstract endpoint', () => {
       fetchMock.addResponse({ foo: 'bar' })
 
       let entry = await endpoint._request('/v2/test')
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?lang=en')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&lang=en')
       expect(entry).toEqual({ foo: 'bar' })
     })
 
@@ -926,7 +928,7 @@ describe('abstract endpoint', () => {
       fetchMock.addResponse({ foo: 'bar' })
 
       let entry = await endpoint._requestMany(['/v2/test'])
-      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?lang=en')
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&lang=en')
       expect(entry).toEqual([{ foo: 'bar' }])
     })
   })
@@ -936,26 +938,26 @@ describe('abstract endpoint', () => {
       endpoint.isLocalized = true
       endpoint.language('de')
       let url = endpoint._buildUrl('/test')
-      expect(url).toEqual('https://api.guildwars2.com/test?lang=de')
+      expect(url).toEqual('https://api.guildwars2.com/test?v=schema&lang=de')
     })
 
     it('doesn\'t set the language header for non localized endpoints', () => {
       endpoint.language('de')
       let url = endpoint._buildUrl('/test')
-      expect(url).toEqual('https://api.guildwars2.com/test')
+      expect(url).toEqual('https://api.guildwars2.com/test?v=schema')
     })
 
     it('sets the authorization header for authenticated endpoints', () => {
       endpoint.isAuthenticated = true
       endpoint.authenticate('key')
       let url = endpoint._buildUrl('/test')
-      expect(url).toEqual('https://api.guildwars2.com/test?access_token=key')
+      expect(url).toEqual('https://api.guildwars2.com/test?v=schema&access_token=key')
     })
 
     it('doesn\'t set the authorization header for non authenticated endpoints', () => {
       endpoint.authenticate('key')
       let url = endpoint._buildUrl('/test')
-      expect(url).toEqual('https://api.guildwars2.com/test')
+      expect(url).toEqual('https://api.guildwars2.com/test?v=schema')
     })
 
     it('sets the authorization header for optional authenticated endpoints', () => {
@@ -963,14 +965,14 @@ describe('abstract endpoint', () => {
       endpoint.isOptionallyAuthenticated = true
       endpoint.authenticate('key')
       let url = endpoint._buildUrl('/test')
-      expect(url).toEqual('https://api.guildwars2.com/test?access_token=key')
+      expect(url).toEqual('https://api.guildwars2.com/test?v=schema&access_token=key')
     })
 
     it('doesn\'t set the authorization header for optional authenticated endpoints if the key is not set', () => {
       endpoint.isAuthenticated = true
       endpoint.isOptionallyAuthenticated = true
       let url = endpoint._buildUrl('/test')
-      expect(url).toEqual('https://api.guildwars2.com/test')
+      expect(url).toEqual('https://api.guildwars2.com/test?v=schema')
     })
 
     it('handles an already existing query', () => {
@@ -979,7 +981,7 @@ describe('abstract endpoint', () => {
       endpoint.isLocalized = true
       endpoint.language('de')
       let url = endpoint._buildUrl('/test?page=0')
-      expect(url).toEqual('https://api.guildwars2.com/test?page=0&access_token=key&lang=de')
+      expect(url).toEqual('https://api.guildwars2.com/test?v=schema&access_token=key&lang=de&page=0')
     })
   })
 
@@ -1003,6 +1005,12 @@ describe('abstract endpoint', () => {
 
       expect(logMock.mock.calls).toEqual([[`[gw2api-client] Test message`]])
     })
+  })
+
+  it('sets the schema', () => {
+    let x = endpoint.schema('2019-04-26T00:00:00Z')
+    expect(x.schemaVersion).toEqual('2019-04-26T00:00:00Z')
+    expect(x).toBeInstanceOf(Module)
   })
 
   it('sets the language', () => {

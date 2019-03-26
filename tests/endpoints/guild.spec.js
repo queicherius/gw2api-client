@@ -7,6 +7,7 @@ describe('endpoints > guild', () => {
   beforeEach(() => {
     endpoint = new Module(mockClient)
     fetchMock.reset()
+    endpoint.schema('schema')
   })
 
   it('test /v2/guild', async () => {
@@ -52,7 +53,7 @@ describe('endpoints > guild', () => {
     fetchMock.addResponse(['F8CDF1E0-2D64-4D71-81E2-049B0796B7AE'])
     let content = await endpoint.name('Baws Like')
     expect(content).toEqual('F8CDF1E0-2D64-4D71-81E2-049B0796B7AE')
-    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/guild/search?name=Baws%20Like'))
+    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/guild/search?v=schema&name=Baws%20Like'))
   })
 
   it('test /v2/guild/upgrades', async () => {
@@ -87,6 +88,8 @@ describe('endpoints > guild', () => {
 
   it('test /v2/guild/:id/log (since)', async () => {
     endpoint = (new Module(mockClient, 'S0ME-UU1D')).log()
+    endpoint.schema('schema')
+    endpoint.authenticate('token')
 
     expect(endpoint.isPaginated).toEqual(false)
     expect(endpoint.isBulk).toEqual(false)
@@ -98,7 +101,7 @@ describe('endpoints > guild', () => {
     fetchMock.addResponse([{ id: 123, user: 'Account.1234', type: 'upgrade' }])
     let content = await endpoint.since(42)
     expect(content[0].user).toEqual('Account.1234')
-    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/guild/S0ME-UU1D/log?since=42'))
+    expect(fetchMock.lastUrl()).toEqual(expect.stringContaining('/v2/guild/S0ME-UU1D/log?v=schema&access_token=token&since=42'))
   })
 
   it('test /v2/guild/:id/members', async () => {

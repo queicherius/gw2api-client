@@ -79,7 +79,7 @@ client.language('de').items().all()
 - [`api().backstory().answers()`](#apibackstoryanswers) - Information about biography answers.
 - [`api().backstory().questions()`](#apibackstoryquestions) - Information about biography questions.
 - [`api().build()`](#apibuild) - The current game build id.
-- [`api().cats()`](#apicats) - Information about home instance cats.
+- [`api().cats()`](#apicats) - (Deprecated) Information about home instance cats.
 - [`api().characters()`](#apicharacters) - Information about characters of the account.
 - [`api().characters(:name).backstory()`](#apicharactersnamebackstory) - Backstory information of a single character.
 - [`api().characters(:name).core()`](#apicharactersnamecore) - Core information (name, race, ...) of a single character.
@@ -123,6 +123,8 @@ client.language('de').items().all()
 - [`api().guild(:id).storage()`](#apiguildidstorage) - Information about the stored guild upgrades.
 - [`api().guild(:id).teams()`](#apiguildidteams) - Information about the teams in the guild.
 - [`api().guild().treasury()`](#apiguildtreasury) - Information about the items in the guild's treasury.
+- [`api().home().cats()`](#apihomecats) - Information about home instance cats.
+- [`api().home().nodes()`](#apihomenodes) - Information about home instance nodes.
 - [`api().items()`](#apiitems) - Information about items that were discovered by players.
 - [`api().itemstats()`](#apiitemstats) - Information about stats for items.
 - [`api().mailcarriers()`](#apimailcarriers) - Information about mailcarriers.
@@ -133,7 +135,7 @@ client.language('de').items().all()
 - [`api().minis()`](#apiminis) - Information about miniatures.
 - [`api().mounts().skins()`](#apimountsskins) - Information about mount skins.
 - [`api().mounts().types()`](#apimountstypes) - Information about mount types.
-- [`api().nodes()`](#apinodes) - Information about home instance nodes.
+- [`api().nodes()`](#apinodes) - (Deprecated) Information about home instance nodes.
 - [`api().outfits()`](#apioutfits) - Information about outfits.
 - [`api().pets()`](#apipets) - Information about the ranger's pets.
 - [`api().professions()`](#apiprofessions) - Information about professions.
@@ -692,8 +694,9 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ### `api().cats()`
 
-> Information about cats.
+> Information about home instance cats.
 
+- **DEPRECATED**
 - **API-URL:** [/v2/cats](https://api.guildwars2.com/v2/cats)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
@@ -1355,6 +1358,36 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 ---
 
+### `api().home().cats()`
+
+> Information about home instance cats.
+
+- **API-URL:** [/v2/home/cats](https://api.guildwars2.com/v2/home/cats)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().home().nodes()`
+
+> Information about home instance nodes.
+
+- **API-URL:** [/v2/home/nodes](https://api.guildwars2.com/v2/home/nodes)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
 ### `api().items()`
 
 > Information about items that were discovered by players.
@@ -1509,6 +1542,7 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 > Information about home instance nodes.
 
+- **DEPRECATED**
 - **API-URL:** [/v2/nodes](https://api.guildwars2.com/v2/nodes)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes

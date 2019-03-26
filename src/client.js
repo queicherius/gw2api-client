@@ -148,6 +148,10 @@ module.exports = class Client {
     return new endpoints.GuildEndpoint(this, id)
   }
 
+  home () {
+    return new endpoints.HomeEndpoint(this)
+  }
+
   items () {
     return new endpoints.ItemsEndpoint(this)
   }

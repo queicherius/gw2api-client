@@ -220,6 +220,11 @@ describe('client', () => {
     expect(endpoint.id).toEqual('UUID')
   })
 
+  it('can get the home endpoint', () => {
+    let endpoint = client.home()
+    expect(endpoint.cats).not.toEqual(undefined)
+  })
+
   it('can get the items endpoint', () => {
     let endpoint = client.items()
     expect(endpoint.url).toEqual('/v2/items')

@@ -1,10 +1,16 @@
 /* eslint-env jest */
+const mockdate = require('mockdate')
+const nullCache = require('../../src/cache/null')
 const { mockClient, fetchMock } = require('../mocks/client.mock')
 const Module = require('../../src/endpoints/account')
 
 describe('endpoints > account', () => {
   let endpoint
   beforeEach(() => {
+    mockdate.set('2019-04-02T17:05:00Z')
+
+    // No caching because we depend on "live" mocked data for some tests
+    mockClient.caches = [nullCache()]
     endpoint = new Module(mockClient)
     fetchMock.reset()
     endpoint.schema('schema')
@@ -68,6 +74,7 @@ describe('endpoints > account', () => {
     expect(contentGet[0].current).toEqual(487)
     expect(fetchMock.lastUrl().endsWith('/v2/account/achievements?v=schema&access_token=XXX')).toEqual(true)
 
+    fetchMock.addResponse([{ id: 1, current: 487, max: 1000, done: false }])
     let contentAll = await endpoint.all()
     expect(contentAll).toEqual(contentGet)
   })
@@ -97,7 +104,7 @@ describe('endpoints > account', () => {
     expect(endpoint.url).toEqual('/v2/commerce/delivery')
   })
 
-  it('test /v2/account/dungeons', async () => {
+  it('test /v2/account/dungeons (up to date)', async () => {
     endpoint = endpoint.dungeons()
 
     expect(endpoint.isPaginated).toEqual(false)
@@ -107,9 +114,35 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/dungeons')
 
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-02T07:03:00Z' })
     fetchMock.addResponse(['hodgins', 'seraph'])
     let content = await endpoint.get()
     expect(content).toEqual(['hodgins', 'seraph'])
+
+    expect(fetchMock.urls()).toEqual([
+      'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false',
+      'https://api.guildwars2.com/v2/account/dungeons?v=schema&access_token=false'
+    ])
+  })
+
+  it('test /v2/account/dungeons (stale)', async () => {
+    endpoint = endpoint.dungeons()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/dungeons')
+
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-01T23:53:00Z' })
+    fetchMock.addResponse(['hodgins', 'seraph'])
+    let content = await endpoint.get()
+    expect(content).toEqual([])
+
+    expect(fetchMock.urls()).toEqual([
+      'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false'
+    ])
   })
 
   it('test /v2/account/dyes', async () => {
@@ -348,7 +381,7 @@ describe('endpoints > account', () => {
     expect(content).toEqual([1, 2, 3])
   })
 
-  it('test /v2/account/raids', async () => {
+  it('test /v2/account/raids (up to date)', async () => {
     endpoint = endpoint.raids()
 
     expect(endpoint.isPaginated).toEqual(false)
@@ -358,9 +391,35 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/raids')
 
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-02T01:03:00Z' })
     fetchMock.addResponse(['spirit_woods', 'keep_construct'])
     let content = await endpoint.get()
     expect(content).toEqual(['spirit_woods', 'keep_construct'])
+
+    expect(fetchMock.urls()).toEqual([
+      'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false',
+      'https://api.guildwars2.com/v2/account/raids?v=schema&access_token=false'
+    ])
+  })
+
+  it('test /v2/account/raids (stale)', async () => {
+    endpoint = endpoint.raids()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/raids')
+
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-01T23:53:00Z' })
+    fetchMock.addResponse(['spirit_woods', 'keep_construct'])
+    let content = await endpoint.get()
+    expect(content).toEqual([])
+
+    expect(fetchMock.urls()).toEqual([
+      'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false'
+    ])
   })
 
   it('test /v2/account/recipes', async () => {

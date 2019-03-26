@@ -1013,6 +1013,31 @@ describe('abstract endpoint', () => {
     expect(x).toBeInstanceOf(Module)
   })
 
+  describe('_schemaIsAtLeast', () => {
+    it('returns "true" if the schema is set to "latest"', () => {
+      endpoint.schema('latest')
+      expect(endpoint._schemaIsAtLeast('2019-01-02T00:00:00Z')).toEqual(true)
+    })
+
+    it('returns "true" if the schema is newer than required', () => {
+      endpoint.schema('2019-01-02T00:00:00Z')
+      expect(endpoint._schemaIsAtLeast('2019-01-02T00:00:00Z')).toEqual(true)
+
+      endpoint.schema('2019-01-03T00:00:00Z')
+      expect(endpoint._schemaIsAtLeast('2019-01-02T00:00:00Z')).toEqual(true)
+    })
+
+    it('returns "false" if the schema is too old', () => {
+      endpoint.schema('2019-01-01T00:00:00Z')
+      expect(endpoint._schemaIsAtLeast('2019-01-02T00:00:00Z')).toEqual(false)
+    })
+
+    it('returns "false" if the schema is malformed (and ignored by the API)', () => {
+      endpoint.schema('HERPDIDERP')
+      expect(endpoint._schemaIsAtLeast('2019-01-02T00:00:00Z')).toEqual(false)
+    })
+  })
+
   it('sets the language', () => {
     let x = endpoint.language('de')
     expect(x.lang).toEqual('de')

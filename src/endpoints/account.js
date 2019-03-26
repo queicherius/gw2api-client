@@ -3,8 +3,9 @@ const CharactersEndpoint = require('./characters')
 const PvpEndpoint = require('./pvp')
 const CommerceEndpoint = require('./commerce')
 const accountBlob = require('./account-blob.js')
+const getLastDailyReset = require('../helpers/getLastDailyReset')
 
-module.exports = class AccountEndpoint extends AbstractEndpoint {
+class AccountEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account'
@@ -167,6 +168,16 @@ class DungeonsEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }
+
+  async get () {
+    // Discard stale data if the last account update was before the last daily reset
+    const account = await new AccountEndpoint(this).schema('2019-03-26').get()
+    if (new Date(account.last_modified) < getLastDailyReset()) {
+      return []
+    }
+
+    return super.get()
+  }
 }
 
 class DyesEndpoint extends AbstractEndpoint {
@@ -302,6 +313,16 @@ class RaidsEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }
+
+  async get () {
+    // Discard stale data if the last account update was before the last daily reset
+    const account = await new AccountEndpoint(this).schema('2019-03-26').get()
+    if (new Date(account.last_modified) < getLastDailyReset()) {
+      return []
+    }
+
+    return super.get()
+  }
 }
 
 class RecipesEndpoint extends AbstractEndpoint {
@@ -339,3 +360,5 @@ class WalletEndpoint extends AbstractEndpoint {
     this.cacheTime = 5 * 60
   }
 }
+
+module.exports = AccountEndpoint

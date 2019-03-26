@@ -3,7 +3,7 @@ const CharactersEndpoint = require('./characters')
 const PvpEndpoint = require('./pvp')
 const CommerceEndpoint = require('./commerce')
 const accountBlob = require('./account-blob.js')
-const getLastDailyReset = require('../helpers/getLastDailyReset')
+const resetTime = require('../helpers/resetTime')
 
 class AccountEndpoint extends AbstractEndpoint {
   constructor (client) {
@@ -172,7 +172,7 @@ class DungeonsEndpoint extends AbstractEndpoint {
   async get () {
     // Discard stale data if the last account update was before the last daily reset
     const account = await new AccountEndpoint(this).schema('2019-03-26').get()
-    if (new Date(account.last_modified) < getLastDailyReset()) {
+    if (new Date(account.last_modified) < resetTime.getLastDailyReset()) {
       return []
     }
 
@@ -317,7 +317,7 @@ class RaidsEndpoint extends AbstractEndpoint {
   async get () {
     // Discard stale data if the last account update was before the last daily reset
     const account = await new AccountEndpoint(this).schema('2019-03-26').get()
-    if (new Date(account.last_modified) < getLastDailyReset()) {
+    if (new Date(account.last_modified) < resetTime.getLastWeeklyReset()) {
       return []
     }
 

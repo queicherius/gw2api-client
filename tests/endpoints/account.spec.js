@@ -412,7 +412,7 @@ describe('endpoints > account', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/account/raids')
 
-    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-01T23:53:00Z' })
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-01T06:53:00Z' })
     fetchMock.addResponse(['spirit_woods', 'keep_construct'])
     let content = await endpoint.get()
     expect(content).toEqual([])

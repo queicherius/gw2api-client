@@ -315,7 +315,7 @@ class RaidsEndpoint extends AbstractEndpoint {
   }
 
   async get () {
-    // Discard stale data if the last account update was before the last daily reset
+    // Discard stale data if the last account update was before the last weekly reset
     const account = await new AccountEndpoint(this).schema('2019-03-26').get()
     if (new Date(account.last_modified) < resetTime.getLastWeeklyReset()) {
       return []

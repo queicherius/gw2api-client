@@ -497,7 +497,7 @@ module.exports = class AbstractEndpoint {
     }
 
     // Merge the parsed query parts out of the url
-    query = { ...query, ...parsedQuery }
+    query = Object.assign(query, parsedQuery)
 
     // Build the url with the finished query
     query = qs.stringify(query, true).replace(/%2C/g, ',')

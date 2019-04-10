@@ -282,6 +282,26 @@ describe('endpoints > account', () => {
     ])
   })
 
+  it('test /v2/account/luck', async () => {
+    endpoint = endpoint.luck()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/luck')
+
+    fetchMock.addResponse([
+      {
+        'id': 'luck',
+        'value': 2682395
+      }
+    ])
+    let content = await endpoint.get()
+    expect(content).toEqual(2682395)
+  })
+
   it('test /v2/account/mailcarriers', async () => {
     endpoint = endpoint.mailcarriers()
 

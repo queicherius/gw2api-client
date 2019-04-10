@@ -60,6 +60,10 @@ class AccountEndpoint extends AbstractEndpoint {
     return new InventoryEndpoint(this)
   }
 
+  luck () {
+    return new LuckEndpoint(this)
+  }
+
   mailcarriers () {
     return new MailcarriersEndpoint(this)
   }
@@ -250,6 +254,20 @@ class InventoryEndpoint extends AbstractEndpoint {
     this.url = '/v2/account/inventory'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
+  }
+}
+
+class LuckEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/luck'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+
+  async get () {
+    const response = await super.get()
+    return response[0].value
   }
 }
 

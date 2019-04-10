@@ -252,6 +252,10 @@ module.exports = class Client {
     return new endpoints.TraitsEndpoint(this)
   }
 
+  worldbosses () {
+    return new endpoints.WorldbossesEndpoint(this)
+  }
+
   worlds () {
     return new endpoints.WorldsEndpoint(this)
   }

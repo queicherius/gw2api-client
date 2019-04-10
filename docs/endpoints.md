@@ -71,6 +71,7 @@ client.language('de').items().all()
 - [`api().account().transactions()`](#apiaccounttransactions) - Alternative method of calling [`api().commerce().transactions()`](#apicommercetransactionscurrentbuys).
 - [`api().account().delivery()`](#apiaccountdelivery) - Alternative method of calling [`api().commerce().delivery()`](#apicommercedelivery).
 - [`api().account().wallet()`](#apiaccountwallet) - The currencies owned by the account. 
+- [`api().account().worldbosses()`](#apiaccountworldbosses) - The daily worldbosses completed by the account. 
 - [`api().achievements()`](#apiachievements) - Information about achievements.
 - [`api().achievements().categories()`](#apiachievementscategories) - The categories for achievements.
 - [`api().achievements().groups()`](#apiachievementsgroups) - The top-level groups for achievements.
@@ -162,6 +163,7 @@ client.language('de').items().all()
 - [`api().tokeninfo()`](#apitokeninfo) - Information about the supplied API key.
 - [`api().traits()`](#apitraits) - Information about specific traits, which are contained within specializations.
 - [`api().worlds()`](#apiworlds) - Information about the available worlds / servers.
+- [`api().worldbosses()`](#apiworldbosses) - Information about the available worldbosses.
 - [`api().wvw().abilities()`](#apiwvwabilities) - Information about the abilities available in WvW.
 - [`api().wvw().matches()`](#apiwvwmatches) - Details about WvW matches, including the total score, kills and deaths and further details for each map.
 - [`api().wvw().matches().overview()`](#apiwvwmatchesoverview) - Overview about WvW matches, shows the participating worlds.
@@ -562,6 +564,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > The currencies owned by the account. 
 
 - **API-URL:** [/v2/account/wallet](https://api.guildwars2.com/v2/account/wallet)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().worldbosses()`
+
+> The daily worldbosses completed by the account.
+
+- **API-URL:** [/v2/account/worldbosses](https://api.guildwars2.com/v2/account/worldbosses)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes
@@ -1939,6 +1956,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Information about the available worlds / servers.
 
 - **API-URL:** [/v2/worlds](https://api.guildwars2.com/v2/worlds)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().worldbosses()`
+
+> Information about the available worldbosses
+
+- **API-URL:** [/v2/worldbosses](https://api.guildwars2.com/v2/worldbosses)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

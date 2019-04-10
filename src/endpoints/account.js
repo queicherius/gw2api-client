@@ -117,6 +117,10 @@ class AccountEndpoint extends AbstractEndpoint {
     return new WalletEndpoint(this)
   }
 
+  worldbosses () {
+    return new WorldbossesEndpoint(this)
+  }
+
   // All data available for the account in a single object
   blob () {
     return accountBlob(this)
@@ -170,13 +174,7 @@ class DungeonsEndpoint extends AbstractEndpoint {
   }
 
   async get () {
-    // Discard stale data if the last account update was before the last daily reset
-    const account = await new AccountEndpoint(this).schema('2019-03-26').get()
-    if (new Date(account.last_modified) < resetTime.getLastDailyReset()) {
-      return []
-    }
-
-    return super.get()
+    return await isStaleDailyData(this) ? [] : super.get()
   }
 }
 
@@ -315,13 +313,7 @@ class RaidsEndpoint extends AbstractEndpoint {
   }
 
   async get () {
-    // Discard stale data if the last account update was before the last weekly reset
-    const account = await new AccountEndpoint(this).schema('2019-03-26').get()
-    if (new Date(account.last_modified) < resetTime.getLastWeeklyReset()) {
-      return []
-    }
-
-    return super.get()
+    return await isStaleWeeklyData(this) ? [] : super.get()
   }
 }
 
@@ -359,6 +351,31 @@ class WalletEndpoint extends AbstractEndpoint {
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }
+}
+
+class WorldbossesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/worldbosses'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+
+  async get () {
+    return await isStaleDailyData(this) ? [] : super.get()
+  }
+}
+
+// Stale data can happen if the last account update was before the last daily reset
+async function isStaleDailyData (endpointInstance) {
+  const account = await new AccountEndpoint(endpointInstance).schema('2019-03-26').get()
+  return new Date(account.last_modified) < resetTime.getLastDailyReset()
+}
+
+// Stale data can happen if the last account update was before the last weekly reset
+async function isStaleWeeklyData (endpointInstance) {
+  const account = await new AccountEndpoint(endpointInstance).schema('2019-03-26').get()
+  return new Date(account.last_modified) < resetTime.getLastWeeklyReset()
 }
 
 module.exports = AccountEndpoint

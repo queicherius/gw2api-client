@@ -487,6 +487,47 @@ describe('endpoints > account', () => {
     expect(content[0].value).toEqual(48043252)
   })
 
+  it('test /v2/account/worldbosses (up to date)', async () => {
+    endpoint = endpoint.worldbosses()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/worldbosses')
+
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-02T07:03:00Z' })
+    fetchMock.addResponse(['admiral_taidha_covington', 'claw_of_jormag'])
+    let content = await endpoint.get()
+    expect(content).toEqual(['admiral_taidha_covington', 'claw_of_jormag'])
+
+    expect(fetchMock.urls()).toEqual([
+      'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false',
+      'https://api.guildwars2.com/v2/account/worldbosses?v=schema&access_token=false'
+    ])
+  })
+
+  it('test /v2/account/worldbosses (stale)', async () => {
+    endpoint = endpoint.worldbosses()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/worldbosses')
+
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-01T23:53:00Z' })
+    fetchMock.addResponse(['admiral_taidha_covington', 'claw_of_jormag'])
+    let content = await endpoint.get()
+    expect(content).toEqual([])
+
+    expect(fetchMock.urls()).toEqual([
+      'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false'
+    ])
+  })
+
   it('test /v2/account .blob()', async () => {
     const blobMock = jest.fn()
     Module.__set__('accountBlob', blobMock)

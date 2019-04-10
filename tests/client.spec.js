@@ -351,6 +351,11 @@ describe('client', () => {
     expect(endpoint.url).toEqual('/v2/traits')
   })
 
+  it('can get the worldbosses endpoint', () => {
+    let endpoint = client.worldbosses()
+    expect(endpoint.url).toEqual('/v2/worldbosses')
+  })
+
   it('can get the worlds endpoint', () => {
     let endpoint = client.worlds()
     expect(endpoint.url).toEqual('/v2/worlds')

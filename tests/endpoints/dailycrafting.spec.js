@@ -1,5 +1,5 @@
 /* eslint-env jest */
-const {mockClient, fetchMock} = require('../mocks/client.mock')
+const { mockClient, fetchMock } = require('../mocks/client.mock')
 const Module = require('../../src/endpoints/dailycrafting')
 
 describe('endpoints > dailycrafting', () => {

@@ -250,6 +250,11 @@ describe('client', () => {
     expect(endpoint.url).toEqual('/v2/mailcarriers')
   })
 
+  it('can get the mapchests endpoint', () => {
+    let endpoint = client.mapchests()
+    expect(endpoint.url).toEqual('/v2/mapchests')
+  })
+
   it('can get the maps endpoint', () => {
     let endpoint = client.maps()
     expect(endpoint.url).toEqual('/v2/maps')

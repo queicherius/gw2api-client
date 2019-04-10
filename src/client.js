@@ -172,6 +172,10 @@ module.exports = class Client {
     return new endpoints.MailcarriersEndpoint(this)
   }
 
+  mapchests () {
+    return new endpoints.MapchestsEndpoint(this)
+  }
+
   maps () {
     return new endpoints.MapsEndpoint(this)
   }

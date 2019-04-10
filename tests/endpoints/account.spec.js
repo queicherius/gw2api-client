@@ -297,6 +297,47 @@ describe('endpoints > account', () => {
     expect(content).toEqual([1, 2, 3])
   })
 
+  it('test /v2/account/mapchests (up to date)', async () => {
+    endpoint = endpoint.mapchests()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/mapchests')
+
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-02T07:03:00Z' })
+    fetchMock.addResponse(['auric_basin_heros_choice_chest', 'dragons_stand_heros_choice_chest'])
+    let content = await endpoint.get()
+    expect(content).toEqual(['auric_basin_heros_choice_chest', 'dragons_stand_heros_choice_chest'])
+
+    expect(fetchMock.urls()).toEqual([
+      'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false',
+      'https://api.guildwars2.com/v2/account/mapchests?v=schema&access_token=false'
+    ])
+  })
+
+  it('test /v2/account/mapchests (stale)', async () => {
+    endpoint = endpoint.mapchests()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/mapchests')
+
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-01T23:53:00Z' })
+    fetchMock.addResponse(['auric_basin_heros_choice_chest', 'dragons_stand_heros_choice_chest'])
+    let content = await endpoint.get()
+    expect(content).toEqual([])
+
+    expect(fetchMock.urls()).toEqual([
+      'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false'
+    ])
+  })
+
   it('test /v2/account/masteries', async () => {
     endpoint = endpoint.masteries()
 

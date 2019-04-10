@@ -68,6 +68,10 @@ class AccountEndpoint extends AbstractEndpoint {
     return new MasteriesEndpoint(this)
   }
 
+  mapchests () {
+    return new MapchestsEndpoint(this)
+  }
+
   mastery () {
     return {
       points: () => new MasteryPointsEndpoint(this)
@@ -255,6 +259,19 @@ class MailcarriersEndpoint extends AbstractEndpoint {
     this.url = '/v2/account/mailcarriers'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
+  }
+}
+
+class MapchestsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/mapchests'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+
+  async get () {
+    return await isStaleDailyData(this) ? [] : super.get()
   }
 }
 

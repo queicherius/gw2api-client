@@ -56,6 +56,7 @@ client.language('de').items().all()
 - [`api().account().home().nodes()`](#apiaccounthomenodes) - The unlocked nodes in the home instance of the account.
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
 - [`api().account().mailcarriers()`](#apiaccountmailcarriers) - The unlocked mailcarriers of the account.
+- [`api().account().mapchests()`](#apiaccountmapchests) - The completed daily mapchests of the account.
 - [`api().account().masteries()`](#apiaccountmasteries) - The unlocked masteries of the account.
 - [`api().account().mastery().points()`](#apiaccountmasterypoints) - The unlocked mastery points of the account.
 - [`api().account().materials()`](#apiaccountmaterials) - The materials stored in the account's material storage.
@@ -132,6 +133,7 @@ client.language('de').items().all()
 - [`api().itemstats()`](#apiitemstats) - Information about stats for items.
 - [`api().mailcarriers()`](#apimailcarriers) - Information about mailcarriers.
 - [`api().legends()`](#apilegends) - Information about the revenant's legends.
+- [`api().mapchests()`](#apimapchests) - Information about daily claimable map chests.
 - [`api().maps()`](#apimaps) - Details about maps, including details about floor and translation data on how to translate between world coordinates and map 
 - [`api().masteries()`](#apimasteries) - Information about the masteries.
 - [`api().materials()`](#apimaterials) - Information about the categories and items in the material storage.
@@ -370,6 +372,21 @@ Alternative method of calling [`api().commerce().delivery()`](#apicommercedelive
 > The unlocked mailcarriers of the account.
 
 - **API-URL:** [/v2/account/mailcarriers](https://api.guildwars2.com/v2/account/mailcarriers)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().mapchests()`
+
+> The completed daily mapchests of the account.
+
+- **API-URL:** [/v2/account/mapchests](https://api.guildwars2.com/v2/account/mapchests)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes
@@ -1491,6 +1508,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** Yes
 - **Authenticated:** No
 - **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().mapchests()`
+
+> Information about daily claimable map chests.
+
+- **API-URL:** [/v2/mapchests](https://api.guildwars2.com/v2/mapchests)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

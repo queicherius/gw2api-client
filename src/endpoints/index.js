@@ -22,6 +22,7 @@ module.exports = {
   ItemstatsEndpoint: require('./itemstats'),
   LegendsEndpoint: require('./legends'),
   MailcarriersEndpoint: require('./mailcarriers'),
+  MapchestsEndpoint: require('./mapchests'),
   MapsEndpoint: require('./maps'),
   MasteriesEndpoint: require('./masteries'),
   MaterialsEndpoint: require('./materials'),

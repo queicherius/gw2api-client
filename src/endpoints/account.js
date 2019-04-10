@@ -25,6 +25,10 @@ class AccountEndpoint extends AbstractEndpoint {
     return new CharactersEndpoint(this, name)
   }
 
+  dailycrafting () {
+    return new DailycraftingEndpoint(this)
+  }
+
   delivery () {
     return new CommerceEndpoint(this).delivery()
   }
@@ -162,6 +166,19 @@ class BankEndpoint extends AbstractEndpoint {
     this.url = '/v2/account/bank'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
+  }
+}
+
+class DailycraftingEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/dailycrafting'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+
+  async get () {
+    return await isStaleDailyData(this) ? [] : super.get()
   }
 }
 

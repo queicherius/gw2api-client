@@ -120,6 +120,10 @@ module.exports = class Client {
     return new endpoints.CurrenciesEndpoint(this)
   }
 
+  dailycrafting () {
+    return new endpoints.DailycraftingEndpoint(this)
+  }
+
   dungeons () {
     return new endpoints.DungeonsEndpoint(this)
   }

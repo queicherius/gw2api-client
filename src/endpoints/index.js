@@ -9,6 +9,7 @@ module.exports = {
   CommerceEndpoint: require('./commerce'),
   ContinentsEndpoint: require('./continents'),
   CurrenciesEndpoint: require('./currencies'),
+  DailycraftingEndpoint: require('./dailycrafting'),
   DungeonsEndpoint: require('./dungeons'),
   EmblemEndpoint: require('./emblem'),
   EventsEndpoint: require('./events'),

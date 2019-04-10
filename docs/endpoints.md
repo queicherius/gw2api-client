@@ -47,6 +47,7 @@ client.language('de').items().all()
 - [`api().account().achievements()`](#apiaccountachievements) - The account's progress towards their achievements.
 - [`api().account().bank()`](#apiaccountbank) - The items stored in the player's bank.
 - [`api().account().characters()`](#apiaccountcharacters) - Alternative method of calling [`api().characters()`](#apicharacters).
+- [`api().account().dailycrafting()`](#apiaccountdailycrafting) - The completed daily crafting for the account.
 - [`api().account().dungeons()`](#apiaccountdungeons) - The completed dungeons of the current daily.
 - [`api().account().dyes()`](#apiaccountdyes) - The unlocked dyes of the account.
 - [`api().account().finishers()`](#apiaccountfinishers) - The unlocked finishers of the account.
@@ -105,6 +106,7 @@ client.language('de').items().all()
 - [`api().continents()`](#apicontinents) - Information about continents.
 - [`api().continents().floors(:id)`](#apicontinentsfloorsid) - Information about a continents' floors.
 - [`api().currencies()`](#apicurrencies) - Information about currencies.
+- [`api().dailycrafting()`](#apidailycrafting) - Information about daily craftable items.
 - [`api().dungeons()`](#apidungeons) - Information about dungeons, including their paths.
 - [`api().emblem().backgrounds()`](#apiemblembackgrounds) - The guild emblem's background images.
 - [`api().emblem().foregrounds()`](#apiemblemforegrounds) - The guild emblem's foreground images.
@@ -238,6 +240,21 @@ Alternative method of calling [`api().characters()`](#apicharacters).
 ### `api().account().delivery()`
 
 Alternative method of calling [`api().commerce().delivery()`](#apicommercedelivery).
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().dailycrafting()`
+
+> The completed daily crafting of the account.
+
+- **API-URL:** [/v2/account/dailycrafting](https://api.guildwars2.com/v2/account/dailycrafting)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 
@@ -1082,6 +1099,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** Yes
 - **Authenticated:** No
 - **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().dailycrafting()`
+
+> Information about daily craftable items.
+
+- **API-URL:** [/v2/dailycrafting](https://api.guildwars2.com/v2/dailycrafting)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

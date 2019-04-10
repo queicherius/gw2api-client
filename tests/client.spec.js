@@ -179,6 +179,11 @@ describe('client', () => {
     expect(endpoint.url).toEqual('/v2/currencies')
   })
 
+  it('can get the dailycrafting endpoint', () => {
+    let endpoint = client.dailycrafting()
+    expect(endpoint.url).toEqual('/v2/dailycrafting')
+  })
+
   it('can get the dungeons endpoint', () => {
     let endpoint = client.dungeons()
     expect(endpoint.url).toEqual('/v2/dungeons')

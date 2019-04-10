@@ -104,6 +104,47 @@ describe('endpoints > account', () => {
     expect(endpoint.url).toEqual('/v2/commerce/delivery')
   })
 
+  it('test /v2/account/dailycrafting (up to date)', async () => {
+    endpoint = endpoint.dailycrafting()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/dailycrafting')
+
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-02T07:03:00Z' })
+    fetchMock.addResponse(['charged_quartz_crystal', 'glob_of_elder_spirit_residue'])
+    let content = await endpoint.get()
+    expect(content).toEqual(['charged_quartz_crystal', 'glob_of_elder_spirit_residue'])
+
+    expect(fetchMock.urls()).toEqual([
+      'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false',
+      'https://api.guildwars2.com/v2/account/dailycrafting?v=schema&access_token=false'
+    ])
+  })
+
+  it('test /v2/account/dailycrafting (stale)', async () => {
+    endpoint = endpoint.dailycrafting()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/dailycrafting')
+
+    fetchMock.addResponse({ name: 'AAA.1234', last_modified: '2019-04-01T23:53:00Z' })
+    fetchMock.addResponse(['charged_quartz_crystal', 'glob_of_elder_spirit_residue'])
+    let content = await endpoint.get()
+    expect(content).toEqual([])
+
+    expect(fetchMock.urls()).toEqual([
+      'https://api.guildwars2.com/v2/account?v=2019-03-26&access_token=false'
+    ])
+  })
+
   it('test /v2/account/dungeons (up to date)', async () => {
     endpoint = endpoint.dungeons()
 

@@ -20,7 +20,7 @@ function mockClient (hasGuildPermission) {
         nodes: () => ({ get: () => _s(['quartz_node', 'airship_cargo']) })
       }),
       inventory: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
-      luck: () => ({get: () => _s(123)}),
+      luck: () => ({ get: () => _s(123) }),
       mailcarriers: () => ({ get: () => _s([1, 2, 3]) }),
       masteries: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
       mastery: () => ({

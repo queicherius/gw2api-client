@@ -267,6 +267,8 @@ class LuckEndpoint extends AbstractEndpoint {
 
   async get () {
     const response = await super.get()
+    // [API PATCH #0] If the account does not have any luck, the API erroneously returns `[]`
+    if (response.length === 0) return 0
     return response[0].value
   }
 }

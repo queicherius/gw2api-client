@@ -65,6 +65,7 @@ client.language('de').items().all()
 - [`api().account().mounts().skins()`](#apiaccountmountsskins) - The unlocked mount skins of the account.
 - [`api().account().mounts().types()`](#apiaccountmountstypes) - The unlocked mount types of the account.
 - [`api().account().outfits()`](#apiaccountoutfits) - The unlocked outfits of the account.
+- [`api().account().novelties()`](#apiaccountnovelties) - The unlocked novelties of the account.
 - [`api().account().pvp()`](#apiaccountpvp) - Alternative method of calling [`api().pvp()`](#apipvpamulets).
 - [`api().account().pvp().heroes()`](#apiaccountpvpheroes) - The unlocked pvp heroes of the account.
 - [`api().account().raids()`](#apiaccountraids) - The completed raids of the current weekly.
@@ -511,6 +512,21 @@ Alternative method of calling [`api().commerce().delivery()`](#apicommercedelive
 > The unlocked outfits of the account.
 
 - **API-URL:** [/v2/account/outfits](https://api.guildwars2.com/v2/account/outfits)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().novelties()`
+
+> The unlocked novelties of the account.
+
+- **API-URL:** [/v2/account/novelties](https://api.guildwars2.com/v2/account/novelties)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes

@@ -97,6 +97,10 @@ class AccountEndpoint extends AbstractEndpoint {
     }
   }
 
+  novelties () {
+    return new NoveltiesEndpoint(this)
+  }
+
   outfits () {
     return new OutfitsEndpoint(this)
   }
@@ -344,6 +348,15 @@ class MountTypesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/mounts/types'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class NoveltiesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/novelties'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

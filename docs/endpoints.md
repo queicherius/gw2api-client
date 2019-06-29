@@ -142,6 +142,7 @@ client.language('de').items().all()
 - [`api().mounts().skins()`](#apimountsskins) - Information about mount skins.
 - [`api().mounts().types()`](#apimountstypes) - Information about mount types.
 - [`api().nodes()`](#apinodes) - (Deprecated) Information about home instance nodes.
+- [`api().novelties()`](#apinovelties) - Information about novelties.
 - [`api().outfits()`](#apioutfits) - Information about outfits.
 - [`api().pets()`](#apipets) - Information about the ranger's pets.
 - [`api().professions()`](#apiprofessions) - Information about professions.
@@ -1643,6 +1644,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 - **DEPRECATED**
 - **API-URL:** [/v2/nodes](https://api.guildwars2.com/v2/nodes)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().novelties()`
+
+> Information about novelties.
+
+- **API-URL:** [/v2/novelties](https://api.guildwars2.com/v2/novelties)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

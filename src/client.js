@@ -200,6 +200,10 @@ module.exports = class Client {
     return new endpoints.NodesEndpoint(this)
   }
 
+  novelties () {
+    return new endpoints.NoveltiesEndpoint(this)
+  }
+
   outfits () {
     return new endpoints.OutfitsEndpoint(this)
   }
@@ -218,6 +222,10 @@ module.exports = class Client {
 
   quaggans () {
     return new endpoints.QuaggansEndpoint(this)
+  }
+
+  quests () {
+    return new endpoints.QuestsEndpoint(this)
   }
 
   races () {

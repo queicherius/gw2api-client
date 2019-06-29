@@ -286,6 +286,11 @@ describe('client', () => {
     expect(endpoint.url).toEqual('/v2/nodes')
   })
 
+  it('can get the novelties endpoint', () => {
+    let endpoint = client.novelties()
+    expect(endpoint.url).toEqual('/v2/novelties')
+  })
+
   it('can get the outfits endpoint', () => {
     let endpoint = client.outfits()
     expect(endpoint.url).toEqual('/v2/outfits')
@@ -309,6 +314,11 @@ describe('client', () => {
   it('can get the quaggans endpoint', () => {
     let endpoint = client.quaggans()
     expect(endpoint.url).toEqual('/v2/quaggans')
+  })
+
+  it('can get the quests endpoint', () => {
+    let endpoint = client.quests()
+    expect(endpoint.url).toEqual('/v2/quests')
   })
 
   it('can get the races endpoint', () => {

@@ -36,6 +36,10 @@ module.exports = class CharactersEndpoint extends AbstractEndpoint {
     return new InventoryEndpoint(this, this.name)
   }
 
+  quests () {
+    return new QuestsEndpoint(this, this.name)
+  }
+
   recipes () {
     return new RecipesEndpoint(this, this.name)
   }
@@ -124,6 +128,15 @@ class InventoryEndpoint extends AbstractEndpoint {
 
   get () {
     return super.get().then(result => result.bags)
+  }
+}
+
+class QuestsEndpoint extends AbstractEndpoint {
+  constructor (client, character) {
+    super(client)
+    this.url = `/v2/characters/${encodeURIComponent(character)}/quests`
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
   }
 }
 

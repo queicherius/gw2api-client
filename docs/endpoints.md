@@ -92,6 +92,7 @@ client.language('de').items().all()
 - [`api().characters(:name).equipment()`](#apicharactersnameequipment) - Equipment of a single character.
 - [`api().characters(:name).heropoints()`](#apicharactersnameheropoints) - Heropoint information of a single character.
 - [`api().characters(:name).inventory()`](#apicharactersnameinventory) - Inventory of a single character.
+- [`api().characters(:name).quests()`](#apicharactersnamequests) - Completed quests of a single character.
 - [`api().characters(:name).recipes()`](#apicharactersnamerecipes) - Unlocked recipes of a single character.
 - [`api().characters(:name).sab()`](#apicharactersnamesab) - Zone progress and unlocks in the SAB for this character.
 - [`api().characters(:name).skills()`](#apicharactersnameskills) - Skills in use by a single character.
@@ -890,6 +891,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Inventory of a single character.
 
 - **API-URL:** [/v2/characters/:name/inventory](https://api.guildwars2.com/v2/characters/:name/inventory)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().characters(:name).quests()`
+
+> Completed quests of a single character.
+
+- **API-URL:** [/v2/characters/:name/quests](https://api.guildwars2.com/v2/characters/:name/quests)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes

@@ -113,6 +113,21 @@ describe('endpoints > characters', () => {
     expect(content[0].id).toEqual(123)
   })
 
+  it('test /v2/characters/:id/quests', async () => {
+    endpoint = (new Module(mockClient, 'Random Nâme')).quests()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/characters/Random%20N%C3%A2me/quests')
+
+    fetchMock.addResponse([42, 40, 337, 295])
+    let content = await endpoint.get()
+    expect(content).toEqual([42, 40, 337, 295])
+  })
+
   it('test /v2/characters/:id/recipes', async () => {
     endpoint = (new Module(mockClient, 'Random Nâme')).recipes()
 

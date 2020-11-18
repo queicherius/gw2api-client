@@ -12,6 +12,7 @@ node_modules/
 
 # Webflow
 .idea/
+.history/
 
 # Operating System
 .DS_Store

@@ -12,6 +12,7 @@ module.exports = class Client {
     this.caches = [nullCache()]
     this.debug = false
     this.client = this
+    this.autoBatchPool = {}
   }
 
   // Set the schema version
@@ -77,6 +78,27 @@ module.exports = class Client {
       return flow.parallel(flushPromises)
         .then(() => buildEndpoint._cacheSetSingle('cacheBuildId', resp.buildId))
     })
+  }
+
+  //maintains pool of static endpoints with auto-batching enabled
+  autoBatch (endpointName, autoBatchInterval = 1000) {
+    if (this.autoBatchPool[endpointName]) {
+      return this.autoBatchPool[endpointName]
+    }
+
+    if (!this[endpointName]) {
+      return new Error(`no enpoint ${endpointName} found`)
+    }
+
+    const resultEndpoint = this[endpointName]()
+    if (resultEndpoint.isBulk) {
+      this.autoBatchPool[endpointName] = resultEndpoint.enableAutoBatch(autoBatchInterval)
+    }
+    else {
+      this.debugMessage(`${endpointName} is not bulk expanding, endpoint will not have any autobatch behavior`)
+    }
+
+    return resultEndpoint
   }
 
   // All the different API endpoints

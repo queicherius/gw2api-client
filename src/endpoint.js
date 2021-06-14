@@ -25,6 +25,8 @@ module.exports = class AbstractEndpoint {
     this.isOptionallyAuthenticated = false
     this.credentials = false
 
+    this._autoBatch = null
+
     this._skipCache = false
   }
 
@@ -71,6 +73,22 @@ module.exports = class AbstractEndpoint {
   live () {
     this._skipCache = true
     this.debugMessage(`skipping cache`)
+    return this
+  }
+
+  //turns on auto-batching for this endpoint
+  enableAutoBatch (interval) {
+    if (this._autoBatch === null) {
+      this._autoBatch = {
+        interval: interval || 1000,
+        set: new Set(),
+        nextBatchPromise: null,
+        autoBatchOverride: false,
+      }
+    }
+    if (interval) {
+      this._autoBatch.interval = interval
+    }
     return this
   }
 
@@ -156,7 +174,14 @@ module.exports = class AbstractEndpoint {
 
     // Request the single id if the endpoint a bulk endpoint
     if (this.isBulk && !url) {
-      return this._request(`${this.url}?id=${id}`)
+      if (this._autoBatch === null) {
+        return this._request(`${this.url}?id=${id}`)
+      }
+      else {
+        return this._autoBatchMany([id]).then((items) => {
+          return items[0]?items[0]:null
+        })
+      }
     }
 
     // We are dealing with a custom url instead
@@ -166,6 +191,36 @@ module.exports = class AbstractEndpoint {
 
     // Just request the base url
     return this._request(this.url)
+  }
+
+  _autoBatchMany (ids) {
+    if (!this._autoBatch.set) {
+      this._autoBatch.set = new Set()
+    }
+    if (this._autoBatch.set.size === 0) {
+      this._autoBatch.nextBatchPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const batchedIds = Array.from(this._autoBatch.set)
+          this.debugMessage(`batch sending for ${batchedIds}`)
+          this._autoBatch.set.clear()
+          this._autoBatch.autoBatchOverride = true
+          return resolve(this.many(batchedIds))
+        }, this._autoBatch.interval) // by default is 1000, 1 sec
+      }).then(items => {
+        const indexedItems = {}
+        items.forEach(item => {
+          indexedItems[item.id] = item
+        })
+        return indexedItems
+      })
+    }
+
+    //add ids to set
+    ids.forEach(id => this._autoBatch.set.add(id))
+    // return array with results requested
+    return this._autoBatch.nextBatchPromise.then(indexedItems => {
+      return ids.map(id => indexedItems[id]).filter(x => x)
+    })
   }
 
   // Get multiple entries by ids
@@ -232,6 +287,11 @@ module.exports = class AbstractEndpoint {
   // Get multiple entries by ids from the live API
   _many (ids, partialRequest = false) {
     this.debugMessage(`many(${this.url}) requesting from api (${ids.length} ids)`)
+
+    if (this._autoBatch !== null && !this._autoBatch.autoBatchOverride) {
+      return this._autoBatchMany(ids)
+    }
+    this._autoBatch.autoBatchOverride = false
 
     // Chunk the requests to the max page size
     const pages = chunk(ids, this.maxPageSize)

@@ -123,6 +123,29 @@ describe('client', () => {
     client.build = tmp
   })
 
+  describe('autobatch', () => {
+    const interval = 10
+    it('can get an autobatching endpoint', () => {
+      let endpoint = client.autoBatch('items', interval)
+      expect(endpoint.url).toEqual('/v2/items')
+      expect(endpoint._autoBatch.interval).toEqual(interval)
+    })
+
+    it('adds the endpoint to the pool', () => {
+      client.autoBatch('items', interval)
+      expect(client.autoBatchPool.items).toBeDefined()
+    })
+    
+    it('returns the same endpoint on subsequent calls', () => {
+      let endpoint1 = client.autoBatch('items', interval)
+      endpoint1.arbitraryPropertyNameForTesting = 'test confirmed'
+      let endpoint2 = client.autoBatch('items', interval)
+      expect(endpoint2.arbitraryPropertyNameForTesting).toEqual('test confirmed')
+    })
+
+
+  })
+
   it('can get the account endpoint', () => {
     let endpoint = client.account()
     expect(endpoint.url).toEqual('/v2/account')

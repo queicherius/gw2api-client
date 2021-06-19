@@ -160,7 +160,7 @@ describe('abstract endpoint', () => {
 
       let [entry1, entry2] = await Promise.all([
         endpoint.get(1), 
-        new Promise((resolve) => {setTimeout(() => {resolve(endpoint.get(2))}, 11)})
+        new Promise((resolve) => {setTimeout(() => {resolve(endpoint.get(2))}, interval+1)})
       ])
       expect(fetchMock.urls()).toEqual([
         'https://api.guildwars2.com/v2/test?v=schema&ids=1',

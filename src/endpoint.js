@@ -19,7 +19,7 @@ module.exports = class AbstractEndpoint {
     this.isPaginated = false
     this.maxPageSize = 200
     this.isBulk = false
-    this.supportsBulkAll = true
+    this.supportsBulkAll = true 
     this.isLocalized = false
     this.isAuthenticated = false
     this.isOptionallyAuthenticated = false
@@ -85,9 +85,6 @@ module.exports = class AbstractEndpoint {
         nextBatchPromise: null,
         autoBatchOverride: false,
       }
-    }
-    if (interval) {
-      this._autoBatch.interval = interval
     }
     return this
   }
@@ -288,10 +285,16 @@ module.exports = class AbstractEndpoint {
   _many (ids, partialRequest = false) {
     this.debugMessage(`many(${this.url}) requesting from api (${ids.length} ids)`)
 
-    if (this._autoBatch !== null && !this._autoBatch.autoBatchOverride) {
-      return this._autoBatchMany(ids)
+    if (this._autoBatch !== null) {
+      if (this._autoBatch.autoBatchOverride) {
+        this._autoBatch.autoBatchOverride = false
+      }
+      else {
+        return this._autoBatchMany(ids)
+      }
     }
-    this._autoBatch.autoBatchOverride = false
+
+
 
     // Chunk the requests to the max page size
     const pages = chunk(ids, this.maxPageSize)

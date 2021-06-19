@@ -108,6 +108,70 @@ describe('abstract endpoint', () => {
     })
   })
 
+  describe('auto batching', () => {
+    const interval = 10
+    beforeEach(() => {
+      endpoint.enableAutoBatch(interval)
+    })
+
+    it('sets up _autoBatch variable', () => {
+      let x = endpoint.enableAutoBatch(interval)
+      expect(x).toBeInstanceOf(Module)
+      expect(x._autoBatch.interval).toEqual(interval)
+      expect(x._autoBatch.set).toBeDefined()
+      expect(x._autoBatch.nextBatchPromise).toBeNull()
+      expect(x._autoBatch.autoBatchOverride).toEqual(false)
+    })
+    
+    it('supports batching from get', async () => {
+      let content = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      // endpoint.enableAutoBatch(10)
+      fetchMock.addResponse(content)
+
+      let [entry1, entry2] = await Promise.all([endpoint.get(1), endpoint.get(2)])
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=1,2')
+      expect(entry1).toEqual(content[0])
+      expect(entry2).toEqual(content[1])
+    })
+    
+    it('supports batching from many', async () => {
+      let content = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }, { id: 3, name: 'bar' }]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      // endpoint.enableAutoBatch(10)
+      fetchMock.addResponse(content)
+
+      let [entry1, entry2] = await Promise.all([endpoint.many([1,2]), endpoint.many([2,3])])
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=1,2,3')
+      expect(entry1).toEqual([content[0],content[1]])
+      expect(entry2).toEqual([content[1],content[2]])
+    })
+
+    it('only batches requests during the interval', async () => {
+      let content1 = [{ id: 1, name: 'foo' }]
+      let content2 = [{ id: 2, name: 'bar' }]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      // endpoint.enableAutoBatch(10)
+      fetchMock.addResponse(content1)
+      fetchMock.addResponse(content2)
+
+      let [entry1, entry2] = await Promise.all([
+        endpoint.get(1), 
+        new Promise((resolve) => {setTimeout(() => {resolve(endpoint.get(2))}, 11)})
+      ])
+      expect(fetchMock.urls()).toEqual([
+        'https://api.guildwars2.com/v2/test?v=schema&ids=1',
+        'https://api.guildwars2.com/v2/test?v=schema&ids=2'
+      ])
+      expect(entry1).toEqual(content1[0])
+      expect(entry2).toEqual(content2[0])
+
+    })
+  })
+
   describe('get', () => {
     it('support for bulk expanding', async () => {
       let content = { id: 1, name: 'foo' }

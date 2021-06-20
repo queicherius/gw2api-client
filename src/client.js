@@ -81,13 +81,13 @@ module.exports = class Client {
   }
 
   //maintains pool of static endpoints with auto-batching enabled
-  autoBatch (endpointName, autoBatchInterval = 1000) {
+  autoBatch (endpointName, autoBatchInterval) {
     if (this.autoBatchPool[endpointName]) {
       return this.autoBatchPool[endpointName]
     }
 
     if (!this[endpointName]) {
-      return new Error(`no enpoint ${endpointName} found`)
+      throw new Error(`no enpoint ${endpointName} found`)
     }
 
     const resultEndpoint = this[endpointName]()

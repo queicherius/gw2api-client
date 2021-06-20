@@ -110,9 +110,9 @@ describe('abstract endpoint', () => {
 
   describe('auto batching', () => {
     const interval = 10
-    beforeEach(() => {
-      endpoint.enableAutoBatch(interval)
-    })
+    // beforeEach(() => {
+    //   endpoint.enableAutoBatch(interval)
+    // })
 
     it('sets up _autoBatch variable', () => {
       let x = endpoint.enableAutoBatch(interval)
@@ -122,12 +122,23 @@ describe('abstract endpoint', () => {
       expect(x._autoBatch.nextBatchPromise).toBeNull()
       expect(x._autoBatch.autoBatchOverride).toEqual(false)
     })
+
+    it('has default interval of 100', () => {
+      let x = endpoint.enableAutoBatch()
+      expect(x._autoBatch.interval).toEqual(100)
+    })
+
+    it('enableAutoBatch does not overwrite _autoBatch variable', () => {
+      endpoint.enableAutoBatch()
+      endpoint.enableAutoBatch(interval)
+      expect(endpoint._autoBatch.interval).toEqual(100)
+    })
     
     it('supports batching from get', async () => {
       let content = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      // endpoint.enableAutoBatch(10)
+      endpoint.enableAutoBatch(interval)
       fetchMock.addResponse(content)
 
       let [entry1, entry2] = await Promise.all([endpoint.get(1), endpoint.get(2)])
@@ -135,12 +146,25 @@ describe('abstract endpoint', () => {
       expect(entry1).toEqual(content[0])
       expect(entry2).toEqual(content[1])
     })
+
+    it('returns null from get with no response', async () => {
+      let content = []
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.enableAutoBatch(interval)
+      fetchMock.addResponse(content)
+
+      let [entry1, entry2] = await Promise.all([endpoint.get(1), endpoint.get(2)])
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=1,2')
+      expect(entry1).toEqual(null)
+      expect(entry2).toEqual(null)
+    })
     
     it('supports batching from many', async () => {
       let content = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }, { id: 3, name: 'bar' }]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      // endpoint.enableAutoBatch(10)
+      endpoint.enableAutoBatch(interval)
       fetchMock.addResponse(content)
 
       let [entry1, entry2] = await Promise.all([endpoint.many([1,2]), endpoint.many([2,3])])
@@ -154,7 +178,7 @@ describe('abstract endpoint', () => {
       let content2 = [{ id: 2, name: 'bar' }]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      // endpoint.enableAutoBatch(10)
+      endpoint.enableAutoBatch(interval)
       fetchMock.addResponse(content1)
       fetchMock.addResponse(content2)
 

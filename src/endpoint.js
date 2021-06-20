@@ -77,10 +77,10 @@ module.exports = class AbstractEndpoint {
   }
 
   //turns on auto-batching for this endpoint
-  enableAutoBatch (interval) {
+  enableAutoBatch (interval = 100) {
     if (this._autoBatch === null) {
       this._autoBatch = {
-        interval: interval || 1000,
+        interval: interval,
         set: new Set(),
         nextBatchPromise: null,
         autoBatchOverride: false,
@@ -191,9 +191,6 @@ module.exports = class AbstractEndpoint {
   }
 
   _autoBatchMany (ids) {
-    if (!this._autoBatch.set) {
-      this._autoBatch.set = new Set()
-    }
     if (this._autoBatch.set.size === 0) {
       this._autoBatch.nextBatchPromise = new Promise((resolve, reject) => {
         setTimeout(() => {

@@ -110,9 +110,6 @@ describe('abstract endpoint', () => {
 
   describe('auto batching', () => {
     const batchDelay = 10
-    // beforeEach(() => {
-    //   endpoint.enableAutoBatch(batchDelay)
-    // })
 
     it('sets up _autoBatch variable', () => {
       let x = endpoint.enableAutoBatch(batchDelay)

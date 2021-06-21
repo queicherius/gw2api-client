@@ -76,14 +76,13 @@ module.exports = class AbstractEndpoint {
     return this
   }
 
-  //turns on auto-batching for this endpoint
-  enableAutoBatch (interval = 100) {
+  // Turn on auto-batching for this endpoint
+  enableAutoBatch (batchDelay = 100) {
     if (this._autoBatch === null) {
       this._autoBatch = {
-        interval: interval,
-        set: new Set(),
+        batchDelay: batchDelay,
+        idsForNextBatch: new Set(),
         nextBatchPromise: null,
-        autoBatchOverride: false,
       }
     }
     return this
@@ -191,15 +190,14 @@ module.exports = class AbstractEndpoint {
   }
 
   _autoBatchMany (ids) {
-    if (this._autoBatch.set.size === 0) {
+    if (this._autoBatch.idsForNextBatch.size === 0) {
       this._autoBatch.nextBatchPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
-          const batchedIds = Array.from(this._autoBatch.set)
-          this.debugMessage(`batch sending for ${batchedIds}`)
-          this._autoBatch.set.clear()
-          this._autoBatch.autoBatchOverride = true
-          return resolve(this.many(batchedIds))
-        }, this._autoBatch.interval) // by default is 1000, 1 sec
+          const batchedIds = Array.from(this._autoBatch.idsForNextBatch)
+          this.debugMessage(`autoBatchMany called (${batchedIds.length} ids)`)
+          this._autoBatch.idsForNextBatch.clear()
+          return resolve(this.many(batchedIds, true))
+        }, this._autoBatch.batchDelay) 
       }).then(items => {
         const indexedItems = {}
         items.forEach(item => {
@@ -209,16 +207,16 @@ module.exports = class AbstractEndpoint {
       })
     }
 
-    //add ids to set
-    ids.forEach(id => this._autoBatch.set.add(id))
-    // return array with results requested
+    // Add the requested ids to the pending ids
+    ids.forEach(id => this._autoBatch.idsForNextBatch.add(id))
+    // Return the results based on the requested ids
     return this._autoBatch.nextBatchPromise.then(indexedItems => {
       return ids.map(id => indexedItems[id]).filter(x => x)
     })
   }
 
   // Get multiple entries by ids
-  many (ids) {
+  many (ids, skipAutoBatch) {
     this.debugMessage(`many(${this.url}) called (${ids.length} ids)`)
 
     if (!this.isBulk) {
@@ -235,7 +233,7 @@ module.exports = class AbstractEndpoint {
 
     // There is no cache time set, so always use the live data
     if (!this.cacheTime) {
-      return this._many(ids)
+      return this._many(ids, undefined, skipAutoBatch)
     }
 
     // Get as much as possible out of the cache
@@ -250,7 +248,7 @@ module.exports = class AbstractEndpoint {
 
       this.debugMessage(`many(${this.url}) resolving partially from cache (${cached.length} ids)`)
       const missingIds = getMissingIds(ids, cached)
-      return this._many(missingIds, cached.length > 0).then(content => {
+      return this._many(missingIds, cached.length > 0, skipAutoBatch).then(content => {
         const cacheContent = content.map(value => [this._cacheHash(value.id), value])
         this._cacheSetMany(cacheContent)
 
@@ -279,14 +277,11 @@ module.exports = class AbstractEndpoint {
   }
 
   // Get multiple entries by ids from the live API
-  _many (ids, partialRequest = false) {
+  _many (ids, partialRequest = false, skipAutoBatch) {
     this.debugMessage(`many(${this.url}) requesting from api (${ids.length} ids)`)
 
     if (this._autoBatch !== null) {
-      if (this._autoBatch.autoBatchOverride) {
-        this._autoBatch.autoBatchOverride = false
-      }
-      else {
+      if (!skipAutoBatch) {
         return this._autoBatchMany(ids)
       }
     }

@@ -109,36 +109,35 @@ describe('abstract endpoint', () => {
   })
 
   describe('auto batching', () => {
-    const interval = 10
+    const batchDelay = 10
     // beforeEach(() => {
-    //   endpoint.enableAutoBatch(interval)
+    //   endpoint.enableAutoBatch(batchDelay)
     // })
 
     it('sets up _autoBatch variable', () => {
-      let x = endpoint.enableAutoBatch(interval)
+      let x = endpoint.enableAutoBatch(batchDelay)
       expect(x).toBeInstanceOf(Module)
-      expect(x._autoBatch.interval).toEqual(interval)
-      expect(x._autoBatch.set).toBeDefined()
+      expect(x._autoBatch.batchDelay).toEqual(batchDelay)
+      expect(x._autoBatch.idsForNextBatch).toBeDefined()
       expect(x._autoBatch.nextBatchPromise).toBeNull()
-      expect(x._autoBatch.autoBatchOverride).toEqual(false)
     })
 
-    it('has default interval of 100', () => {
+    it('has default batchDelay of 100', () => {
       let x = endpoint.enableAutoBatch()
-      expect(x._autoBatch.interval).toEqual(100)
+      expect(x._autoBatch.batchDelay).toEqual(100)
     })
 
     it('enableAutoBatch does not overwrite _autoBatch variable', () => {
       endpoint.enableAutoBatch()
-      endpoint.enableAutoBatch(interval)
-      expect(endpoint._autoBatch.interval).toEqual(100)
+      endpoint.enableAutoBatch(batchDelay)
+      expect(endpoint._autoBatch.batchDelay).toEqual(100)
     })
     
     it('supports batching from get', async () => {
       let content = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.enableAutoBatch(interval)
+      endpoint.enableAutoBatch(batchDelay)
       fetchMock.addResponse(content)
 
       let [entry1, entry2] = await Promise.all([endpoint.get(1), endpoint.get(2)])
@@ -151,7 +150,7 @@ describe('abstract endpoint', () => {
       let content = []
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.enableAutoBatch(interval)
+      endpoint.enableAutoBatch(batchDelay)
       fetchMock.addResponse(content)
 
       let [entry1, entry2] = await Promise.all([endpoint.get(1), endpoint.get(2)])
@@ -164,7 +163,7 @@ describe('abstract endpoint', () => {
       let content = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }, { id: 3, name: 'bar' }]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.enableAutoBatch(interval)
+      endpoint.enableAutoBatch(batchDelay)
       fetchMock.addResponse(content)
 
       let [entry1, entry2] = await Promise.all([endpoint.many([1,2]), endpoint.many([2,3])])
@@ -173,18 +172,18 @@ describe('abstract endpoint', () => {
       expect(entry2).toEqual([content[1],content[2]])
     })
 
-    it('only batches requests during the interval', async () => {
+    it('only batches requests during the batchDelay', async () => {
       let content1 = [{ id: 1, name: 'foo' }]
       let content2 = [{ id: 2, name: 'bar' }]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.enableAutoBatch(interval)
+      endpoint.enableAutoBatch(batchDelay)
       fetchMock.addResponse(content1)
       fetchMock.addResponse(content2)
 
       let [entry1, entry2] = await Promise.all([
         endpoint.get(1), 
-        new Promise((resolve) => {setTimeout(() => {resolve(endpoint.get(2))}, interval+1)})
+        new Promise((resolve) => {setTimeout(() => {resolve(endpoint.get(2))}, batchDelay+1)})
       ])
       expect(fetchMock.urls()).toEqual([
         'https://api.guildwars2.com/v2/test?v=schema&ids=1',

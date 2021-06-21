@@ -80,8 +80,8 @@ module.exports = class Client {
     })
   }
 
-  //maintains pool of static endpoints with auto-batching enabled
-  autoBatch (endpointName, autoBatchInterval) {
+  // Maintains a pool of static endpoints with auto-batching enabled
+  autoBatch (endpointName, batchDelay) {
     if (this.autoBatchPool[endpointName]) {
       return this.autoBatchPool[endpointName]
     }
@@ -92,7 +92,7 @@ module.exports = class Client {
 
     const resultEndpoint = this[endpointName]()
     if (resultEndpoint.isBulk) {
-      this.autoBatchPool[endpointName] = resultEndpoint.enableAutoBatch(autoBatchInterval)
+      this.autoBatchPool[endpointName] = resultEndpoint.enableAutoBatch(batchDelay)
     }
     else {
       this.debugMessage(`${endpointName} is not bulk expanding, endpoint will not have any autobatch behavior`)

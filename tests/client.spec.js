@@ -1,19 +1,20 @@
 /* eslint-env jest */
 const nullCache = require('../src/cache/null')
 const memoryCache = require('../src/cache/memory')
+const AutoBatchNode = require('../src/autoBatchNode')
 const Module = require('../src/client')
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-async function expectError (callback) {
-  let err
-  try {
-    await callback()
-  } catch (e) {
-    err = e
-  }
+// async function expectError (callback) {
+//   let err
+//   try {
+//     await callback()
+//   } catch (e) {
+//     err = e
+//   }
 
-  expect(err).toBeInstanceOf(Error)
-}
+//   expect(err).toBeInstanceOf(Error)
+// }
 
 describe('client', () => {
   let client
@@ -135,36 +136,37 @@ describe('client', () => {
   })
 
   describe('autobatch', () => {
-    const batchDelay = 10
+
+    it(`can get the autoBatchNode wrapped Client`, () => {
+      expect(client.autoBatch()).toBeInstanceOf(AutoBatchNode)
+      expect(client.autoBatch()).toBeInstanceOf(AutoBatchNode)
+      expect(client.autoBatch().parent).toBeInstanceOf(Module)
+      expect(client.autoBatch().parent === client).toEqual(true)
+    })
+
     it('can get an autobatching endpoint', () => {
-      let endpoint = client.autoBatch('items', batchDelay)
+      let endpoint = client.autoBatch().items().parent
       expect(endpoint.url).toEqual('/v2/items')
-      expect(endpoint._autoBatch.batchDelay).toEqual(batchDelay)
+      expect(endpoint._autoBatch).not.toBeNull()
     })
 
-    it('adds the endpoint to the pool', () => {
-      client.autoBatch('items', batchDelay)
-      expect(client.autoBatchPool.items).toBeDefined()
-    })
+    // it('adds the endpoint to the pool', () => {
+    //   client.autoBatch('items', autoBatchDelay)
+    //   expect(client.autoBatchPool.items).toBeDefined()
+    // })
     
-    it('returns the same endpoint on subsequent calls', () => {
-      let endpoint1 = client.autoBatch('items', batchDelay)
-      endpoint1.arbitraryPropertyNameForTesting = 'test confirmed'
-      let endpoint2 = client.autoBatch('items', batchDelay)
-      expect(endpoint2.arbitraryPropertyNameForTesting).toEqual('test confirmed')
-    })
+    // it('returns the same endpoint on subsequent calls', () => {
+    //   let endpoint1 = client.autoBatch('items', autoBatchDelay)
+    //   endpoint1.arbitraryPropertyNameForTesting = 'test confirmed'
+    //   let endpoint2 = client.autoBatch('items', autoBatchDelay)
+    //   expect(endpoint2.arbitraryPropertyNameForTesting).toEqual('test confirmed')
+    // })
 
-    it(`errors if endpoint name doesn't exist`, async () => {
-      await expectError(() => client.autoBatch('does not exist'))
-    })
+    // it(`errors if endpoint name doesn't exist`, async () => {
+    //   await expectError(() => client.autoBatch('does not exist'))
+    // })
 
-    it(`debugMessage if endpoint is not bulk expanding`, () => {
-      const debugMessageMock = jest.fn()
-      client.debugMessage = debugMessageMock
-
-      const eventsAutoBatch = client.autoBatch('events')
-      expect(debugMessageMock.mock.calls.length).toBe(1)
-    })
+    
   })
 
   it('can get the account endpoint', () => {

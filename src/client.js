@@ -2,6 +2,7 @@ const fetch = require('lets-fetch')
 const nullCache = require('./cache/null')
 const endpoints = require('./endpoints')
 const flow = require('./flow')
+const AutoBatchNode = require('./autoBatchNode')
 
 module.exports = class Client {
   constructor () {
@@ -12,7 +13,7 @@ module.exports = class Client {
     this.caches = [nullCache()]
     this.debug = false
     this.client = this
-    this.autoBatchPool = {}
+    this.autoBatchPool = new AutoBatchNode(this, this)
   }
 
   // Set the schema version
@@ -81,25 +82,28 @@ module.exports = class Client {
   }
 
   // Maintains a pool of static endpoints with auto-batching enabled
-  autoBatch (endpointName, batchDelay) {
-    if (this.autoBatchPool[endpointName]) {
-      return this.autoBatchPool[endpointName]
-    }
-
-    if (!this[endpointName]) {
-      throw new Error(`no enpoint ${endpointName} found`)
-    }
-
-    const resultEndpoint = this[endpointName]()
-    if (resultEndpoint.isBulk) {
-      this.autoBatchPool[endpointName] = resultEndpoint.enableAutoBatch(batchDelay)
-    }
-    else {
-      this.debugMessage(`${endpointName} is not bulk expanding, endpoint will not have any autobatch behavior`)
-    }
-
-    return resultEndpoint
+  autoBatch() {
+    return this.autoBatchPool
   }
+  // autoBatch (endpointName, batchDelay) {
+  //   if (this.autoBatchPool[endpointName]) {
+  //     return this.autoBatchPool[endpointName]
+  //   }
+
+  //   if (!this[endpointName]) {
+  //     throw new Error(`no enpoint ${endpointName} found`)
+  //   }
+
+  //   const resultEndpoint = this[endpointName]()
+  //   if (resultEndpoint.isBulk) {
+  //     this.autoBatchPool[endpointName] = resultEndpoint.enableAutoBatch(batchDelay)
+  //   }
+  //   else {
+  //     this.debugMessage(`${endpointName} is not bulk expanding, endpoint will not have any autobatch behavior`)
+  //   }
+
+  //   return resultEndpoint
+  // }
 
   // All the different API endpoints
   account () {

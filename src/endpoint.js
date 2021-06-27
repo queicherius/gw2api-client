@@ -26,6 +26,7 @@ module.exports = class AbstractEndpoint {
     this.credentials = false
 
     this._autoBatch = null
+    this.autoBatchDelay = 50
 
     this._skipCache = false
   }
@@ -77,14 +78,19 @@ module.exports = class AbstractEndpoint {
   }
 
   // Turn on auto-batching for this endpoint
-  enableAutoBatch (batchDelay = 100) {
+  enableAutoBatch (autoBatchDelay) {
     if (this._autoBatch === null) {
+      if (!this.isBulk) {
+        this.debugMessage(`${this.url} is not bulk expanding, endpoint will not have any autobatch behavior`)
+        return this
+      }
       this._autoBatch = {
-        batchDelay: batchDelay,
+        // autoBatchDelay: autoBatchDelay,
         idsForNextBatch: new Set(),
         nextBatchPromise: null,
       }
     }
+    this.autoBatchDelay = autoBatchDelay || this.autoBatchDelay
     return this
   }
 
@@ -197,7 +203,7 @@ module.exports = class AbstractEndpoint {
           this.debugMessage(`autoBatchMany called (${batchedIds.length} ids)`)
           this._autoBatch.idsForNextBatch.clear()
           return resolve(this.many(batchedIds, true))
-        }, this._autoBatch.batchDelay) 
+        }, this.autoBatchDelay) 
       }).then(items => {
         const indexedItems = {}
         items.forEach(item => {

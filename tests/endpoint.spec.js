@@ -110,24 +110,36 @@ describe('abstract endpoint', () => {
 
   describe('auto batching', () => {
     const batchDelay = 10
+    beforeEach(() => {
+      endpoint.isBulk = true
+    })
 
     it('sets up _autoBatch variable', () => {
       let x = endpoint.enableAutoBatch(batchDelay)
       expect(x).toBeInstanceOf(Module)
-      expect(x._autoBatch.batchDelay).toEqual(batchDelay)
+      expect(x.autoBatchDelay).toEqual(batchDelay)
       expect(x._autoBatch.idsForNextBatch).toBeDefined()
       expect(x._autoBatch.nextBatchPromise).toBeNull()
     })
 
-    it('has default batchDelay of 100', () => {
+    it('has default batchDelay of 50', () => {
       let x = endpoint.enableAutoBatch()
-      expect(x._autoBatch.batchDelay).toEqual(100)
+      expect(x.autoBatchDelay).toEqual(50)
     })
 
-    it('enableAutoBatch does not overwrite _autoBatch variable', () => {
+    it('enableAutoBatch will overwrite autoBatchDelay variable', () => {
       endpoint.enableAutoBatch()
       endpoint.enableAutoBatch(batchDelay)
-      expect(endpoint._autoBatch.batchDelay).toEqual(100)
+      expect(endpoint.autoBatchDelay).toEqual(batchDelay)
+    })
+
+    it(`enableAutoBatch will call debugMessage if endpoint is not bulk expanding`, () => {
+      endpoint.isBulk = false
+      const debugMessageMock = jest.fn()
+      endpoint.debugMessage = debugMessageMock
+
+      endpoint.enableAutoBatch()
+      expect(debugMessageMock.mock.calls.length).toBe(1)
     })
     
     it('supports batching from get', async () => {

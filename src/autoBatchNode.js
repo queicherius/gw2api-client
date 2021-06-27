@@ -2,6 +2,7 @@
 const Endpoint = require('./endpoint')
 const _ = require('lodash')
 
+// This helper function returns all method names including those inherited from extending classes
 function getClassMethodNames(klass) {
   const isFunction = (x, name) => typeof x[name] === 'function';
   const deepFunctions = x =>
@@ -19,30 +20,25 @@ module.exports = class AutoBatchNode {
     this.client = client
     this.children = {}
     
-    
-    // Object.getOwnPropertyNames(Object.getPrototypeOf(parent)).forEach((x) => {
-    // _.functionsIn(parent).forEach((key) => {
     getClassMethodNames(parent).forEach((key) => {
-    // _.forOwn(parent, (val, key) => {
-      // if(typeof val !== 'function') {return}
       this[key] = (...args) => {
-        //always use settings from client
+        // Enforce settings from the Client
         this._syncSettingsFromClient()
 
-        // Return endpoint from pool, if available
+        // Return endpoint node from the child pool, if available
         const child = this._getChildNode(key, args)
         if (child) {
           return child
         }
 
-        // Call on the parent's method
+        // Call the parent's method
         const result = parent[key](...args)
 
-        // If method returns parent, return this
+        // If the method returns parent, return this
         if (result === this.parent) {
           return this
         } 
-        // If method returns new Endpoint, add it to the pool and return it
+        // If method returns a new Endpoint, add it to the child pool and return it
         else if (result instanceof Endpoint) {
           return this._newChildNode(key, args, result)
         }
@@ -55,7 +51,7 @@ module.exports = class AutoBatchNode {
   }
 
   _syncSettingsFromClient() {
-    // If this is the client, don't change settings
+    // If this is the client, don't need to change settings
     if (this.parent === this.client) {
       return 
     }
@@ -86,8 +82,5 @@ module.exports = class AutoBatchNode {
     const childName = nameList.join('_')
     return this.children[childName]   
   }
-
-
-
 
 }

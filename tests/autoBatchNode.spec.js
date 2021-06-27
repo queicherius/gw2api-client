@@ -1,18 +1,6 @@
 /* eslint-env jest */
 const Client = require('../src/client')
 const AutoBatchNode = require('../src/autoBatchNode')
-// const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-
-// async function expectError (callback) {
-//   let err
-//   try {
-//     await callback()
-//   } catch (e) {
-//     err = e
-//   }
-
-//   expect(err).toBeInstanceOf(Error)
-// }
 
 
 describe('autoBatchNode', () => {

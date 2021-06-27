@@ -149,24 +149,6 @@ describe('client', () => {
       expect(endpoint.url).toEqual('/v2/items')
       expect(endpoint._autoBatch).not.toBeNull()
     })
-
-    // it('adds the endpoint to the pool', () => {
-    //   client.autoBatch('items', autoBatchDelay)
-    //   expect(client.autoBatchPool.items).toBeDefined()
-    // })
-    
-    // it('returns the same endpoint on subsequent calls', () => {
-    //   let endpoint1 = client.autoBatch('items', autoBatchDelay)
-    //   endpoint1.arbitraryPropertyNameForTesting = 'test confirmed'
-    //   let endpoint2 = client.autoBatch('items', autoBatchDelay)
-    //   expect(endpoint2.arbitraryPropertyNameForTesting).toEqual('test confirmed')
-    // })
-
-    // it(`errors if endpoint name doesn't exist`, async () => {
-    //   await expectError(() => client.autoBatch('does not exist'))
-    // })
-
-    
   })
 
   it('can get the account endpoint', () => {

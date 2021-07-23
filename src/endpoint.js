@@ -5,6 +5,8 @@ const hashString = require('./hash')
 
 const clone = (x) => JSON.parse(JSON.stringify(x))
 
+const autoBatchSharedData = {}
+
 module.exports = class AbstractEndpoint {
   constructor (parent) {
     this.client = parent.client
@@ -24,8 +26,11 @@ module.exports = class AbstractEndpoint {
     this.isAuthenticated = false
     this.isOptionallyAuthenticated = false
     this.credentials = false
-
+    
+    this.autoBatching = parent.autoBatching
+    this.autoBatchDelay = parent.autoBatchDelay
     this._autoBatch = null
+    this.setupAutoBatchSharedData()
 
     this._skipCache = false
   }
@@ -33,6 +38,7 @@ module.exports = class AbstractEndpoint {
   // Set the schema version
   schema (schema) {
     this.schemaVersion = schema
+    this.setupAutoBatchSharedData()
     this.debugMessage(`set the schema to ${schema}`)
     return this
   }
@@ -45,6 +51,7 @@ module.exports = class AbstractEndpoint {
   // Set the language for locale-aware endpoints
   language (lang) {
     this.lang = lang
+    this.setupAutoBatchSharedData()
     this.debugMessage(`set the language to ${lang}`)
     return this
   }
@@ -52,6 +59,7 @@ module.exports = class AbstractEndpoint {
   // Set the api key for authenticated endpoints
   authenticate (apiKey) {
     this.apiKey = apiKey
+    this.setupAutoBatchSharedData()
     this.debugMessage(`set the api key to ${apiKey}`)
     return this
   }
@@ -77,15 +85,26 @@ module.exports = class AbstractEndpoint {
   }
 
   // Turn on auto-batching for this endpoint
-  enableAutoBatch (batchDelay = 100) {
-    if (this._autoBatch === null) {
-      this._autoBatch = {
-        batchDelay: batchDelay,
+  autoBatch (autoBatchDelay) {
+    if (autoBatchDelay) {
+      this.autoBatchDelay = autoBatchDelay
+      this.setupAutoBatchSharedData()
+    }
+    this.autoBatching = true
+    return this
+  }
+
+  // Sets _autoBatch to shared batching object based on _cacheHash 
+  setupAutoBatchSharedData() {
+    const autoBatchId = this._cacheHash(this.autoBatchDelay)
+    if (!autoBatchSharedData[autoBatchId]) {
+      autoBatchSharedData[autoBatchId] = {
         idsForNextBatch: new Set(),
         nextBatchPromise: null,
       }
     }
-    return this
+
+    this._autoBatch = autoBatchSharedData[autoBatchId]
   }
 
   // Get all ids
@@ -170,13 +189,13 @@ module.exports = class AbstractEndpoint {
 
     // Request the single id if the endpoint a bulk endpoint
     if (this.isBulk && !url) {
-      if (this._autoBatch === null) {
-        return this._request(`${this.url}?id=${id}`)
-      }
-      else {
+      if (this.autoBatching) {
         return this._autoBatchMany([id]).then((items) => {
           return items[0]?items[0]:null
         })
+      }
+      else {
+        return this._request(`${this.url}?id=${id}`)
       }
     }
 
@@ -197,7 +216,7 @@ module.exports = class AbstractEndpoint {
           this.debugMessage(`autoBatchMany called (${batchedIds.length} ids)`)
           this._autoBatch.idsForNextBatch.clear()
           return resolve(this.many(batchedIds, true))
-        }, this._autoBatch.batchDelay) 
+        }, this.autoBatchDelay) 
       }).then(items => {
         const indexedItems = {}
         items.forEach(item => {
@@ -280,10 +299,8 @@ module.exports = class AbstractEndpoint {
   _many (ids, partialRequest = false, skipAutoBatch) {
     this.debugMessage(`many(${this.url}) requesting from api (${ids.length} ids)`)
 
-    if (this._autoBatch !== null) {
-      if (!skipAutoBatch) {
-        return this._autoBatchMany(ids)
-      }
+    if (this.autoBatching && !skipAutoBatch) {
+      return this._autoBatchMany(ids)
     }
 
 

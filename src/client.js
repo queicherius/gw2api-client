@@ -12,7 +12,8 @@ module.exports = class Client {
     this.caches = [nullCache()]
     this.debug = false
     this.client = this
-    this.autoBatchPool = {}
+    this.autoBatching = false
+    this.autoBatchDelay = 50
   }
 
   // Set the schema version
@@ -80,25 +81,13 @@ module.exports = class Client {
     })
   }
 
-  // Maintains a pool of static endpoints with auto-batching enabled
-  autoBatch (endpointName, batchDelay) {
-    if (this.autoBatchPool[endpointName]) {
-      return this.autoBatchPool[endpointName]
+  // Turn on autobatching for all endpoints
+  autoBatch (autoBatchDelay) {
+    if (autoBatchDelay) {
+      this.autoBatchDelay = autoBatchDelay
     }
-
-    if (!this[endpointName]) {
-      throw new Error(`no enpoint ${endpointName} found`)
-    }
-
-    const resultEndpoint = this[endpointName]()
-    if (resultEndpoint.isBulk) {
-      this.autoBatchPool[endpointName] = resultEndpoint.enableAutoBatch(batchDelay)
-    }
-    else {
-      this.debugMessage(`${endpointName} is not bulk expanding, endpoint will not have any autobatch behavior`)
-    }
-
-    return resultEndpoint
+    this.autoBatching = true
+    return this
   }
 
   // All the different API endpoints

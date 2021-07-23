@@ -136,34 +136,21 @@ describe('client', () => {
 
   describe('autobatch', () => {
     const batchDelay = 10
-    it('can get an autobatching endpoint', () => {
-      let endpoint = client.autoBatch('items', batchDelay)
-      expect(endpoint.url).toEqual('/v2/items')
-      expect(endpoint._autoBatch.batchDelay).toEqual(batchDelay)
+    it('can turn on autobatching with specified delay', () => {
+      let api = client.autoBatch(100)
+      expect(client.autoBatchDelay).toEqual(100)
+      expect(api).toBeInstanceOf(Module)
+
+      let endpoint = client.account().autoBatch(200)
+      expect(endpoint.autoBatchDelay).toEqual(200)
+      expect(client.autoBatch(300).autoBatchDelay).toEqual(300)
+      expect(endpoint.autoBatchDelay).toEqual(200)
     })
 
-    it('adds the endpoint to the pool', () => {
-      client.autoBatch('items', batchDelay)
-      expect(client.autoBatchPool.items).toBeDefined()
-    })
-    
-    it('returns the same endpoint on subsequent calls', () => {
-      let endpoint1 = client.autoBatch('items', batchDelay)
-      endpoint1.arbitraryPropertyNameForTesting = 'test confirmed'
-      let endpoint2 = client.autoBatch('items', batchDelay)
-      expect(endpoint2.arbitraryPropertyNameForTesting).toEqual('test confirmed')
-    })
-
-    it(`errors if endpoint name doesn't exist`, async () => {
-      await expectError(() => client.autoBatch('does not exist'))
-    })
-
-    it(`debugMessage if endpoint is not bulk expanding`, () => {
-      const debugMessageMock = jest.fn()
-      client.debugMessage = debugMessageMock
-
-      const eventsAutoBatch = client.autoBatch('events')
-      expect(debugMessageMock.mock.calls.length).toBe(1)
+    it ('has default bach delay of 50', () => {
+      let endpoint = client.autoBatch().items()
+      expect(client.autoBatchDelay).toEqual(50)
+      expect(endpoint.autoBatchDelay).toEqual(50)
     })
   })
 

@@ -112,29 +112,29 @@ describe('abstract endpoint', () => {
     const batchDelay = 10
 
     it('sets up _autoBatch variable', () => {
-      let x = endpoint.enableAutoBatch(batchDelay)
+      let x = endpoint.autoBatch(batchDelay)
       expect(x).toBeInstanceOf(Module)
-      expect(x._autoBatch.batchDelay).toEqual(batchDelay)
+      expect(x.autoBatchDelay).toEqual(batchDelay)
       expect(x._autoBatch.idsForNextBatch).toBeDefined()
       expect(x._autoBatch.nextBatchPromise).toBeNull()
     })
 
-    it('has default batchDelay of 100', () => {
-      let x = endpoint.enableAutoBatch()
-      expect(x._autoBatch.batchDelay).toEqual(100)
+    it('has default batchDelay of 50', () => {
+      let x = endpoint.autoBatch()
+      expect(x.autoBatchDelay).toEqual(50)
     })
 
-    it('enableAutoBatch does not overwrite _autoBatch variable', () => {
-      endpoint.enableAutoBatch()
-      endpoint.enableAutoBatch(batchDelay)
-      expect(endpoint._autoBatch.batchDelay).toEqual(100)
+    it('autoBatch can change the batchDelay', () => {
+      endpoint.autoBatch()
+      endpoint.autoBatch(batchDelay)
+      expect(endpoint.autoBatchDelay).toEqual(batchDelay)
     })
     
     it('supports batching from get', async () => {
       let content = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.enableAutoBatch(batchDelay)
+      endpoint.autoBatch(batchDelay)
       fetchMock.addResponse(content)
 
       let [entry1, entry2] = await Promise.all([endpoint.get(1), endpoint.get(2)])
@@ -147,7 +147,7 @@ describe('abstract endpoint', () => {
       let content = []
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.enableAutoBatch(batchDelay)
+      endpoint.autoBatch(batchDelay)
       fetchMock.addResponse(content)
 
       let [entry1, entry2] = await Promise.all([endpoint.get(1), endpoint.get(2)])
@@ -160,7 +160,7 @@ describe('abstract endpoint', () => {
       let content = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }, { id: 3, name: 'bar' }]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.enableAutoBatch(batchDelay)
+      endpoint.autoBatch(batchDelay)
       fetchMock.addResponse(content)
 
       let [entry1, entry2] = await Promise.all([endpoint.many([1,2]), endpoint.many([2,3])])
@@ -174,7 +174,7 @@ describe('abstract endpoint', () => {
       let content2 = [{ id: 2, name: 'bar' }]
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
-      endpoint.enableAutoBatch(batchDelay)
+      endpoint.autoBatch(batchDelay)
       fetchMock.addResponse(content1)
       fetchMock.addResponse(content2)
 

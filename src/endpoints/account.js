@@ -60,6 +60,10 @@ class AccountEndpoint extends AbstractEndpoint {
     return new InventoryEndpoint(this)
   }
 
+  legendaryarmory () {
+    return new LegendaryarmoryEndpoint(this)
+  }
+
   luck () {
     return new LuckEndpoint(this)
   }
@@ -256,6 +260,15 @@ class InventoryEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/inventory'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class LegendaryarmoryEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/legendaryarmory'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

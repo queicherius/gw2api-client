@@ -282,6 +282,25 @@ describe('endpoints > account', () => {
     ])
   })
 
+  it('test /v2/account/legendaryarmory', async () => {
+    endpoint = endpoint.legendaryarmory()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/legendaryarmory')
+
+    fetchMock.addResponse([
+      { id: 30699, count: 1 }
+    ])
+    let content = await endpoint.get()
+    expect(content).toEqual([
+      { id: 30699, count: 1 }
+    ])
+  })
+
   it('test /v2/account/luck', async () => {
     endpoint = endpoint.luck()
 

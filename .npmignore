@@ -1,0 +1,20 @@
+# Logs
+npm-debug.log*
+
+# Coverage directories
+coverage/
+
+# Dependencies
+node_modules/
+yarn.lock
+
+# Optional npm cache directory
+.npm/
+
+# Webflow
+.idea/
+.history/
+
+# Operating System
+.DS_Store
+Thumbs.db

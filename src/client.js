@@ -164,6 +164,10 @@ module.exports = class Client {
     return new endpoints.ItemstatsEndpoint(this)
   }
 
+  legendaryarmory () {
+    return new endpoints.LegendaryarmoryEndpoint(this)
+  }
+
   legends () {
     return new endpoints.LegendsEndpoint(this)
   }

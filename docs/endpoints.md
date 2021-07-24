@@ -55,6 +55,7 @@ client.language('de').items().all()
 - [`api().account().home().cats()`](#apiaccounthomecats) - The unlocked cats in the home instance of the account.
 - [`api().account().home().nodes()`](#apiaccounthomenodes) - The unlocked nodes in the home instance of the account.
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
+- [`api().account().legendaryarmory()`](#apiaccountlegendaryarmory) - The items in the legendary armory of the account.
 - [`api().account().luck()`](#apiaccountluck) - The total luck of the account.
 - [`api().account().mailcarriers()`](#apiaccountmailcarriers) - The unlocked mailcarriers of the account.
 - [`api().account().mapchests()`](#apiaccountmapchests) - The completed daily mapchests of the account.
@@ -135,6 +136,7 @@ client.language('de').items().all()
 - [`api().items()`](#apiitems) - Information about items that were discovered by players.
 - [`api().itemstats()`](#apiitemstats) - Information about stats for items.
 - [`api().mailcarriers()`](#apimailcarriers) - Information about mailcarriers.
+- [`api().legendaryarmory()`](#legendaryarmory) - Information about the items in the legendary armory.
 - [`api().legends()`](#apilegends) - Information about the revenant's legends.
 - [`api().mapchests()`](#apimapchests) - Information about daily claimable map chests.
 - [`api().maps()`](#apimaps) - Details about maps, including details about floor and translation data on how to translate between world coordinates and map 
@@ -362,6 +364,21 @@ Alternative method of calling [`api().commerce().delivery()`](#apicommercedelive
 > The shared inventory slots of the account.
 
 - **API-URL:** [/v2/account/inventory](https://api.guildwars2.com/v2/account/inventory)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().legendaryarmory()`
+
+> The items in the legendary armory of the account.
+
+- **API-URL:** [/v2/account/legendaryarmory](https://api.guildwars2.com/v2/account/legendaryarmory)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes
@@ -1530,6 +1547,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** Yes
 - **Authenticated:** No
 - **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().legendaryarmory()`
+
+> Information about the items in the legendary armory.
+
+- **API-URL:** [/v2/legendaryarmory](https://api.guildwars2.com/v2/legendaryarmory)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

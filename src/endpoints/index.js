@@ -20,6 +20,7 @@ module.exports = {
   HomeEndpoint: require('./home'),
   ItemsEndpoint: require('./items'),
   ItemstatsEndpoint: require('./itemstats'),
+  LegendaryarmoryEndpoint: require('./legendaryarmory'),
   LegendsEndpoint: require('./legends'),
   MailcarriersEndpoint: require('./mailcarriers'),
   MapchestsEndpoint: require('./mapchests'),

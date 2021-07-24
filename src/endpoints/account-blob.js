@@ -19,6 +19,7 @@ function blob (parent) {
     'home.cats': wrap(() => client.account().home().cats().get()),
     'home.nodes': wrap(() => client.account().home().nodes().get()),
     guilds: wrap(() => accountGuilds(client)),
+    legendaryarmory: wrap(() => client.account().legendaryarmory().get()),
     luck: wrap(() => client.account().luck().get()),
     mailcarriers: wrap(() => client.account().mailcarriers().get()),
     masteries: wrap(() => client.account().masteries().get()),

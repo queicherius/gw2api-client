@@ -135,6 +135,7 @@ client.language('de').items().all()
 - [`api().items()`](#apiitems) - Information about items that were discovered by players.
 - [`api().itemstats()`](#apiitemstats) - Information about stats for items.
 - [`api().mailcarriers()`](#apimailcarriers) - Information about mailcarriers.
+- [`api().legendaryarmory()`](#legendaryarmory) - Information about the items in the legendary armory.
 - [`api().legends()`](#apilegends) - Information about the revenant's legends.
 - [`api().mapchests()`](#apimapchests) - Information about daily claimable map chests.
 - [`api().maps()`](#apimaps) - Details about maps, including details about floor and translation data on how to translate between world coordinates and map 
@@ -1530,6 +1531,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** Yes
 - **Authenticated:** No
 - **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().legendaryarmory()`
+
+> Information about the items in the legendary armory.
+
+- **API-URL:** [/v2/legendaryarmory](https://api.guildwars2.com/v2/legendaryarmory)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

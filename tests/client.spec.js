@@ -240,6 +240,11 @@ describe('client', () => {
     expect(endpoint.url).toEqual('/v2/itemstats')
   })
 
+  it('can get the legendaryarmory endpoint', () => {
+    let endpoint = client.legendaryarmory()
+    expect(endpoint.url).toEqual('/v2/legendaryarmory')
+  })
+
   it('can get the legends endpoint', () => {
     let endpoint = client.legends()
     expect(endpoint.url).toEqual('/v2/legends')

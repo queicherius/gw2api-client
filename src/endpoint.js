@@ -96,7 +96,7 @@ module.exports = class AbstractEndpoint {
 
   // Sets _autoBatch to shared batching object based on _cacheHash 
   setupAutoBatchSharedData() {
-    const autoBatchId = this._cacheHash(this.autoBatchDelay)
+    const autoBatchId = this._cacheHash(this.constructor.name + this.autoBatchDelay)
     if (!autoBatchSharedData[autoBatchId]) {
       autoBatchSharedData[autoBatchId] = {
         idsForNextBatch: new Set(),

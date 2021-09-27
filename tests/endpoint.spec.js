@@ -210,11 +210,17 @@ describe('abstract endpoint', () => {
       endpoint.url = '/v2/test'
       endpoint.schemaVersion = 'schema'
 
-      differentEndpoint = new Module(mockClient)
+      class differentModule extends Module {
+        constructor (client) {
+          super(client)
+          this.url = '/v2/differentTest'
+          this.schemaVersion = 'schema'
+          this.isBulk = true
+        }
+      }
+
+      differentEndpoint = new differentModule(mockClient)
       differentEndpoint.caches.map(cache => cache.flush())
-      differentEndpoint.isBulk = true
-      differentEndpoint.url = '/v2/differentTest'
-      differentEndpoint.schemaVersion = 'schema'
 
       fetchMock.addResponse(content1)
       fetchMock.addResponse(content2)

@@ -29,7 +29,6 @@ module.exports = class AbstractEndpoint {
     
     this.autoBatching = parent.autoBatching
     this.autoBatchDelay = parent.autoBatchDelay
-    this._autoBatch = null
     this.setupAutoBatchSharedData()
 
     this._skipCache = false
@@ -97,6 +96,7 @@ module.exports = class AbstractEndpoint {
   // Sets _autoBatch to shared batching object based on _cacheHash 
   setupAutoBatchSharedData() {
     const autoBatchId = this._cacheHash(this.autoBatchDelay)
+    console.log('@@',autoBatchId, this.url)
     if (!autoBatchSharedData[autoBatchId]) {
       autoBatchSharedData[autoBatchId] = {
         idsForNextBatch: new Set(),

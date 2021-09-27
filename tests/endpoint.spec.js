@@ -201,7 +201,6 @@ describe('abstract endpoint', () => {
     })
     
     it('can batch requests from different endpoints in parallel', async () => {
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@')
       let content1 = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }]
       let content2 = [{ id: 1, name: 'bar' }]
       
@@ -210,14 +209,12 @@ describe('abstract endpoint', () => {
       endpoint.isBulk = true
       endpoint.url = '/v2/test'
       endpoint.schemaVersion = 'schema'
-      // endpoint.autoBatch(batchDelay*100)
 
       differentEndpoint = new Module(mockClient)
       differentEndpoint.caches.map(cache => cache.flush())
       differentEndpoint.isBulk = true
       differentEndpoint.url = '/v2/differentTest'
       differentEndpoint.schemaVersion = 'schema'
-      // differentEndpoint.autoBatch(batchDelay*100)
 
       fetchMock.addResponse(content1)
       fetchMock.addResponse(content2)
@@ -227,7 +224,6 @@ describe('abstract endpoint', () => {
         differentEndpoint.get(1), 
         endpoint.get(2), 
       ])
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@')
       expect(fetchMock.urls()).toEqual([
         'https://api.guildwars2.com/v2/test?v=schema&ids=1,2',
         'https://api.guildwars2.com/v2/differentTest?v=schema&ids=1'
@@ -236,7 +232,6 @@ describe('abstract endpoint', () => {
       expect(entry2).toEqual(content2[0])
       expect(entry3).toEqual(content1[1])
 
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@')
     })
   })
 

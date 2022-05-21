@@ -1,5 +1,6 @@
 /* eslint-env jest */
 const { mockClient, fetchMock } = require('./mocks/client.mock')
+const errorCache = require('./mocks/errorCache.mock')
 const Module = require('../src/endpoint')
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -852,12 +853,48 @@ describe('abstract endpoint', () => {
       expect(await endpoint.caches[2].get('foo')).toEqual({ bar: 1337 })
     })
 
+    it('handles errors in single sets in all connected cache storages', async () => {
+      const warnMock = jest.fn()
+      global.console = { warn: warnMock }
+
+      endpoint.caches = [errorCache()]
+
+      let error
+      try {
+        endpoint._cacheSetSingle('foo', { bar: 1337 })
+        await wait(50)
+      } catch (err) {
+        error = err
+      }
+
+      expect(error).toBeUndefined()
+      expect(warnMock.mock.calls[0][0]).toEqual(`[gw2api-client] Errored during _cacheSetSingle`)
+    })
+
     it('many sets in all connected cache storages', async () => {
       endpoint._cacheSetMany([['foo', { bar: 1337 }], ['herp', { derp: 42 }]])
       await wait(50)
 
       expect(await endpoint.caches[1].mget(['foo', 'herp'])).toEqual([{ bar: 1337 }, { derp: 42 }])
       expect(await endpoint.caches[2].mget(['foo', 'herp'])).toEqual([{ bar: 1337 }, { derp: 42 }])
+    })
+
+    it('handles errors in many sets in all connected cache storages', async () => {
+      const warnMock = jest.fn()
+      global.console = { warn: warnMock }
+
+      endpoint.caches = [errorCache()]
+
+      let error
+      try {
+        endpoint._cacheSetMany([['foo', { bar: 1337 }], ['herp', { derp: 42 }]])
+        await wait(50)
+      } catch (err) {
+        error = err
+      }
+
+      expect(error).toBeUndefined()
+      expect(warnMock.mock.calls[0][0]).toEqual(`[gw2api-client] Errored during _cacheSetMany`)
     })
 
     it('single gets of the first possible connected cache storage', async () => {

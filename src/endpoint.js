@@ -389,13 +389,21 @@ module.exports = class AbstractEndpoint {
 
   // Set a single cache key in all connected cache storages
   _cacheSetSingle (key, value) {
-    this.caches.map(cache => cache.set(key, value, this.cacheTime))
+    this.caches.map(cache => {
+      cache.set(key, value, this.cacheTime).catch(error => {
+        console.warn('[gw2api-client] Errored during _cacheSetSingle', { error, cache, key, value })
+      })
+    })
   }
 
   // Set multiples cache key in all connected cache storages
   _cacheSetMany (values) {
     values = values.map(value => [value[0], value[1], this.cacheTime])
-    this.caches.map(cache => cache.mset(values))
+    this.caches.map(cache => {
+      cache.mset(values).catch(error => {
+        console.warn('[gw2api-client] Errored during _cacheSetMany', { error, cache, values })
+      })
+    })
   }
 
   // Get a cached value out of the first possible connected cache storages

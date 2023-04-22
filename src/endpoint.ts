@@ -29,7 +29,7 @@ export class AbstractEndpoint {
   protected fetch
   protected caches
   protected debug
-  protected baseUrl = 'https://api.guildwars2.com'
+  protected baseUrl: Url = 'https://api.guildwars2.com'
   protected isPaginated = false
   protected maxPageSize = 200
   protected isBulk = false

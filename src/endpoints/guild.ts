@@ -15,20 +15,20 @@ export class GuildEndpoint extends AbstractEndpoint {
     this.cacheTime = 60 * 60
   }
 
-  public get (id: GuildID) {
+  get (id: GuildID) {
     return super.get(`/${id}`, true)
   }
 
-  public permissions (): PermissionsEndpoint {
+  permissions () {
     return new PermissionsEndpoint(this)
   }
 
-  public search (name: string): SearchEndpoint {
+  search (name: string) {
     // FIXME: bug? Constructor got passed `name` before (which is not received in the constructor) instead of chaining the call
     return new SearchEndpoint(this) //, name)
   }
 
-  public upgrades (): UpgradesEndpoint | AllUpgradesEndpoint {
+  upgrades () {
     if (this.id === undefined) {
       return new AllUpgradesEndpoint(this)
     }
@@ -36,31 +36,31 @@ export class GuildEndpoint extends AbstractEndpoint {
     return new UpgradesEndpoint(this, this.id)
   }
 
-  public log (): LogEndpoint {
+  log () {
     return new LogEndpoint(this, this.id)
   }
 
-  public members (): MembersEndpoint {
+  members () {
     return new MembersEndpoint(this, this.id)
   }
 
-  public ranks (): RanksEndpoint {
+  ranks () {
     return new RanksEndpoint(this, this.id)
   }
 
-  public stash (): StashEndpoint {
+  stash () {
     return new StashEndpoint(this, this.id)
   }
 
-  public storage (): StorageEndpoint {
+  storage () {
     return new StorageEndpoint(this, this.id)
   }
 
-  public teams (): TeamsEndpoint {
+  teams () {
     return new TeamsEndpoint(this, this.id)
   }
 
-  public treasury (): TreasuryEndpoint {
+  treasury () {
     return new TreasuryEndpoint(this, this.id)
   }
 }
@@ -83,7 +83,7 @@ class SearchEndpoint extends AbstractEndpoint {
     this.cacheTime = 60 * 60
   }
 
-  public name (name: string) {
+  name (name: string) {
     return super.get(`?name=${encodeURIComponent(name)}`, true)
       .then(result => result[0])
   }
@@ -108,7 +108,7 @@ class LogEndpoint extends AbstractEndpoint {
     this.cacheTime = 5 * 60
   }
 
-  public since (logId: LogID) {
+  since (logId: LogID) {
     return super.get(`?since=${logId}`, true)
   }
 }

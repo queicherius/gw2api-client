@@ -1,11 +1,11 @@
 import { AbstractEndpoint } from '../endpoint'
 
 export class HomeEndpoint extends AbstractEndpoint {
-  public cats (): CatsEndpoint {
+  cats () {
     return new CatsEndpoint(this)
   }
 
-  public nodes (): NodesEndpoint {
+  nodes () {
     return new NodesEndpoint(this)
   }
 }

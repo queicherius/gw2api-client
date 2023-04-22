@@ -10,7 +10,7 @@ export class StoriesEndpoint extends AbstractEndpoint {
     this.cacheTime = 24 * 60 * 60
   }
 
-  public seasons (): SeasonsEndpoint {
+  seasons () {
     return new SeasonsEndpoint(this)
   }
 }

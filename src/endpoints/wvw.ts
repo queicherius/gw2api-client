@@ -72,23 +72,23 @@ type WorldID = NA.WorldID | EU.WorldID
 
 
 export class WvwEndpoint extends AbstractEndpoint {
-  public abilities (): AbilitiesEndpoint {
+  abilities () {
     return new AbilitiesEndpoint(this)
   }
 
-  public matches (): MatchesEndpoint {
+  matches () {
     return new MatchesEndpoint(this)
   }
 
-  public objectives (): ObjectivesEndpoint {
+  objectives () {
     return new ObjectivesEndpoint(this)
   }
 
-  public upgrades (): UpgradesEndpoint {
+  upgrades () {
     return new UpgradesEndpoint(this)
   }
 
-  public ranks (): RanksEndpoint {
+  ranks () {
     return new RanksEndpoint(this)
   }
 }
@@ -143,7 +143,7 @@ class TeamsEndpoint extends AbstractEndpoint {
     this.url = `/v2/wvw/matches/stats/${id}/teams`
   }
 
-  public top (which: Top): TopStatsEndpoint {
+  top (which: Top) {
     return new TopStatsEndpoint(this, this.id, this.team, which)
   }
 }

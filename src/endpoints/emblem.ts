@@ -1,11 +1,11 @@
 import { AbstractEndpoint } from '../endpoint'
 
 export class EmblemEndpoint extends AbstractEndpoint {
-  public backgrounds (): LayersEndpoint {
+  backgrounds () {
     return new LayersEndpoint(this, 'backgrounds')
   }
 
-  public foregrounds (): LayersEndpoint {
+  foregrounds () {
     return new LayersEndpoint(this, 'foregrounds')
   }
 }

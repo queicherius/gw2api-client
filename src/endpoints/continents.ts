@@ -12,7 +12,7 @@ export class ContinentsEndpoint extends AbstractEndpoint {
     this.cacheTime = 24 * 60 * 60
   }
 
-  public floors (id: FloorID): FloorsEndpoint {
+  floors (id: FloorID) {
     return new FloorsEndpoint(this, id)
   }
 }

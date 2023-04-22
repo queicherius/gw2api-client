@@ -9,11 +9,11 @@ export class EventsEndpoint extends AbstractEndpoint {
     this.cacheTime = 24 * 60 * 60
   }
 
-  public all () {
+  all () {
     return super.get().then(transformV1Format)
   }
 
-  public get (id: EventID) {
+  get (id: EventID) {
     return super.get(`?event_id=${id}`, true).then(json => transformV1Format(json)[0])
   }
 }

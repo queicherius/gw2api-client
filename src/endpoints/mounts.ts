@@ -1,11 +1,11 @@
 import { AbstractEndpoint } from '../endpoint'
 
 export class MountsEndpoint extends AbstractEndpoint {
-  public skins (): SkinsEndpoint {
+  skins () {
     return new SkinsEndpoint(this)
   }
 
-  public types (): TypesEndpoint {
+  types () {
     return new TypesEndpoint(this)
   }
 }

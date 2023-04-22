@@ -12,7 +12,7 @@ export class RecipesEndpoint extends AbstractEndpoint {
     this.cacheTime = 24 * 60 * 60
   }
 
-  public search (): SearchEndpoint {
+  search () {
     return new SearchEndpoint(this)
   }
 }
@@ -24,11 +24,11 @@ class SearchEndpoint extends AbstractEndpoint {
     this.cacheTime = 24 * 60 * 60
   }
 
-  public input (id: ItemID) {
+  input (id: ItemID) {
     return super.get(`?input=${id}`, true)
   }
 
-  public output (id: ItemID) {
+  output (id: ItemID) {
     return super.get(`?output=${id}`, true)
   }
 }

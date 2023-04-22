@@ -1,6 +1,6 @@
-const AbstractEndpoint = require('../endpoint')
+import { AbstractEndpoint } from '../endpoint'
 
-module.exports = class WorldsEndpoint extends AbstractEndpoint {
+export class WorldsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/worlds'

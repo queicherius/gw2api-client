@@ -3,79 +3,107 @@ const unique = require('array-unique')
 const chunk = require('chunk')
 const hashString = require('./hash')
 
-const clone = (x) => JSON.parse(JSON.stringify(x))
+// FIXME: replace with structuredClone?
+const clone = <T>(x: T): T => JSON.parse(JSON.stringify(x))
 
-module.exports = class AbstractEndpoint {
+
+type Language = 'en' | 'de' | 'es' | 'fr'
+type Url = string
+
+interface Headers {
+  headers: {
+    get: <T>(prop: string) => T
+  },
+  json: Function
+}
+
+interface IDable {
+  id: number
+}
+
+export class AbstractEndpoint {
+  public client
+  protected schemaVersion: string
+  protected lang: Language
+  protected apiKey
+  protected fetch
+  protected caches
+  protected debug
+  protected baseUrl = 'https://api.guildwars2.com'
+  protected isPaginated = false
+  protected maxPageSize = 200
+  protected isBulk = false
+  protected supportsBulkAll = true
+  protected isLocalized = false
+  protected isAuthenticated = false
+  protected isOptionallyAuthenticated = false
+  protected credentials = false
+  private _skipCache = false
+
+  protected url: string
+  protected cacheTime: number
+
   constructor (parent) {
     this.client = parent.client
-    this.schemaVersion = parent.schemaVersion || '2019-03-20T00:00:00.000Z'
+    this.schemaVersion = parent.schemaVersion ?? '2019-03-20T00:00:00.000Z'
     this.lang = parent.lang
     this.apiKey = parent.apiKey
     this.fetch = parent.fetch
     this.caches = parent.caches
     this.debug = parent.debug
-
-    this.baseUrl = 'https://api.guildwars2.com'
-    this.isPaginated = false
-    this.maxPageSize = 200
-    this.isBulk = false
-    this.supportsBulkAll = true
-    this.isLocalized = false
-    this.isAuthenticated = false
-    this.isOptionallyAuthenticated = false
-    this.credentials = false
-
-    this._skipCache = false
   }
 
   // Set the schema version
-  schema (schema) {
+  // FIXME: Type
+  public schema (schema): AbstractEndpoint {
     this.schemaVersion = schema
     this.debugMessage(`set the schema to ${schema}`)
     return this
   }
 
   // Check if the schema version includes a specific version
-  _schemaIncludes (date) {
+  private _schemaIncludes (date): boolean {
     return this.schemaVersion >= date
   }
 
   // Set the language for locale-aware endpoints
-  language (lang) {
+  public language (lang: Language): AbstractEndpoint {
     this.lang = lang
     this.debugMessage(`set the language to ${lang}`)
     return this
   }
 
   // Set the api key for authenticated endpoints
-  authenticate (apiKey) {
+  // FIXME: type
+  public authenticate (apiKey): AbstractEndpoint {
     this.apiKey = apiKey
     this.debugMessage(`set the api key to ${apiKey}`)
     return this
   }
 
   // Set the debugging flag
-  debugging (flag) {
+  // FIXME: enum
+  public debugging (flag): AbstractEndpoint {
     this.debug = flag
     return this
   }
 
   // Print out a debug message if debugging is enabled
-  debugMessage (string) {
+  public debugMessage (string: string) {
     if (this.debug) {
       console.log(`[gw2api-client] ${string}`)
     }
   }
 
   // Skip caching and get the live data
-  live () {
+  public live (): AbstractEndpoint {
     this._skipCache = true
     this.debugMessage(`skipping cache`)
     return this
   }
 
   // Get all ids
-  ids () {
+  public async ids (): Promise<number[]> {
     this.debugMessage(`ids(${this.url}) called`)
 
     if (!this.isBulk) {
@@ -110,13 +138,15 @@ module.exports = class AbstractEndpoint {
   }
 
   // Get all ids from the live API
-  _ids () {
+  private async _ids (): Promise<number[]> {
     this.debugMessage(`ids(${this.url}) requesting from api`)
     return this._request(this.url)
   }
 
   // Get a single entry by id
-  get (id, url = false) {
+  public async get <T> (id: string, url: true): Promise<T>;
+  public async get <T> (id: number, url: false): Promise<T>;
+  public async get <T> (id: number | string, url: boolean = false): Promise<T> {
     this.debugMessage(`get(${this.url}) called`)
 
     if (!id && this.isBulk && !url) {
@@ -151,7 +181,7 @@ module.exports = class AbstractEndpoint {
   }
 
   // Get a single entry by id from the live API
-  _get (id, url) {
+  private async _get <T>(id: number | string, url: boolean): Promise<T> {
     this.debugMessage(`get(${this.url}) requesting from api`)
 
     // Request the single id if the endpoint a bulk endpoint
@@ -169,7 +199,7 @@ module.exports = class AbstractEndpoint {
   }
 
   // Get multiple entries by ids
-  many (ids) {
+  public async many <T>(ids: number[]): Promise<T[]> {
     this.debugMessage(`many(${this.url}) called (${ids.length} ids)`)
 
     if (!this.isBulk) {
@@ -201,7 +231,7 @@ module.exports = class AbstractEndpoint {
 
       this.debugMessage(`many(${this.url}) resolving partially from cache (${cached.length} ids)`)
       const missingIds = getMissingIds(ids, cached)
-      return this._many(missingIds, cached.length > 0).then(content => {
+      return this._many<IDable>(missingIds, cached.length > 0).then(content => {
         const cacheContent = content.map(value => [this._cacheHash(value.id), value])
         this._cacheSetMany(cacheContent)
 
@@ -230,7 +260,7 @@ module.exports = class AbstractEndpoint {
   }
 
   // Get multiple entries by ids from the live API
-  _many (ids, partialRequest = false) {
+  private async _many <T>(ids, partialRequest = false): Promise<T[]> {
     this.debugMessage(`many(${this.url}) requesting from api (${ids.length} ids)`)
 
     // Chunk the requests to the max page size
@@ -250,13 +280,13 @@ module.exports = class AbstractEndpoint {
     }
 
     // Work on all requests in parallel and then flatten the responses into one
-    return this._requestMany(requests)
+    return this._requestMany<T>(requests)
       .then(responses => responses.reduce((x, y) => x.concat(y), []))
       .catch(handleMissingIds)
   }
 
   // Get a single page
-  page (page, size = this.maxPageSize) {
+  public page <T extends IDable>(page: number, size = this.maxPageSize) {
     this.debugMessage(`page(${this.url}) called`)
 
     if (!this.isBulk && !this.isPaginated) {
@@ -284,7 +314,7 @@ module.exports = class AbstractEndpoint {
         return cached
       }
 
-      return this._page(page, size).then(content => {
+      return this._page<T>(page, size).then(content => {
         let cacheContent = [[hash, content]]
 
         if (this.isBulk) {
@@ -305,13 +335,13 @@ module.exports = class AbstractEndpoint {
   }
 
   // Get a single page from the live API
-  _page (page, size) {
+  private async _page <T>(page: number, size: number): Promise<T[]> {
     this.debugMessage(`page(${this.url}) requesting from api`)
     return this._request(`${this.url}?page=${page}&page_size=${size}`)
   }
 
   // Get all entries
-  all () {
+  public async all <T extends IDable>(): Promise<T[]> {
     this.debugMessage(`all(${this.url}) called`)
 
     if (!this.isBulk && !this.isPaginated) {
@@ -320,7 +350,7 @@ module.exports = class AbstractEndpoint {
 
     // There is no cache time set, so always use the live data
     if (!this.cacheTime) {
-      return this._all()
+      return this._all<T>()
     }
 
     // Get as much as possible out of the cache
@@ -331,7 +361,7 @@ module.exports = class AbstractEndpoint {
         return cached
       }
 
-      return this._all().then(content => {
+      return this._all<T>().then(content => {
         let cacheContent = [[hash, content]]
 
         if (this.isBulk) {
@@ -352,7 +382,7 @@ module.exports = class AbstractEndpoint {
   }
 
   // Get all entries from the live API
-  _all () {
+  private _all <T>(): Promise<T[]> {
     this.debugMessage(`all(${this.url}) requesting from api`)
 
     // Use bulk expansion if the endpoint supports the "all" keyword
@@ -362,10 +392,11 @@ module.exports = class AbstractEndpoint {
 
     // Get everything via all pages instead
     let totalEntries
-    return this._request(`${this.url}?page=0&page_size=${this.maxPageSize}`, 'response')
+    return this._request<T>(`${this.url}?page=0&page_size=${this.maxPageSize}`, 'response')
       .then(firstPage => {
+        
         // Get the total number of entries off the first page's headers
-        totalEntries = firstPage.headers.get('X-Result-Total')
+        totalEntries = firstPage.headers.get<number>('X-Result-Total')
         return firstPage.json()
       })
       .then(result => {
@@ -380,7 +411,7 @@ module.exports = class AbstractEndpoint {
           requests.push(`${this.url}?page=${page}&page_size=${this.maxPageSize}`)
         }
 
-        return this._requestMany(requests).then(responses => {
+        return this._requestMany<T>(requests).then(responses => {
           responses = responses.reduce((x, y) => x.concat(y), [])
           return result.concat(responses)
         })
@@ -460,7 +491,8 @@ module.exports = class AbstractEndpoint {
   }
 
   // Execute a single request
-  _request (url, type = 'json') {
+  // FIXME: not sure if Headers is best placed here
+  private async _request <T>(url, type = 'json'): Promise<T & Headers> {
     url = this._buildUrl(url)
 
     /* istanbul ignore next */
@@ -470,7 +502,7 @@ module.exports = class AbstractEndpoint {
   }
 
   // Execute multiple requests in parallel
-  _requestMany (urls, type = 'json') {
+  private async _requestMany <T>(urls, type = 'json'): Promise<T[]> {
     urls = urls.map(url => this._buildUrl(url))
 
     /* istanbul ignore next */
@@ -480,13 +512,13 @@ module.exports = class AbstractEndpoint {
   }
 
   // Build the headers for localization and authentication
-  _buildUrl (url) {
+  private _buildUrl (url: string): string {
     // Add the base url
     url = this.baseUrl + url
 
     // Parse a possibly existing query
-    const parsedUrl = url.split('?')
-    let parsedQuery = qs.parse(parsedUrl[1] || '')
+    const [base, urlParameters] = url.split('?')
+    const parsedQuery = qs.parse(urlParameters ?? '')
 
     let query = {}
 
@@ -509,11 +541,11 @@ module.exports = class AbstractEndpoint {
 
     // Build the url with the finished query
     query = qs.stringify(query, true).replace(/%2C/g, ',')
-    return parsedUrl[0] + query
+    return base + query
   }
 
   // Guarantee the element order of bulk results
-  _sortByIdList (entries, ids) {
+  private _sortByIdList (entries: IDable[], ids: number[]): IDable[] {
     // Hash map of the indexes for better time complexity on big arrays
     let indexMap = {}
     ids.map((x, i) => {
@@ -525,7 +557,7 @@ module.exports = class AbstractEndpoint {
     return entries
   }
 
-  _usesApiKey () {
+  private _usesApiKey (): boolean {
     return this.isAuthenticated && (!this.isOptionallyAuthenticated || this.apiKey)
   }
 }

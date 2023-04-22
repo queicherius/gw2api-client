@@ -1,23 +1,23 @@
-const AbstractEndpoint = require('../endpoint')
+import { AbstractEndpoint } from '../endpoint'
 
-module.exports = class WvwEndpoint extends AbstractEndpoint {
-  abilities () {
+export class WvwEndpoint extends AbstractEndpoint {
+  public abilities (): AbilitiesEndpoint {
     return new AbilitiesEndpoint(this)
   }
 
-  matches () {
+  public matches (): MatchesEndpoint {
     return new MatchesEndpoint(this)
   }
 
-  objectives () {
+  public objectives (): ObjectivesEndpoint {
     return new ObjectivesEndpoint(this)
   }
 
-  upgrades () {
+  public upgrades (): UpgradesEndpoint {
     return new UpgradesEndpoint(this)
   }
 
-  ranks () {
+  public ranks (): RanksEndpoint {
     return new RanksEndpoint(this)
   }
 }
@@ -33,6 +33,8 @@ class AbilitiesEndpoint extends AbstractEndpoint {
   }
 }
 
+interface World {}
+
 class MatchesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
@@ -42,8 +44,8 @@ class MatchesEndpoint extends AbstractEndpoint {
     this.cacheTime = 30
   }
 
-  world (worldId) {
-    return super.get(`?world=${worldId}`, true)
+  world (worldId: number): World {
+    return super.get<World>(`?world=${worldId}`, true)
   }
 
   overview () {
@@ -60,6 +62,9 @@ class MatchesEndpoint extends AbstractEndpoint {
 }
 
 class TeamsEndpoint extends AbstractEndpoint {
+  private team
+  private id
+
   constructor (client, id, team) {
     super(client)
     this.team = team
@@ -67,12 +72,14 @@ class TeamsEndpoint extends AbstractEndpoint {
     this.url = `/v2/wvw/matches/stats/${id}/teams`
   }
 
-  top (which) {
+  public top (which): TopStatsEndpoint {
     return new TopStatsEndpoint(this, this.id, this.team, which)
   }
 }
 
 class TopStatsEndpoint extends AbstractEndpoint {
+  private which
+
   constructor (client, id, team, which) {
     super(client)
     this.which = which
@@ -89,8 +96,8 @@ class MatchesOverviewEndpoint extends AbstractEndpoint {
     this.cacheTime = 30
   }
 
-  world (worldId) {
-    return super.get(`?world=${worldId}`, true)
+  public world (worldId): Promise<World> {
+    return super.get<World>(`?world=${worldId}`, true)
   }
 }
 
@@ -109,6 +116,8 @@ class MatchesScoresEndpoint extends AbstractEndpoint {
 }
 
 class MatchesStatsEndpoint extends AbstractEndpoint {
+  private id
+
   constructor (client, id) {
     super(client)
     this.id = id

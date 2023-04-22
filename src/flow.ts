@@ -1,4 +1,5 @@
-async function parallel (promises) {
+// FIXME: a bit handywavey...
+export async function parallel (promises: Function): Promise<any[] | Object> {
   const results = await Promise.all(
     Object.values(promises).map(func => func())
   )
@@ -15,5 +16,3 @@ async function parallel (promises) {
     return object
   }, {})
 }
-
-module.exports = { parallel }

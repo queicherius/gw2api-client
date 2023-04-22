@@ -1,21 +1,21 @@
 const DAY_MS = 24 * 60 * 60 * 1000
 
-function getDateAtTime (date, time) {
+export function getDateAtTime (date: Date, time: string): Date {
   return new Date(date.toISOString().replace(/T.*Z/, `T${time}.000Z`))
 }
 
-function getDailyReset (date) {
+export function getDailyReset (date: Date): Date {
   date = date ? new Date(date) : new Date()
 
   date = new Date(date.getTime() + DAY_MS)
   return getDateAtTime(date, '00:00:00')
 }
 
-function getLastDailyReset (date) {
+export function getLastDailyReset (date: Date): Date {
   return new Date(getDailyReset(date).getTime() - DAY_MS)
 }
 
-function getWeeklyReset (date) {
+export function getWeeklyReset (date: Date): Date {
   date = date ? new Date(date) : new Date()
 
   const weekday = date.getUTCDay()
@@ -48,14 +48,6 @@ function getWeeklyReset (date) {
   return getDateAtTime(date, '07:30:00')
 }
 
-function getLastWeeklyReset (date) {
+export function getLastWeeklyReset (date: Date): Date {
   return new Date(getWeeklyReset(date).getTime() - 7 * DAY_MS)
-}
-
-module.exports = {
-  getDateAtTime,
-  getDailyReset,
-  getLastDailyReset,
-  getWeeklyReset,
-  getLastWeeklyReset
 }

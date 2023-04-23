@@ -21,7 +21,7 @@ interface IDable {
   id: number
 }
 
-export class AbstractEndpoint {
+export class AbstractEndpoint<T> {
   public client
   protected schemaVersion: string
   protected lang: Language
@@ -144,9 +144,9 @@ export class AbstractEndpoint {
   }
 
   // Get a single entry by id
-  public async get <T> (id: string, url: true): Promise<T>;
-  public async get <T> (id: number, url: false): Promise<T>;
-  public async get <T> (id: number | string, url: boolean = false): Promise<T> {
+  public async get (id: string, url: true): Promise<T>;
+  public async get (id: number, url: false): Promise<T>;
+  public async get (id: number | string, url: boolean = false): Promise<T> {
     this.debugMessage(`get(${this.url}) called`)
 
     if (!id && this.isBulk && !url) {
@@ -199,7 +199,7 @@ export class AbstractEndpoint {
   }
 
   // Get multiple entries by ids
-  public async many <T>(ids: number[]): Promise<T[]> {
+  public async many (ids: number[]): Promise<T[]> {
     this.debugMessage(`many(${this.url}) called (${ids.length} ids)`)
 
     if (!this.isBulk) {

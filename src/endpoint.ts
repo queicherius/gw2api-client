@@ -144,8 +144,8 @@ export class AbstractEndpoint<T> {
   }
 
   // Get a single entry by id
-  public async get (id: string, url: true): Promise<T>;
-  public async get (id: number, url: false): Promise<T>;
+  public async get (id: string, url?: true): Promise<T>;
+  public async get (id: number, url?: false): Promise<T>;
   public async get (id: number | string, url: boolean = false): Promise<T> {
     this.debugMessage(`get(${this.url}) called`)
 

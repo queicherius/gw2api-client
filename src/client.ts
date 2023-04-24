@@ -1,55 +1,60 @@
 const fetch = require('lets-fetch')
 const nullCache = require('./cache/null')
-const endpoints = require('./endpoints')
+import * as endpoints from './endpoints/index'
+import { Schema } from './endpoints/schemas/schema'
+import { Language } from './types'
 const flow = require('./flow')
 
-module.exports = class Client {
+export class Client<S extends Schema> {
+  private schemaVersion = '2019-03-20T00:00:00.000Z'
+  private lang: Language = 'en'
+  private fetch = fetch
+  private caches = [nullCache()]
+  private debug = false
+  private client: Client<S>
+  private apiKey: string
+
   constructor () {
-    this.schemaVersion = '2019-03-20T00:00:00.000Z'
-    this.lang = 'en'
-    this.apiKey = false
-    this.fetch = fetch
-    this.caches = [nullCache()]
-    this.debug = false
     this.client = this
   }
 
   // Set the schema version
-  schema (schema) {
+  schema (schema: string) {
     this.schemaVersion = schema
     this.debugMessage(`set the schema to ${schema}`)
     return this
   }
 
   // Set the language for locale-aware endpoints
-  language (lang) {
+  language (lang: Language) {
     this.lang = lang
     this.debugMessage(`set the language to ${lang}`)
     return this
   }
 
   // Set the api key for authenticated endpoints
-  authenticate (apiKey) {
+  authenticate (apiKey: string) {
     this.apiKey = apiKey
     this.debugMessage(`set the api key to ${apiKey}`)
     return this
   }
 
   // Set the caching storage method(s)
-  cacheStorage (caches) {
+  // FIXME: type
+  cacheStorage (caches: any[]) {
     this.caches = [].concat(caches)
     this.debugMessage(`updated the cache storage`)
     return this
   }
 
   // Set the debugging flag
-  debugging (flag) {
+  debugging (flag: boolean) {
     this.debug = flag
     return this
   }
 
   // Print out a debug message if debugging is enabled
-  debugMessage (string) {
+  debugMessage (string: string) {
     if (this.debug) {
       console.log(`[gw2api-client] ${string}`)
     }
@@ -81,15 +86,15 @@ module.exports = class Client {
 
   // All the different API endpoints
   account () {
-    return new endpoints.AccountEndpoint(this)
+    return new endpoints.AccountEndpoint<S>(this)
   }
 
   achievements () {
-    return new endpoints.AchievementsEndpoint(this)
+    return new endpoints.AchievementsEndpoint<S>(this)
   }
 
   backstory () {
-    return new endpoints.BackstoryEndpoint(this)
+    return new endpoints.BackstoryEndpoint<S>(this)
   }
 
   build () {

@@ -1,6 +1,8 @@
-const AbstractEndpoint = require('../endpoint')
+import { AbstractEndpoint } from '../endpoint'
 
-module.exports = class CharactersEndpoint extends AbstractEndpoint {
+export class CharactersEndpoint<S extends Schema> extends AbstractEndpoint<S["Achievement"]> {
+  public name: string
+
   constructor (client, name) {
     super(client)
     this.name = name

@@ -1,3 +1,5 @@
+import { Language, URL } from "./types"
+
 const qs = require('querystringify')
 const unique = require('array-unique')
 const chunk = require('chunk')
@@ -5,10 +7,6 @@ const hashString = require('./hash')
 
 // FIXME: replace with structuredClone?
 const clone = <T>(x: T): T => JSON.parse(JSON.stringify(x))
-
-
-type Language = 'en' | 'de' | 'es' | 'fr'
-type Url = string
 
 interface Headers {
   headers: {
@@ -29,7 +27,7 @@ export class AbstractEndpoint<T> {
   protected fetch
   protected caches
   protected debug
-  protected baseUrl: Url = 'https://api.guildwars2.com'
+  protected baseUrl: URL = 'https://api.guildwars2.com'
   protected isPaginated = false
   protected maxPageSize = 200
   protected isBulk = false

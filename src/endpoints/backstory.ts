@@ -1,44 +1,17 @@
 import { AbstractEndpoint } from '../endpoint'
-import { Profession, Race } from '../types'
+import { Schema } from './schemas/schema'
 
-/** {@link https://wiki.guildwars2.com/wiki/API:2/characters/:id/backstory} */
-interface Backstory {
-  backstory: string[]
-}
-
-/** {@link https://wiki.guildwars2.com/wiki/API:2/backstory/answers} */
-interface Answer {
-  id: string,
-  title: string,
-  description: string,
-  journal: string,
-  question: number,
-  professions: Profession[],
-  races: Race[],
-}
-
-/** {@link https://wiki.guildwars2.com/wiki/API:2/backstory/questions} */
-interface Question {
-  id: number,
-  title: string,
-  description: string,
-  answer: number[],
-  order: number,
-  races: Race[],
-  professions: Profession[]
-}
-
-export class BackstoryEndpoint extends AbstractEndpoint<Backstory> {
+export class BackstoryEndpoint<S extends Schema> extends AbstractEndpoint<S["Backstory"]> {
   answers () {
-    return new AnswersEndpoint(this)
+    return new AnswersEndpoint<S>(this)
   }
 
   questions () {
-    return new QuestionsEndpoint(this)
+    return new QuestionsEndpoint<S>(this)
   }
 }
 
-class AnswersEndpoint extends AbstractEndpoint<Answer> {
+class AnswersEndpoint<S extends Schema> extends AbstractEndpoint<S["Answers"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/backstory/answers'
@@ -50,7 +23,7 @@ class AnswersEndpoint extends AbstractEndpoint<Answer> {
   }
 }
 
-class QuestionsEndpoint extends AbstractEndpoint<Question> {
+class QuestionsEndpoint<S extends Schema> extends AbstractEndpoint<S["Questions"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/backstory/questions'

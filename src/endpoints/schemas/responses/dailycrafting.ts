@@ -1,0 +1,1 @@
+type DailyCrafting = 'lump_of_mithrilium' | 'spool_of_silk_weaving_thread' | 'spool_of_thick_elonian_cord'

@@ -1,18 +1,7 @@
 import { AbstractEndpoint } from '../endpoint'
+import { Schema } from './schemas/schema'
 
-
-export namespace SchemaOld {
-  export interface Cat {
-    id: number,
-    hint: string
-  }
-}
-
-export namespace SchemaNew {
-  export type Cat = number
-}
-
-export class CatsEndpoint<T extends SchemaOld.Cat | SchemaNew.Cat> extends AbstractEndpoint<T> {
+export class CatsEndpoint<S extends Schema> extends AbstractEndpoint<S["Cats"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/cats'

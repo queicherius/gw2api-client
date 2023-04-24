@@ -1,11 +1,12 @@
 import { AbstractEndpoint } from '../endpoint'
+import { Schema } from './schemas/schema'
 const CharactersEndpoint = require('./characters')
 const PvpEndpoint = require('./pvp')
 const CommerceEndpoint = require('./commerce')
 const accountBlob = require('./account-blob.js')
 const resetTime = require('../helpers/resetTime')
 
-export class AccountEndpoint extends AbstractEndpoint {
+export class AccountEndpoint<S extends Schema> extends AbstractEndpoint<S["Achievement"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/account'

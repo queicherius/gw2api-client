@@ -1,8 +1,7 @@
 import { AbstractEndpoint } from '../endpoint'
+import { Schema } from './schemas/schema'
 
-type DailyCrafting = 'lump_of_mithrilium' | 'spool_of_silk_weaving_thread' | 'spool_of_thick_elonian_cord'
-
-export class DailycraftingEndpoint extends AbstractEndpoint<DailyCrafting[]> {
+export class DailycraftingEndpoint<S extends Schema> extends AbstractEndpoint<S["Dailycrafting"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/dailycrafting'

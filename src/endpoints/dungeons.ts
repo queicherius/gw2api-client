@@ -1,12 +1,7 @@
 import { AbstractEndpoint } from '../endpoint'
+import { Schema } from './schemas/schema'
 
-
-interface Dungeon {
-  id: string,
-  paths: { id: string, type: 'Story' | 'Explorable' }
-}
-
-export class DungeonsEndpoint extends AbstractEndpoint<Dungeon> {
+export class DungeonsEndpoint<S extends Schema> extends AbstractEndpoint<S["Dungeons"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/dungeons'

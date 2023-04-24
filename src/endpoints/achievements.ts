@@ -1,4 +1,5 @@
 import { AbstractEndpoint } from '../endpoint'
+import { Schema } from './schemas/schema'
 
 
 type Flag = 'PvE' | 'PvP' | 'WvW' | 'SpecialEvent'
@@ -95,7 +96,7 @@ interface Achievement {
 }
 
 
-export class AchievementsEndpoint extends AbstractEndpoint<Achievement> {
+export class AchievementsEndpoint<S extends Schema> extends AbstractEndpoint<S["Achievement"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements'
@@ -123,7 +124,7 @@ export class AchievementsEndpoint extends AbstractEndpoint<Achievement> {
   }
 }
 
-class CategoriesEndpoint<T extends SchemaNew.Category | SchemaOld.Category> extends AbstractEndpoint<T> {
+class CategoriesEndpoint<S extends Schema> extends AbstractEndpoint<S["Category"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements/categories'
@@ -135,7 +136,7 @@ class CategoriesEndpoint<T extends SchemaNew.Category | SchemaOld.Category> exte
 }
 
 
-class GroupsEndpoint extends AbstractEndpoint<Group> {
+class GroupsEndpoint<S extends Schema> extends AbstractEndpoint<S["Group"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements/groups'
@@ -146,7 +147,7 @@ class GroupsEndpoint extends AbstractEndpoint<Group> {
   }
 }
 
-class DailyEndpoint<T extends SchemaOld.Dailies | SchemaOld.Dailies> extends AbstractEndpoint<T> {
+class DailyEndpoint<S extends Schema> extends AbstractEndpoint<S["Dailies"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements/daily'
@@ -154,7 +155,7 @@ class DailyEndpoint<T extends SchemaOld.Dailies | SchemaOld.Dailies> extends Abs
   }
 }
 
-class DailyTomorrowEndpoint<T extends SchemaOld.Dailies | SchemaOld.Dailies> extends AbstractEndpoint<T> {
+class DailyTomorrowEndpoint<S extends Schema> extends AbstractEndpoint<S["Dailies"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements/daily/tomorrow'

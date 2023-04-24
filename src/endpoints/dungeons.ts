@@ -1,6 +1,12 @@
 import { AbstractEndpoint } from '../endpoint'
 
-export class DungeonsEndpoint extends AbstractEndpoint {
+
+interface Dungeon {
+  id: string,
+  paths: { id: string, type: 'Story' | 'Explorable' }
+}
+
+export class DungeonsEndpoint extends AbstractEndpoint<Dungeon> {
   constructor (client) {
     super(client)
     this.url = '/v2/dungeons'

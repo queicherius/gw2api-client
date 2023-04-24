@@ -1,6 +1,15 @@
 import { AbstractEndpoint } from '../endpoint'
+import { URL } from '../types'
 
-export class CurrenciesEndpoint extends AbstractEndpoint {
+interface Currency {
+  id: number,
+  string: string,
+  description: string,
+  icon: URL,
+  order: number
+}
+
+export class CurrenciesEndpoint extends AbstractEndpoint<Currency> {
   constructor (client) {
     super(client)
     this.url = '/v2/currencies'

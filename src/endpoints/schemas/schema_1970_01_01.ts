@@ -4,6 +4,7 @@ import * as backstory from './responses/backstory'
 import * as achievements from './responses/achievements'
 import * as build from './responses/build'
 import * as cats from './responses/cats'
+import * as currencies from './responses/currencies'
 import * as dungeons from './responses/dungeons'
 import * as gliders from './responses/gliders'
 import * as continents from './responses/continents'
@@ -25,7 +26,10 @@ export interface Schema extends BaseSchema {
 
     // Backstory
     Answers: backstory.Schema_1970_01_01.Answer
-    Questions: backstory.Schema_1970_01_01.Question   
+    Questions: backstory.Schema_1970_01_01.Question
+
+    // Currencies
+    Currencies: currencies.Schema_1970_01_01.Currency
 
     // Colors
     Colors: colors.Schema_1970_01_01.Color

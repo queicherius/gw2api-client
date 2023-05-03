@@ -6,6 +6,7 @@ import * as build from './responses/build'
 import * as cats from './responses/cats'
 import * as dungeons from './responses/dungeons'
 import * as gliders from './responses/gliders'
+import * as continents from './responses/continents'
 
 export interface Schema extends BaseSchema {
     // Achievements
@@ -29,4 +30,7 @@ export interface Schema extends BaseSchema {
 
     // Gliders
     Gliders: gliders.Schema_1970_01_01.Glider
+
+    // Continents
+    Continents: continents.Schema_1970_01_01.Continent
 }

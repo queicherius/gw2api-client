@@ -53,7 +53,7 @@ export class AbstractEndpoint<T> {
 
   // Set the schema version
   // FIXME: Type
-  public schema (schema): AbstractEndpoint {
+  public schema (schema): this {
     this.schemaVersion = schema
     this.debugMessage(`set the schema to ${schema}`)
     return this
@@ -65,7 +65,7 @@ export class AbstractEndpoint<T> {
   }
 
   // Set the language for locale-aware endpoints
-  public language (lang: Language): AbstractEndpoint {
+  public language (lang: Language): this {
     this.lang = lang
     this.debugMessage(`set the language to ${lang}`)
     return this
@@ -73,7 +73,7 @@ export class AbstractEndpoint<T> {
 
   // Set the api key for authenticated endpoints
   // FIXME: type
-  public authenticate (apiKey): AbstractEndpoint {
+  public authenticate (apiKey): this {
     this.apiKey = apiKey
     this.debugMessage(`set the api key to ${apiKey}`)
     return this
@@ -81,7 +81,7 @@ export class AbstractEndpoint<T> {
 
   // Set the debugging flag
   // FIXME: enum
-  public debugging (flag): AbstractEndpoint {
+  public debugging (flag): this {
     this.debug = flag
     return this
   }
@@ -94,7 +94,7 @@ export class AbstractEndpoint<T> {
   }
 
   // Skip caching and get the live data
-  public live (): AbstractEndpoint {
+  public live (): this {
     this._skipCache = true
     this.debugMessage(`skipping cache`)
     return this

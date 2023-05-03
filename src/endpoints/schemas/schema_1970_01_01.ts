@@ -1,44 +1,32 @@
-import { Achievement, BaseCategory, BaseDaily, Group, Product } from "./responses/achievements"
 import { Schema as BaseSchema } from './schema'
 
-export namespace Schema_1970_01_01 {
-    export interface Daily extends BaseDaily {
-        required_access: Product[]
-    }
-
-    /** {@link https://wiki.guildwars2.com/wiki/API:2/achievements/daily/tomorrow} */
-    export interface Dailies {
-        pve: Daily[],
-        wvw: Daily[],
-        fractals: Daily[],
-        special: Daily[]
-    }
-
-    export interface Category extends BaseCategory {
-        id: number,
-        name: string,
-        description: string,
-        order: number,
-        icon: string,
-        achievements: number[],
-    }
-
-    export interface Cat {
-        id: number,
-        hint: string
-    }
-
-    /** {@link https://wiki.guildwars2.com/wiki/API:2/build} */
-    export interface Build {
-        id: number
-    }
-}
+import * as backstory from './responses/backstory'
+import * as achievements from './responses/achievements'
+import * as build from './responses/build'
+import * as cats from './responses/cats'
+import * as dungeons from './responses/dungeons'
+import * as gliders from './responses/gliders'
 
 export interface Schema extends BaseSchema {
-    Achievement: Achievement,
-    Group: Group,
-    Daily: BaseDaily,
-    Dailies: Schema_1970_01_01.Dailies,
-    Category: Schema_1970_01_01.Category,
-    Dungeons: Dungeon
+    // Achievements
+    Daily: achievements.Schema_1970_01_01.Daily
+    Dailies: achievements.Schema_1970_01_01.Dailies
+    Category: achievements.Schema_1970_01_01.Category
+    Achievement: achievements.Schema_1970_01_01.Achievement
+    Group: achievements.Schema_1970_01_01.Group
+
+    // Build 
+    Build: build.Schema_1970_01_01.Build
+    // Cats
+    Cats: cats.Schema_1970_01_01.Cat
+
+    // Backstory
+    Answers: backstory.Schema_1970_01_01.Answer
+    Questions: backstory.Schema_1970_01_01.Question   
+
+    // Dungeon
+    Dungeons: dungeons.Schema_1970_01_01.Dungeon
+
+    // Gliders
+    Gliders: gliders.Schema_1970_01_01.Glider
 }

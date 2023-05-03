@@ -19,7 +19,8 @@ interface IDable {
   id: number
 }
 
-export class AbstractEndpoint<T> {
+// FIXME: remove any! Just to make compilation go through for now
+export class AbstractEndpoint<T = any> {
   public client
   protected schemaVersion: string
   protected lang: Language

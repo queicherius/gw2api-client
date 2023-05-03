@@ -1,4 +1,5 @@
 import { AbstractEndpoint } from '../endpoint'
+import { Schema } from './schemas/schema'
 
 type Team = 'red' | 'blue' | 'green'
 type Top = 'kills' | 'kdr'
@@ -158,7 +159,7 @@ class TopStatsEndpoint extends AbstractEndpoint {
   }
 }
 
-class MatchesOverviewEndpoint extends AbstractEndpoint {
+class MatchesOverviewEndpoint<S extends Schema> extends AbstractEndpoint<S["Worlds"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/wvw/matches/overview'
@@ -168,7 +169,7 @@ class MatchesOverviewEndpoint extends AbstractEndpoint {
   }
 
   public world (worldId: WorldID): Promise<World> {
-    return super.get<World>(`?world=${worldId}`, true)
+    return super.get(`?world=${worldId}`, true)
   }
 }
 

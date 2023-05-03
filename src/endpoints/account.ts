@@ -6,7 +6,7 @@ const CommerceEndpoint = require('./commerce')
 const accountBlob = require('./account-blob.js')
 const resetTime = require('../helpers/resetTime')
 
-export class AccountEndpoint<S extends Schema> extends AbstractEndpoint<S["Achievement"]> {
+export class AccountEndpoint<S extends Schema> extends AbstractEndpoint<S["Achievements"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/account'

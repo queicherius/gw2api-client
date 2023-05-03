@@ -116,8 +116,8 @@ class MatchesEndpoint extends AbstractEndpoint {
     this.cacheTime = 30
   }
 
-  world (worldId: WorldID): World {
-    return super.get<World>(`?world=${worldId}`, true)
+  world (worldId: WorldID): Promise<World> {
+    return super.get(`?world=${worldId}`, true)
   }
 
   overview () {

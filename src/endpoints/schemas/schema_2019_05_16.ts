@@ -1,5 +1,3 @@
-import { BaseDaily, RequiredAccess } from "./responses/achievements"
-
 export * from './schema_2019_03_22'
 
 export namespace Schema_2019_05_16 {

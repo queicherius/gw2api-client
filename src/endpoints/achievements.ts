@@ -96,7 +96,7 @@ interface Achievement {
 }
 
 
-export class AchievementsEndpoint<S extends Schema> extends AbstractEndpoint<S["Achievement"]> {
+export class AchievementsEndpoint<S extends Schema> extends AbstractEndpoint<S["Achievements"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/achievements'

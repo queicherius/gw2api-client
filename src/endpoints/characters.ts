@@ -1,4 +1,5 @@
 import { AbstractEndpoint } from '../endpoint'
+import { Schema } from './schemas/schema'
 
 export class CharactersEndpoint<S extends Schema> extends AbstractEndpoint<S["Achievement"]> {
   public name: string

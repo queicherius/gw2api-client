@@ -226,7 +226,8 @@ export class Client<S extends Schema> {
   }
 
   pvp () {
-    return new endpoints.PvpEndpoint(this)
+    // FIXME: bug? No fromAccount argument was originally provided, so it always behaved falsey
+    return new endpoints.PvpEndpoint(this, false)
   }
 
   quaggans () {

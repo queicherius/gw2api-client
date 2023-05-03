@@ -1,6 +1,7 @@
 import { AbstractEndpoint } from '../endpoint'
+import { Schema } from './schemas/schema'
 
-export class ContinentsEndpoint extends AbstractEndpoint<Continent> {
+export class ContinentsEndpoint<S extends Schema> extends AbstractEndpoint<S["Continents"]> {
   constructor (client) {
     super(client)
     this.url = '/v2/continents'

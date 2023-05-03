@@ -7,6 +7,8 @@ import * as cats from './responses/cats'
 import * as dungeons from './responses/dungeons'
 import * as gliders from './responses/gliders'
 import * as continents from './responses/continents'
+import * as colors from './responses/colors'
+import * as dailycrafting from './responses/dailycrafting'
 
 export interface Schema extends BaseSchema {
     // Achievements
@@ -24,6 +26,12 @@ export interface Schema extends BaseSchema {
     // Backstory
     Answers: backstory.Schema_1970_01_01.Answer
     Questions: backstory.Schema_1970_01_01.Question   
+
+    // Colors
+    Colors: colors.Schema_1970_01_01.Color
+
+    // Dailycrafting
+    Dailycrafting: dailycrafting.Schema_1970_01_01.DailyCrafting
 
     // Dungeon
     Dungeons: dungeons.Schema_1970_01_01.Dungeon

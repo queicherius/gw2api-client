@@ -11,6 +11,7 @@ import * as continents from './responses/continents'
 import * as colors from './responses/colors'
 import * as dailycrafting from './responses/dailycrafting'
 import * as emblems from './responses/emblems'
+import * as titles from './responses/titles'
 
 export interface Schema extends BaseSchema {
     // Achievements
@@ -50,4 +51,7 @@ export interface Schema extends BaseSchema {
 
     // Continents
     Continents: continents.Schema_1970_01_01.Continent
+
+    // Titles
+    Titles: titles.Schema_1970_01_01.Title
 }

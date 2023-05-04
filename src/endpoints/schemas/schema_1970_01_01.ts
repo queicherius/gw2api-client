@@ -11,6 +11,7 @@ import * as continents from './responses/continents'
 import * as colors from './responses/colors'
 import * as dailycrafting from './responses/dailycrafting'
 import * as emblems from './responses/emblems'
+import * as minis from './responses/minis'
 import * as skins from './responses/skins'
 import * as titles from './responses/titles'
 import * as tokeninfo from './responses/tokeninfo'
@@ -44,6 +45,8 @@ export interface Schema extends BaseSchema {
     Gliders: gliders.Schema_1970_01_01.Glider
     // Continents
     Continents: continents.Schema_1970_01_01.Continent
+    // Minis
+    Minis: minis.Schema_1970_01_01.Mini
     // Nodes
     Nodes: nodes.Schema_1970_01_01.Nodes
     // Titles

@@ -1,6 +1,5 @@
-export * from './schema_2019_03_22'
+import { Schema as BaseSchema } from './schema_2019_03_22'
 
-export namespace Schema_2019_05_16 {
-    // daily
+export interface Schema extends BaseSchema {
 
 }

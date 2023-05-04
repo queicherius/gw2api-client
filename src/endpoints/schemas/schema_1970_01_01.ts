@@ -5,12 +5,14 @@ import * as achievements from './responses/achievements'
 import * as build from './responses/build'
 import * as cats from './responses/cats'
 import * as currencies from './responses/currencies'
+import * as commerce from './responses/commerce'
 import * as dungeons from './responses/dungeons'
 import * as gliders from './responses/gliders'
 import * as continents from './responses/continents'
 import * as colors from './responses/colors'
 import * as dailycrafting from './responses/dailycrafting'
 import * as emblems from './responses/emblems'
+import * as mailcarriers from './responses/mailcarriers'
 import * as minis from './responses/minis'
 import * as skins from './responses/skins'
 import * as titles from './responses/titles'
@@ -35,6 +37,12 @@ export interface Schema extends BaseSchema {
     Currencies: currencies.Schema_1970_01_01.Currency
     // Colors
     Colors: colors.Schema_1970_01_01.Color
+    // Commerce
+    Delivery: commerce.Schema_1970_01_01.Delivery
+    Exchange: commerce.Schema_1970_01_01.Exchange
+    Listings: commerce.Schema_1970_01_01.Listing
+    Prices: commerce.Schema_1970_01_01.Price
+    Transactions: commerce.Schema_1970_01_01.Transactions
     // Dailycrafting
     Dailycrafting: dailycrafting.Schema_1970_01_01.DailyCrafting
     // Dungeon
@@ -45,6 +53,8 @@ export interface Schema extends BaseSchema {
     Gliders: gliders.Schema_1970_01_01.Glider
     // Continents
     Continents: continents.Schema_1970_01_01.Continent
+    // Mailcarriers
+    Mailcarriers: mailcarriers.Schema_1970_01_01.Mailcarrier
     // Minis
     Minis: minis.Schema_1970_01_01.Mini
     // Nodes

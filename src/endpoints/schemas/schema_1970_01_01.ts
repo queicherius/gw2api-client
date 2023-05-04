@@ -14,6 +14,7 @@ import * as emblems from './responses/emblems'
 import * as skins from './responses/skins'
 import * as titles from './responses/titles'
 import * as tokeninfo from './responses/tokeninfo'
+import * as nodes from './responses/nodes'
 
 export interface Schema extends BaseSchema {
     // Achievements
@@ -43,6 +44,8 @@ export interface Schema extends BaseSchema {
     Gliders: gliders.Schema_1970_01_01.Glider
     // Continents
     Continents: continents.Schema_1970_01_01.Continent
+    // Nodes
+    Nodes: nodes.Schema_1970_01_01.Nodes
     // Titles
     Titles: titles.Schema_1970_01_01.Title
     // Tokeninfo

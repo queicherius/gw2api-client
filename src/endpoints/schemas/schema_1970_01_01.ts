@@ -13,6 +13,7 @@ import * as dailycrafting from './responses/dailycrafting'
 import * as emblems from './responses/emblems'
 import * as skins from './responses/skins'
 import * as titles from './responses/titles'
+import * as tokeninfo from './responses/tokeninfo'
 
 export interface Schema extends BaseSchema {
     // Achievements
@@ -44,6 +45,8 @@ export interface Schema extends BaseSchema {
     Continents: continents.Schema_1970_01_01.Continent
     // Titles
     Titles: titles.Schema_1970_01_01.Title
+    // Tokeninfo
+    Tokeninfo: tokeninfo.Schema_1970_01_01.TokenInfo
     // Skins
     Skins: skins.Schema_1970_01_01.Skin
 }

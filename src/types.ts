@@ -1,6 +1,7 @@
 export type ItemID = number
 
 export type URL = string
+export type ISO8601 = string
 
 export type Language = 'en' | 'de' | 'es' | 'fr'
 export type Race = 'Human' | 'Norn' | 'Charr' | 'Sylvari' | 'Asura'

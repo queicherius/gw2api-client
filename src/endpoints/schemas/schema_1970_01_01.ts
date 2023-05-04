@@ -10,6 +10,7 @@ import * as gliders from './responses/gliders'
 import * as continents from './responses/continents'
 import * as colors from './responses/colors'
 import * as dailycrafting from './responses/dailycrafting'
+import * as emblems from './responses/emblems'
 
 export interface Schema extends BaseSchema {
     // Achievements
@@ -21,6 +22,7 @@ export interface Schema extends BaseSchema {
 
     // Build 
     Build: build.Schema_1970_01_01.Build
+
     // Cats
     Cats: cats.Schema_1970_01_01.Cat
 
@@ -39,6 +41,9 @@ export interface Schema extends BaseSchema {
 
     // Dungeon
     Dungeons: dungeons.Schema_1970_01_01.Dungeon
+
+    // Emblem
+    Emblem: emblems.Schema_1970_01_01.Emblem
 
     // Gliders
     Gliders: gliders.Schema_1970_01_01.Glider

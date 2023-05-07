@@ -20,6 +20,7 @@ import * as skins from './responses/skins'
 import * as titles from './responses/titles'
 import * as tokeninfo from './responses/tokeninfo'
 import * as nodes from './responses/nodes'
+import * as traits from './responses/traits'
 
 export interface Schema extends BaseSchema {
     // Achievements
@@ -70,6 +71,8 @@ export interface Schema extends BaseSchema {
     Titles: titles.Schema_1970_01_01.Title
     // Tokeninfo
     Tokeninfo: tokeninfo.Schema_1970_01_01.TokenInfo
+    // Trait
+    Traits: traits.Schema_1970_01_01.Trait
     // Skins
     Skins: skins.Schema_1970_01_01.Skin
 }

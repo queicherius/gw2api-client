@@ -7,6 +7,7 @@ import * as cats from './responses/cats'
 import * as currencies from './responses/currencies'
 import * as commerce from './responses/commerce'
 import * as dungeons from './responses/dungeons'
+import * as finishers from './responses/finishers'
 import * as gliders from './responses/gliders'
 import * as continents from './responses/continents'
 import * as colors from './responses/colors'
@@ -49,6 +50,8 @@ export interface Schema extends BaseSchema {
     Dungeons: dungeons.Schema_1970_01_01.Dungeon
     // Emblem
     Emblem: emblems.Schema_1970_01_01.Emblem
+    // Finisher
+    Finishers: finishers.Schema_1970_01_01.Finisher
     // Gliders
     Gliders: gliders.Schema_1970_01_01.Glider
     // Continents

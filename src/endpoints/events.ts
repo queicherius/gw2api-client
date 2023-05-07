@@ -13,7 +13,7 @@ export class EventsEndpoint extends AbstractEndpoint {
     return super.get().then(transformV1Format)
   }
 
-  get (id: EventID) {
+  get (id: number) {
     return super.get(`?event_id=${id}`, true).then(json => transformV1Format(json)[0])
   }
 }

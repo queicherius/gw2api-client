@@ -15,7 +15,7 @@ export class GuildEndpoint extends AbstractEndpoint {
     this.cacheTime = 60 * 60
   }
 
-  get (id: GuildID) {
+  get (id: number) {
     return super.get(`/${id}`, true)
   }
 

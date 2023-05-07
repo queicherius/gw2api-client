@@ -1,7 +1,7 @@
 import { AbstractEndpoint } from '../endpoint'
 import { Schema } from './schemas/schema'
 
-export class CharactersEndpoint<S extends Schema> extends AbstractEndpoint<S["Achievement"]> {
+export class CharactersEndpoint<S extends Schema> extends AbstractEndpoint<S["Achievements"]> {
   public name: string
 
   constructor (client, name) {

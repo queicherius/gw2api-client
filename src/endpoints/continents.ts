@@ -11,12 +11,12 @@ export class ContinentsEndpoint<S extends Schema> extends AbstractEndpoint<S["Co
     this.cacheTime = 24 * 60 * 60
   }
 
-  floors (id: FloorID) {
+  floors (id: number) {
     return new FloorsEndpoint(this, id)
   }
 }
 
-class FloorsEndpoint extends AbstractEndpoint<Floor> {
+class FloorsEndpoint<S extends Schema> extends AbstractEndpoint<S["Floor"]> {
   constructor (client, continentId) {
     super(client)
     this.url = `/v2/continents/${continentId}/floors`

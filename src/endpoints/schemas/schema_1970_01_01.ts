@@ -57,6 +57,7 @@ export interface Schema extends BaseSchema {
     Gliders: gliders.Schema_1970_01_01.Glider
     // Continents
     Continents: continents.Schema_1970_01_01.Continent
+    Floor: continents.Schema_1970_01_01.Floor
     // Legends
     Legends: legends.Schema_1970_01_01.Legend
     // Mailcarriers

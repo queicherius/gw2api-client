@@ -6,6 +6,7 @@ export interface Schema {
     Answers: EndpointResponse,
     Backstory: EndpointResponse,
     Build: EndpointResponse,
+    Category: EndpointResponse,
     Cats: EndpointResponse,
     Characters: EndpointResponse,
     Colors: EndpointResponse,
@@ -13,6 +14,8 @@ export interface Schema {
     Continents: EndpointResponse,
     Currencies: EndpointResponse,
     Exchange: EndpointResponse,
+    Daily: EndpointResponse
+    Dailies: EndpointResponse
     Dailycrafting: EndpointResponse,
     Delivery: EndpointResponse,
     Dungeons: EndpointResponse,
@@ -20,7 +23,9 @@ export interface Schema {
     Events: EndpointResponse,
     Files: EndpointResponse,
     Finishers: EndpointResponse,
+    Floor: EndpointResponse,
     Gliders: EndpointResponse,
+    Group: EndpointResponse
     Guild: EndpointResponse,
     Home: EndpointResponse,
     Items: EndpointResponse,

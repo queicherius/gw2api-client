@@ -13,6 +13,7 @@ import * as continents from './responses/continents'
 import * as colors from './responses/colors'
 import * as dailycrafting from './responses/dailycrafting'
 import * as emblems from './responses/emblems'
+import * as legends from './responses/legends'
 import * as mailcarriers from './responses/mailcarriers'
 import * as minis from './responses/minis'
 import * as skins from './responses/skins'
@@ -56,6 +57,8 @@ export interface Schema extends BaseSchema {
     Gliders: gliders.Schema_1970_01_01.Glider
     // Continents
     Continents: continents.Schema_1970_01_01.Continent
+    // Legends
+    Legends: legends.Schema_1970_01_01.Legend
     // Mailcarriers
     Mailcarriers: mailcarriers.Schema_1970_01_01.Mailcarrier
     // Minis

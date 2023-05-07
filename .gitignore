@@ -1,4 +1,4 @@
-built/
+dist/
 # Logs
 npm-debug.log*
 

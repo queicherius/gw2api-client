@@ -22,7 +22,8 @@ import * as tokeninfo from './responses/tokeninfo'
 import * as nodes from './responses/nodes'
 import * as traits from './responses/traits'
 import * as races from './responses/races'
-import { RacesEndpoint } from '../races'
+import * as quaggans from './responses/quaggans'
+
 
 export interface Schema extends BaseSchema {
     // Achievements
@@ -69,6 +70,8 @@ export interface Schema extends BaseSchema {
     Minis: minis.Schema_1970_01_01.Mini
     // Nodes
     Nodes: nodes.Schema_1970_01_01.Nodes
+    // Quaggans
+    Quaggans: quaggans.Schema_1970_01_01.Quaggan
     // Races
     Races: races.Schema_1970_01_01.Race
     // Titles

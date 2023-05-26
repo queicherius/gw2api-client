@@ -23,6 +23,7 @@ import * as nodes from './responses/nodes'
 import * as traits from './responses/traits'
 import * as races from './responses/races'
 import * as quaggans from './responses/quaggans'
+import * as novelties from './responses/novelties'
 
 
 export interface Schema extends BaseSchema {
@@ -70,6 +71,8 @@ export interface Schema extends BaseSchema {
     Minis: minis.Schema_1970_01_01.Mini
     // Nodes
     Nodes: nodes.Schema_1970_01_01.Nodes
+    // Novelties
+    Novelties: novelties.Schema_1970_01_01.Novelty
     // Quaggans
     Quaggans: quaggans.Schema_1970_01_01.Quaggan
     // Races

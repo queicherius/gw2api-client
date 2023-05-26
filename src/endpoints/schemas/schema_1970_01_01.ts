@@ -21,6 +21,8 @@ import * as titles from './responses/titles'
 import * as tokeninfo from './responses/tokeninfo'
 import * as nodes from './responses/nodes'
 import * as traits from './responses/traits'
+import * as races from './responses/races'
+import { RacesEndpoint } from '../races'
 
 export interface Schema extends BaseSchema {
     // Achievements
@@ -67,6 +69,8 @@ export interface Schema extends BaseSchema {
     Minis: minis.Schema_1970_01_01.Mini
     // Nodes
     Nodes: nodes.Schema_1970_01_01.Nodes
+    // Races
+    Races: races.Schema_1970_01_01.Race
     // Titles
     Titles: titles.Schema_1970_01_01.Title
     // Tokeninfo

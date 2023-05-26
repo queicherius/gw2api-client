@@ -1,5 +1,3 @@
-import { URL } from "../../../types"
-
 type Slot = 'Chair' | 'Music' | 'HeldItem' | 'Miscellaneous' | 'Tonic'
 
 export namespace Schema_1970_01_01 {

@@ -82,7 +82,7 @@ export interface Schema extends BaseSchema {
     // Outfits
     Outfits: outfits.Schema_1970_01_01.Outfit
     // Pets
-    Pets: pets.Schema_1970_01_01.Pets
+    Pets: pets.Schema_1970_01_01.Pet
     // Professions
     Professions: professions.Schema_1970_01_01.Profession
     // Quaggans

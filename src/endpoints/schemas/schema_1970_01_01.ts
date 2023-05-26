@@ -27,6 +27,7 @@ import * as novelties from './responses/novelties'
 import * as outfits from './responses/outfits'
 import * as pets from './responses/pets'
 import * as professions from './responses/professions'
+import * as files from './responses/files'
 
 
 export interface Schema extends BaseSchema {
@@ -59,6 +60,8 @@ export interface Schema extends BaseSchema {
     Dungeons: dungeons.Schema_1970_01_01.Dungeon
     // Emblem
     Emblem: emblems.Schema_1970_01_01.Emblem
+    // Files
+    Files: files.Schema_1970_01_01.File
     // Finisher
     Finishers: finishers.Schema_1970_01_01.Finisher
     // Gliders

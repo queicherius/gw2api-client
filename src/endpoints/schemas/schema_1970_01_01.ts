@@ -26,6 +26,7 @@ import * as quaggans from './responses/quaggans'
 import * as novelties from './responses/novelties'
 import * as outfits from './responses/outfits'
 import * as pets from './responses/pets'
+import * as professions from './responses/professions'
 
 
 export interface Schema extends BaseSchema {
@@ -79,6 +80,8 @@ export interface Schema extends BaseSchema {
     Outfits: outfits.Schema_1970_01_01.Outfit
     // Pets
     Pets: pets.Schema_1970_01_01.Pets
+    // Professions
+    Professions: professions.Schema_1970_01_01.Profession
     // Quaggans
     Quaggans: quaggans.Schema_1970_01_01.Quaggan
     // Races

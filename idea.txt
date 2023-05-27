@@ -1,0 +1,6 @@
+use typescript-json-schema to generate schema info:
+```sh
+▶ node_modules/typescript-json-schema/bin/typescript-json-schema "src/endpoints/schemas/responses/*" "*"
+```
+
+use that in a schema validator, for example in ajv

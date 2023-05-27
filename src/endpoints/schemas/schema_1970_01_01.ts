@@ -28,6 +28,8 @@ import * as outfits from './responses/outfits'
 import * as pets from './responses/pets'
 import * as professions from './responses/professions'
 import * as files from './responses/files'
+import * as masteries from './responses/masteries'
+import * as mounts from './responses/mounts'
 
 
 export interface Schema extends BaseSchema {
@@ -73,6 +75,11 @@ export interface Schema extends BaseSchema {
     Legends: legends.Schema_1970_01_01.Legend
     // Mailcarriers
     Mailcarriers: mailcarriers.Schema_1970_01_01.Mailcarrier
+    // Masteries
+    Masteries: masteries.Schema_1970_01_01.Mastery
+    // Mounts
+    MountType: mounts.Schema_1970_01_01.Type
+    MountSkin: mounts.Schema_1970_01_01.Skin
     // Minis
     Minis: minis.Schema_1970_01_01.Mini
     // Nodes

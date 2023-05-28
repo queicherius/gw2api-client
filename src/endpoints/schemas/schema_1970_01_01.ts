@@ -30,6 +30,7 @@ import * as professions from './responses/professions'
 import * as files from './responses/files'
 import * as masteries from './responses/masteries'
 import * as mounts from './responses/mounts'
+import * as raids from './responses/raids'
 
 
 export interface Schema extends BaseSchema {
@@ -96,6 +97,8 @@ export interface Schema extends BaseSchema {
     Quaggans: quaggans.Schema_1970_01_01.Quaggan
     // Races
     Races: races.Schema_1970_01_01.Race
+    // Raid
+    Raid: raids.Schema_1970_01_01.Raid
     // Titles
     Titles: titles.Schema_1970_01_01.Title
     // Tokeninfo

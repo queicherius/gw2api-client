@@ -31,6 +31,7 @@ import * as files from './responses/files'
 import * as masteries from './responses/masteries'
 import * as mounts from './responses/mounts'
 import * as raids from './responses/raids'
+import * as mapchests from './responses/mapchests'
 
 
 export interface Schema extends BaseSchema {
@@ -76,6 +77,8 @@ export interface Schema extends BaseSchema {
     Legends: legends.Schema_1970_01_01.Legend
     // Mailcarriers
     Mailcarriers: mailcarriers.Schema_1970_01_01.Mailcarrier
+    // Mapchests
+    Mapchests: mapchests.Schema_1970_01_01.Mapchest
     // Masteries
     Masteries: masteries.Schema_1970_01_01.Mastery
     // Mounts

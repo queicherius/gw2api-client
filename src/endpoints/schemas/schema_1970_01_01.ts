@@ -36,6 +36,7 @@ import * as legendaryarmory from './responses/legendaryarmory'
 import * as worldbosses from './responses/worldbosses'
 import * as worlds from './responses/worlds'
 import * as quests from './responses/quests'
+import * as stories from './responses/stories'
 
 
 export interface Schema extends BaseSchema {
@@ -109,6 +110,8 @@ export interface Schema extends BaseSchema {
     Races: races.Schema_1970_01_01.Race
     // Raid
     Raid: raids.Schema_1970_01_01.Raid
+    // Stories
+    Stories: stories.Schema_1970_01_01.Story
     // Titles
     Titles: titles.Schema_1970_01_01.Title
     // Tokeninfo

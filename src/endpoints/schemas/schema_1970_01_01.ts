@@ -35,6 +35,7 @@ import * as mapchests from './responses/mapchests'
 import * as legendaryarmory from './responses/legendaryarmory'
 import * as worldbosses from './responses/worldbosses'
 import * as worlds from './responses/worlds'
+import * as quests from './responses/quests'
 
 
 export interface Schema extends BaseSchema {
@@ -77,6 +78,8 @@ export interface Schema extends BaseSchema {
     // Continents
     Continents: continents.Schema_1970_01_01.Continent
     Floor: continents.Schema_1970_01_01.Floor
+    // Quests
+    Quests: quests.Schema_1970_01_01.Quest
     // Legendary Armory
     LegendaryArmory: legendaryarmory.Schema_1970_01_01.Legendaryarmory
     // Legends

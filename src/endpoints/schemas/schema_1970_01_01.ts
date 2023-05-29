@@ -44,8 +44,9 @@ export interface Schema extends BaseSchema {
     Group: achievements.Schema_1970_01_01.Group
     // Build 
     Build: build.Schema_1970_01_01.Build
-    // Cats
+    // Home
     Cats: cats.Schema_1970_01_01.Cat
+    Nodes: nodes.Schema_1970_01_01.Nodes
     // Backstory
     Answers: backstory.Schema_1970_01_01.Answer
     Questions: backstory.Schema_1970_01_01.Question
@@ -89,8 +90,6 @@ export interface Schema extends BaseSchema {
     MountSkin: mounts.Schema_1970_01_01.Skin
     // Minis
     Minis: minis.Schema_1970_01_01.Mini
-    // Nodes
-    Nodes: nodes.Schema_1970_01_01.Nodes
     // Novelties
     Novelties: novelties.Schema_1970_01_01.Novelty
     // Outfits

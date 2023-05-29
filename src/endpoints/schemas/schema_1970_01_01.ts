@@ -33,6 +33,7 @@ import * as mounts from './responses/mounts'
 import * as raids from './responses/raids'
 import * as mapchests from './responses/mapchests'
 import * as legendaryarmory from './responses/legendaryarmory'
+import * as worldbosses from './responses/worldbosses'
 
 
 export interface Schema extends BaseSchema {
@@ -112,4 +113,6 @@ export interface Schema extends BaseSchema {
     Traits: traits.Schema_1970_01_01.Trait
     // Skins
     Skins: skins.Schema_1970_01_01.Skin
+    // Worldbosses
+    Worldbosses: worldbosses.Schema_1970_01_01.Worldboss
 }

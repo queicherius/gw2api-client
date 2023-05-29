@@ -32,6 +32,7 @@ import * as masteries from './responses/masteries'
 import * as mounts from './responses/mounts'
 import * as raids from './responses/raids'
 import * as mapchests from './responses/mapchests'
+import * as legendaryarmory from './responses/legendaryarmory'
 
 
 export interface Schema extends BaseSchema {
@@ -73,6 +74,8 @@ export interface Schema extends BaseSchema {
     // Continents
     Continents: continents.Schema_1970_01_01.Continent
     Floor: continents.Schema_1970_01_01.Floor
+    // Legendary Armory
+    LegendaryArmory: legendaryarmory.Schema_1970_01_01.Legendaryarmory
     // Legends
     Legends: legends.Schema_1970_01_01.Legend
     // Mailcarriers

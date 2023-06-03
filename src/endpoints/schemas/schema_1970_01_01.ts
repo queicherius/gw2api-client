@@ -37,9 +37,12 @@ import * as worldbosses from './responses/worldbosses'
 import * as worlds from './responses/worlds'
 import * as quests from './responses/quests'
 import * as stories from './responses/stories'
+import * as account from './responses/account'
 
 
 export interface Schema extends BaseSchema {
+    // Account
+    Account: account.Schema_1970_01_01.Account
     // Achievements
     Daily: achievements.Schema_1970_01_01.Daily
     Dailies: achievements.Schema_1970_01_01.Dailies

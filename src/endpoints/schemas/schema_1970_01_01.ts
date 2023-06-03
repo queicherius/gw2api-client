@@ -38,7 +38,7 @@ import * as worlds from './responses/worlds'
 import * as quests from './responses/quests'
 import * as stories from './responses/stories'
 import * as account from './responses/account'
-
+import * as specializations from './responses/specializations'
 
 export interface Schema extends BaseSchema {
     // Account
@@ -113,6 +113,8 @@ export interface Schema extends BaseSchema {
     Races: races.Schema_1970_01_01.Race
     // Raid
     Raid: raids.Schema_1970_01_01.Raid
+    // Specializations
+    Specializations: specializations.Schema_1970_01_01.Specialization
     // Stories
     Stories: stories.Schema_1970_01_01.Story
     // Titles

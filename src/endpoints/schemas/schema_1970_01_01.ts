@@ -39,6 +39,7 @@ import * as quests from './responses/quests'
 import * as stories from './responses/stories'
 import * as account from './responses/account'
 import * as specializations from './responses/specializations'
+import * as materials from './responses/materials'
 
 export interface Schema extends BaseSchema {
     // Account
@@ -94,6 +95,8 @@ export interface Schema extends BaseSchema {
     Mapchests: mapchests.Schema_1970_01_01.Mapchest
     // Masteries
     Masteries: masteries.Schema_1970_01_01.Mastery
+    // Materials
+    Materials: materials.Schema_1970_01_01.Material
     // Mounts
     MountType: mounts.Schema_1970_01_01.Type
     MountSkin: mounts.Schema_1970_01_01.Skin

@@ -40,6 +40,7 @@ import * as stories from './responses/stories'
 import * as account from './responses/account'
 import * as specializations from './responses/specializations'
 import * as materials from './responses/materials'
+import * as guilds from './responses/guilds'
 
 export interface Schema extends BaseSchema {
     // Account
@@ -80,6 +81,18 @@ export interface Schema extends BaseSchema {
     Finishers: finishers.Schema_1970_01_01.Finisher
     // Gliders
     Gliders: gliders.Schema_1970_01_01.Glider
+    // Guilds
+    Guilds: guilds.Schema_1970_01_01.Guild
+    Logs: guilds.Schema_1970_01_01.Log
+    Members: guilds.Schema_1970_01_01.Member
+    Ranks: guilds.Schema_1970_01_01.Rank
+    Stash: guilds.Schema_1970_01_01.Stash
+    Storage: guilds.Schema_1970_01_01.Storage
+    Team: guilds.Schema_1970_01_01.Team
+    Treasury: guilds.Schema_1970_01_01.Treasury
+    Upgrades: guilds.Schema_1970_01_01.Upgrade
+    Permissions: guilds.Schema_1970_01_01.Permission
+    Search: guilds.Schema_1970_01_01.Search
     // Continents
     Continents: continents.Schema_1970_01_01.Continent
     Floor: continents.Schema_1970_01_01.Floor

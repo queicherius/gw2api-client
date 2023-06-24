@@ -1,6 +1,9 @@
+// FIXME: https://wiki.guildwars2.com/wiki/API:2/characters heropoints, quests, and sab missing
+
 import { Race, Gender, Profession, ISO8601, Discipline, EquipmentSlot } from "../../../types"
 
 type WeaponAttribute = 'AgonyResistance' | 'BoonDuration' | 'ConditionDamage' | 'ConditionDuration' | 'CritDamage' | 'Healing' | 'Power' | 'Precision' | 'Toughness' | 'Vitality'
+type Binding = 'Character' | 'Account'
 
 // BUILDTABS
 interface BuildSpecialization {
@@ -46,7 +49,30 @@ interface Build {
 }
 
 // EQUIPMENT
-interface EquipmentAttributes {
+
+interface EquipmentTabDetails {
+  /** The item id of the equipment piece. Resolvable against /v2/items. */
+  id: number
+  /** In which slot the equipment piece is equiped. Possible values: */
+  slot: string
+  /** The skin id of the skin transmuted onto the equipment piece. Resolvable against /v2/skins. */
+  skin?: number
+  /** The item ids of the upgrade components sloted in the weapon. Resolvable against /v2/items. */
+  upgrades?: number[]
+  /** The item ids of the infusions sloted in the weapon. Resolvable against /v2/items. */
+  infusions?: number[]
+  /** The binding of the item. Possible values: */
+  binding?: Binding
+  /** The name of the character to which the item is bound. */
+  bound_to?: string
+  /** Either Equipped or Armory. */
+  location: 'Equipped' | 'Armory'
+  /** Four dye ids representing the dyes used in the dye slots of the equipment piece or null if a dye slot is unavailable for a piece. Resolvable against /v2/colors. */
+  dyes?: number[]
+  /** Contains detailed information on the weapon stats. */
+  stats?: WeaponStats
+}
+interface ItemAttributes {
   /** Shows the amount of power given */
   Power?: number
   /** Shows the amount of Precision given */
@@ -65,12 +91,88 @@ interface EquipmentAttributes {
   BoonDuration?: number
 }
 
-interface EquipmentStats {
+interface EquipmentPvP {
+  /** resolve id against v2/pvp/amulets. */
+  amulet: number
+  /** resolve id against v2/items. */
+  rune: number
+  /** resolve ids against v2/items. Will contain nulls for unequipped items. */
+  sigils: number[]
+}
+
+interface ItemStats {
   /** The itemstat id, can be resolved against /v2/itemstats */
   id: number
   /** Contains a summary of the stats on the item. */
-  attributes: EquipmentAttributes
+  attributes: ItemAttributes
+}
 
+interface WeaponStats {
+  /** The id of the wepons stats. Resolvable against /v2/itemstats. */
+  id: number
+  /** Contains the weapon attributes in the form of key value pairs with the key being the attribute name and the value itself. */
+  attributes: {[key in WeaponAttribute]?: number}
+}
+
+// INVENTORY (also EQUIPMENT?)
+interface Item {
+  /** The item id which can be resolved against /v2/items */
+  id: number
+  /** Amount of item in the stack. Minium of 1, maximum of 250. */
+  count: number
+  /** The number of charges on an item. */
+  charges: number
+  /** returns an array of infusion item ids which can be resolved against /v2/items */
+  infusions: Array<any>
+  /** returns an array of upgrade component item ids which can be resolved against /v2/items */
+  upgrades: Array<any>
+  /** Skin id for the given equipment piece. Can be resolved against /v2/skins */
+  skin: number
+  /** Contains information on the stats chosen if the item offers an option for stats/prefix. */
+  stats: ItemStats
+    /** Array of selected dyes for the equipment piece. Values default to null if no dye is selected. Colors can be resolved against v2/colors */
+  dyes: number[]
+  /** describes which kind of binding the item has. */
+  binding: Binding
+  /** Name of the character the item is bound to. */
+  bound_to: string
+}
+
+interface Bag {
+  /** The bag's item id which can be resolved against /v2/items */
+  id: number
+  /** The amount of slots available with this bag. */
+  size: number
+  /** Contains one object structure per item, object is null if no item is in the given bag slot. */
+  inventory: Array<Item>
+}
+
+// SKILLS TRAITS TRAINING
+interface SkillSet {
+  /** contains the skill id for the heal skill, resolvable against /v2/skills. */
+  heal: number
+  /** each integer corresponds to a skill id for the equipped utilities, resolvable against /v2/skills. */
+  utilities: number[]
+  /** contains the skill id for the elite skill, resolvable against /v2/skills. */
+  elite: number
+  /** each string corresponds to a Revenant legend, resolvable against /v2/legends. */
+  legends?: number[]
+}
+
+interface Traits {
+  /** Specialization id, can be resolved against /v2/specializations. */
+  id: number
+  /** returns ids for each selected trait, can be resolved against /v2/traits. */
+  traits: number[]
+}
+
+interface TrainingDetails {
+  /** Skill tree id, can be compared against the training section for each /v2/professions. */
+  id: number
+  /** Shows how many hero points have been spent in this tree */
+  spent: number
+  /** States whether or not the tree is fully trained. */
+  done: boolean
 }
 
 export namespace Schema_1970_01_01 {
@@ -134,9 +236,9 @@ export namespace Schema_1970_01_01 {
     /** Skin id for the given equipment piece. Can be resolved against /v2/skins */
     skin?: number
     /** Contains information on the stats chosen if the item offers an option for stats/prefix. */
-    stats: EquipmentStats
+    stats: ItemStats
     /** describes which kind of binding the item has. Possible values: */
-    binding?: 'Character' | 'Account'
+    binding?: Binding
     /** The amount of charges remaining on the item. */
     charges?: number
     /** Name of the character the item is bound to. */
@@ -145,6 +247,7 @@ export namespace Schema_1970_01_01 {
     dyes: number[]
   }
 
+  // FIXME: Whats this?
   export interface Character {
     /** An array containing an entry for each crafting discipline the character has unlocked */
     crafting: Array<Crafting>
@@ -155,46 +258,7 @@ export namespace Schema_1970_01_01 {
   }
 
 
-  interface WeaponStats {
-    /** The id of the wepons stats. Resolvable against /v2/itemstats. */
-    id: number
-    /** Contains the weapon attributes in the form of key value pairs with the key being the attribute name and the value itself. */
-    attributes: {[key in WeaponAttribute]?: number}
-  }
 
-
-  export interface EquipmentTabDetails {
-    /** The item id of the equipment piece. Resolvable against /v2/items. */
-    id: number
-    /** In which slot the equipment piece is equiped. Possible values: */
-    slot: string
-    /** The skin id of the skin transmuted onto the equipment piece. Resolvable against /v2/skins. */
-    skin?: number
-    /** The item ids of the upgrade components sloted in the weapon. Resolvable against /v2/items. */
-    upgrades?: number[]
-    /** The item ids of the infusions sloted in the weapon. Resolvable against /v2/items. */
-    infusions?: number[]
-    /** The binding of the item. Possible values: */
-    binding?: 'Account' | 'Character'
-    /** The name of the character to which the item is bound. */
-    bound_to?: string
-    /** Either Equipped or Armory. */
-    location: 'Equipped' | 'Armory'
-    /** Four dye ids representing the dyes used in the dye slots of the equipment piece or null if a dye slot is unavailable for a piece. Resolvable against /v2/colors. */
-    dyes?: number[]
-    /** Contains detailed information on the weapon stats. */
-    stats?: WeaponStats
-
-  }
-
-  interface EquipmentPvP {
-    /** resolve id against v2/pvp/amulets. */
-    amulet: number
-    /** resolve id against v2/items. */
-    rune: number
-    /** resolve ids against v2/items. Will contain nulls for unequipped items. */
-    sigils: number[]
-  }
 
   export interface EquipmentTabs {
     /** The "id" of this tab. (The position at which it resides.) */
@@ -207,6 +271,50 @@ export namespace Schema_1970_01_01 {
     equipment: EquipmentTabDetails[]
     /** Contains the following key-value pairs: */
     equipment_pvp: EquipmentPvP
+  }
+
+
+  /** {@link https://wiki.guildwars2.com/wiki/API:2/characters/:id/inventory} */
+  export interface Inventory {
+    /** Contains one object structure per bag in the character's inventory */
+    bags: Array<Bag>
+  }
+
+  /** {@link https://wiki.guildwars2.com/wiki/API:2/characters/:id/recipes} */
+  export interface Recipe {
+    recipes: number[]
+  }
+
+  /** {@link https://wiki.guildwars2.com/API:2/characters/:id/skills} */
+  export interface Skills {
+    /** contains the pve, pvp, and wvw objects for the current utilities equipped. */
+    skills: {
+      /** contains the information on each slotted utility for PvE */
+      pve: SkillSet
+      /** contains the information on each slotted utility for PvP */
+      pvp: SkillSet
+      /** contains the information on each slotted utility for WvW */
+      wvw: SkillSet
+    }
+  }
+
+  /** {@link https://wiki.guildwars2.com/API:2/characters/:id/specializations} */
+  export interface Specializations {
+    /** contains the pve, pvp, and wvw objects for the current specializations and traits equipped. */
+    specializations: {
+      /** contains the information on each slotted specialization and trait for PvE */
+      pve: Array<Traits>
+      /** contains the information on each slotted specialization and trait for PvP */
+      pvp: Array<Traits>
+      /** contains the information on each slotted specialization and trait for WvW */
+      wvw: Array<Traits>
+    }
+  }
+
+  /** {@link https://wiki.guildwars2.com/API:2/characters/:id/training} */
+  export interface Training {
+    /** contains objects for each skill tree trained */
+    training: Array<TrainingDetails>
   }
 }
 

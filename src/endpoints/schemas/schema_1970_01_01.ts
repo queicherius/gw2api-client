@@ -41,6 +41,7 @@ import * as account from './responses/account'
 import * as specializations from './responses/specializations'
 import * as materials from './responses/materials'
 import * as guilds from './responses/guilds'
+import * as characters from './responses/characters'
 
 export interface Schema extends BaseSchema {
     // Account
@@ -53,6 +54,8 @@ export interface Schema extends BaseSchema {
     Group: achievements.Schema_1970_01_01.Group
     // Build 
     Build: build.Schema_1970_01_01.Build
+    // Character
+    Equipment: characters.Schema_1970_01_01.Equipment
     // Home
     Cats: cats.Schema_1970_01_01.Cat
     Nodes: nodes.Schema_1970_01_01.Nodes

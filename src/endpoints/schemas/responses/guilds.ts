@@ -335,7 +335,7 @@ export namespace Schema_1970_01_01 {
   }
 
   /** {@link https://wiki.guildwars2.com/API:2/guild/search} */
-  type Search = string[]
+  export type Search = string[]
 
 
 }

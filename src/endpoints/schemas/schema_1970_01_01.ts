@@ -42,6 +42,7 @@ import { Schema_1970_01_01 as specializations } from './responses/specialization
 import { Schema_1970_01_01 as materials } from './responses/materials'
 import { Schema_1970_01_01 as guilds } from './responses/guilds'
 import { Schema_1970_01_01 as characters } from './responses/characters'
+import { Schema_1970_01_01 as skills } from './responses/skills'
 
 export interface Schema extends BaseSchema {
     // Account
@@ -62,7 +63,8 @@ export interface Schema extends BaseSchema {
     EquipmentTabs: characters.EquipmentTabs
     Inventory: characters.Inventory
     Recipe: characters.Recipe
-    Skills: characters.Skills
+    // FIXME: really need to nest! Collision with Skills
+    cSkills: characters.Skills
     // FIXME: duplicate?
     CharacterSpecializations: characters.Specializations
     Training: characters.Training
@@ -152,6 +154,7 @@ export interface Schema extends BaseSchema {
     Tokeninfo: tokeninfo.TokenInfo
     // Trait
     Traits: traits.Trait
+    Skills: skills.Skill
     // Skins
     Skins: skins.Skin
     // Worlds

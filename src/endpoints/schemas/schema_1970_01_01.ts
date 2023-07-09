@@ -43,6 +43,7 @@ import { Schema_1970_01_01 as materials } from './responses/materials'
 import { Schema_1970_01_01 as guilds } from './responses/guilds'
 import { Schema_1970_01_01 as characters } from './responses/characters'
 import { Schema_1970_01_01 as skills } from './responses/skills'
+import { Schema_1970_01_01 as events } from './responses/events'
 
 export interface Schema extends BaseSchema {
     // Account
@@ -90,6 +91,8 @@ export interface Schema extends BaseSchema {
     Dungeons: dungeons.Dungeon
     // Emblem
     Emblem: emblems.Emblem
+    // Events
+    Events: events.EventDetails
     // Files
     Files: files.File
     // Finisher

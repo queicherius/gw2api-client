@@ -44,6 +44,7 @@ import { Schema_1970_01_01 as guilds } from './responses/guilds'
 import { Schema_1970_01_01 as characters } from './responses/characters'
 import { Schema_1970_01_01 as skills } from './responses/skills'
 import { Schema_1970_01_01 as events } from './responses/events'
+import { Schema_1970_01_01 as items } from './responses/items'
 
 export interface Schema extends BaseSchema {
     // Account
@@ -111,6 +112,19 @@ export interface Schema extends BaseSchema {
     Upgrades: guilds.Upgrade
     Permissions: guilds.Permission
     Search: guilds.Search
+    // Items
+    BackItems: items.BackItem
+    Bags: items.Bag
+    Consumables: items.Consumable
+    Containers: items.Container
+    Gathering: items.Gathering
+    Gizmos: items.Gizmo
+    Miniatures: items.Miniature
+    SalvageKits: items.SalvageKit
+    Trinket: items.Trinket
+    UpgradeComponent: items.UpgradeComponent
+    Weapons: items.Weapon
+    Armor: items.Armor
     // Continents
     Continents: continents.Continent
     Floor: continents.Floor

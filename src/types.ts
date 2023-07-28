@@ -3,7 +3,7 @@ export type ItemID = number
 export type URL = string
 export type ISO8601 = string
 
-export type Attribute = 'Agonyresistance' | 'BoonDuration' | 'ConditionDamage' | 'ConditionDuration' | 'CritDamage' | 'Healing' | 'Power' | 'Precision' | 'Toughness' | 'Vitality'
+export type Attribute = 'AgonyResistance' | 'BoonDuration' | 'ConditionDamage' | 'ConditionDuration' | 'CritDamage' | 'Healing' | 'Power' | 'Precision' | 'Toughness' | 'Vitality'
 export type Language = 'en' | 'de' | 'es' | 'fr'
 export type Gender = 'Male' | 'Female'
 export type Race = 'Human' | 'Norn' | 'Charr' | 'Sylvari' | 'Asura'

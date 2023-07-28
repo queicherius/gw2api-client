@@ -278,7 +278,7 @@ export namespace Schema_1970_01_01 {
     minipet_id: number
   }
 
-  export interface Salvagekits extends Item<'Salvage'> {
+  export interface SalvageKit extends Item<'Salvage'> {
     /** Number of charges. */
     charges: number
   }

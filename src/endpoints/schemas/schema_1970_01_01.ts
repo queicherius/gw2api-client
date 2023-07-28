@@ -45,6 +45,7 @@ import { Schema_1970_01_01 as characters } from './responses/characters'
 import { Schema_1970_01_01 as skills } from './responses/skills'
 import { Schema_1970_01_01 as events } from './responses/events'
 import { Schema_1970_01_01 as items } from './responses/items'
+import { Schema_1970_01_01 as itemstats } from './responses/itemstats'
 
 export interface Schema extends BaseSchema {
     // Account
@@ -125,6 +126,8 @@ export interface Schema extends BaseSchema {
     UpgradeComponent: items.UpgradeComponent
     Weapons: items.Weapon
     Armor: items.Armor
+    // Itemstats
+    Itemstats: itemstats.Itemstats
     // Continents
     Continents: continents.Continent
     Floor: continents.Floor

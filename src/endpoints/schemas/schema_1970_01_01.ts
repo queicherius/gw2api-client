@@ -46,6 +46,7 @@ import { Schema_1970_01_01 as skills } from './responses/skills'
 import { Schema_1970_01_01 as events } from './responses/events'
 import { Schema_1970_01_01 as items } from './responses/items'
 import { Schema_1970_01_01 as itemstats } from './responses/itemstats'
+import { Schema_1970_01_01 as maps } from './responses/maps'
 
 export interface Schema extends BaseSchema {
     // Account
@@ -139,6 +140,7 @@ export interface Schema extends BaseSchema {
     Legends: legends.Legend
     // Mailcarriers
     Mailcarriers: mailcarriers.Mailcarrier
+    Map: maps.Map
     // Mapchests
     Mapchests: mapchests.Mapchest
     // Masteries

@@ -29,6 +29,7 @@
     "querystringify": "^2.0.0"
   },
   "devDependencies": {
+    "@types/node": "^18.15.13",
     "babel-plugin-rewire": "^1.2.0",
     "jest": "^23.6.0",
     "mockdate": "^2.0.2",

@@ -4,6 +4,7 @@ export type URL = string
 export type ISO8601 = string
 
 export type Coordinate = [number, number]
+export type Coordinate3 = [number, number, number]
 
 export type Attribute = 'AgonyResistance' | 'BoonDuration' | 'ConditionDamage' | 'ConditionDuration' | 'CritDamage' | 'Healing' | 'Power' | 'Precision' | 'Toughness' | 'Vitality'
 export type Language = 'en' | 'de' | 'es' | 'fr'

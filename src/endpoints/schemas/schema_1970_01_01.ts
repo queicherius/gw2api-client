@@ -47,6 +47,7 @@ import { Schema_1970_01_01 as events } from './responses/events'
 import { Schema_1970_01_01 as items } from './responses/items'
 import { Schema_1970_01_01 as itemstats } from './responses/itemstats'
 import { Schema_1970_01_01 as maps } from './responses/maps'
+import { Schema_1970_01_01 as wvw } from './responses/wvw'
 
 export interface Schema extends BaseSchema {
     // Account
@@ -183,4 +184,11 @@ export interface Schema extends BaseSchema {
     Worlds: worlds.World
     // Worldbosses
     Worldbosses: worldbosses.Worldboss
+    // WvW
+    Abilities: wvw.Ability
+    Matches: wvw.Match
+    Objective: wvw.Objective
+    // FIXME: collision!
+    wRanks: wvw.Rank
+    Upgrade: wvw.Upgrade
 }

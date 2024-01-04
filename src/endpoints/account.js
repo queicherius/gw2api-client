@@ -64,6 +64,10 @@ class AccountEndpoint extends AbstractEndpoint {
     return new InventoryEndpoint(this)
   }
 
+  jadebots () {
+    return new JadebotsEndpoint(this)
+  }
+
   legendaryarmory () {
     return new LegendaryarmoryEndpoint(this)
   }
@@ -273,6 +277,15 @@ class InventoryEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/inventory'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class JadebotsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/jadebots'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

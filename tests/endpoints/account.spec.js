@@ -276,6 +276,21 @@ describe('endpoints > account', () => {
     expect(content).toEqual(['quartz_node', 'airship_cargo'])
   })
 
+  it('test /v2/account/jadebots', async () => {
+    endpoint = endpoint.jadebots()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/jadebots')
+
+    fetchMock.addResponse([2, 3, 4])
+    let content = await endpoint.get()
+    expect(content).toEqual([2, 3, 4])
+  })
+
   it('test /v2/account/inventory', async () => {
     endpoint = endpoint.inventory()
 

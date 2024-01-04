@@ -21,6 +21,7 @@ function mockClient (hasGuildPermission) {
         nodes: () => ({ get: () => _s(['quartz_node', 'airship_cargo']) })
       }),
       inventory: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
+      jadebots: () => ({ get: () => _s([1, 2, 3]) }),
       legendaryarmory: () => ({ get: () => _s([{ id: 123, count: 1 }]) }),
       luck: () => ({ get: () => _s(123) }),
       mailcarriers: () => ({ get: () => _s([1, 2, 3]) }),
@@ -103,6 +104,7 @@ const expectedResponse = {
     cats: [{ id: 1, hint: 'chicken' }],
     nodes: ['quartz_node', 'airship_cargo']
   },
+  jadebots: [1, 2, 3],
   legendaryarmory: [{ id: 123, count: 1 }],
   luck: 123,
   mailcarriers: [1, 2, 3],

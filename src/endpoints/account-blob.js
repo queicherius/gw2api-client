@@ -14,6 +14,7 @@ function blob (parent) {
     'commerce.sells': wrap(() => client.commerce().transactions().current().sells().all()),
     dungeons: wrap(() => client.account().dungeons().get()),
     dyes: wrap(() => client.account().dyes().get()),
+    emotes: wrap(() => client.account().emotes().get()),
     finishers: wrap(() => client.account().finishers().get()),
     gliders: wrap(() => client.account().gliders().get()),
     guilds: wrap(() => accountGuilds(client)),

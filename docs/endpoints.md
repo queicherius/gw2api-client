@@ -50,6 +50,7 @@ client.language('de').items().all()
 - [`api().account().dailycrafting()`](#apiaccountdailycrafting) - The completed daily crafting for the account.
 - [`api().account().dungeons()`](#apiaccountdungeons) - The completed dungeons of the current daily.
 - [`api().account().dyes()`](#apiaccountdyes) - The unlocked dyes of the account.
+- [`api().account().emotes()`](#apiaccountemotes) - The unlocked emotes of the account.
 - [`api().account().finishers()`](#apiaccountfinishers) - The unlocked finishers of the account.
 - [`api().account().gliders()`](#apiaccountgliders) - The unlocked gliders of the account.
 - [`api().account().home().cats()`](#apiaccounthomecats) - The unlocked cats in the home instance of the account.
@@ -117,6 +118,7 @@ client.language('de').items().all()
 - [`api().emblem().foregrounds()`](#apiemblemforegrounds) - The guild emblem's foreground images.
 - [`api().events()`](#apievents) - Information about events.
 - [`api().files()`](#apifiles) - Commonly requested assets that may be used to enhance API-derived applications.
+- [`api().emotes()`](#apiemotes) - Information about emotes.
 - [`api().finishers()`](#apifinishers) - Information about finishers.
 - [`api().gliders()`](#apigliders) - Information about gliders.
 - [`api().guild()`](#apiguild) - Core details about a given guild.
@@ -289,6 +291,21 @@ Alternative method of calling [`api().commerce().delivery()`](#apicommercedelive
 > The unlocked dyes of the account.
 
 - **API-URL:** [/v2/account/dyes](https://api.guildwars2.com/v2/account/dyes)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().emotes()`
+
+> The unlocked emotes of the account.
+
+- **API-URL:** [/v2/account/emotes](https://api.guildwars2.com/v2/account/emotes)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes
@@ -1275,6 +1292,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** Yes
 - **Authenticated:** No
 - **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().emotes()`
+
+> Information about emotes.
+
+- **API-URL:** [/v2/emotes](https://api.guildwars2.com/v2/emotes)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

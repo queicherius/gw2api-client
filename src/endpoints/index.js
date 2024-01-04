@@ -12,6 +12,7 @@ module.exports = {
   DailycraftingEndpoint: require('./dailycrafting'),
   DungeonsEndpoint: require('./dungeons'),
   EmblemEndpoint: require('./emblem'),
+  EmotesEndpoint: require('./emotes'),
   EventsEndpoint: require('./events'),
   FilesEndpoint: require('./files'),
   FinishersEndpoint: require('./finishers'),

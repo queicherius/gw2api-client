@@ -13,6 +13,7 @@ function mockClient (hasGuildPermission) {
       bank: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
       dungeons: () => ({ get: () => _s(['detha']) }),
       dyes: () => ({ get: () => _s([1, 2, 3]) }),
+      emotes: () => ({ get: () => _s([1, 2, 3]) }),
       finishers: () => ({ get: () => _s([1, 2, 3]) }),
       gliders: () => ({ get: () => _s([1, 2, 3]) }),
       home: () => ({
@@ -95,6 +96,7 @@ const expectedResponse = {
   },
   dungeons: ['detha'],
   dyes: [1, 2, 3],
+  emotes: [1, 2, 3],
   finishers: [1, 2, 3],
   gliders: [1, 2, 3],
   home: {

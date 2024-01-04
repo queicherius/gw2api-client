@@ -201,6 +201,21 @@ describe('endpoints > account', () => {
     expect(content).toEqual([2, 3, 4])
   })
 
+  it('test /v2/account/emotes', async () => {
+    endpoint = endpoint.emotes()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/emotes')
+
+    fetchMock.addResponse(['Stretch', 'geargrind'])
+    let content = await endpoint.get()
+    expect(content).toEqual(['Stretch', 'geargrind'])
+  })
+
   it('test /v2/account/finishers', async () => {
     endpoint = endpoint.finishers()
 

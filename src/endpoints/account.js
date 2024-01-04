@@ -41,6 +41,10 @@ class AccountEndpoint extends AbstractEndpoint {
     return new DyesEndpoint(this)
   }
 
+  emotes () {
+    return new EmotesEndpoint(this)
+  }
+
   finishers () {
     return new FinishersEndpoint(this)
   }
@@ -215,6 +219,15 @@ class DyesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/dyes'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class EmotesEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/emotes'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

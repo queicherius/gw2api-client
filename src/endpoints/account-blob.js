@@ -39,6 +39,7 @@ function blob (parent) {
     raids: wrap(() => client.account().raids().get()),
     recipes: wrap(() => client.account().recipes().get()),
     shared: wrap(() => client.account().inventory().get()),
+    skiffs: wrap(() => client.account().skiffs().get()),
     skins: wrap(() => client.account().skins().get()),
     titles: wrap(() => client.account().titles().get()),
     wallet: wrap(() => client.account().wallet().get())

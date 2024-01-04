@@ -129,6 +129,10 @@ class AccountEndpoint extends AbstractEndpoint {
     return new RecipesEndpoint(this)
   }
 
+  skiffs () {
+    return new SkiffsEndpoint(this)
+  }
+
   skins () {
     return new SkinsEndpoint(this)
   }
@@ -427,6 +431,15 @@ class RecipesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/recipes'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class SkiffsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/skiffs'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

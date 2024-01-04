@@ -73,6 +73,7 @@ client.language('de').items().all()
 - [`api().account().pvp().heroes()`](#apiaccountpvpheroes) - The unlocked pvp heroes of the account.
 - [`api().account().raids()`](#apiaccountraids) - The completed raids of the current weekly.
 - [`api().account().recipes()`](#apiaccountrecipes) - The unlocked recipes of the account. 
+- [`api().account().skiffs()`](#apiaccountskiffs) - The unlocked skiffs of the account. 
 - [`api().account().skins()`](#apiaccountskins) - The unlocked skins of the account. 
 - [`api().account().titles()`](#apiaccounttitles) - The unlocked titles of the account. 
 - [`api().account().transactions()`](#apiaccounttransactions) - Alternative method of calling [`api().commerce().transactions()`](#apicommercetransactionscurrentbuys).
@@ -169,6 +170,7 @@ client.language('de').items().all()
 - [`api().raids()`](#apiraids) - Information about raids, including their bosses.
 - [`api().recipes()`](#apirecipes) - Information about discovered recipes.
 - [`api().recipes().search()`](#apirecipessearch) - Search for a recipe based on input or output items.
+- [`api().skiffs()`](#apiskiffs) - Information about skiffs.
 - [`api().skills()`](#apiskills) - Information about skills usable by players.
 - [`api().skins()`](#apiskins) - Information about available skins.
 - [`api().specializations()`](#apispecializations) - Information about currently released specializations.
@@ -633,6 +635,21 @@ Alternative method of calling [`api().pvp()`](#apipvpamulets).
 > The unlocked recipes of the account. 
 
 - **API-URL:** [/v2/account/recipes](https://api.guildwars2.com/v2/account/recipes)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().skiffs()`
+
+> The unlocked skiffs of the account. 
+
+- **API-URL:** [/v2/account/skiffs](https://api.guildwars2.com/v2/account/skiffs)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes
@@ -2068,6 +2085,21 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **This endpoint exposes the following methods:**
   - `input(:id)` - Search for recipes with this item as an ingredient
   - `output(:id)` - Search for recipes that craft this item
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().skiffs()`
+
+> Information about skiffs.
+
+- **API-URL:** [/v2/skiffs](https://api.guildwars2.com/v2/skiffs)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

@@ -42,6 +42,7 @@ module.exports = {
   RacesEndpoint: require('./races'),
   RaidsEndpoint: require('./raids'),
   RecipesEndpoint: require('./recipes'),
+  SkiffsEndpoint: require('./skiffs'),
   SkillsEndpoint: require('./skills'),
   SkinsEndpoint: require('./skins'),
   SpecializationsEndpoint: require('./specializations'),

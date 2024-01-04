@@ -618,6 +618,21 @@ describe('endpoints > account', () => {
     expect(content).toEqual([2, 3, 4, 5])
   })
 
+  it('test /v2/account/skiffs', async () => {
+    endpoint = endpoint.skiffs()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/skiffs')
+
+    fetchMock.addResponse([410, 413, 420])
+    let content = await endpoint.get()
+    expect(content).toEqual([410, 413, 420])
+  })
+
   it('test /v2/account/skins', async () => {
     endpoint = endpoint.skins()
 

@@ -194,6 +194,11 @@ describe('client', () => {
     expect(endpoint.backgrounds).not.toEqual(undefined)
   })
 
+  it('can get the emotes endpoint', () => {
+    let endpoint = client.emotes()
+    expect(endpoint.url).toEqual('/v2/emotes')
+  })
+
   it('can get the events endpoint', () => {
     let endpoint = client.events()
     expect(endpoint.url).toEqual('/v1/event_details.json')
@@ -238,6 +243,11 @@ describe('client', () => {
   it('can get the itemstats endpoint', () => {
     let endpoint = client.itemstats()
     expect(endpoint.url).toEqual('/v2/itemstats')
+  })
+
+  it('can get the jadebots endpoint', () => {
+    let endpoint = client.jadebots()
+    expect(endpoint.url).toEqual('/v2/jadebots')
   })
 
   it('can get the legendaryarmory endpoint', () => {
@@ -339,6 +349,11 @@ describe('client', () => {
   it('can get the recipes endpoint', () => {
     let endpoint = client.recipes()
     expect(endpoint.url).toEqual('/v2/recipes')
+  })
+
+  it('can get the skiffs endpoint', () => {
+    let endpoint = client.skiffs()
+    expect(endpoint.url).toEqual('/v2/skiffs')
   })
 
   it('can get the skills endpoint', () => {

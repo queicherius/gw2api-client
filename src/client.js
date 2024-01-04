@@ -132,6 +132,10 @@ module.exports = class Client {
     return new endpoints.EmblemEndpoint(this)
   }
 
+  emotes () {
+    return new endpoints.EmotesEndpoint(this)
+  }
+
   events () {
     return new endpoints.EventsEndpoint(this)
   }
@@ -162,6 +166,10 @@ module.exports = class Client {
 
   itemstats () {
     return new endpoints.ItemstatsEndpoint(this)
+  }
+
+  jadebots () {
+    return new endpoints.JadebotsEndpoint(this)
   }
 
   legendaryarmory () {
@@ -242,6 +250,10 @@ module.exports = class Client {
 
   recipes () {
     return new endpoints.RecipesEndpoint(this)
+  }
+
+  skiffs () {
+    return new endpoints.SkiffsEndpoint(this)
   }
 
   skills () {

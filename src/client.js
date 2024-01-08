@@ -12,6 +12,8 @@ module.exports = class Client {
     this.caches = [nullCache()]
     this.debug = false
     this.client = this
+    this.autoBatching = false
+    this.autoBatchDelay = 50
   }
 
   // Set the schema version
@@ -77,6 +79,15 @@ module.exports = class Client {
       return flow.parallel(flushPromises)
         .then(() => buildEndpoint._cacheSetSingle('cacheBuildId', resp.buildId))
     })
+  }
+
+  // Turn on autobatching for all endpoints
+  autoBatch (autoBatchDelay) {
+    if (autoBatchDelay) {
+      this.autoBatchDelay = autoBatchDelay
+    }
+    this.autoBatching = true
+    return this
   }
 
   // All the different API endpoints

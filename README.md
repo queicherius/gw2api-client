@@ -13,7 +13,7 @@
 npm install gw2api-client
 ```
 
-This module can be used for Node.js as well as browsers using [Browserify](https://github.com/substack/browserify-handbook#how-node_modules-works). 
+This module can be used for Node.js as well as browsers using [Browserify](https://github.com/substack/browserify-handbook#how-node_modules-works).
 
 ## Usage
 
@@ -96,6 +96,42 @@ The cache uses expiration times and not the build number, because the content of
 
 // Check the build every 10 minutes and flush the cache if it updated
 setInterval(() => api.flushCacheIfGameUpdated(), 10 * 60 * 1000)
+```
+
+### Auto-Batching
+
+By default, all API requests are executed individually against the live API (or the cache).  You can queue/batch requests to bulk endpoints with the `.autoBatch(batchDelay)` method.  When enabled, the library will pool ids from get/many for the specified `batchDelay` in ms(default 50 ms), then make API requests with all pending IDs.
+
+```js
+api.items().autoBatch().get(100)
+api.items().autoBatch().get(100)
+api.items().autoBatch().get(101)
+api.items().autoBatch().many([100, 101, 102, 103])
+api.items().autoBatch().many([100, 103, 104, 105])
+// when called in immediate succession here, the only API call will be:
+// https://api.guildwars2.com/v2/items?ids=100,101,102,103,104,105
+```
+
+Autobatching can be enabled for all endpoints by calling `client.autoBatch()`:
+
+```js
+api.autoBatch() // autobatching turned on for all endpoints stemmed from this client object
+api.items().get(100)
+api.items().get(100)
+api.items().get(101)
+api.items().many([100, 101, 102, 103])
+api.items().many([100, 103, 104, 105])
+```
+
+Or enable only for a single Endpoint by saving a reference to an endpoint after calling autobatch:
+
+```js
+const itemsApi = api.items().autoBatch() // autobatching turned on for all calls from this endpoint
+itemsApi.get(100)
+itemsApi.get(100)
+itemsApi.get(101)
+itemsApi.many([100, 101, 102, 103])
+itemsApi.many([100, 103, 104, 105])
 ```
 
 ### Error handling

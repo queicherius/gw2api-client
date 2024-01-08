@@ -123,6 +123,26 @@ describe('client', () => {
     client.build = tmp
   })
 
+  describe('autobatch', () => {
+    const batchDelay = 10
+    it('can turn on autobatching with specified delay', () => {
+      let api = client.autoBatch(100)
+      expect(client.autoBatchDelay).toEqual(100)
+      expect(api).toBeInstanceOf(Module)
+
+      let endpoint = client.account().autoBatch(200)
+      expect(endpoint.autoBatchDelay).toEqual(200)
+      expect(client.autoBatch(300).autoBatchDelay).toEqual(300)
+      expect(endpoint.autoBatchDelay).toEqual(200)
+    })
+
+    it ('has default bach delay of 50', () => {
+      let endpoint = client.autoBatch().items()
+      expect(client.autoBatchDelay).toEqual(50)
+      expect(endpoint.autoBatchDelay).toEqual(50)
+    })
+  })
+
   it('can get the account endpoint', () => {
     let endpoint = client.account()
     expect(endpoint.url).toEqual('/v2/account')

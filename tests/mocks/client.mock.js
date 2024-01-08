@@ -7,6 +7,8 @@ const mockClient = {
   apiKey: false,
   fetch: fetch,
   caches: [nullCache(), memoryCache(), memoryCache()],
+  autoBatching: false,
+  autoBatchDelay: 50,
   language: function (lang) {
     this.lang = lang
   },

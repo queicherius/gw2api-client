@@ -5,6 +5,8 @@ const hashString = require('./hash')
 
 const clone = (x) => JSON.parse(JSON.stringify(x))
 
+const autoBatchSharedData = {}
+
 module.exports = class AbstractEndpoint {
   constructor (parent) {
     this.client = parent.client
@@ -24,6 +26,10 @@ module.exports = class AbstractEndpoint {
     this.isAuthenticated = false
     this.isOptionallyAuthenticated = false
     this.credentials = false
+    
+    this.autoBatching = parent.autoBatching
+    this.autoBatchDelay = parent.autoBatchDelay
+    this.setupAutoBatchSharedData()
 
     this._skipCache = false
   }
@@ -31,6 +37,7 @@ module.exports = class AbstractEndpoint {
   // Set the schema version
   schema (schema) {
     this.schemaVersion = schema
+    this.setupAutoBatchSharedData()
     this.debugMessage(`set the schema to ${schema}`)
     return this
   }
@@ -43,6 +50,7 @@ module.exports = class AbstractEndpoint {
   // Set the language for locale-aware endpoints
   language (lang) {
     this.lang = lang
+    this.setupAutoBatchSharedData()
     this.debugMessage(`set the language to ${lang}`)
     return this
   }
@@ -50,6 +58,7 @@ module.exports = class AbstractEndpoint {
   // Set the api key for authenticated endpoints
   authenticate (apiKey) {
     this.apiKey = apiKey
+    this.setupAutoBatchSharedData()
     this.debugMessage(`set the api key to ${apiKey}`)
     return this
   }
@@ -72,6 +81,29 @@ module.exports = class AbstractEndpoint {
     this._skipCache = true
     this.debugMessage(`skipping cache`)
     return this
+  }
+
+  // Turn on auto-batching for this endpoint
+  autoBatch (autoBatchDelay) {
+    if (autoBatchDelay) {
+      this.autoBatchDelay = autoBatchDelay
+      this.setupAutoBatchSharedData()
+    }
+    this.autoBatching = true
+    return this
+  }
+
+  // Sets _autoBatch to shared batching object based on _cacheHash 
+  setupAutoBatchSharedData() {
+    const autoBatchId = this._cacheHash(this.constructor.name + this.autoBatchDelay)
+    if (!autoBatchSharedData[autoBatchId]) {
+      autoBatchSharedData[autoBatchId] = {
+        idsForNextBatch: new Set(),
+        nextBatchPromise: null,
+      }
+    }
+
+    this._autoBatch = autoBatchSharedData[autoBatchId]
   }
 
   // Get all ids
@@ -156,7 +188,14 @@ module.exports = class AbstractEndpoint {
 
     // Request the single id if the endpoint a bulk endpoint
     if (this.isBulk && !url) {
-      return this._request(`${this.url}?id=${id}`)
+      if (this.autoBatching) {
+        return this._autoBatchMany([id]).then((items) => {
+          return items[0]?items[0]:null
+        })
+      }
+      else {
+        return this._request(`${this.url}?id=${id}`)
+      }
     }
 
     // We are dealing with a custom url instead
@@ -168,8 +207,34 @@ module.exports = class AbstractEndpoint {
     return this._request(this.url)
   }
 
+  _autoBatchMany (ids) {
+    if (this._autoBatch.idsForNextBatch.size === 0) {
+      this._autoBatch.nextBatchPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const batchedIds = Array.from(this._autoBatch.idsForNextBatch)
+          this.debugMessage(`autoBatchMany called (${batchedIds.length} ids)`)
+          this._autoBatch.idsForNextBatch.clear()
+          return resolve(this.many(batchedIds, true))
+        }, this.autoBatchDelay) 
+      }).then(items => {
+        const indexedItems = {}
+        items.forEach(item => {
+          indexedItems[item.id] = item
+        })
+        return indexedItems
+      })
+    }
+
+    // Add the requested ids to the pending ids
+    ids.forEach(id => this._autoBatch.idsForNextBatch.add(id))
+    // Return the results based on the requested ids
+    return this._autoBatch.nextBatchPromise.then(indexedItems => {
+      return ids.map(id => indexedItems[id]).filter(x => x)
+    })
+  }
+
   // Get multiple entries by ids
-  many (ids) {
+  many (ids, skipAutoBatch) {
     this.debugMessage(`many(${this.url}) called (${ids.length} ids)`)
 
     if (!this.isBulk) {
@@ -186,7 +251,7 @@ module.exports = class AbstractEndpoint {
 
     // There is no cache time set, so always use the live data
     if (!this.cacheTime) {
-      return this._many(ids)
+      return this._many(ids, undefined, skipAutoBatch)
     }
 
     // Get as much as possible out of the cache
@@ -201,7 +266,7 @@ module.exports = class AbstractEndpoint {
 
       this.debugMessage(`many(${this.url}) resolving partially from cache (${cached.length} ids)`)
       const missingIds = getMissingIds(ids, cached)
-      return this._many(missingIds, cached.length > 0).then(content => {
+      return this._many(missingIds, cached.length > 0, skipAutoBatch).then(content => {
         const cacheContent = content.map(value => [this._cacheHash(value.id), value])
         this._cacheSetMany(cacheContent)
 
@@ -230,8 +295,14 @@ module.exports = class AbstractEndpoint {
   }
 
   // Get multiple entries by ids from the live API
-  _many (ids, partialRequest = false) {
+  _many (ids, partialRequest = false, skipAutoBatch) {
     this.debugMessage(`many(${this.url}) requesting from api (${ids.length} ids)`)
+
+    if (this.autoBatching && !skipAutoBatch) {
+      return this._autoBatchMany(ids)
+    }
+
+
 
     // Chunk the requests to the max page size
     const pages = chunk(ids, this.maxPageSize)

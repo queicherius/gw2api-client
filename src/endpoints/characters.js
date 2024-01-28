@@ -7,6 +7,7 @@ module.exports = class CharactersEndpoint extends AbstractEndpoint {
     this.url = '/v2/characters'
     this.isPaginated = true
     this.isBulk = true
+    this.bulkId = 'name'
     this.supportsBulkAll = false
     this.isAuthenticated = true
     this.cacheTime = 5 * 60

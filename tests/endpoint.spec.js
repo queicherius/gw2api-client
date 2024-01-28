@@ -312,6 +312,34 @@ describe('abstract endpoint', () => {
       expect(bulkEntriesInCache).toEqual(content)
     })
 
+    it('caching with custom bulk id', async () => {
+      let content = [
+        { name: 1, profession: 'foo' },
+        { name: 2, profession: 'bar' },
+        { name: 3, profession: 'fooo' }
+      ]
+      endpoint.isBulk = true
+      endpoint.bulkId = 'name'
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.many([1, 2, 3])
+      await wait(50)
+      let entryShouldCache = await endpoint.many([2, 3, 2])
+      let bulkEntriesInCache = await endpoint._cacheGetMany([
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
+      ])
+
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=1,2,3')
+      expect(fetchMock.urls().length).toEqual(1)
+      expect(entry).toEqual(content)
+      expect(entryShouldCache).toEqual(content.slice(1))
+      expect(bulkEntriesInCache).toEqual(content)
+    })
+
     it('partial caching', async () => {
       let content = [
         { id: 1, name: 'foo' },
@@ -320,6 +348,40 @@ describe('abstract endpoint', () => {
         { id: 4, name: 'xd' }
       ]
       endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(content.slice(1, 3))
+      fetchMock.addResponse(content.slice(0, 1).concat(content.slice(3, 4)))
+
+      let entry = await endpoint.many([2, 3])
+      await wait(50)
+      let entryShouldCache = await endpoint.many([1, 2, 3, 4])
+      await wait(50)
+      let bulkEntriesInCache = await endpoint._cacheGetMany([
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3',
+        'hash[https://api.guildwars2.com/v2/test:schema]:4'
+      ])
+
+      expect(fetchMock.urls()).toEqual([
+        'https://api.guildwars2.com/v2/test?v=schema&ids=2,3',
+        'https://api.guildwars2.com/v2/test?v=schema&ids=1,4'
+      ])
+      expect(entry).toEqual(content.slice(1, 3))
+      expect(entryShouldCache).toEqual(content)
+      expect(bulkEntriesInCache).toEqual(content)
+    })
+
+    it('partial caching with custom bulk id', async () => {
+      let content = [
+        { name: 1, profession: 'foo' },
+        { name: 2, profession: 'bar' },
+        { name: 3, profession: 'fooo' },
+        { name: 4, profession: 'xd' }
+      ]
+      endpoint.isBulk = true
+      endpoint.bulkId = 'name'
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
       fetchMock.addResponse(content.slice(1, 3))
@@ -491,6 +553,37 @@ describe('abstract endpoint', () => {
       ]
       endpoint.isPaginated = true
       endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.page(0, 3)
+      await wait(50)
+      let entryShouldCache = await endpoint.page(0, 3)
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:page-0/3')
+      let bulkEntriesInCache = await endpoint._cacheGetMany([
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
+      ])
+
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&page=0&page_size=3')
+      expect(fetchMock.urls().length).toEqual(1)
+      expect(entry).toEqual(content)
+      expect(entryShouldCache).toEqual(content)
+      expect(entryInCache).toEqual(content)
+      expect(bulkEntriesInCache).toEqual(content)
+    })
+
+    it('caching for bulk endpoints with custom bulk id', async () => {
+      let content = [
+        { name: 1, profession: 'foo' },
+        { name: 2, profession: 'bar' },
+        { name: 3, profession: 'fooo' }
+      ]
+      endpoint.isPaginated = true
+      endpoint.isBulk = true
+      endpoint.bulkId = 'name'
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
       fetchMock.addResponse(content)
@@ -692,6 +785,36 @@ describe('abstract endpoint', () => {
         { id: 3, name: 'fooo' }
       ]
       endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.cacheTime = 60
+      fetchMock.addResponse(content)
+
+      let entry = await endpoint.all()
+      await wait(50)
+      let entryShouldCache = await endpoint.all()
+      let entryInCache = await endpoint._cacheGetSingle('hash[https://api.guildwars2.com/v2/test:schema]:all')
+      let cacheEntries = await endpoint._cacheGetMany([
+        'hash[https://api.guildwars2.com/v2/test:schema]:1',
+        'hash[https://api.guildwars2.com/v2/test:schema]:2',
+        'hash[https://api.guildwars2.com/v2/test:schema]:3'
+      ])
+
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=all')
+      expect(fetchMock.urls().length).toEqual(1)
+      expect(entry).toEqual(content)
+      expect(entryShouldCache).toEqual(content)
+      expect(entryInCache).toEqual(content)
+      expect(cacheEntries).toEqual(content)
+    })
+
+    it('caching for bulk endpoints with custom bulk id', async () => {
+      let content = [
+        { name: 1, profession: 'foo' },
+        { name: 2, profession: 'bar' },
+        { name: 3, profession: 'fooo' }
+      ]
+      endpoint.isBulk = true
+      endpoint.bulkId = 'name'
       endpoint.url = '/v2/test'
       endpoint.cacheTime = 60
       fetchMock.addResponse(content)

@@ -12,6 +12,7 @@ describe('endpoints > characters', () => {
   it('test /v2/characters', async () => {
     expect(endpoint.isPaginated).toEqual(true)
     expect(endpoint.isBulk).toEqual(true)
+    expect(endpoint.bulkId).toEqual('name')
     expect(endpoint.supportsBulkAll).toEqual(false)
     expect(endpoint.isLocalized).toEqual(false)
     expect(endpoint.isAuthenticated).toEqual(true)

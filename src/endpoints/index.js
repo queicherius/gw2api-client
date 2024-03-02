@@ -50,6 +50,7 @@ module.exports = {
   TitlesEndpoint: require('./titles'),
   TokeninfoEndpoint: require('./tokeninfo'),
   TraitsEndpoint: require('./traits'),
+  WizardsvaultEndpoint: require('./wizardsvault'),
   WorldbossesEndpoint: require('./worldbosses'),
   WorldsEndpoint: require('./worlds'),
   WvwEndpoint: require('./wvw')

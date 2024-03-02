@@ -179,6 +179,9 @@ client.language('de').items().all()
 - [`api().titles()`](#apititles) - Information about titles.
 - [`api().tokeninfo()`](#apitokeninfo) - Information about the supplied API key.
 - [`api().traits()`](#apitraits) - Information about specific traits, which are contained within specializations.
+- [`api().wizardsvault()`](#apiwizardsvault) - Information about the current season of the Wizard's Vault.
+- [`api().wizardsvault().listings()`](#apiwizardsvaultlistings) - Information about the astral rewards in the Wizard's Vault.
+- [`api().wizardsvault().objectives()`](#apiwizardsvaultobjectives) - Information about the objectives in the Wizard's Vault.
 - [`api().worlds()`](#apiworlds) - Information about the available worlds / servers.
 - [`api().worldbosses()`](#apiworldbosses) - Information about the available worldbosses.
 - [`api().wvw().abilities()`](#apiwvwabilities) - Information about the abilities available in WvW.
@@ -2220,6 +2223,51 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Authenticated:** No
 - **Localized:** Yes
 - **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().wizardsvault()`
+
+> Information about the current season of the Wizard's Vault.
+
+- **API-URL:** [/v2/wizardsvault](https://api.guildwars2.com/v2/wizardsvault)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 1 hour
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().wizardsvault().listings()`
+
+> Information about the astral rewards in the Wizard's Vault.
+
+- **API-URL:** [/v2/wizardsvault/listings](https://api.guildwars2.com/v2/wizardsvault/listings)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 1 hour
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().wizardsvault().objectives()`
+
+> Information about the objectives in the Wizard's Vault.
+
+- **API-URL:** [/v2/wizardsvault/objectives](https://api.guildwars2.com/v2/wizardsvault/objectives)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 1 hour
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
 

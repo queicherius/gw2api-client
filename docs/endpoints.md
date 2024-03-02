@@ -79,6 +79,10 @@ client.language('de').items().all()
 - [`api().account().transactions()`](#apiaccounttransactions) - Alternative method of calling [`api().commerce().transactions()`](#apicommercetransactionscurrentbuys).
 - [`api().account().delivery()`](#apiaccountdelivery) - Alternative method of calling [`api().commerce().delivery()`](#apicommercedelivery).
 - [`api().account().wallet()`](#apiaccountwallet) - The currencies owned by the account. 
+- [`api().account().wizardsvault().listings()`](#apiaccountwizardsvaultlistings) - The account's astral rewards in the Wizard's Vault.
+- [`api().account().wizardsvault().daily()`](#apiaccountwizardsvaultdaily) - The account's daily objectives in the Wizard's Vault.
+- [`api().account().wizardsvault().weekly()`](#apiaccountwizardsvaultweekly) - The account's weekly objectives in the Wizard's Vault.
+- [`api().account().wizardsvault().special()`](#apiaccountwizardsvaultspecial) - The account's seasonal objectives in the Wizard's Vault.
 - [`api().account().worldbosses()`](#apiaccountworldbosses) - The daily worldbosses completed by the account. 
 - [`api().achievements()`](#apiachievements) - Information about achievements.
 - [`api().achievements().categories()`](#apiachievementscategories) - The categories for achievements.
@@ -710,6 +714,66 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Bulk expanding:** No
 - **Authenticated:** Yes
 - **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().wizardsvault().listings()`
+
+> The account's astral rewards in the Wizard's Vault.
+
+- **API-URL:** [/v2/account/wizardsvault/listings](https://api.guildwars2.com/v2/account/wizardsvault/listings)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().wizardsvault().daily()`
+
+> The account's daily objectives in the Wizard's Vault.
+
+- **API-URL:** [/v2/account/wizardsvault/daily](https://api.guildwars2.com/v2/account/wizardsvault/daily)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** Yes
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().wizardsvault().weekly()`
+
+> The account's weekly objectives in the Wizard's Vault.
+
+- **API-URL:** [/v2/account/wizardsvault/weekly](https://api.guildwars2.com/v2/account/wizardsvault/weekly)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** Yes
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().wizardsvault().special()`
+
+> The account's seasonal objectives in the Wizard's Vault.
+
+- **API-URL:** [/v2/account/wizardsvault/special](https://api.guildwars2.com/v2/account/wizardsvault/special)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** Yes
 - **Cache time:** 5 minutes
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

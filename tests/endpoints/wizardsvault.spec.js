@@ -17,10 +17,10 @@ describe('endpoints > wizardsvault', () => {
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/wizardsvault')
 
-    fetchMock.addResponse({ 
+    fetchMock.addResponse({
       title: 'The Realm of Dreams Season',
       start: '2022-11-07T17:00:00Z',
-      end: '2024-05-14T16:00:00Z',
+      end: '2024-05-14T16:00:00Z'
     })
     let content = await endpoint.get()
     expect(content.title).toEqual('The Realm of Dreams Season')

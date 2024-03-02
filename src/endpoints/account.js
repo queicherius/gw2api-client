@@ -2,6 +2,7 @@ const AbstractEndpoint = require('../endpoint')
 const CharactersEndpoint = require('./characters')
 const PvpEndpoint = require('./pvp')
 const CommerceEndpoint = require('./commerce')
+const WizardsvaultEndpoint = require('./wizardsvault')
 const accountBlob = require('./account-blob.js')
 const resetTime = require('../helpers/resetTime')
 
@@ -147,6 +148,15 @@ class AccountEndpoint extends AbstractEndpoint {
 
   wallet () {
     return new WalletEndpoint(this)
+  }
+
+  wizardsvault () {
+    return {
+      listings: () => new WizardsvaultListingsEndpoint(this),
+      daily: () => new WizardsvaultDailyEndpoint(this),
+      weekly: () => new WizardsvaultWeeklyEndpoint(this),
+      special: () => new WizardsvaultSpecialEndpoint(this)
+    }
   }
 
   worldbosses () {
@@ -485,16 +495,103 @@ class WorldbossesEndpoint extends AbstractEndpoint {
   }
 }
 
+class WizardsvaultListingsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/wizardsvault/listings'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class WizardsvaultDailyEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/wizardsvault/daily'
+    this.isAuthenticated = true
+    this.isLocalized = true
+    this.cacheTime = 5 * 60
+  }
+
+  async get () {
+    const [response, isStale] = await Promise.all([
+      super.get(),
+      isStaleDailyData(this)
+    ])
+
+    if (isStale) {
+      response.meta_progress_current = 0
+      response.meta_reward_claimed = false
+      response.objectives = []
+    }
+
+    return response
+  }
+}
+
+class WizardsvaultWeeklyEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/wizardsvault/weekly'
+    this.isAuthenticated = true
+    this.isLocalized = true
+    this.cacheTime = 5 * 60
+  }
+
+  async get () {
+    const [response, isStale] = await Promise.all([
+      super.get(),
+      isStaleWeeklyData(this)
+    ])
+
+    if (isStale) {
+      response.meta_progress_current = 0
+      response.meta_reward_claimed = false
+      response.objectives = []
+    }
+
+    return response
+  }
+}
+
+class WizardsvaultSpecialEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/wizardsvault/special'
+    this.isAuthenticated = true
+    this.isLocalized = true
+    this.cacheTime = 5 * 60
+  }
+
+  async get () {
+    const season = await new WizardsvaultEndpoint(this).get()
+
+    const [response, isStale] = await Promise.all([
+      super.get(),
+      isStaleData(this, new Date(season.start))
+    ])
+
+    if (isStale) {
+      response.objectives = []
+    }
+
+    return response
+  }
+}
+
 // Stale data can happen if the last account update was before the last daily reset
 async function isStaleDailyData (endpointInstance) {
-  const account = await new AccountEndpoint(endpointInstance).schema('2019-03-26').get()
-  return new Date(account.last_modified) < resetTime.getLastDailyReset()
+  return isStaleData(endpointInstance, resetTime.getLastDailyReset())
 }
 
 // Stale data can happen if the last account update was before the last weekly reset
 async function isStaleWeeklyData (endpointInstance) {
+  return isStaleData(endpointInstance, resetTime.getLastWeeklyReset())
+}
+
+async function isStaleData (endpointInstance, resetDate) {
   const account = await new AccountEndpoint(endpointInstance).schema('2019-03-26').get()
-  return new Date(account.last_modified) < resetTime.getLastWeeklyReset()
+  return new Date(account.last_modified) < resetDate
 }
 
 module.exports = AccountEndpoint

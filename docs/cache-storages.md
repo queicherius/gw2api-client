@@ -1,15 +1,15 @@
-### `gw2api-client/build/cache/null`
+### `gw2api-client/src/cache/null`
 
 The default storage. Does no caching at all.
 
 ```js
-import cacheNull from 'gw2api-client/build/cache/null'
+import cacheNull from 'gw2api-client/src/cache/null'
 api.cacheStorage(cacheNull())
 ```
 
 ---
 
-### `gw2api-client/build/cache/memory`
+### `gw2api-client/src/cache/memory`
 
 Caches the data using a basic in-memory storage.
 
@@ -18,7 +18,7 @@ Caches the data using a basic in-memory storage.
 - `gcTick` *(optional)* - How often the garbage collection should clean out expired data (in ms). Defaults to `5 * 60 * 1000`.
 
 ```js
-import cacheMemory from 'gw2api-client/build/cache/memory'
+import cacheMemory from 'gw2api-client/src/cache/memory'
 
 const options = {
   gcTick: 5 * 60 * 1000
@@ -29,7 +29,7 @@ api.cacheStorage(cacheMemory(options))
 
 ---
 
-### `gw2api-client/build/cache/browser`
+### `gw2api-client/src/cache/browser`
 
 Caches the data in-memory but saves a persistent version into IndexedDB to hydrate the cache from on page load.
 
@@ -41,7 +41,7 @@ Caches the data in-memory but saves a persistent version into IndexedDB to hydra
 - `storageEngine` - *(optional)* - A storage engine, with the same interface as [`idb-keyval`](https://www.npmjs.com/package/idb-keyval#usage)
 
 ```js
-import cacheBrowserStorage from 'gw2api-client/build/cache/browser'
+import cacheBrowserStorage from 'gw2api-client/src/cache/browser'
 
 const options = {
   gcTick: 3 * 60 * 1000
@@ -52,7 +52,7 @@ api.cacheStorage(cacheBrowserStorage(options))
 
 ---
 
-### `gw2api-client/build/cache/redis`
+### `gw2api-client/src/cache/redis`
 
 Caches the data using [Redis](https://redis.io).
 
@@ -63,7 +63,7 @@ Caches the data using [Redis](https://redis.io).
 
 ```js
 import redis from 'redis'
-import cacheRedis from 'gw2api-client/build/cache/redis'
+import cacheRedis from 'gw2api-client/src/cache/redis'
 
 const options = {
   redis: redis.createClient(),

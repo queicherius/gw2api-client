@@ -29,7 +29,7 @@ describe('endpoints > continents', () => {
     expect(endpoint.isPaginated).toEqual(true)
     expect(endpoint.isBulk).toEqual(true)
     expect(endpoint.supportsBulkAll).toEqual(true)
-    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(true)
     expect(endpoint.isAuthenticated).toEqual(false)
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/continents/1/floors')

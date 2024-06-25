@@ -1287,7 +1287,7 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No
-- **Localized:** No
+- **Localized:** Yes
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

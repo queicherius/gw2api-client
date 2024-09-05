@@ -13,8 +13,8 @@ describe('endpoints > homestead', () => {
     endpoint = endpoint.decorations()
 
     expect(endpoint.isPaginated).toEqual(true)
-    expect(endpoint.isBulk).toEqual(true)
-    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(true)
     expect(endpoint.isAuthenticated).toEqual(false)
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/homestead/decorations')
@@ -55,7 +55,7 @@ describe('endpoints > homestead', () => {
 
     expect(endpoint.isPaginated).toEqual(true)
     expect(endpoint.isBulk).toEqual(true)
-    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(true)
     expect(endpoint.isAuthenticated).toEqual(false)
     expect(endpoint.cacheTime).not.toEqual(undefined)
     expect(endpoint.url).toEqual('/v2/homestead/decorations/categories')

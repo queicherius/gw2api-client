@@ -15,7 +15,7 @@ class DecorationsEndpoint extends AbstractEndpoint {
     super(client)
     this.url = '/v2/homestead/decorations'
     this.isPaginated = true
-    this.isBulk = true
+    this.isLocalized = true
     this.cacheTime = 24 * 60 * 60
   }
 
@@ -40,6 +40,7 @@ class DecorationsCategoriesEndpoint extends AbstractEndpoint {
     this.url = '/v2/homestead/decorations/categories'
     this.isPaginated = true
     this.isBulk = true
+    this.isLocalized = true
     this.cacheTime = 24 * 60 * 60
   }
 }

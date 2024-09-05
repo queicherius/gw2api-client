@@ -1697,9 +1697,9 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 
 - **API-URL:** [/v2/homestead/decorations](https://api.guildwars2.com/v2/homestead/decorations)
 - **Paginated:** Yes
-- **Bulk expanding:** Yes
+- **Bulk expanding:** No
 - **Authenticated:** No
-- **Localized:** No
+- **Localized:** Yes
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>
@@ -1714,7 +1714,7 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No
-- **Localized:** No
+- **Localized:** Yes
 - **Cache time:** 24 hours
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

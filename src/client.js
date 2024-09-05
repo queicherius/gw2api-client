@@ -160,7 +160,7 @@ module.exports = class Client {
     return new endpoints.HomeEndpoint(this)
   }
 
-  homestead() {
+  homestead () {
     return new endpoints.HomesteadEndpoint(this)
   }
 

@@ -295,18 +295,18 @@ class HomeNodesEndpoint extends AbstractEndpoint {
 }
 
 class HomesteadDecorationsEndpoint extends AbstractEndpoint {
-  constructor(client) {
+  constructor (client) {
     super(client)
-    this.url = "/v2/account/homestead/decorations"
+    this.url = '/v2/account/homestead/decorations'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }
 }
 
 class HomesteadGlyphsEndpoint extends AbstractEndpoint {
-  constructor(client) {
+  constructor (client) {
     super(client)
-    this.url = "/v2/account/homestead/glyphs"
+    this.url = '/v2/account/homestead/glyphs'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

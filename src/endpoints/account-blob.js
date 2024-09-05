@@ -44,7 +44,7 @@ function blob (parent) {
     skiffs: wrap(() => client.account().skiffs().get()),
     skins: wrap(() => client.account().skins().get()),
     titles: wrap(() => client.account().titles().get()),
-    wallet: wrap(() => client.account().wallet().get()),
+    wallet: wrap(() => client.account().wallet().get())
   }
 
   return flow.parallel(requests).then(data => {

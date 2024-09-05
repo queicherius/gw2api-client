@@ -19,6 +19,7 @@ module.exports = {
   GlidersEndpoint: require('./gliders'),
   GuildEndpoint: require('./guild'),
   HomeEndpoint: require('./home'),
+  HomesteadEndpoint: require('./homestead'),
   ItemsEndpoint: require('./items'),
   ItemstatsEndpoint: require('./itemstats'),
   JadebotsEndpoint: require('./jadebots'),

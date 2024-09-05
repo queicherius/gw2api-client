@@ -160,6 +160,10 @@ module.exports = class Client {
     return new endpoints.HomeEndpoint(this)
   }
 
+  homestead() {
+    return new endpoints.HomesteadEndpoint(this)
+  }
+
   items () {
     return new endpoints.ItemsEndpoint(this)
   }

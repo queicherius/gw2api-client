@@ -20,6 +20,10 @@ function mockClient (hasGuildPermission) {
         cats: () => ({ get: () => _s([{ id: 1, hint: 'chicken' }]) }),
         nodes: () => ({ get: () => _s(['quartz_node', 'airship_cargo']) })
       }),
+      homestead: () => ({
+        decorations: () => ({ get: () => _s([{ id: 35, count: 50 }]) }),
+        glyphs: () => ({ get: () => _s(['volatility_harvesting', 'volatility_logging']) })
+      }),
       inventory: () => ({ get: () => _s([{ id: 123, foo: 'bar' }]) }),
       jadebots: () => ({ get: () => _s([1, 2, 3]) }),
       legendaryarmory: () => ({ get: () => _s([{ id: 123, count: 1 }]) }),
@@ -104,6 +108,10 @@ const expectedResponse = {
   home: {
     cats: [{ id: 1, hint: 'chicken' }],
     nodes: ['quartz_node', 'airship_cargo']
+  },
+  homestead: {
+    decorations: [{ id: 35, count: 50 }],
+    glyphs: ['volatility_harvesting', 'volatility_logging']
   },
   jadebots: [1, 2, 3],
   legendaryarmory: [{ id: 123, count: 1 }],

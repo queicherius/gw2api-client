@@ -55,6 +55,8 @@ client.language('de').items().all()
 - [`api().account().gliders()`](#apiaccountgliders) - The unlocked gliders of the account.
 - [`api().account().home().cats()`](#apiaccounthomecats) - The unlocked cats in the home instance of the account.
 - [`api().account().home().nodes()`](#apiaccounthomenodes) - The unlocked nodes in the home instance of the account.
+- ['api().account().homestead().decorations()`](#apiaccounthomesteaddecorations) - The account's currently used decorations in homestead.
+- ['api().account().homestead().glyphs()`](#apiaccounthomesteadglyphs) - The account's glyphs stored in homestead.
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
 - [`api().account().jadebots()`](#apiaccountjadebots) - The unlocked jadebots of the account.
 - [`api().account().legendaryarmory()`](#apiaccountlegendaryarmory) - The items in the legendary armory of the account.
@@ -83,7 +85,7 @@ client.language('de').items().all()
 - [`api().account().wizardsvault().daily()`](#apiaccountwizardsvaultdaily) - The account's daily objectives in the Wizard's Vault.
 - [`api().account().wizardsvault().weekly()`](#apiaccountwizardsvaultweekly) - The account's weekly objectives in the Wizard's Vault.
 - [`api().account().wizardsvault().special()`](#apiaccountwizardsvaultspecial) - The account's seasonal objectives in the Wizard's Vault.
-- [`api().account().worldbosses()`](#apiaccountworldbosses) - The daily worldbosses completed by the account. 
+- [`api().account().worldbosses()`](#apiaccountworldbosses) - The daily worldbosses completed by the account.
 - [`api().achievements()`](#apiachievements) - Information about achievements.
 - [`api().achievements().categories()`](#apiachievementscategories) - The categories for achievements.
 - [`api().achievements().groups()`](#apiachievementsgroups) - The top-level groups for achievements.
@@ -141,6 +143,9 @@ client.language('de').items().all()
 - [`api().guild().treasury()`](#apiguildtreasury) - Information about the items in the guild's treasury.
 - [`api().home().cats()`](#apihomecats) - Information about home instance cats.
 - [`api().home().nodes()`](#apihomenodes) - Information about home instance nodes.
+- ['api().homestead().decorations()`](#apihomesteaddecorations) - Information about homestead decorations.
+- ['api().homestead().decorations().categories()`](#apihomesteaddecorationscategories) - Information about homestead decoration categories.
+- ['api().homestead().glyphs()`](#apihomesteadglyphs) - Information about glyphs in homestead.
 - [`api().items()`](#apiitems) - Information about items that were discovered by players.
 - [`api().itemstats()`](#apiitemstats) - Information about stats for items.
 - [`api().mailcarriers()`](#apimailcarriers) - Information about mailcarriers.
@@ -377,6 +382,36 @@ Alternative method of calling [`api().commerce().delivery()`](#apicommercedelive
 > The unlocked nodes in the home instance of the account.
 
 - **API-URL:** [/v2/account/home/nodes](https://api.guildwars2.com/v2/account/home/nodes)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().homestead().decorations()`
+
+> The account's currently used decorations in homestead.
+
+- **API-URL:** [/v2/account/homestead/decorations](https://api.guildwars2.com/v2/account/homestead/decorations)
+- **Paginated:** No
+- **Bulk expanding:** No
+- **Authenticated:** Yes
+- **Localized:** No
+- **Cache time:** 5 minutes
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().account().homestead().glyphs()`
+
+> The account's glyphs stored in homestead.
+
+- **API-URL:** [/v2/account/homestead/glyphs](https://api.guildwars2.com/v2/account/homestead/glyphs)
 - **Paginated:** No
 - **Bulk expanding:** No
 - **Authenticated:** Yes
@@ -1646,6 +1681,51 @@ Alternative method of calling [`api().commerce().transactions()`](#apicommercetr
 > Information about home instance nodes.
 
 - **API-URL:** [/v2/home/nodes](https://api.guildwars2.com/v2/home/nodes)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** No
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().homestead().decorations()`
+
+> Information about homestead decorations.
+
+- **API-URL:** [/v2/homestead/decorations](https://api.guildwars2.com/v2/homestead/decorations)
+- **Paginated:** Yes
+- **Bulk expanding:** No
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().homestead().decorations().categories()`
+
+> Information about homestead decoration categories.
+
+- **API-URL:** [/v2/homestead/decorations/categories](https://api.guildwars2.com/v2/homestead/decorations/categories)
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
+- **Authenticated:** No
+- **Localized:** Yes
+- **Cache time:** 24 hours
+
+<sup>[↑ Back to the overview](#available-endpoints)</sup>
+
+---
+
+### `api().homestead().glyphs()`
+
+> Information about glyphs in homestead.
+
+- **API-URL:** [/v2/homestead/glyphs](https://api.guildwars2.com/v2/homestead/glyphs)
 - **Paginated:** Yes
 - **Bulk expanding:** Yes
 - **Authenticated:** No

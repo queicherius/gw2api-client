@@ -235,6 +235,11 @@ describe('client', () => {
     expect(endpoint.cats).not.toEqual(undefined)
   })
 
+  it('can get the homestead endpoint', () => {
+    let endpoint = client.homestead()
+    expect(endpoint.decorations).not.toEqual(undefined)
+  })
+
   it('can get the items endpoint', () => {
     let endpoint = client.items()
     expect(endpoint.url).toEqual('/v2/items')

@@ -61,6 +61,13 @@ class AccountEndpoint extends AbstractEndpoint {
     }
   }
 
+  homestead () {
+    return {
+      decorations: () => new HomesteadDecorationsEndpoint(this),
+      glyphs: () => new HomesteadGlyphsEndpoint(this)
+    }
+  }
+
   inventory () {
     return new InventoryEndpoint(this)
   }
@@ -282,6 +289,24 @@ class HomeNodesEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
     this.url = '/v2/account/home/nodes'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class HomesteadDecorationsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/homestead/decorations'
+    this.isAuthenticated = true
+    this.cacheTime = 5 * 60
+  }
+}
+
+class HomesteadGlyphsEndpoint extends AbstractEndpoint {
+  constructor (client) {
+    super(client)
+    this.url = '/v2/account/homestead/glyphs'
     this.isAuthenticated = true
     this.cacheTime = 5 * 60
   }

@@ -276,6 +276,36 @@ describe('endpoints > account', () => {
     expect(content).toEqual(['quartz_node', 'airship_cargo'])
   })
 
+  it('test /v2/account/homestead/decorations', async () => {
+    endpoint = endpoint.homestead().decorations()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/homestead/decorations')
+
+    fetchMock.addResponse([{ id: 35, count: 50 }])
+    let content = await endpoint.get()
+    expect(content).toEqual([{ id: 35, count: 50 }])
+  })
+
+  it('test /v2/account/homestead/glyphs', async () => {
+    endpoint = endpoint.homestead().glyphs()
+
+    expect(endpoint.isPaginated).toEqual(false)
+    expect(endpoint.isBulk).toEqual(false)
+    expect(endpoint.isLocalized).toEqual(false)
+    expect(endpoint.isAuthenticated).toEqual(true)
+    expect(endpoint.cacheTime).not.toEqual(undefined)
+    expect(endpoint.url).toEqual('/v2/account/homestead/glyphs')
+
+    fetchMock.addResponse(['volatility_harvesting', 'volatility_logging'])
+    let content = await endpoint.get()
+    expect(content).toEqual(['volatility_harvesting', 'volatility_logging'])
+  })
+
   it('test /v2/account/jadebots', async () => {
     endpoint = endpoint.jadebots()
 

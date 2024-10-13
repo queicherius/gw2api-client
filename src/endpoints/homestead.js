@@ -16,6 +16,7 @@ class DecorationsEndpoint extends AbstractEndpoint {
     this.url = '/v2/homestead/decorations'
     this.isPaginated = true
     this.isLocalized = true
+    this.isBulk = true
     this.cacheTime = 24 * 60 * 60
   }
 

@@ -397,10 +397,10 @@ Alternative method of calling [`api().commerce().delivery()`](#apicommercedelive
 > The account's currently used decorations in homestead.
 
 - **API-URL:** [/v2/account/homestead/decorations](https://api.guildwars2.com/v2/account/homestead/decorations)
-- **Paginated:** No
-- **Bulk expanding:** No
+- **Paginated:** Yes
+- **Bulk expanding:** Yes
 - **Authenticated:** Yes
-- **Localized:** No
+- **Localized:** Yes
 - **Cache time:** 5 minutes
 
 <sup>[↑ Back to the overview](#available-endpoints)</sup>

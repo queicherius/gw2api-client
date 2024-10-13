@@ -55,8 +55,8 @@ client.language('de').items().all()
 - [`api().account().gliders()`](#apiaccountgliders) - The unlocked gliders of the account.
 - [`api().account().home().cats()`](#apiaccounthomecats) - The unlocked cats in the home instance of the account.
 - [`api().account().home().nodes()`](#apiaccounthomenodes) - The unlocked nodes in the home instance of the account.
-- ['api().account().homestead().decorations()`](#apiaccounthomesteaddecorations) - The account's currently used decorations in homestead.
-- ['api().account().homestead().glyphs()`](#apiaccounthomesteadglyphs) - The account's glyphs stored in homestead.
+- [`api().account().homestead().decorations()`](#apiaccounthomesteaddecorations) - The account's currently used decorations in homestead.
+- [`api().account().homestead().glyphs()`](#apiaccounthomesteadglyphs) - The account's glyphs stored in homestead.
 - [`api().account().inventory()`](#apiaccountinventory) - The shared inventory slots of the account.
 - [`api().account().jadebots()`](#apiaccountjadebots) - The unlocked jadebots of the account.
 - [`api().account().legendaryarmory()`](#apiaccountlegendaryarmory) - The items in the legendary armory of the account.
@@ -143,9 +143,9 @@ client.language('de').items().all()
 - [`api().guild().treasury()`](#apiguildtreasury) - Information about the items in the guild's treasury.
 - [`api().home().cats()`](#apihomecats) - Information about home instance cats.
 - [`api().home().nodes()`](#apihomenodes) - Information about home instance nodes.
-- ['api().homestead().decorations()`](#apihomesteaddecorations) - Information about homestead decorations.
-- ['api().homestead().decorations().categories()`](#apihomesteaddecorationscategories) - Information about homestead decoration categories.
-- ['api().homestead().glyphs()`](#apihomesteadglyphs) - Information about glyphs in homestead.
+- [`api().homestead().decorations()`](#apihomesteaddecorations) - Information about homestead decorations.
+- [`api().homestead().decorations().categories()`](#apihomesteaddecorationscategories) - Information about homestead decoration categories.
+- [`api().homestead().glyphs()`](#apihomesteadglyphs) - Information about glyphs in homestead.
 - [`api().items()`](#apiitems) - Information about items that were discovered by players.
 - [`api().itemstats()`](#apiitemstats) - Information about stats for items.
 - [`api().mailcarriers()`](#apimailcarriers) - Information about mailcarriers.

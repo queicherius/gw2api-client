@@ -17,6 +17,7 @@ class DecorationsEndpoint extends AbstractEndpoint {
     this.isPaginated = true
     this.isLocalized = true
     this.isBulk = true
+    this.supportsBulkAll = false
     this.cacheTime = 24 * 60 * 60
   }
 

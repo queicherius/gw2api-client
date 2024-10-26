@@ -6,7 +6,7 @@
 
 These endpoints support requesting resources by using their identifiers. You can use the following methods with bulk expanding endpoints:
 
-- `all()` - Get all entries
+- `all()` - Get all entries (Some endpoints are bulk expanding but do not allow all in which case supportsBulkAll flag needs to be set to false.)
 - `ids()` - Get all ids
 - `get(:id)` - Get a single entry by id
 - `many([:id, :id])` - Get multiple entries by ids

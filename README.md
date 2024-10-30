@@ -170,16 +170,15 @@ AbstractEndpoint.prototype.post = function () {
 class ItemsEndpoint extends AbstractEndpoint {
   constructor (client) {
     super(client)
-    this.baseUrl = 'https://api.my-domain.com'
-    this.url = '/items'
-    this.isPaginated = false
-    this.isBulk = true
-    this.supportsBulkAll = false
-    this.isLocalized = true
-    this.cacheTime = 5 * 60
+    this.baseUrl = 'https://api.my-domain.com' // Base URL of the API
+    this.url = '/items' // Endpoint URL path
+    this.isPaginated = false // Support for requesting pages
+    this.isBulk = true // Support for requesting resources by using their identifiers
+    this.supportsBulkAll = false // Support for all() (Some bulk endpoints do not support all() and needs to be specified)
+    this.isLocalized = true // Support for returning resources in multiple languages
+    this.cacheTime = 5 * 60 // Cache timing
 
-    // Send credentials (e.g. session cookies)
-    this.credentials = true
+    this.credentials = true // Send credentials (e.g. session cookies)
   }
 }
 

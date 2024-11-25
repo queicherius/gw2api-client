@@ -471,13 +471,18 @@ module.exports = class AbstractEndpoint {
   }
 
   // Execute multiple requests in parallel
-  _requestMany (urls, type = 'json') {
+  async _requestMany (urls, type = 'json') {
     urls = urls.map(url => this._buildUrl(url))
 
     /* istanbul ignore next */
     const credentials = this.credentials ? 'include' : undefined
 
-    return this.fetch.many(urls, { type, credentials })
+    // rudimentry rate limit on single queries (e.g. api.items().all())
+    const BURST_LIMIT = 300 // hardcoded; 600 limit exposed in headers is inaccurate
+    const WAIT_TIME = 1 // lets-fetch adds wait time to sequential response rather than enforcing minimum sequential delay
+    const burst = await this.fetch.many(urls.slice(0, BURST_LIMIT - 1), { type, credentials })
+    const remaining = await this.fetch.many(urls.slice(BURST_LIMIT), { type, credentials, waitTime: WAIT_TIME })
+    return [...burst, ...remaining]
   }
 
   // Build the headers for localization and authentication

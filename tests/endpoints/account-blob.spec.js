@@ -185,6 +185,17 @@ describe('endpoints > account.blob()', () => {
     expect(response).toEqual(null)
   })
 
+  it('test wrap() handling api errors without cors', async () => {
+    function mockEndpoint () {
+      let error = new Error('Network request failed')
+
+      return _e(error)
+    }
+
+    let response = await endpoint.wrap(mockEndpoint)()
+    expect(response).toEqual(null)
+  })
+
   it('test /v2/account .blob() handling library errors', async () => {
     function mockEndpoint () {
       return _e(new Error('Oh no.'))

@@ -102,7 +102,11 @@ function wrap (func) {
         let status = _get(err, 'response.status')
         let text = _get(err, 'content.text')
 
-        if (status || text || err.message.includes('request failed')) {
+        if (
+          status ||
+          text ||
+          ['network request failed', 'failed to fetch'].includes(err.message.toLowerCase())
+        ) {
           console.warn(`API error: ${text} (${status})`)
           return resolve(null)
         }

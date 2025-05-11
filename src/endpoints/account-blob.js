@@ -105,7 +105,7 @@ function wrap (func) {
         if (
           status ||
           text ||
-          ['network request failed', 'failed to fetch'].includes(err.message.toLowerCase())
+          ['network', 'fetch'].some(x => err.message.toLowerCase().includes(x))
         ) {
           console.warn(`API error: ${text} (${status})`)
           return resolve(null)

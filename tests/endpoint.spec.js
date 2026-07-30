@@ -109,6 +109,139 @@ describe('abstract endpoint', () => {
     })
   })
 
+  describe('auto batching', () => {
+    const batchDelay = 10
+
+    beforeEach(() => {
+      mockClient.autoBatching = true
+    })
+    
+    afterEach(() => {
+      mockClient.autoBatching = false
+    })
+
+    it('sets up _autoBatch variable', () => {
+      let x = endpoint.autoBatch(batchDelay)
+      expect(x).toBeInstanceOf(Module)
+      expect(x.autoBatchDelay).toEqual(batchDelay)
+      expect(x._autoBatch.idsForNextBatch).toBeDefined()
+      expect(x._autoBatch.nextBatchPromise).toBeNull()
+    })
+
+    it('has default batchDelay of 50', () => {
+      let x = endpoint.autoBatch()
+      expect(x.autoBatchDelay).toEqual(50)
+    })
+
+    it('autoBatch can change the batchDelay', () => {
+      endpoint.autoBatch()
+      endpoint.autoBatch(batchDelay)
+      expect(endpoint.autoBatchDelay).toEqual(batchDelay)
+    })
+    
+    it('supports batching from get', async () => {
+      let content = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.autoBatch(batchDelay)
+      fetchMock.addResponse(content)
+
+      let [entry1, entry2, entry3] = await Promise.all([endpoint.get(1), endpoint.get(2), endpoint.get(1)])
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=1,2')
+      expect(entry1).toEqual(content[0])
+      expect(entry2).toEqual(content[1])
+      expect(entry3).toEqual(content[0])
+    })
+
+    it('returns null from get with no response', async () => {
+      let content = []
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.autoBatch(batchDelay)
+      fetchMock.addResponse(content)
+
+      let [entry1, entry2] = await Promise.all([endpoint.get(1), endpoint.get(2)])
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=1,2')
+      expect(entry1).toEqual(null)
+      expect(entry2).toEqual(null)
+    })
+    
+    it('supports batching from many', async () => {
+      let content = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }, { id: 3, name: 'bar' }]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.autoBatch(batchDelay)
+      fetchMock.addResponse(content)
+
+      let [entry1, entry2] = await Promise.all([endpoint.many([1,2]), endpoint.many([2,3])])
+      expect(fetchMock.lastUrl()).toEqual('https://api.guildwars2.com/v2/test?v=schema&ids=1,2,3')
+      expect(entry1).toEqual([content[0],content[1]])
+      expect(entry2).toEqual([content[1],content[2]])
+    })
+
+    it('only batches requests during the batchDelay', async () => {
+      let content1 = [{ id: 1, name: 'foo' }]
+      let content2 = [{ id: 2, name: 'bar' }]
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.autoBatch(batchDelay)
+      fetchMock.addResponse(content1)
+      fetchMock.addResponse(content2)
+
+      let [entry1, entry2] = await Promise.all([
+        endpoint.get(1), 
+        new Promise((resolve) => {setTimeout(() => {resolve(endpoint.get(2))}, batchDelay+1)})
+      ])
+      expect(fetchMock.urls()).toEqual([
+        'https://api.guildwars2.com/v2/test?v=schema&ids=1',
+        'https://api.guildwars2.com/v2/test?v=schema&ids=2'
+      ])
+      expect(entry1).toEqual(content1[0])
+      expect(entry2).toEqual(content2[0])
+
+    })
+    
+    it('can batch requests from different endpoints in parallel', async () => {
+      let content1 = [{ id: 1, name: 'foo' }, { id: 2, name: 'bar' }]
+      let content2 = [{ id: 1, name: 'bar' }]
+      
+      endpoint = new Module(mockClient)
+      endpoint.caches.map(cache => cache.flush())
+      endpoint.isBulk = true
+      endpoint.url = '/v2/test'
+      endpoint.schemaVersion = 'schema'
+
+      class differentModule extends Module {
+        constructor (client) {
+          super(client)
+          this.url = '/v2/differentTest'
+          this.schemaVersion = 'schema'
+          this.isBulk = true
+        }
+      }
+
+      differentEndpoint = new differentModule(mockClient)
+      differentEndpoint.caches.map(cache => cache.flush())
+
+      fetchMock.addResponse(content1)
+      fetchMock.addResponse(content2)
+
+      let [entry1, entry2, entry3] = await Promise.all([
+        endpoint.get(1), 
+        differentEndpoint.get(1), 
+        endpoint.get(2), 
+      ])
+      expect(fetchMock.urls()).toEqual([
+        'https://api.guildwars2.com/v2/test?v=schema&ids=1,2',
+        'https://api.guildwars2.com/v2/differentTest?v=schema&ids=1'
+      ])
+      expect(entry1).toEqual(content1[0])
+      expect(entry2).toEqual(content2[0])
+      expect(entry3).toEqual(content1[1])
+
+    })
+  })
+
   describe('get', () => {
     it('support for bulk expanding', async () => {
       let content = { id: 1, name: 'foo' }
